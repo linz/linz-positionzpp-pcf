@@ -79,6 +79,7 @@ sub GetSummary
     GetSinexCoords($summary,$dirsnx,$ssss);
     GetFinalStats($summary,$dirout,$dircrd,$ssss);
     GetHelmert($summary,$refstns,$dirout,$dircrd,$ssss);
+    GetBaselineWkt($summary);
     return $summary;
 }
 
@@ -308,6 +309,33 @@ sub GetSinexCoords
         print $@;
     }
     $self->{calc_coords} = $sfdata;
+}
+
+sub GetBaselineWkt
+{
+    my ($self)=@_;
+    $self->{baseline_wkt}='';
+    eval
+    {
+        my $cslist=LINZ::GNSS::CoordSysList();
+        my $itrf08xyz=$cslist->coordsys('ITRF2008_XYZ');
+        my $itrf08=$cslist->coordsys('ITRF2008');
+        my $markname=$self->{files}->[0]->{markname};
+        my $llh=$self->{calc_coords}->{$markname}->{llh};
+        my @lines=();
+        foreach my $rfs (values %{$self->{refstns}})
+        {
+            my $rfllh=$itrf08xyz->coord(@{$rfs->{xyz}})->as($itrf08);
+            push(@lines,sprintf("(%.8f %.8f, %.8f %.8f)",
+                    $llh->[0],$llh->[1],$rfllh->lon,$rfllh->lat));
+        }
+        $self->{baseline_wkt}='MULTILINESTRING('.
+           join(',',@lines).')';
+    };
+    if( $@ )
+    {
+        print $@;
+    }
 }
 
 1;

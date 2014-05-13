@@ -113,7 +113,7 @@ if( $@ )
 
 sub GetJobStats
 {
-    my($campaigndir)=@_;
+    my($campaigndir,$csvfile)=@_;
     my $stats={};
     my $campaign=$campaigndir;
     $campaign=~s/.*[\\\/]//;
@@ -129,6 +129,8 @@ sub GetJobStats
         my $f0=$settings->{files}->[0];
         my $markname=$f0->{markname};
         $stats->{markname}=$markname;
+        $stats->{srcmarkname}=$f0->{srcmarkname};
+        $stats->{srcfilename}=$f0->{srcfilename};
         $stats->{start}=seconds_datetime($f0->{session_start});
         $stats->{duration}=int($f0->{session_end}-$f0->{session_end});
         $stats->{campaign}=$campaign;
@@ -140,15 +142,21 @@ sub GetJobStats
             my $results=JSON::new->decode($rsltdata);
             $stats->{orbit_type}=$results->{orbittype};
             my $calc=$results->{calc_coords}->{$markname};
-            $stats->{covee}=sqrt($calc->{covenu}->[1]->[1])*1000;
-            $stats->{covnn}=sqrt($calc->{covenu}->[0]->[0])*1000;
-            $stats->{covuu}=sqrt($calc->{covenu}->[2]->[2])*1000;
-            $stats->{refstnde}=$results->{ref_stn_
-
-
+            $stats->{lon}=sprintf("%.9f",$calc->{nzgd2kllh}->[0]);
+            $stats->{lat}=sprintf("%.9f",$calc->{nzgd2kllh}->[1]);
+            $stats->{ehgt}=sprintf("%.4f",$calc->{nzgd2kllh}->[2]);
+            my $covenu=$calc->{covenu};
+            $stats->{covee}=sprintf("%.1f",sqrt($covenu->[1]->[1])*1000);
+            $stats->{covnn}=sprintf("%.1f",sqrt($covenu->[0]->[0])*1000);
+            $stats->{covuu}=sprintf("%.1f",sqrt($covenu->[2]->[2])*1000);
+            my $rsr=$results->{ref_stn_residual_enu};
+            $stats->{refstnde}=sprintf("%.1f",$rsr->[0]);
+            $stats->{refstnde}=sprintf("%.1f",$rsr->[0]);
+            $stats->{refstnde}=sprintf("%.1f",$rsr->[0]);
+            $stats->{seu}=$results->{final}->{seu};
         }
-        $setfile
-    my $
+    }
+}
 
 * campaign.files
 + results.calc_coords{ markname}
