@@ -118,6 +118,10 @@ sub GetRef
     my $refstns={};
     my $start;
     my $end;
+    my $rfcodes='';
+    my $minoffset='';
+    my $maxoffset='';
+    my $nrefstn=0;
     if( open( my $rf, $rffile ) )
     {
         my $stn;
@@ -131,6 +135,8 @@ sub GetRef
                 my $name=$1;
                 $stn={name=>$name};
                 $refstns->{$name}=$stn;
+                $rfcodes .= ' '.$name;
+                $nrefstn++;
                 next;
             }
             if( $stn && $line=~/Calculated\s+ITRF08\s+coordinate\s+as\s+\[(.*)\]/)
@@ -141,7 +147,10 @@ sub GetRef
             }
             if( $stn && $line=~ /Offset\s+(\d+\.\d+)km/ )
             {
-                $stn->{offset}=$1+0;
+                my $offset=$1+0;
+                $stn->{offset}=$offset;
+                $minoffset=$offset if $minoffset eq '' || $offset < $minoffset;
+                $maxoffset=$offset if $maxoffset eq '' || $offset > $maxoffset;
             }
        }
         my $starttime=<$rf>;
@@ -149,6 +158,14 @@ sub GetRef
     }
 
     $self->{refstns}=$refstns;
+    $self->{refstn_summary}={
+        count=>$nrefstn,
+        marknames=>join(' ',
+            sort {$refstns->{$a}->{offset} <=> $refstns->{$b}->{offset}}
+            keys %$refstns),
+        minoffset=>$minoffset,
+        maxoffset=>$maxoffset
+    };
 
     my $duration=TimeSeconds($end)-TimeSeconds($start);
     $self->{session}=
