@@ -85,7 +85,7 @@ sub GetSummary
 sub TimeSeconds
 {
     my ($time) = @_;
-    return 0 if $time !~ /^\s*(\d\d\d\d)\-(\d\d)\-(\d\d)\s+(\d\d)\:(\d\d)\:(\d\d)\s*$/;
+    return 0 if ! $time || $time !~ /^\s*(\d\d\d\d)\-(\d\d)\-(\d\d)\s+(\d\d)\:(\d\d)\:(\d\d)\s*$/;
     return timegm($6,$5,$4,$3,$2-1,$1-1900);
 }
 
@@ -261,6 +261,10 @@ sub GetSinexCoords
             $itrf08xyz=$cslist->coordsys('ITRF2008_XYZ');
             $nzgd2k=$cslist->coordsys('NZGD2000');
         };
+        if( $@ )
+        {
+            print $@;
+        }
 
         my $sf=new LINZ::GNSS::SinexFile($snxfile);
         my %codelist=();

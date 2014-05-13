@@ -28,10 +28,12 @@ numeric wildcard (#) character.
 use strict;
 use LINZ::BERN::BernUtil;
 use LINZ::GNSS::DataCenter;
+use LINZ::GNSS::Time qw /seconds_datetime/;
+use JSON;
 use Getopt::Std;
 
 my %opts;
-getopts('oc:',\%opts);
+getopts('oc:s:a:S',\%opts);
 
 my $campaign = $opts{c} || 'PNZPP#';
 my $overwrite = $opts{o};
@@ -47,6 +49,11 @@ Options can include:
  
   -c ###    Specify an alternative name for the campaign
   -o        Allow overwriting an existing campaign directory
+  -s fff    Append job statistics to fff.csv and fff_fail.csv
+  -a x=y    Add column x with value y to the csv file (column header only
+            added if the file does not yet exists)
+  -S        Collect statistics from all campaigns matching the name, don't
+            run Bernese.
 
 EOS
 
@@ -104,5 +111,56 @@ if( $@ )
     print "Unable to create job:\n$@\n";
 }
 
+sub GetJobStats
+{
+    my($campaigndir)=@_;
+    my $stats={};
+    my $campaign=$campaigndir;
+    $campaign=~s/.*[\\\/]//;
+    my $runstatus=BernUtil::RunPcfStatus($campaigndir);
+    eval
+    {
+        my $setfile=$campaigndir.'/OUT/SETTINGS.JSON';
+        open(my $setf,$setfile) || die "Cannot open settings file $setfile\n";
+        my $setdata=join('',<$setf>);
+        close($setf);
+        $settings=JSON::new->decode($setdata);
+        scalar(@{$settings->{files}})==1 || die "Campaign $campaign has multiple input files\n";
+        my $f0=$settings->{files}->[0];
+        my $markname=$f0->{markname};
+        $stats->{markname}=$markname;
+        $stats->{start}=seconds_datetime($f0->{session_start});
+        $stats->{duration}=int($f0->{session_end}-$f0->{session_end});
+        $stats->{campaign}=$campaign;
+        my $rsltfile=$campaigndir.'/OUT/SUMMARY.JSON';
+        if( open(my $rf,"<$rsltfile") )
+        {
+            my $rsltdata=join('',<$rf>);
+            close($rf);
+            my $results=JSON::new->decode($rsltdata);
+            $stats->{orbit_type}=$results->{orbittype};
+            my $calc=$results->{calc_coords}->{$markname};
+            $stats->{covee}=sqrt($calc->{covenu}->[1]->[1])*1000;
+            $stats->{covnn}=sqrt($calc->{covenu}->[0]->[0])*1000;
+            $stats->{covuu}=sqrt($calc->{covenu}->[2]->[2])*1000;
+            $stats->{refstnde}=$results->{ref_stn_
 
+
+        }
+        $setfile
+    my $
+
+* campaign.files
++ results.calc_coords{ markname}
+|$+,$+,$+,$+,$+,$+,$+,$+,#.###,#.###,#.###,#.###,#.###,#.###,#.##
+= campaign.JOBID
+= srcfilename
+= srcmarkname
+= seconds_datetime( campaign.session_start) seconds_datetime( campaign.session_end)
+= orbit_type
+= seconds_datetime( start_time) seconds_datetime( end_time) 
+= sqrt( covenu[1][1])*1000  sqrt( covenu[0][0])*1000 sqrt( covenu[2][2])*1000
+= results.ref_stn_residual_enu[0] results.ref_stn_residual_enu[1] results.ref_stn_residual_enu[2]
+= results.final.seu
+}
 
