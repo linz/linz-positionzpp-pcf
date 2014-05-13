@@ -1,0 +1,108 @@
+#!/usr/bin/perl
+
+=head1 run_positionz_pcf
+
+Script to run the PositioNZ-PP PCF on a selected RINEX file.  The script will create
+a Bernese campaign PNZPP# where # is the next number in a sequence, then run the 
+PositioNZ PCF with that campaign.
+
+Usage:  run_positionz_pcf [options] <rinex_file_name>
+
+Options can include
+
+=over
+
+=item -c <camp>
+
+Specifies an alternative name for the campaign
+
+=item -o
+
+Allows overwriting an existing campaign (if the new campaign name does not contain a 
+numeric wildcard (#) character.
+
+=back
+
+=cut
+
+use strict;
+use LINZ::BERN::BernUtil;
+use LINZ::GNSS::DataCenter;
+use Getopt::Std;
+
+my %opts;
+getopts('oc:',\%opts);
+
+my $campaign = $opts{c} || 'PNZPP#';
+my $overwrite = $opts{o};
+
+@ARGV == 1 || die <<EOS;
+
+Syntax: run_positionz_pcf [options] rinex_file
+
+Runs the PositioNZ-PP PCF on a specified RINEX file.  Creates a new user campaign
+called PNZPP###, installs the rinex file, and runs the PCF.
+
+Options can include:
+ 
+  -c ###    Specify an alternative name for the campaign
+  -o        Allow overwriting an existing campaign directory
+
+EOS
+
+my $rinexfile=shift(@ARGV);
+my $pcf='RUN_PNZ';
+
+eval
+{
+    LINZ::BERN::BernUtil::SetBerneseEnv();
+    my $codes=LINZ::GNSS::DataCenter::AvailableStations();
+    my $campaign=LINZ::BERN::BernUtil::CreateCampaign(
+        $campaign,
+        RinexFiles=>[$rinexfile],
+        RenameRinex=>'U###',
+        RenameCodes=>$codes,
+        CrdFile=>'APR$S+0',
+        AbbFile=>'ABBREV',
+        StaFile=>'STATIONS',
+        AddNoneRadome=>1,
+        MakeSessionFile=>1,
+        SettingsFile=>1,
+        SetupUserMenu=>1,
+        UpdateCampaignList=>1,
+        CanOverwrite=>$opts{o},
+    );
+    if( $campaign )
+    {
+        foreach my $k (sort keys %$campaign )
+        {
+            print "$k: $campaign->{$k}\n" if ! ref $campaign->{$k};
+        }
+
+        # Some variables required by the RUN_PNZ PCF script
+        my $usrmrk=$campaign->{marks}->[0];
+        my $vars=$campaign->{variables};
+        $vars->{V_USRMRK}=$campaign->{marks}->[0];
+        $vars->{V_ORBTYPE}='ULTRA+';
+        $vars->{V_ERPTYPE}='ULTRA+';
+        $vars->{V_GDDNLD}='1';
+        $vars->{V_GDQUEU}='0';
+
+        my $status=LINZ::BERN::BernUtil::RunPcf($campaign,$pcf);
+        if( $status )
+        {
+            print "BPE stopped with errors\n";
+        }
+        else
+        {
+            print "BPE completed successfully\n";
+        }
+    }
+};
+if( $@ )
+{
+    print "Unable to create job:\n$@\n";
+}
+
+
+

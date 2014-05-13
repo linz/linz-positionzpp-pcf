@@ -1,0 +1,27 @@
+Source: linz-positionzpp-pcf
+Section: science
+Priority: optional
+Maintainer: Chris Crook <ccrook@linz.govt.nz>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.2
+Homepage: 
+
+Package: linz-positionzpp-pcf
+Architecture: all
+Depends: ${misc:Depends},
+    linz-bernese52,
+    linz-bernese52-util,
+    linz-bernese52-spm,
+    liblinz-gnss-perl,
+    liblinz-bern-perl
+Description: LINZ PositioNZ-PP Bernese PCF
+ LINZ PositioNZ-PP Bernese PCF and support files
+ .
+ This installs the PositioNZ-PP PCF files into the Bernese5.2
+ installation.  This includes options directories PNZ*, scripts
+ PNZSTART for managing restarting the script and PNZSUMRY for
+ compiling a summary of data, and the RUN_PNZ.PCF file.
+ . 
+ It also installs an executable file run_positionzpp_pcf to 
+ create a campaign and execute the PCF file.
+    

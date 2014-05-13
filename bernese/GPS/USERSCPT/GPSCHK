@@ -1,0 +1,95 @@
+package GPSCHK;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  GPSCHK
+#
+# Purpose :  Check double-difference data screening results and reject, when
+#            indicated, data of misbehaving stations:
+#
+#            1. RESRMS to create F(irst) residual screening summary
+#            2. RESRMS to create L(ast) residual screening summary
+#            3. RESCHK to create residual screening statistics
+#
+#            Binary data files of misbehaving stations are subsequently
+#            removed; BPE processing is continued with SNGDIF.
+#
+# PARAMs  :  PARAM2 - goto PID in case of misbehaving stations
+#
+# Author  :  M. Meindl, S. Schaer
+# Created :  20-Oct-2003
+#
+# ============================================================================
+use lib $ENV{BPE};
+use bpe_util;
+use File::Copy;
+
+sub run {
+  my $bpe = shift;
+
+# Get variables
+# -------------
+  my ($yyssss  , $ssss    , $param2  , $startcount,
+      $dirOut  , $dirSum  , $dirDel  , $dirU    ,
+      $extOut   ,$extSum  , $extDel  , $extRes   ) =
+  $bpe->getKeys
+     ('$YSS+0' , '$S+0'   , 'PARAM2' , 'STARTCOUNT',
+      'DIR_OUT', 'DIR_SUM', 'DIR_DEL', 'U'      ,
+      'EXT_OUT', 'EXT_SUM', 'EXT_DEL', 'EXT_RES' );
+
+  my $prcFil = "${dirOut}CHK${ssss}.PRC";
+  my $tmpFil = "${dirOut}CHK${ssss}.TMP";
+  my $mprFil = "${dirSum}MPR${ssss}.${extSum}";
+  my $outFil = "${dirOut}CHK${ssss}.${extOut}";
+  my $sumFil = "${dirSum}CHK${ssss}.${extSum}";
+  my $chkFil = "${dirSum}EDT${ssss}.${extSum}";
+  my $delFil = "${dirDel}EDT${ssss}.${extDel}";
+
+# Delete old files (DEL)
+# ----------------------
+  unlink ($tmpFil,$delFil);
+
+# Run programs
+# ------------
+  setUserVar($bpe,"FL","F");
+
+  my $PGMNAM = "RESRMS";
+  $bpe->RUN_PGMS($PGMNAM);
+  appFile("",0,$sumFil,$tmpFil,1);
+
+  setUserVar($bpe,"FL","L");
+
+  $bpe->RUN_PGMS($PGMNAM);
+  appFile("",0,$sumFil,$tmpFil,1);
+
+  copy($tmpFil,$chkFil);
+
+  $PGMNAM = "RESCHK";
+  $bpe->RUN_PGMS($PGMNAM);
+
+# Delete collecting protocol file in first run  
+# -------------------------------------------- 
+  unlink $prcFil if $startcount == 1;
+
+# Collect protocol files
+# ----------------------
+  appFile("",1,$mprFil,$prcFil,0);
+  appFile("",0,$outFil,$prcFil,1);
+  appFile("",0,$sumFil,$prcFil,1);
+  appFile("",0,$tmpFil,$prcFil,1);
+
+  unlink ($tmpFil);
+
+# Bad stations detected?
+# ----------------------
+  if (-s $delFil) {
+    open (DEL,$delFil);
+    while (<DEL>) {
+      chomp;
+      while ( /^ / ) { s/^ // }  # Remove leading blanks
+      unlink ($_);
+      prtMess($bpe,"$_ deleted") }
+    close DEL;
+    prtGoto($bpe,$param2) }
+
+}

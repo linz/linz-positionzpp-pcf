@@ -1,0 +1,27 @@
+package RNX2STA;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  RNX2STA
+#
+# Purpose :  Execute RNX2STA
+#
+# PARAMs  :
+#
+# Author  :  M. Meindl
+# Created :  20-Oct-2003
+#
+# Changes :  11-Aug-2011 RD: Updated for version 5.2
+#
+# ============================================================================
+use strict;
+
+sub run {
+  my $bpe = shift;
+
+# Run program
+# -----------
+  my $PGMNAM = "RNX2STA";
+  $bpe->RUN_PGMS($PGMNAM);
+
+}
