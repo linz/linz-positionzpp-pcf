@@ -37,8 +37,51 @@ getopts('oc:s:a:S',\%opts);
 
 my $campaign = $opts{c} || 'PNZPP#';
 my $overwrite = $opts{o};
+my $extradata=$opts{a};
+my $statscsv=$opts{s};
+my $statsonly=$opts{S};
 
-@ARGV == 1 || die <<EOS;
+my $pcf='RUN_PNZ';
+
+my @stats_columns=qw/
+   markname
+   srcmarkname
+   srcfilename
+   starttime
+   duration
+   campaign
+   lon
+   lat
+   ehgt
+   erre
+   errn
+   erru
+   refcount
+   refcodes
+   refminoffset
+   refmaxoffset
+   refmaxde
+   refmaxdn
+   refmaxdu
+   seu
+   baseline_wkt
+   /;
+
+my @fail_columns=qw/
+   markname
+   srcmarkname
+   srcfilename
+   starttime
+   duration
+   campaign
+   status
+   fail_pid
+   fail_script
+   fail_prog
+   fail_message
+   /;
+
+@ARGV || $statsonly || die <<EOS;
 
 Syntax: run_positionz_pcf [options] rinex_file
 
@@ -57,118 +100,190 @@ Options can include:
 
 EOS
 
-my $rinexfile=shift(@ARGV);
-my $pcf='RUN_PNZ';
+LINZ::BERN::BernUtil::SetBerneseEnv();
 
-eval
+if( $statsonly )
 {
-    LINZ::BERN::BernUtil::SetBerneseEnv();
-    my $codes=LINZ::GNSS::DataCenter::AvailableStations();
-    my $campaign=LINZ::BERN::BernUtil::CreateCampaign(
-        $campaign,
-        RinexFiles=>[$rinexfile],
-        RenameRinex=>'U###',
-        RenameCodes=>$codes,
-        CrdFile=>'APR$S+0',
-        AbbFile=>'ABBREV',
-        StaFile=>'STATIONS',
-        AddNoneRadome=>1,
-        MakeSessionFile=>1,
-        SettingsFile=>1,
-        SetupUserMenu=>1,
-        UpdateCampaignList=>1,
-        CanOverwrite=>$opts{o},
-    );
-    if( $campaign )
+    die "Cannot use -S option without csv file (-s option)\n" if ! $statscsv;
+    my $campdir=$ENV{P};
+    die "Invalid campaign directory $campdir\n" if ! -e $campdir;
+    my $campre=quotemeta($campaign);
+    $campre=~ s/(\\\#)+/\\d+/;
+    $campre='^'.$campre.'$';
+    opendir(my $cd,$campdir) || die "Cannot read directory $campdir\n";
+    my @dirs=();
+    foreach my $d (readdir($cd))
     {
-        foreach my $k (sort keys %$campaign )
-        {
-            print "$k: $campaign->{$k}\n" if ! ref $campaign->{$k};
-        }
-
-        # Some variables required by the RUN_PNZ PCF script
-        my $usrmrk=$campaign->{marks}->[0];
-        my $vars=$campaign->{variables};
-        $vars->{V_USRMRK}=$campaign->{marks}->[0];
-        $vars->{V_ORBTYPE}='ULTRA+';
-        $vars->{V_ERPTYPE}='ULTRA+';
-        $vars->{V_GDDNLD}='1';
-        $vars->{V_GDQUEU}='0';
-
-        my $status=LINZ::BERN::BernUtil::RunPcf($campaign,$pcf);
-        if( $status )
-        {
-            print "BPE stopped with errors\n";
-        }
-        else
-        {
-            print "BPE completed successfully\n";
-        }
+        next if $d !~ /$campre/;
+        $d = "$campdir/$d";
+        next if ! -d  "$d/OUT";
+        push(@dirs,$d);
     }
-};
-if( $@ )
-{
-    print "Unable to create job:\n$@\n";
+    closedir($cd);
+    foreach my $d (@dirs)
+    {
+        my $dirname=$d;
+        $dirname=~s/.*[\\\/]//;
+        print "Writing statistics for $dirname\n";
+        PrintJobStats($d,$statscsv,$extradata);
+    }
+    exit;
 }
 
-sub GetJobStats
+foreach my $rinexfile (@ARGV)
 {
-    my($campaigndir,$csvfile)=@_;
-    my $stats={};
+    print "Processing $rinexfile\n";
+    my $berncamp=RunPcf($campaign,$rinexfile);
+    my $campdir=$ENV{P}.'/'.$berncamp->{JOBID};
+    PrintJobStats($campdir,$statscsv,$extradata) if $statscsv;
+}
+
+sub RunPcf
+{
+    my($camdir,$rinexfile)=@_;
+    eval
+    {
+        my $codes=LINZ::GNSS::DataCenter::AvailableStations();
+        $campaign=LINZ::BERN::BernUtil::CreateCampaign(
+            $campaign,
+            RinexFiles=>[$rinexfile],
+            RenameRinex=>'U###',
+            RenameCodes=>$codes,
+            CrdFile=>'APR$S+0',
+            AbbFile=>'ABBREV',
+            StaFile=>'STATIONS',
+            AddNoneRadome=>1,
+            MakeSessionFile=>1,
+            SettingsFile=>1,
+            SetupUserMenu=>1,
+            UpdateCampaignList=>1,
+            CanOverwrite=>$opts{o},
+        );
+        if( $campaign )
+        {
+            foreach my $k (sort keys %$campaign )
+            {
+                print "$k: $campaign->{$k}\n" if ! ref $campaign->{$k};
+            }
+
+            # Some variables required by the RUN_PNZ PCF script
+            my $usrmrk=$campaign->{marks}->[0];
+            my $vars=$campaign->{variables};
+            $vars->{V_USRMRK}=$campaign->{marks}->[0];
+            $vars->{V_ORBTYPE}='ULTRA+';
+            $vars->{V_ERPTYPE}='ULTRA+';
+            $vars->{V_GDDNLD}='1';
+            $vars->{V_GDQUEU}='0';
+
+            my $status=LINZ::BERN::BernUtil::RunPcf($campaign,$pcf);
+            if( $status )
+            {
+                print "BPE stopped with errors\n";
+            }
+            else
+            {
+                print "BPE completed successfully\n";
+            }
+        }
+    };
+    if( $@ )
+    {
+        print "Unable to create job:\n$@\n";
+    }
+    return $campaign;
+}
+
+sub PrintJobStats
+{
+    my($campaigndir,$csvfile,$extracols)=@_;
     my $campaign=$campaigndir;
     $campaign=~s/.*[\\\/]//;
-    my $runstatus=BernUtil::RunPcfStatus($campaigndir);
+    $csvfile=~s/\.csv$//i;
+
+    my $runstatus=LINZ::BERN::BernUtil::RunPcfStatus($campaigndir);
+    my $stats={};
     eval
     {
         my $setfile=$campaigndir.'/OUT/SETTINGS.JSON';
         open(my $setf,$setfile) || die "Cannot open settings file $setfile\n";
         my $setdata=join('',<$setf>);
         close($setf);
-        $settings=JSON::new->decode($setdata);
+        my $settings=JSON->new->decode($setdata);
         scalar(@{$settings->{files}})==1 || die "Campaign $campaign has multiple input files\n";
         my $f0=$settings->{files}->[0];
         my $markname=$f0->{markname};
         $stats->{markname}=$markname;
         $stats->{srcmarkname}=$f0->{srcmarkname};
         $stats->{srcfilename}=$f0->{srcfilename};
-        $stats->{start}=seconds_datetime($f0->{session_start});
-        $stats->{duration}=int($f0->{session_end}-$f0->{session_end});
+        $stats->{starttime}=seconds_datetime($settings->{session_start});
+        $stats->{duration}=int($settings->{session_end}-$settings->{session_start});
         $stats->{campaign}=$campaign;
         my $rsltfile=$campaigndir.'/OUT/SUMMARY.JSON';
         if( open(my $rf,"<$rsltfile") )
         {
             my $rsltdata=join('',<$rf>);
             close($rf);
-            my $results=JSON::new->decode($rsltdata);
+            my $results=JSON->new->decode($rsltdata);
             $stats->{orbit_type}=$results->{orbittype};
             my $calc=$results->{calc_coords}->{$markname};
             $stats->{lon}=sprintf("%.9f",$calc->{nzgd2kllh}->[0]);
             $stats->{lat}=sprintf("%.9f",$calc->{nzgd2kllh}->[1]);
             $stats->{ehgt}=sprintf("%.4f",$calc->{nzgd2kllh}->[2]);
             my $covenu=$calc->{covenu};
-            $stats->{covee}=sprintf("%.1f",sqrt($covenu->[1]->[1])*1000);
-            $stats->{covnn}=sprintf("%.1f",sqrt($covenu->[0]->[0])*1000);
-            $stats->{covuu}=sprintf("%.1f",sqrt($covenu->[2]->[2])*1000);
+            $stats->{erre}=sprintf("%.1f",sqrt($covenu->[1]->[1])*1000);
+            $stats->{errn}=sprintf("%.1f",sqrt($covenu->[0]->[0])*1000);
+            $stats->{erru}=sprintf("%.1f",sqrt($covenu->[2]->[2])*1000);
             my $rsr=$results->{ref_stn_residual_enu};
-            $stats->{refstnde}=sprintf("%.1f",$rsr->[0]);
-            $stats->{refstnde}=sprintf("%.1f",$rsr->[0]);
-            $stats->{refstnde}=sprintf("%.1f",$rsr->[0]);
+            $stats->{refmaxde}=sprintf("%.1f",$rsr->[0]);
+            $stats->{refmaxdn}=sprintf("%.1f",$rsr->[1]);
+            $stats->{refmaxdu}=sprintf("%.1f",$rsr->[2]);
             $stats->{seu}=$results->{final}->{seu};
+            $stats->{baseline_wkt}=$results->{baseline_wkt};
+            my $rfs=$results->{refstn_summary};
+            $stats->{refcount}=$rfs->{count};
+            $stats->{refminoffset}=$rfs->{minoffset};
+            $stats->{refmaxoffset}=$rfs->{maxoffset};
+            $stats->{refcodes}=$rfs->{marknames};
+        }
+        my @csvcols=@stats_columns;
+        foreach my $col (split(/\:/,$extracols))
+        {
+            my($name,$value)=split(/\=/,$col,2);
+            splice(@csvcols,-1,0,$name);
+            $stats->{$name}=$value;
+        }
+        my $csvfn=$csvfile.'.csv';
+        my $newfile= ! -e $csvfn;
+        open(my $csvf,">>$csvfn") || die "Cannot open CSV file $csvfn\n";
+        print $csvf join(",",@csvcols),"\n" if $newfile;
+        print $csvf join(",", 
+            map { s/\"/\"\"/g; /[\,\n\"]/ ? '"'.$_.'"' : $_ }
+            map { $stats->{$_} }
+            @csvcols),"\n";
+        close($csvf);
+    };
+    if( $@ )
+    {
+        print "Error assembling statistics\n$@\n";
+    }
+    if( $runstatus->{status} ne 'OK' )
+    {
+        $stats->{$_}=$runstatus->{$_} foreach keys %$runstatus;
+        my @csvcols=@fail_columns;
+        eval {
+            my $csvfn=$csvfile.'_fail.csv';
+            my $newfile= ! -e $csvfn;
+            open(my $csvf,">>$csvfn") || die "Cannot open CSV file $csvfn\n";
+            print $csvf join(",",@csvcols),"\n" if $newfile;
+            print $csvf join(",", 
+                map { s/\"/\"\"/g; /[\,\n\"]/ ? '"'.$_.'"' : $_ }
+                map { $stats->{$_} }
+                @csvcols),"\n";
+            close($csvf);
+        };
+        if( $@ )
+        {
+            print "Error assembling fail statistics\n$@\n";
         }
     }
 }
-
-* campaign.files
-+ results.calc_coords{ markname}
-|$+,$+,$+,$+,$+,$+,$+,$+,#.###,#.###,#.###,#.###,#.###,#.###,#.##
-= campaign.JOBID
-= srcfilename
-= srcmarkname
-= seconds_datetime( campaign.session_start) seconds_datetime( campaign.session_end)
-= orbit_type
-= seconds_datetime( start_time) seconds_datetime( end_time) 
-= sqrt( covenu[1][1])*1000  sqrt( covenu[0][0])*1000 sqrt( covenu[2][2])*1000
-= results.ref_stn_residual_enu[0] results.ref_stn_residual_enu[1] results.ref_stn_residual_enu[2]
-= results.final.seu
-}
-
