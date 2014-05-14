@@ -133,9 +133,16 @@ if( $statsonly )
     exit;
 }
 
+my $spacer='';
 foreach my $rinexfile (@ARGV)
 {
+    print $spacer;
+    $spacer="\n\n".("="x70)."\n";
     print "Processing $rinexfile\n";
+    if( ! -e $rinexfile )
+    {
+        print "Cannot find rinex file $rinexfile\n";
+    }
     my $berncamp=RunPcf($campaign,$rinexfile);
     my $campdir=$ENV{P}.'/'.$berncamp->{JOBID};
     PrintJobStats($campdir,$statscsv,$extradata) if $statscsv;

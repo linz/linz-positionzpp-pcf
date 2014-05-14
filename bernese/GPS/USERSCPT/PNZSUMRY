@@ -264,6 +264,8 @@ sub GetFinalCoords
     $self->{final_coords}=$crds;
 }
 
+sub _wrapLon { return $_[0] < 0 ? $_[0]+360.0 : $_[0]; }
+
 sub GetSinexCoords
 {
     my ($self,$dirsnx,$ssss)=@_;
@@ -314,9 +316,9 @@ sub GetSinexCoords
                 code=>$code,
                 xyz=>$xyz,
                 covxyz=>$covxyz,
-                llh=>[$llh->lon,$llh->lat,$llh->hgt],
+                llh=>[_wrapLon($llh->lon),$llh->lat,$llh->hgt],
                 covenu=>$covllh,
-                nzgd2kllh=>$crdnz2k ? [$crdnz2k->lon,$crdnz2k->lat,$crdnz2k->hgt] : [0.0,0.0,0.0],
+                nzgd2kllh=>$crdnz2k ? [_wrapLon($crdnz2k->lon),$crdnz2k->lat,$crdnz2k->hgt] : [0.0,0.0,0.0],
                 year=>$year,
             };
         }
@@ -344,7 +346,7 @@ sub GetBaselineWkt
         {
             my $rfllh=$itrf08xyz->coord(@{$rfs->{xyz}})->as($itrf08);
             push(@lines,sprintf("(%.8f %.8f, %.8f %.8f)",
-                    $llh->[0],$llh->[1],$rfllh->lon,$rfllh->lat));
+                    $llh->[0],$llh->[1],_wrapLon($rfllh->lon),$rfllh->lat));
         }
         $self->{baseline_wkt}='MULTILINESTRING('.
            join(',',@lines).')';
