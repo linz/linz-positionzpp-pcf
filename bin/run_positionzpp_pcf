@@ -44,12 +44,13 @@ my $statsonly=$opts{S};
 my $pcf='RUN_PNZ';
 
 my @stats_columns=qw/
+   id
    markname
    srcmarkname
+   filename
    srcfilename
-   starttime
+   sessionstart
    duration
-   campaign
    lon
    lat
    ehgt
@@ -63,17 +64,19 @@ my @stats_columns=qw/
    refmaxde
    refmaxdn
    refmaxdu
+   orbittype
    seu
    baseline_wkt
    /;
 
 my @fail_columns=qw/
+   id
    markname
    srcmarkname
+   filename
    srcfilename
-   starttime
+   sessionstart
    duration
-   campaign
    status
    fail_pid
    fail_script
@@ -215,9 +218,9 @@ sub PrintJobStats
         $stats->{markname}=$markname;
         $stats->{srcmarkname}=$f0->{srcmarkname};
         $stats->{srcfilename}=$f0->{srcfilename};
-        $stats->{starttime}=seconds_datetime($settings->{session_start});
+        $stats->{sessionstart}=seconds_datetime($settings->{session_start});
         $stats->{duration}=int($settings->{session_end}-$settings->{session_start});
-        $stats->{campaign}=$campaign;
+        $stats->{id}=$campaign;
         my $rsltfile=$campaigndir.'/OUT/SUMMARY.JSON';
         if( open(my $rf,"<$rsltfile") )
         {
