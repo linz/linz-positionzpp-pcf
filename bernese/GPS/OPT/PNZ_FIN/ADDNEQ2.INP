@@ -231,7 +231,7 @@ DESCR_NUTMOD 1  "Nutation model"
 
 ! Sinex header file
 ! -----------------
-SINEXIN 1  "SINEX."
+SINEXIN 1  "SINEX.PNZPP"
   ## widget = selwin; path = PTH_GEN; maxfiles = 1; emptyallowed = true
 
 DESCR_SINEXIN 1  "SINEX general input file"
