@@ -46,9 +46,9 @@ my $pcf='RUN_PNZ';
 my @stats_columns=qw/
    id
    markname
-   srcmarkname
+   origmarkname
    filename
-   srcfilename
+   orig_filename
    sessionstart
    duration
    lon
@@ -72,9 +72,9 @@ my @stats_columns=qw/
 my @fail_columns=qw/
    id
    markname
-   srcmarkname
+   origmarkname
    filename
-   srcfilename
+   orig_filename
    sessionstart
    duration
    status
@@ -223,8 +223,8 @@ sub PrintJobStats
         my $f0=$settings->{files}->[0];
         my $markname=$f0->{markname};
         $stats->{markname}=$markname;
-        $stats->{srcmarkname}=$f0->{srcmarkname};
-        $stats->{srcfilename}=$f0->{srcfilename};
+        $stats->{origmarkname}=$f0->{origmarkname};
+        $stats->{orig_filename}=$f0->{orig_filename};
         $stats->{sessionstart}=seconds_datetime($settings->{session_start});
         $stats->{duration}=int($settings->{session_end}-$settings->{session_start});
         $stats->{id}=$campaign;
