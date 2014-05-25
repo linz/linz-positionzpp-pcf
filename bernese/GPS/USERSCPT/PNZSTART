@@ -78,6 +78,12 @@ sub run
     my $finish=$bpe->{PARAM1} eq 'FINISH';
     my $lockfile='';
 
+    # No jump files exist - check whether restart is allowed.
+    
+    my $statusfile=$bpe->{PARAM8} || 'STATUS';
+    my $statuspath=$dirout.$statusfile.$lockext;
+    my $runtime=seconds_datetime(localtime());
+
     foreach my $i (2,3,4)
     {
         my $fprm="PARAM".($i+3);
@@ -86,8 +92,8 @@ sub run
         next if ! $filename;
         my $filepath=$dirout.$filename.$lockext;
         next if ! -e $filepath;
-	
-	if( $finish )
+        
+        if( $finish )
         {
             $lockfile=$filepath;
             last;
@@ -95,6 +101,14 @@ sub run
         my $pid=$bpe->{$jprm};
         if( $pid =~ /^\d\d\d$/ )
         {
+            # Otherwise create a stop file to prevent restarting
+            if( open(my $stf,">$statuspath") )
+            {
+                print $stf "FAIL $runtime\n";
+                print $stf "BPE restarted at $pid but did not successfully finish\n";
+                print $stf "Remove this file to allow the script to start again\n";
+                close($stf);
+            }
             prtMess($bpe,"Restarting at $pid as file $outname/$filename$lockext exists.");
             prtGoto($bpe,$pid);
             return;
@@ -102,29 +116,29 @@ sub run
         die "Invalid PID $pid in PNZSTART parameter $jprm\n";
     }
 
-    # No jump files exist - check whether restart is allowed.
-    
-    my $statusfile=$bpe->{PARAM8};
-    if( ! $statusfile ) { return; }
-
-    my $statuspath=$dirout.$statusfile.$lockext;
-
-    my $runtime=seconds_datetime(localtime());
-
     if( ! $finish )
     {
-        # If the stop file exists then stop!
-        if( -e $statuspath )
-        {
-            prtErr($bpe,"Script not started as lock file $outname/$statusfile$lockext exists.");
-            die "Script stopped by lock file $outname/$statusfile$lockext\n";
-        }
-        # Otherwise create a stop file to prevent restarting
+        my $locked=-e $statuspath;
+        # Create a stop file to prevent restarting
         if( open(my $stf,">$statuspath") )
         {
             print $stf "FAIL $runtime\n";
-            print $stf "BPE started but did not successfully finish\n";
+            if( $locked )
+            {
+                print $stf "BPE not started as lock file already exists\n";
+            }
+            else
+            {
+                print $stf "BPE started but did not successfully finish\n";
+            }
             print $stf "Remove this file to allow the script to start again\n";
+            close($stf);
+        }
+        # If the stop file exists then stop!
+        if( $locked )
+        {
+            prtErr($bpe,"Script not started as lock file $outname/$statusfile$lockext exists.");
+            die "Script stopped by lock file $outname/$statusfile$lockext\n";
         }
     }
     else
