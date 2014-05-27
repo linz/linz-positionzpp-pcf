@@ -33,10 +33,11 @@ use JSON;
 use Getopt::Std;
 
 my %opts;
-getopts('oc:s:a:S',\%opts);
+getopts('oO:c:s:a:S',\%opts);
 
 my $campaign = $opts{c} || 'PNZPP#';
 my $overwrite = $opts{o};
+my $orbittype = $opts{O} || 'ULTRA+';
 my $extradata=$opts{a};
 my $statscsv=$opts{s};
 my $statsonly=$opts{S};
@@ -94,6 +95,7 @@ called PNZPP###, installs the rinex file, and runs the PCF.
 Options can include:
  
   -c ###    Specify an alternative name for the campaign
+  -O ####   Specify orbit/ERP quality, one of ULTRA, RAPID, FINAL.
   -o        Allow overwriting an existing campaign directory
   -s fff    Append job statistics to fff.csv and fff_fail.csv
   -a x=y    Add column x with value y to the csv file (column header only
@@ -134,6 +136,9 @@ if( $statsonly )
 }
 
 my $spacer='';
+$orbittype=uc($orbittype);
+die "Invalid orbit type $orbittype\nMust be one of ULTRA, ULTRA+, RAPID, RAPID+, FINAL\n"
+   if $orbittype !~ /^(ULTRA\+?|RAPID\+?|FINAL)$/;
 foreach my $rinexfile (@ARGV)
 {
     print $spacer;
@@ -180,8 +185,8 @@ sub RunPcf
             my $usrmrk=$campaign->{marks}->[0];
             my $vars=$campaign->{variables};
             $vars->{V_USRMRK}=$campaign->{marks}->[0];
-            $vars->{V_ORBTYPE}='ULTRA+';
-            $vars->{V_ERPTYPE}='ULTRA+';
+            $vars->{V_ORBTYP}=$orbittype;
+            $vars->{V_ERPTYP}=$orbittype;
             $vars->{V_GDDNLD}='1';
             $vars->{V_GDQUEU}='0';
 
