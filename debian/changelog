@@ -1,3 +1,10 @@
+linz-positionzpp-pcf (1.4.3-1) precise; urgency=low
+
+  * Fixing use of PCV.I08 - should be PCV_COD.I08
+  * Changing to consistent tropospheric model (GMF)
+
+ -- Chris Crook <ccrook@linz.govt.nz>  Thu, 05 Jun 2014 08:07:05 +1200
+
 linz-positionzpp-pcf (1.4.2-1) precise; urgency=low
 
   * Fixing truncation in SINEX file header
