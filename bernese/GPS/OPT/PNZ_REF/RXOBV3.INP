@@ -71,7 +71,7 @@ DESCR_RECEIVR 1  "Receiver information"
 
 ! Phase Center Eccentricities
 ! ---------------------------
-PHASECC 1  "PCV.I08"
+PHASECC 1  "PCV_COD.I08"
   ## widget = selwin; path = PTH_GEN; maxfiles = 1; emptyallowed = true
 
 DESCR_PHASECC 1  "Phase center eccentricities"

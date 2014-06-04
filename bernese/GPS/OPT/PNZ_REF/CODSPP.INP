@@ -114,9 +114,9 @@ DESCR_NUTMOD 1  "Nutation model"
 
 ! Phase Center Eccentricities
 ! ---------------------------
-PHASECC 1  "${X}/GEN/PCV.I08"
+PHASECC 1  "${X}/GEN/PCV_COD.I08"
   ## widget = selwin; path = PTH_GEN; ext = EXT_ANY; maxfiles = 1
-  # PCV.I08
+  # PCV_COD.I08
 
 DESCR_PHASECC 1  "Phase center eccentricities"
 
