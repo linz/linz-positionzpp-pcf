@@ -191,7 +191,7 @@ MSG_VMF1_FILES 1  "Grid files for VMF"
 
 ! Atmosphere: Tropospheric Model
 ! ------------------------------
-TROPOS 1  "NIELL"
+TROPOS 1  "GMF"
   ## widget = combobox; editable = false; activeif = TROPEST = _
   ## cards = SAASTAMOINEN HOPFIELD ESSEN-FROOME NIELL GMF VMF DRY_SAAST DRY_HOPFIELD DRY_NIELL DRY_GMF DRY_VMF NONE
 

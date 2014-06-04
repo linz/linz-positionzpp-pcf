@@ -435,7 +435,7 @@ MSG_COORDEST 1  "Estimate coordinates"
 
 ! Tropospheric Model
 ! ------------------
-TROPOS 1  "SAASTAMOINEN"
+TROPOS 1  "GMF"
   ## widget = combobox; editable = false
   ## cards = NONE VMF GMF NIELL SAASTAMOINEN HOPFIELD ESSEN-FROOME MARINI-MUR ESTIMATED
 

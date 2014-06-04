@@ -849,7 +849,7 @@ MSG_ENDTIM1 1  "End time(hour minutes seconds)"
 ! ----------------------------------------------------------------------
 ! Tropospheric Model (microwave observations)
 ! -------------------------------------------
-TROPOS 1  "DRY_NIELL"
+TROPOS 1  "GMF"
   ## widget = combobox; editable = false
   ## cards = NONE VMF DRY_VMF GMF DRY_GMF NIELL DRY_NIELL SAASTAMOINEN DRY_SAAST HOPFIELD DRY_HOPFIELD ESSEN-FROOME
   ## activeif = GEOTEC = GNSS AND FREQUENCY / L4 AND FREQUENCY / MELWUEBB AND FREQUENCY / DTEC AND TROPEST = _
