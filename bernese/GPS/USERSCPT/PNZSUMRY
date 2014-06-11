@@ -139,7 +139,7 @@ sub GetRef
                 $nrefstn++;
                 next;
             }
-            if( $stn && $line=~/Calculated\s+ITRF08\s+coordinate\s+as\s+\[(.*)\]/)
+            if( $stn && $line=~/Calculated\s+ITRF2008\s+coordinate\s+as\s+\[(.*)\]/)
             {
                 my @crds=split(' ',$1);
                 $stn->{xyz}=[$crds[0]+0.0,$crds[1]+0.0,$crds[2]+0.0];
