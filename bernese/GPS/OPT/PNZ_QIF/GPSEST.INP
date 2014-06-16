@@ -2151,7 +2151,7 @@ MSG_STAFILE6 1  "Tropo: file with stations(s) with no troposphere est."
 
 ! Tropo: Mapping Function
 ! -----------------------
-MAPPNG 1  "WET_NIELL"
+MAPPNG 1  "WET_GMF"
   ## widget = combobox; editable = false; activeif = TROPEST = _
   ## cards = WET_VMF DRY_VMF WET_GMF DRY_GMF WET_NIELL DRY_NIELL COSZ HOPFIELD
 

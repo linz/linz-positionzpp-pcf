@@ -35,7 +35,7 @@ use Getopt::Std;
 my %opts;
 getopts('oO:c:s:a:S',\%opts);
 
-my $campaign = $opts{c} || 'PNZPP#';
+my $campaign = uc($opts{c}) || 'PNZPP#';
 my $overwrite = $opts{o};
 my $orbittype = $opts{O} || 'ULTRA+';
 my $extradata=$opts{a};
