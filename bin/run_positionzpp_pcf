@@ -14,12 +14,33 @@ Options can include
 
 =item -c <camp>
 
-Specifies an alternative name for the campaign
+Specifies an alternative name for the campaign. 
 
 =item -o
 
 Allows overwriting an existing campaign (if the new campaign name does not contain a 
 numeric wildcard (#) character.
+
+=item -O <type>
+
+Specifies the orbit quality to use, eg FINAL, RAPID, ULTRA, etc.
+
+=item -R
+
+Create the job(s) but don't run it
+
+=item -s <csvfile>
+
+Specifies a CSV file to which statistics about the job are written.  The statistics will be a
+appended to the job.
+
+=item -a <x=y>
+
+Adds a column x with value y to the CSV file
+
+=item -S
+
+Just compile statistics from existing jobs, don't create or run any new jobs
 
 =back
 
@@ -33,7 +54,7 @@ use JSON;
 use Getopt::Std;
 
 my %opts;
-getopts('oO:c:s:a:S',\%opts);
+getopts('oO:c:Rs:a:S',\%opts);
 
 my $campaign = uc($opts{c}) || 'PNZPP#';
 my $overwrite = $opts{o};
@@ -41,6 +62,7 @@ my $orbittype = $opts{O} || 'ULTRA+';
 my $extradata=$opts{a};
 my $statscsv=$opts{s};
 my $statsonly=$opts{S};
+my $norun=$opts{R};
 
 my $pcf='RUN_PNZ';
 
@@ -97,11 +119,12 @@ Options can include:
   -c ###    Specify an alternative name for the campaign
   -O ####   Specify orbit/ERP quality, one of ULTRA, RAPID, FINAL.
   -o        Allow overwriting an existing campaign directory
+  -R        Create the campaign but don't run the script
   -s fff    Append job statistics to fff.csv and fff_fail.csv
   -a x=y    Add column x with value y to the csv file (column header only
             added if the file does not yet exists)
   -S        Collect statistics from all campaigns matching the name, don't
-            run Bernese.
+            create or run any campaigns
 
 EOS
 
@@ -148,33 +171,33 @@ foreach my $rinexfile (@ARGV)
     {
         print "Cannot find rinex file $rinexfile\n";
     }
-    my $berncamp=RunPcf($campaign,$rinexfile);
+    my $berncamp=RunPcf($campaign,$rinexfile,$norun);
     my $campdir=$ENV{P}.'/'.$berncamp->{JOBID};
     PrintJobStats($campdir,$statscsv,$extradata) if $statscsv;
 }
 
 sub RunPcf
 {
-    my($camdir,$rinexfile)=@_;
+    my($campname,$rinexfile,$norun)=@_;
     eval
     {
         my $codes=LINZ::GNSS::DataCenter::AvailableStations();
         $campaign=LINZ::BERN::BernUtil::CreateCampaign(
-            $campaign,
+            $campname,
             RinexFiles=>[$rinexfile],
             RenameRinex=>'U###',
             RenameCodes=>$codes,
             CrdFile=>'APR$S+0',
             AbbFile=>'ABBREV',
             StaFile=>'STATIONS',
-            AddNoneRadome=>1,
+            FixRinexAntRec=>1,
             MakeSessionFile=>1,
             SettingsFile=>1,
             SetupUserMenu=>1,
             UpdateCampaignList=>1,
             CanOverwrite=>$opts{o},
         );
-        if( $campaign )
+        if( $campaign && ! $norun )
         {
             foreach my $k (sort keys %$campaign )
             {
@@ -194,11 +217,19 @@ sub RunPcf
             if( $status )
             {
                 print "BPE stopped with errors\n";
+                print "PID: ".$campaign->{runstatus}->{fail_pid}."\n";
+                print "Script: ".$campaign->{runstatus}->{fail_script}."\n";
+                print "Program: ".$campaign->{runstatus}->{fail_prog}."\n";
+                print "Message: ".$campaign->{runstatus}->{fail_message}."\n";
             }
             else
             {
                 print "BPE completed successfully\n";
             }
+        }
+        elsif( $campaign )
+        {
+            print "Campaign created in: ".$campaign->{campaigndir}."\n";
         }
     };
     if( $@ )
