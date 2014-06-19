@@ -83,8 +83,8 @@ DESCR_RECEIVR 1  "Receiver information"
 
 ! Phase Center Eccentricities
 ! ---------------------------
-PHASECC 1  "${X}/GEN/PCV_COD.I08"
-  ## widget = selwin; path = PTH_GEN; maxfiles = 1; emptyallowed = true
+PHASECC 1  "PCV_COD.I08"
+  ## widget = selwin; path = DIR_STA; maxfiles = 1; emptyallowed = true
   # PCV_COD.I08
 
 DESCR_PHASECC 1  "Phase center eccentricities"
@@ -647,7 +647,7 @@ SMTFILE_PTH_COL_7 1  "${P}/PNZPP1/OBS/"
 #   Satellite information   > %%%%%%%%%%%% <                                   # SATELL
 #   Satellite problems      > %%%%%%%%%%%% <                                   # SATCRUX
 #   Receiver information    > %%%%%%%%%%%% <                                   # RECEIVR
-#   Phase center offsets    > %%%%%%%%%%%% <                                   # PHASECC
+#   Phase center offsets    > %%%%%%%%%%%% <  Moved to STA                     # PHASECC
 #   GPS-UTC seconds         > %%%%%%%%%%%% <                                   # GPSUTC
 #   Abbreviation table      > %%%%%%%%%%%% <                                   # ABBREV
 #   Frequency information   > %%%%%%%%%%%% <                                   # FRQINFO

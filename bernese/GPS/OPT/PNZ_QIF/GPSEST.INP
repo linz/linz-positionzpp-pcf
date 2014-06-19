@@ -73,7 +73,7 @@ DESCR_DATUM 1  "Geodetic datum"
 ! Phase Center Eccentricities
 ! ---------------------------
 PHASECC 1  "PCV_COD.I08"
-  ## widget = selwin; path = PTH_GEN; maxfiles = 1
+  ## widget = selwin; path = DIR_STA; maxfiles = 1
 
 DESCR_PHASECC 1  "Phase center eccentricities"
 
@@ -4849,7 +4849,7 @@ USESYNCR 1  "0"
 # GENERAL INPUT FILES                                                          #
 #   General constants           > %%%%%%%%%%%% <                               # CONST
 #   Geodetic datum              > %%%%%%%%%%%% <                               # DATUM
-#   Phase center variations     > %%%%%%%%%%%% <                               # PHASECC
+#   Phase center variations     > %%%%%%%%%%%% <  Moved to STA                 # PHASECC
 #   Receiver information        > %%%%%%%%%%%% <                               # RECEIVR
 #   Satellite information       > %%%%%%%%%%%% <                               # SATELL
 #   Satellite problems          > %%%%%%%%%%%% <                               # SATCRUX

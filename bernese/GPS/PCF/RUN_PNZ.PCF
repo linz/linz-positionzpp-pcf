@@ -20,12 +20,14 @@ PID SCRIPT   OPT_DIR  CAMPAIGN CPU      F WAIT FOR....
 030 PRETAB   PNZ_ORB           ANY      1 020
 040 ORBGEN   PNZ_ORB           ANY      1 030
 050 RNX2STA  PNZ_REF           ANY      1 040
-060 RXOBV3   PNZ_REF           ANY      1 050
+055 PNZATX   PNZ_REF           ANY      1 050
+060 RXOBV3   PNZ_REF           ANY      1 055
 070 CODSPP   PNZ_REF           ANY      1 060
 080 GETDATA  PNZ_REF           ANY      1 070
 085 CRDMERGE PNZ_REF           ANY      1 080
 090 RNX2STA  PNZ_REF           ANY      1 085
-100 RXOBV3   PNZ_REF           ANY      1 090
+095 PNZATX   PNZ_REF           ANY      1 090
+100 RXOBV3   PNZ_REF           ANY      1 095
 105 CREATABB PNZ_REF           ANY      1 100
 110 CODSPPAP PNZ_GEN           ANY      1 105
 111 CODSPP_P PNZ_GEN           ANY      1 110

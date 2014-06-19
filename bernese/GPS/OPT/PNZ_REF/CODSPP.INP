@@ -114,8 +114,8 @@ DESCR_NUTMOD 1  "Nutation model"
 
 ! Phase Center Eccentricities
 ! ---------------------------
-PHASECC 1  "${X}/GEN/PCV_COD.I08"
-  ## widget = selwin; path = PTH_GEN; ext = EXT_ANY; maxfiles = 1
+PHASECC 1  "PCV_COD.I08"
+  ## widget = selwin; path = DIR_STA; ext = EXT_ANY; maxfiles = 1
   # PCV_COD.I08
 
 DESCR_PHASECC 1  "Phase center eccentricities"
@@ -679,7 +679,7 @@ MSG_COMMENT 1  "Comment lines"
 #   Satellite problems          > %%%%%%%%%%%% <                               # SATCRUX
 #   Station information         > %%%%%%%%%%%% <                               # STAINFO
 #   Geodetic datum              > %%%%%%%%%%%% <                               # DATUM
-#   Phase center eccentricities > %%%%%%%%%%%% <                               # PHASECC
+#   Phase center eccentricities > %%%%%%%%%%%% <  Moved to STA                 # PHASECC
 #   Frequency information       > %%%%%%%%%%%% <                               # FRQINFO
 #   GPS-UTC file                > %%%%%%%%%%%% <                               # GPSUTC
 #                                                                              #
