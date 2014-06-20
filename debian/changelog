@@ -1,3 +1,14 @@
+linz-positionzpp-pcf (1.5.0-1) precise; urgency=low
+
+  * Fixing mapping function to GMF and forcing campaign to upper case
+  * Removing extraneous backup files
+  * Adding option for fixing receivers/antennae to GETDATA
+  * Bug fixes and adding option for not running PCF
+  * Fixing to include ATX2PCV - moving PCV file to campaign STA directory
+  * Bug fix: can have invalid campaign object
+
+ -- Chris Crook <ccrook@linz.govt.nz>  Fri, 20 Jun 2014 15:57:40 +1200
+
 linz-positionzpp-pcf (1.4.4-1) precise; urgency=low
 
   * Fixing reference stations coordinates
