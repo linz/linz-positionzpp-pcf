@@ -179,6 +179,7 @@ foreach my $rinexfile (@ARGV)
 sub RunPcf
 {
     my($campname,$rinexfile,$norun)=@_;
+    my $campaign;
     eval
     {
         my $codes=LINZ::GNSS::DataCenter::AvailableStations();
