@@ -1,3 +1,9 @@
+linz-positionzpp-pcf (1.5.1-1) precise; urgency=low
+
+  * Changing seu to seuw
+
+ -- Chris Crook <ccrook@linz.govt.nz>  Fri, 27 Jun 2014 10:10:51 +1200
+
 linz-positionzpp-pcf (1.5.0-1) precise; urgency=low
 
   * Fixing mapping function to GMF and forcing campaign to upper case
