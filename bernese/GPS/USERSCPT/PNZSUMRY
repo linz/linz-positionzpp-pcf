@@ -187,7 +187,7 @@ sub GetFinalStats
         while(my $line=<$fsf>)
         {
             $final->{dof}=$1+0 if $line=~/^\s*DEGREE\s+OF\s+FREEDOM\s+\(DOF\)\s*\:\s*(\d+)/;
-            $final->{seu}=$1+0 if $line=~/^\s*CHI\*\*2\/DOF\s*\:\s*(\d+\.\d+)/;
+            $final->{seuw}=$1+0 if $line=~/^\s*CHI\*\*2\/DOF\s*\:\s*(\d+\.\d+)/;
         }
         close($fsf);
     }
