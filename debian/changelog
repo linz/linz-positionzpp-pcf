@@ -1,3 +1,9 @@
+linz-positionzpp-pcf (1.5.2-1) precise; urgency=low
+
+  * Fixing error with multiple reference station RINEX files
+
+ -- Chris Crook <ccrook@linz.govt.nz>  Mon, 07 Jul 2014 15:04:09 +1200
+
 linz-positionzpp-pcf (1.5.1-1) precise; urgency=low
 
   * Changing seu to seuw
