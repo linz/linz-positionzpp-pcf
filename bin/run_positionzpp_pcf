@@ -54,7 +54,7 @@ use JSON;
 use Getopt::Std;
 
 my %opts;
-getopts('oO:c:Rs:a:S',\%opts);
+getopts('oO:c:hs:a:S',\%opts);
 
 my $campaign = uc($opts{c}) || 'PNZPP#';
 my $overwrite = $opts{o};
@@ -62,7 +62,7 @@ my $orbittype = $opts{O} || 'ULTRA+';
 my $extradata=$opts{a};
 my $statscsv=$opts{s};
 my $statsonly=$opts{S};
-my $norun=$opts{R};
+my $norun=$opts{h};
 
 my $pcf='RUN_PNZ';
 
@@ -119,7 +119,7 @@ Options can include:
   -c ###    Specify an alternative name for the campaign
   -O ####   Specify orbit/ERP quality, one of ULTRA, RAPID, FINAL.
   -o        Allow overwriting an existing campaign directory
-  -R        Create the campaign but don't run the script
+  -h        Create the campaign but don't run the script (put on hold)
   -s fff    Append job statistics to fff.csv and fff_fail.csv
   -a x=y    Add column x with value y to the csv file (column header only
             added if the file does not yet exists)
@@ -186,7 +186,7 @@ sub RunPcf
         $campaign=LINZ::BERN::BernUtil::CreateCampaign(
             $campname,
             RinexFiles=>[$rinexfile],
-            RenameRinex=>'U###',
+            RenameRinex=>'',
             RenameCodes=>$codes,
             CrdFile=>'APR$S+0',
             AbbFile=>'ABBREV',

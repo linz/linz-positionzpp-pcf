@@ -107,7 +107,7 @@ RADIO_O 1  "1"
 
 MSG_RADIO_O 1  "Select original RINEX observation files"
 
-RXOFILE 1  "????$S+0"
+RXOFILE 1  "????????"
   ## widget = selwin; path = DIR_RXO; ext = EXT_RXO; maxfiles = 999
 
 RXOFILE_TXT_COL_1 1  "RINEX files"
