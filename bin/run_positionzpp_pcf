@@ -48,6 +48,7 @@ Just compile statistics from existing jobs, don't create or run any new jobs
 
 use strict;
 use LINZ::BERN::BernUtil;
+use LINZ::GNSS;
 use LINZ::GNSS::DataCenter;
 use LINZ::GNSS::Time qw /seconds_datetime/;
 use JSON;
@@ -129,6 +130,7 @@ Options can include:
 EOS
 
 LINZ::BERN::BernUtil::SetBerneseEnv();
+LINZ::GNSS::LoadConfig();
 
 if( $statsonly )
 {
