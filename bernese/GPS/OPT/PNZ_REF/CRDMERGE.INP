@@ -139,7 +139,7 @@ DESCR_SYSERR 1  "Error message"
 ! -------------------------------------------------------------------------
 ! Title line
 ! ----------
-TITLE 1  "Copy apriori coordiantes to ITRF to save ref station coords"
+TITLE 1  "Copy apriori coordinates to ITRF to save ref station coords"
   ## widget = lineedit; check_strlen = 65
 
 MSG_TITLE 1  "Title line"
