@@ -1,3 +1,12 @@
+linz-positionzpp-pcf (1.6.0-1) precise; urgency=low
+
+  * Fixing up RINEX import
+  * Getting extra ERP info to ensure sufficient for ORBGEN
+  * Fix to correctly rename reference stations
+  * Spelling mistake
+
+ -- Chris Crook <ccrook@linz.govt.nz>  Thu, 10 Jul 2014 06:52:11 +1200
+
 linz-positionzpp-pcf (1.5.2-1) precise; urgency=low
 
   * Fixing error with multiple reference station RINEX files
