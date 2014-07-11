@@ -18,7 +18,7 @@ PID SCRIPT   OPT_DIR  CAMPAIGN CPU      F WAIT FOR....
 010 GETDATA  PNZ_ORB           ANY      1 001
 020 POLUPD   PNZ_ORB           ANY      1 010
 030 PRETAB   PNZ_ORB           ANY      1 020
-040 ORBGEN   PNZ_ORB           ANY      1 030
+040 PNZORB   PNZ_ORB           ANY      1 030
 050 RNX2STA  PNZ_REF           ANY      1 040
 055 PNZATX   PNZ_REF           ANY      1 050
 060 RXOBV3   PNZ_REF           ANY      1 055
@@ -77,7 +77,6 @@ V_I      ION ESTIMATION                           ION
 V_USRMRK User station code                        U001
 V_SAMPL  Sampling rate of solutions               30
 V_ORBTYP Select the orbit quality required        FINAL
-V_ERPTYP Select the ERP quality required          FINAL
 V_GDDNLD GETDATA download now                     1
 V_GDQUEU GETDATA queue data request               0
 #

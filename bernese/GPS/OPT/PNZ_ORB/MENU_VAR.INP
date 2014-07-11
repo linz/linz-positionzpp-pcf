@@ -50,7 +50,6 @@ MSG_VAR_PLUS 1  "Plus range"
 ! ----------------------
 USERVAR 2
   "ORBTYP" "FINAL"
-  "ERPTYP" "FINAL"
   ## widget = uniline; numlines = 20; keepvariables = true
 
 MSG_USERVAR 1  "User-defined variables"

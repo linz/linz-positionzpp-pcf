@@ -1,0 +1,74 @@
+package ORBGEN;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  PNZORB
+#
+# Purpose :  Execute ORBGEN shifting the session beginning back to a multiple
+#            of the integration interval.  This ensures that ORBGEN does not 
+#            end up requesting data from the day after the current session, as
+#            this data may not have been retrieved or tabulated...
+#
+# PARAMs  :
+#
+# Author  :  M. Meindl
+# Created :  20-Oct-2003
+#
+# Changes :  11-Aug-2011 RD: Updated for version 5.2
+#
+# ============================================================================
+use strict;
+use lib $ENV{BPE};
+use LINZ::GNSS::Time qw/seconds_datetime/;
+use LINZ::BERN::SessionFile;
+use bpe_util qw/prtMess/;
+
+sub run {
+  my $bpe = shift;
+
+  my ($dirses,$ssss,$yyyy) = $bpe->getKeys('DIR_SES','$S+0','$Y+0');
+
+  # Get the integration interval for the 
+  my $lenint=$bpe->getKey("$$bpe{U}/PAN/ORBGEN.INP","LENINTER");
+  my($inth,$intm,$ints)=split(' ',$lenint);
+  my $intsec=$ints+$intm*60+$inth*3600;
+
+  # Get the session table and retrieve the start and end of the session
+  my $sesstable=$dirses.'/'.$$bpe{SESSION_TABLE};
+  my $sf=new LINZ::BERN::SessionFile($sesstable);
+  my ($start,$end)=$sf->sessionStartEnd($ssss,$yyyy);
+  
+  # Convert to 'YYYY MM DD HH MM SS'
+  $start=seconds_datetime($start);
+  $end=seconds_datetime($end);
+  $start =~ s/\D/ /g;
+  $end =~ s/\D/ /g;
+   
+  my $stadat=substr($start,0,10);
+  my $statim=substr($start,11,8);
+  my $enddat=substr($end,0,10);
+  my $endtim=substr($end,11,8);
+
+  my ($stah,$stam,$stas)=split(' ',$statim);
+  my $stasec=$stas+$stam*60+$stah*3600;
+  $stasec=$intsec*int($stasec/$intsec);
+  $stah=int($stasec/3600);
+  $stasec -= $stah*3600;
+  $stam=int($stasec/60);
+  $stas=$stasec-$stam*60;
+  $statim=sprintf("%02d %02d %02d",$stah,$stam,$stas);
+
+  prtMess($bpe,"Setting orbit time span to $stadat $statim - $enddat $endtim");
+
+  $bpe->putKey("$$bpe{U}/PAN/ORBGEN.INP","STADAT",$stadat);
+  $bpe->putKey("$$bpe{U}/PAN/ORBGEN.INP","STATIM",$statim);
+
+  $bpe->putKey("$$bpe{U}/PAN/ORBGEN.INP","ENDDAT",$enddat);
+  $bpe->putKey("$$bpe{U}/PAN/ORBGEN.INP","ENDTIM",$endtim);
+
+# Run program
+# -----------
+  my $PGMNAM = "ORBGEN";
+  $bpe->RUN_PGMS($PGMNAM);
+
+}

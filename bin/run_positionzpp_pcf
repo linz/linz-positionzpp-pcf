@@ -212,7 +212,6 @@ sub RunPcf
             my $vars=$campaign->{variables};
             $vars->{V_USRMRK}=$campaign->{marks}->[0];
             $vars->{V_ORBTYP}=$orbittype;
-            $vars->{V_ERPTYP}=$orbittype;
             $vars->{V_GDDNLD}='1';
             $vars->{V_GDQUEU}='0';
 

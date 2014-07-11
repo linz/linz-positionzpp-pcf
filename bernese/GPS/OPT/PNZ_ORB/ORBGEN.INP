@@ -530,13 +530,13 @@ ARCINT 0
 
 MSG_ARCINT 1  "LENGTH OF TIME INTERVAL"
 
-RADIO_1 1  "1"
+RADIO_1 1  "0"
   ## widget = radiobutton; group = DUMMY
   ## radiokeys = SESSION_YEAR SESSION_STRG
 
 MSG_RADIO_1 1  "Obs. window defined by year and session identifier"
 
-RADIO_2 1  "0"
+RADIO_2 1  "1"
   ## widget = radiobutton; group = DUMMY
 
 MSG_RADIO_2 1  "Obs. window defined by start and end times"
