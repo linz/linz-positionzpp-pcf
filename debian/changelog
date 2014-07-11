@@ -1,3 +1,9 @@
+linz-positionzpp-pcf (1.6.1-1) precise; urgency=low
+
+  * Fixing handling of orbit integration time span
+
+ -- Chris Crook <ccrook@linz.govt.nz>  Fri, 11 Jul 2014 13:40:16 +1200
+
 linz-positionzpp-pcf (1.6.0-1) precise; urgency=low
 
   * Fixing up RINEX import
