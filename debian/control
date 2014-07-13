@@ -12,6 +12,7 @@ Depends: ${misc:Depends},
     linz-bernese52,
     linz-bernese52-util,
     linz-bernese52-spm,
+    libjson-perl,
     liblinz-gnss-perl,
     liblinz-bern-perl
 Description: LINZ PositioNZ-PP Bernese PCF
