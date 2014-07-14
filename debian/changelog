@@ -1,3 +1,11 @@
+linz-positionzpp-pcf (1.6.2-1) precise; urgency=low
+
+  * Adding missing dependency
+  * Fixing column names and stats outputs
+  * Removing outlier detection from input data to better handle poor approx coords
+
+ -- Chris Crook <ccrook@linz.govt.nz>  Tue, 15 Jul 2014 11:51:45 +1200
+
 linz-positionzpp-pcf (1.6.1-1) precise; urgency=low
 
   * Fixing handling of orbit integration time span
