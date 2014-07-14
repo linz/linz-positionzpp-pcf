@@ -557,7 +557,7 @@ MSG_ITRMAX 1  "Max. number of iterations"
 
 ! Outlier Detection
 ! -----------------
-OUTDET 1  "1"
+OUTDET 1  "0"
   ## widget = checkbox
 
 MSG_OUTDET 1  "Outlier detection"
