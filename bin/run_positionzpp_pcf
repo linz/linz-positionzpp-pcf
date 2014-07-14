@@ -70,7 +70,7 @@ my $pcf='RUN_PNZ';
 my @stats_columns=qw/
    id
    markname
-   origmarkname
+   orig_markname
    filename
    orig_filename
    sessionstart
@@ -89,14 +89,14 @@ my @stats_columns=qw/
    refmaxdn
    refmaxdu
    orbittype
-   seu
+   seuw
    baseline_wkt
    /;
 
 my @fail_columns=qw/
    id
    markname
-   origmarkname
+   orig_markname
    filename
    orig_filename
    sessionstart
@@ -261,7 +261,8 @@ sub PrintJobStats
         my $f0=$settings->{files}->[0];
         my $markname=$f0->{markname};
         $stats->{markname}=$markname;
-        $stats->{origmarkname}=$f0->{origmarkname};
+        $stats->{orig_markname}=$f0->{orig_markname};
+        $stats->{filename}=$f0->{filename};
         $stats->{orig_filename}=$f0->{orig_filename};
         $stats->{sessionstart}=seconds_datetime($settings->{session_start});
         $stats->{duration}=int($settings->{session_end}-$settings->{session_start});
@@ -272,7 +273,7 @@ sub PrintJobStats
             my $rsltdata=join('',<$rf>);
             close($rf);
             my $results=JSON->new->decode($rsltdata);
-            $stats->{orbit_type}=$results->{orbittype};
+            $stats->{orbittype}=$results->{orbittype};
             my $calc=$results->{calc_coords}->{$markname};
             $stats->{lon}=sprintf("%.9f",$calc->{nzgd2kllh}->[0]);
             $stats->{lat}=sprintf("%.9f",$calc->{nzgd2kllh}->[1]);
@@ -285,7 +286,7 @@ sub PrintJobStats
             $stats->{refmaxde}=sprintf("%.1f",$rsr->[0]);
             $stats->{refmaxdn}=sprintf("%.1f",$rsr->[1]);
             $stats->{refmaxdu}=sprintf("%.1f",$rsr->[2]);
-            $stats->{seu}=$results->{final}->{seu};
+            $stats->{seuw}=$results->{final}->{seuw};
             $stats->{baseline_wkt}=$results->{baseline_wkt};
             my $rfs=$results->{refstn_summary};
             $stats->{refcount}=$rfs->{count};
