@@ -27,12 +27,6 @@ sub run {
 
   my ($dirGen) = $bpe->getKeys( 'PTH_GEN' );
 
-  print "U=".$ENV{U}."\n";
-  
-  use File::Find;
-
-  find( sub {print $File::Find::name,"\n"}, $ENV{U} );
-
   $bpe->inpOutMenu("","$ENV{U}/PAN/ATX2PCV.INP","$ENV{U}/INP/ATX2PCV.INP","ATX2PCV");
 
   my $atx = $bpe->getKey("$ENV{U}/INP/ATX2PCV.INP","PHASEXT");
