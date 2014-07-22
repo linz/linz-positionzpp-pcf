@@ -29,6 +29,10 @@ Specifies the orbit quality to use, eg FINAL, RAPID, ULTRA, etc.
 
 Create the job(s) but don't run it
 
+=item -p <pcf>
+
+Use an alternative Bernese PCF (process control file) for the run.  The default is RUN_PNZ.
+
 =item -s <csvfile>
 
 Specifies a CSV file to which statistics about the job are written.  The statistics will be a
@@ -55,7 +59,7 @@ use JSON;
 use Getopt::Std;
 
 my %opts;
-getopts('oO:c:hs:a:S',\%opts);
+getopts('oO:c:hs:a:p:S',\%opts);
 
 my $campaign = uc($opts{c}) || 'PNZPP#';
 my $overwrite = $opts{o};
@@ -64,8 +68,7 @@ my $extradata=$opts{a};
 my $statscsv=$opts{s};
 my $statsonly=$opts{S};
 my $norun=$opts{h};
-
-my $pcf='RUN_PNZ';
+my $pcf= $opts{p} || 'RUN_PNZ';
 
 my @stats_columns=qw/
    id
@@ -121,6 +124,7 @@ Options can include:
   -O ####   Specify orbit/ERP quality, one of ULTRA, RAPID, FINAL.
   -o        Allow overwriting an existing campaign directory
   -h        Create the campaign but don't run the script (put on hold)
+  -p ###    Specify an alternative Bernese PCF to use
   -s fff    Append job statistics to fff.csv and fff_fail.csv
   -a x=y    Add column x with value y to the csv file (column header only
             added if the file does not yet exists)
