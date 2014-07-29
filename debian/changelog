@@ -1,3 +1,9 @@
+linz-positionzpp-pcf (1.8.0-1) precise; urgency=low
+
+  * Adding -j (junk) option, changing -h to -w
+
+ -- Chris Crook <ccrook@linz.govt.nz>  Wed, 30 Jul 2014 08:49:09 +1200
+
 linz-positionzpp-pcf (1.7.0-1) precise; urgency=low
 
   * Allow alternative PCF for running
