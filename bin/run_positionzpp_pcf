@@ -25,9 +25,13 @@ numeric wildcard (#) character.
 
 Specifies the orbit quality to use, eg FINAL, RAPID, ULTRA, etc.
 
-=item -R
+=item -w
 
 Create the job(s) but don't run it
+
+=item -j
+
+Delete the campaign after it has run
 
 =item -p <pcf>
 
@@ -55,11 +59,12 @@ use LINZ::BERN::BernUtil;
 use LINZ::GNSS;
 use LINZ::GNSS::DataCenter;
 use LINZ::GNSS::Time qw /seconds_datetime/;
+use File::Path qw/remove_tree/;
 use JSON;
 use Getopt::Std;
 
 my %opts;
-getopts('oO:c:hs:a:p:S',\%opts);
+getopts('oO:c:wjs:a:p:S',\%opts);
 
 my $campaign = uc($opts{c}) || 'PNZPP#';
 my $overwrite = $opts{o};
@@ -67,7 +72,8 @@ my $orbittype = $opts{O} || 'ULTRA+';
 my $extradata=$opts{a};
 my $statscsv=$opts{s};
 my $statsonly=$opts{S};
-my $norun=$opts{h};
+my $norun=$opts{w};
+my $junkdir=$opts{j};
 my $pcf= $opts{p} || 'RUN_PNZ';
 
 my @stats_columns=qw/
@@ -123,7 +129,8 @@ Options can include:
   -c ###    Specify an alternative name for the campaign
   -O ####   Specify orbit/ERP quality, one of ULTRA, RAPID, FINAL.
   -o        Allow overwriting an existing campaign directory
-  -h        Create the campaign but don't run the script (put on hold)
+  -w        Create the campaign but don't run the script (wait)
+  -j        Delete the campaign after it has run
   -p ###    Specify an alternative Bernese PCF to use
   -s fff    Append job statistics to fff.csv and fff_fail.csv
   -a x=y    Add column x with value y to the csv file (column header only
@@ -176,10 +183,12 @@ foreach my $rinexfile (@ARGV)
     if( ! -e $rinexfile )
     {
         print "Cannot find rinex file $rinexfile\n";
+        next;
     }
     my $berncamp=RunPcf($campaign,$rinexfile,$norun);
     my $campdir=$ENV{P}.'/'.$berncamp->{JOBID};
     PrintJobStats($campdir,$statscsv,$extradata) if $statscsv;
+    remove_tree($campdir) if $junkdir;
 }
 
 sub RunPcf
