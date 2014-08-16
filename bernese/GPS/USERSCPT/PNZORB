@@ -39,24 +39,35 @@ sub run {
   my ($start,$end)=$sf->sessionStartEnd($ssss,$yyyy);
   
   # Convert to 'YYYY MM DD HH MM SS'
-  $start=seconds_datetime($start);
-  $end=seconds_datetime($end);
-  $start =~ s/\D/ /g;
-  $end =~ s/\D/ /g;
-   
-  my $stadat=substr($start,0,10);
-  my $statim=substr($start,11,8);
-  my $enddat=substr($end,0,10);
-  my $endtim=substr($end,11,8);
+  my $starts=seconds_datetime($start);
+  $starts =~ s/\D/ /g;
+  my $statim0=substr($starts,11,8);
 
-  my ($stah,$stam,$stas)=split(' ',$statim);
-  my $stasec=$stas+$stam*60+$stah*3600;
-  $stasec=$intsec*int($stasec/$intsec);
-  $stah=int($stasec/3600);
-  $stasec -= $stah*3600;
-  $stam=int($stasec/60);
-  $stas=$stasec-$stam*60;
-  $statim=sprintf("%02d %02d %02d",$stah,$stam,$stas);
+  my ($stah,$stam,$stas)=split(' ',$statim0);
+  my $stasec0=$stas+$stam*60+$stah*3600;
+  my $stasec=$intsec*int($stasec0/$intsec);
+  $start += ($stasec-$stasec0);
+
+  # Issue with orbgen generating error
+  # 
+  # NO TWO SATELLITE POSITIONS FOUND < 3 HOURS APART
+  #
+  # This seems to occur if the session is less than 15 mins (with the current settings).
+  # So force end time to be at least 15 mins after start.  Not sure what factors could
+  # change this value.
+ 
+  my $endmin=$start+15*60;
+  $end=$endmin if $end < $endmin;
+
+  $starts=seconds_datetime($start);
+  $starts =~ s/\D/ /g;
+  my $stadat=substr($starts,0,10);
+  my $statim=substr($starts,11,8);
+
+  my $ends=seconds_datetime($end);
+  $ends =~ s/\D/ /g;
+  my $enddat=substr($ends,0,10);
+  my $endtim=substr($ends,11,8);
 
   prtMess($bpe,"Setting orbit time span to $stadat $statim - $enddat $endtim");
 
