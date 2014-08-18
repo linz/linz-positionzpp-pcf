@@ -1,0 +1,277 @@
+#!/usr/bin/perl
+#==============================================================================
+#
+# PROGRAM:             test_pnz: Tests positionz pcf on a set of rinex files 
+#                      downloaded from geonet.
+#
+# VERSION:             1.0 
+#
+#
+# DESCRIPTION:         Downloads compressed RINEX files from GeoNet FTP site using       
+#                      specified year, Julian day and geodetic code of CORS station.  
+#                      Files are capitalised on download ready for use in Bernese.
+#
+#
+#
+# PARAMETERS:          
+#                      -p          specifies all PositioNZ stations
+#
+#                      -g          specifies all Geonet stations
+#                         
+#                      year        format yyyy
+#
+#                      day         format doy
+#
+#                      station(s)  geodetic code (do not enter code if -p or -g switch
+#                                  is applied).
+#                                  
+# EXAMPLE        for all PositioNZ stations:  getrinex -p 2014 001
+#
+#                for selected stations:       getrinex 2014 001 AUCK MAST
+#
+#
+# DEPENDENCIES:
+#
+# MODIFICATION HISTORY
+#
+# NAME                 DATE        DESCRIPTION
+#====================  ==========  ============================================
+# Paula Gentle         08/01/2014  Created
+#==============================================================================
+#First be in the correct directory, such as opt/bern52/DATAPOOL/RINEX.  
+#Then in Terminal, type eg: getrinex 2013 364 AUCK
+#This will get just PositioNZ station AUCK, day 30 Dec, 2013.
+
+use strict;
+use warnings;
+use Time::Local;
+use Net::FTP;
+use Getopt::Std;
+
+
+if( ! @ARGV )
+{
+    print <<EOD;
+
+test_pnz: Test PositioNZ-PP PCF using downloaded GNS RINEX data
+
+Syntax: test_pnz [options] code year day sess_len ntests
+
+    code     The Geonet station code to use for testing
+    year     The year for the first test session
+    day      The day of year of the first session
+    sess_len The length session (##:## hours, minutes)
+    ntests   The number of tests to run
+
+Options can include
+
+    -o orbit The orbit type to use (eg ULTRA, RAPID, FINAL)
+    -p pcf   Alternative PCF to run
+    -r rcode Base name for generated rinex file (default is station code)
+    -s csv   Base name of csv file (default is test_pnz)
+    -c camp  Campaign name (Can include #)
+    -x #     Number of sessions to skip (to repeat selected sessions)
+    -v       Set to verbose mode
+
+EOD
+
+    exit();
+}
+
+my %opts;
+getopts('o:p:r:s:c:x:v',\%opts);
+
+die "Incorrect number of parameters\n" if scalar(@ARGV) != 5;
+
+my($code,$year,$doy,$sess_len,$ntests)=@ARGV;
+
+my $orb = uc($opts{o} // '') || 'FINAL';
+my $pcf = uc($opts{p} // '') || 'RUN_PNZ';
+my $camp = uc($opts{c} // '') || 'TEST_PNZ';
+my $nskip = ($opts{x} // '') || 0;
+
+my $csv = $opts{s} || 'test_pnz';
+my $rnxbase = uc($opts{r} // '') || uc($code);
+my $verbose = $opts{v};
+
+$code =~ /^\w{4}$/ || die "Invalid code $code - must be four letters\n";
+$code = uc($code);
+$year =~ /^(?:19|20)(\d\d)$/ || die "Invalid year $year\n";
+my $yy = $1;
+($doy =~ /^\d{3}$/ && $doy <= 366) || die "Invalid doy $doy\n";
+$sess_len =~ /^(\d\d?)(?:\:(\d\d))?$/ || die "Invalid session length $sess_len\n";
+my $sess_secs = 60*($1*60 + ($2 // 0));
+$ntests =~ /^\d\d?\d?$/ || die "Invalid number of tests $ntests\n";
+$nskip =~ /^\d\d?\d?$/ || die "Invalid number of tests to skip $nskip\n";
+$orb =~ /^(ULTRA|RAPID|FINAL)$/ || die "Invalid orbit $orb, must be ULTRA, RAPID, or FINAL\n";
+$pcf =~ /^\w{3,8}$/ || die "Invalid pcf name, must be 3-8 characters\n";
+$camp =~ /^[\w\#]{1,8}$/ || die "Invalid campaign name, must be 1-8 characters\n";
+$rnxbase =~ /^\w{1,8}$/ || die "Invalid rinex base code $rnxbase\n";
+
+if( $verbose )
+{
+    print "Code: $code\n";
+    print "Year: $year\n";
+    print "DOY:  $doy\n";
+    print "Sess_length: $sess_len\n";
+    print "no of tests: $ntests\n";
+    print "skipping first: $nskip\n" if $nskip;
+    print "orbit: $orb\n";
+    print "pcf name: $pcf\n";
+    print "campaign name: $camp\n";
+    print "rinex base: $rnxbase\n";
+}
+
+# Calculate timestamp for start of session (1 Jan + doy*secs_per_day)
+
+my $sess0_start=timegm(0,0,0,1,0,$year-1900)+($doy-1)*(60*60*24);
+
+foreach my $testno (1 .. $ntests)
+{
+    next if $nskip && $nskip--;
+    print "="x60,"\n";
+    # Beginning and end of test session in seconds
+    my $teststart=$sess0_start + ($testno-1)*$sess_secs;
+    my $testend=$teststart+$sess_secs-1;
+    my ($year,$mon,$day,$hour,$min,$sec,$doy)=(gmtime($teststart))[5,4,3,2,1,0,7];
+    my ($yend,$dend)=(gmtime($testend))[5,7];
+    if( $year != $yend )
+    {
+        print "Skipping session $testno - start and end years differ\n";
+        next;
+    }
+    $year += 1900;
+    $mon++;
+    $doy++;
+    $dend++;
+    my @rnx=getFiles($code,$year,$doy,$dend,$verbose);
+
+    # Construct teqc command to extract requires session.
+    # Start time
+    # Number of minutes
+    # Output file name
+    my $tstart=sprintf("%04d-%02d-%02d-%02d:%02d:%02d",$year,$mon,$day,$hour,$min,$sec);
+    my $tlen=$sess_secs/60-0.1;
+    my $tsuffix=$rnx[0];
+    $tsuffix=~ s/.*\.//;
+    my $tname=sprintf("%s_%03d.%s",$code,$testno,$tsuffix);
+    system('teqc','+st',$tstart,'-dm',$tlen,'+out',$tname,@rnx);
+    print "Session $testno RINEX file: $tname\n";
+    system('run_positionzpp_pcf','-c',$camp,'-o','-O',$orb,'-p',$pcf,'-s',$csv,$tname);
+}
+
+sub getFiles
+{
+    my($code,$year,$dstart,$dend,$verbose) = @_;
+   
+    my $y2=substr($year,2,2);
+
+    # Build array names of required rinex files
+    my @rnxfiles=map { sprintf("%s%03d0.%02dO",$code,$_,$y2) } ($dstart .. $dend);
+    
+    # Select out missing files
+    my @missing= grep { ! -e $_ } @rnxfiles;
+
+    return @rnxfiles if ! @missing;
+
+    # Try to get missing files!
+
+    my $ftp = Net::FTP->new("ftp.geonet.org.nz", Debug => 0)
+    or die "Cannot connect to ftp.geonet.org.nz: $@";
+
+    $ftp->login("anonymous",'positionz@linz.govt.nz')
+    or die "Cannot login ", $ftp->message;
+
+    $ftp->binary();
+    $ftp->cwd("gps/rinex/$year")                          
+    or die "Cannot change working directory ", $ftp->message;
+
+    my @gnsfiles=();
+    foreach my $f (@missing)
+    {         
+        my $gnsfile = lc($f);
+        $gnsfile =~ s/o$/d.Z/;
+        my $doyd=substr($gnsfile,4,3);
+        
+        # Change directory to day of year
+        $ftp->cwd($doyd);
+        if( $ftp->get($gnsfile) )
+        {               
+            push(@gnsfiles,$gnsfile);
+            print "$f downloaded\n" if $verbose;
+        }
+        else 
+        {
+            die "Get $gnsfile failed: ", $ftp->message;
+        }
+        $ftp->cwd('..');
+    }
+    $ftp->quit or die "Error closing ftp connection: ", $ftp->message;
+
+    foreach my $gnsfile (@gnsfiles)
+    {
+        system('compress','-d',$gnsfile);
+        $gnsfile =~ s/\.Z$//;
+        die "Uncompressing $gnsfile failed\n" if ! -e $gnsfile;
+        system('crx2rnx',$gnsfile);
+        unlink($gnsfile);
+        $gnsfile =~ s/d$/o/;
+        die "crx2rnx $gnsfile failed\n" if ! -e $gnsfile;
+        rename($gnsfile,uc($gnsfile));
+    }
+
+    foreach my $rnxfile (@missing)
+    {
+        die "Failed to retrieve $rnxfile\n" if ! -e $rnxfile;
+    }
+
+    return @rnxfiles;
+}
+
+__END__
+}
+
+print "\nThe End\n";
+
+__END__
+
+
+RESEARCH NOTES/COMMANDS THAT COULD COME IN HANDY: 
+
+Option 1 for NK research - looks like the preferred option....
+For each station, go to site, download it. If successful, print X downloaded. Move on to the next station download.
+If download unsucessful, print X get failed and move on to the next station download. Carry on.
+(Currently the download script stops as soon as it encounters a station it can't download).
+
+Option 2 for NK research:
+Check if file exists on FTP site, if it does, download it.  Print X downloaded. Move on to next station download.
+If file doesn't exist, print X get failed. Move on to next station in the list and see if it exists. Carry on.
+
+
+
+foreach my $f (@station) {
+if ($ftp->exists($f)) {
+print "$f exists\n";
+$ftp->get($f,uc($f));
+print "$f downloaded\n";
+next;
+}
+else {
+print "get failed ", $ftp->message;
+}
+next;
+}
+
+The below commands could be useful later...
+if
+print "$f downloaded\n";
+then move on to the next one... 
+If download is unsuccessful...            
+else print "get failed ", $ftp->message;
+next;
+}
+
+This is for a slightly modified Net::FTP module:
+following lines are copied and pasted from website, unsure if they're useful commands...
+@file = $ez->grep(Grep => qr/[A-M]*[.]txt/);
+$ez->exists(RemoteFile => 'needed-file.txt');
