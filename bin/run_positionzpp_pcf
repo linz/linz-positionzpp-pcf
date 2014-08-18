@@ -217,7 +217,9 @@ sub RunPcf
         {
             foreach my $k (sort keys %$campaign )
             {
-                print "$k: $campaign->{$k}\n" if ! ref $campaign->{$k};
+                my $value=$campaign->{$k};
+                $value=seconds_datetime($value) if $k =~ /^session_(start|end)$/;
+                print "$k: $value\n" if ! ref $campaign->{$k};
             }
 
             # Some variables required by the RUN_PNZ PCF script
