@@ -36,7 +36,7 @@ $sess_len =~ /^(\d\d?)(?:\:(\d\d))?(\+\d\d?(\:\d\d)?)*$/ || die "Invalid session
 $ntests =~ /^\d\d?\d?$/ || die "Invalid number of tests $ntests\n";
 $nskip =~ /^\d\d?\d?$/ || die "Invalid number of tests to skip $nskip\n";
 $orb =~ /^(ULTRA|RAPID|FINAL)(\+(ULTRA|RAPID|FINAL))*$/ || die "Invalid orbit $orb, must be ULTRA, RAPID, or FINAL\n";
-$pcf =~ /^\w{3,8}(\+w{3,8})*$/ || die "Invalid pcf name, must be 3-8 characters\n";
+$pcf =~ /^\w{3,8}(\+\w{3,8})*$/ || die "Invalid pcf name, must be 3-8 characters\n";
 $camp =~ /^[\w\#]{1,8}$/ || die "Invalid campaign name, must be 1-8 characters\n";
 $offsets =~ /^(\d?\d)(?:\:(\d\d))$/ || die "Invalid time offset $offsets\n";
 my $offset_secs=($1*60+$2)*60;
@@ -131,7 +131,7 @@ foreach my $fileprm (@fileprms)
         my $tlen=$sess_secs/60-0.1;
         my $tsuffix=$rnx[0];
         $tsuffix=~ s/.*\.//;
-        my $tname=sprintf("%s_%03d.%s",$code,$testno,$tsuffix);
+        my $tname=$rnxdir.'/'.sprintf("%s_%03d.%s",$code,$testno,$tsuffix);
         system('teqc','+st',$tstart,'-dm',$tlen,'+out',$tname,@rnx);
         print "Session $testno RINEX file: $tname\n";
         foreach my $procprm (@procprms)
