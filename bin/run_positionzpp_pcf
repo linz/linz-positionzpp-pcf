@@ -1,59 +1,4 @@
 #!/usr/bin/perl
-
-=head1 run_positionz_pcf
-
-Script to run the PositioNZ-PP PCF on a selected RINEX file.  The script will create
-a Bernese campaign PNZPP# where # is the next number in a sequence, then run the 
-PositioNZ PCF with that campaign.
-
-Usage:  run_positionz_pcf [options] <rinex_file_name>
-
-Options can include
-
-=over
-
-=item -c <camp>
-
-Specifies an alternative name for the campaign. 
-
-=item -o
-
-Allows overwriting an existing campaign (if the new campaign name does not contain a 
-numeric wildcard (#) character.
-
-=item -O <type>
-
-Specifies the orbit quality to use, eg FINAL, RAPID, ULTRA, etc.
-
-=item -w
-
-Create the job(s) but don't run it
-
-=item -j
-
-Delete the campaign after it has run
-
-=item -p <pcf>
-
-Use an alternative Bernese PCF (process control file) for the run.  The default is RUN_PNZ.
-
-=item -s <csvfile>
-
-Specifies a CSV file to which statistics about the job are written.  The statistics will be a
-appended to the job.
-
-=item -a <x=y>
-
-Adds a column x with value y to the CSV file
-
-=item -S
-
-Just compile statistics from existing jobs, don't create or run any new jobs
-
-=back
-
-=cut
-
 use strict;
 use LINZ::BERN::BernUtil;
 use LINZ::GNSS;
@@ -64,7 +9,7 @@ use JSON;
 use Getopt::Std;
 
 my %opts;
-getopts('oO:c:wjs:a:p:S',\%opts);
+getopts('hoO:c:wjs:a:p:S',\%opts);
 
 my $campaign = uc($opts{c}) || 'PNZPP#';
 my $overwrite = $opts{o};
@@ -76,7 +21,7 @@ my $norun=$opts{w};
 my $junkdir=$opts{j};
 my $pcf= $opts{p} || 'RUN_PNZ';
 
-my @stats_columns=qw/
+my @common_columns=qw/
    id
    markname
    orig_markname
@@ -84,6 +29,9 @@ my @stats_columns=qw/
    orig_filename
    sessionstart
    duration
+   /;
+
+my @stats_columns=qw/
    lon
    lat
    ehgt
@@ -103,13 +51,6 @@ my @stats_columns=qw/
    /;
 
 my @fail_columns=qw/
-   id
-   markname
-   orig_markname
-   filename
-   orig_filename
-   sessionstart
-   duration
    status
    fail_pid
    fail_script
@@ -117,28 +58,7 @@ my @fail_columns=qw/
    fail_message
    /;
 
-@ARGV || $statsonly || die <<EOS;
-
-Syntax: run_positionz_pcf [options] rinex_file
-
-Runs the PositioNZ-PP PCF on a specified RINEX file.  Creates a new user campaign
-called PNZPP###, installs the rinex file, and runs the PCF.
-
-Options can include:
- 
-  -c ###    Specify an alternative name for the campaign
-  -O ####   Specify orbit/ERP quality, one of ULTRA, RAPID, FINAL.
-  -o        Allow overwriting an existing campaign directory
-  -w        Create the campaign but don't run the script (wait)
-  -j        Delete the campaign after it has run
-  -p ###    Specify an alternative Bernese PCF to use
-  -s fff    Append job statistics to fff.csv and fff_fail.csv
-  -a x=y    Add column x with value y to the csv file (column header only
-            added if the file does not yet exists)
-  -S        Collect statistics from all campaigns matching the name, don't
-            create or run any campaigns
-
-EOS
+@ARGV || $statsonly || help(!$opts{h});
 
 LINZ::BERN::BernUtil::SetBerneseEnv();
 LINZ::GNSS::LoadConfig();
@@ -309,13 +229,14 @@ sub PrintJobStats
             $stats->{refmaxoffset}=$rfs->{maxoffset};
             $stats->{refcodes}=$rfs->{marknames};
         }
-        my @csvcols=@stats_columns;
+        my @csvcols=@common_columns;
         foreach my $col (split(/\:/,$extracols))
         {
             my($name,$value)=split(/\=/,$col,2);
-            splice(@csvcols,-1,0,$name);
+            push(@csvcols,$name);
             $stats->{$name}=$value;
         }
+        push(@csvcols,@stats_columns);
         my $csvfn=$csvfile.'.csv';
         my $newfile= ! -e $csvfn;
         open(my $csvf,">>$csvfn") || die "Cannot open CSV file $csvfn\n";
@@ -333,7 +254,14 @@ sub PrintJobStats
     if( $runstatus->{status} ne 'OK' )
     {
         $stats->{$_}=$runstatus->{$_} foreach keys %$runstatus;
-        my @csvcols=@fail_columns;
+        my @csvcols=@common_columns;
+        foreach my $col (split(/\:/,$extracols))
+        {
+            my($name,$value)=split(/\=/,$col,2);
+            push(@csvcols,$name);
+            $stats->{$name}=$value;
+        }
+        push(@csvcols,@fail_columns);
         eval {
             my $csvfn=$csvfile.'_fail.csv';
             my $newfile= ! -e $csvfn;
@@ -351,3 +279,82 @@ sub PrintJobStats
         }
     }
 }
+
+sub help
+{
+    my ($brief)=@_;
+    require Pod::Usage;
+    Pod::Usage::pod2usage(
+    {
+        -verbose=>$brief ? 99 : 2,
+        -sections=>'Synopsis',
+        -exitval=>2,
+    });
+}
+
+__DATA__
+
+=head1 Name
+
+run_positionz_pcf - Script to run the PositioNZ-PP Bernese PCF file
+
+=head1 Synopsis
+
+ run_positionz_pcf [options] <rinex_file_name>
+ run_positionz_pcf -h
+
+=head1 Description
+
+Script to run the PositioNZ-PP PCF on selected RINEX files.  The script will create
+a Bernese campaign PNZPP# where # is the next number in a sequence, then run the 
+PositioNZ PCF with that campaign.
+
+=head1 Options
+
+Options can include
+
+=over
+
+=item -c <camp>
+
+Specifies an alternative name for the campaign. 
+
+=item -o
+
+Allows overwriting an existing campaign (if the new campaign name does not contain a 
+numeric wildcard (#) character.
+
+=item -O <type>
+
+Specifies the orbit quality to use, eg FINAL, RAPID, ULTRA, etc.
+
+=item -w
+
+Create the job(s) but don't run it
+
+=item -j
+
+Delete the campaign after it has run
+
+=item -p <pcf>
+
+Use an alternative Bernese PCF (process control file) for the run.  The default is RUN_PNZ.
+
+=item -s csvfile
+
+Specifies a CSV file to which statistics about the job are written.  The statistics will be a
+appended to an existing file of this name if it exists.  A header will be written only if it is 
+a new file.  Note that the file should not include the .csv extension.  Two files may be created -
+<csvfile>.csv for statistics and <csvfile>_fail.csv for failed jobs
+
+=item -a name1=value1:name2=value2:...
+
+Adds a column(s) x with value y to the CSV file
+
+=item -S
+
+Just compile statistics from existing jobs, don't create or run any new jobs
+
+=back
+
+=cut

@@ -1,112 +1,50 @@
 #!/usr/bin/perl
-#==============================================================================
-#
-# PROGRAM:             test_pnz: Tests positionz pcf on a set of rinex files 
-#                      downloaded from geonet.
-#
-# VERSION:             1.0 
-#
-#
-# DESCRIPTION:         Downloads compressed RINEX files from GeoNet FTP site using       
-#                      specified year, Julian day and geodetic code of CORS station.  
-#                      Files are capitalised on download ready for use in Bernese.
-#
-#
-#
-# PARAMETERS:          
-#                      -p          specifies all PositioNZ stations
-#
-#                      -g          specifies all Geonet stations
-#                         
-#                      year        format yyyy
-#
-#                      day         format doy
-#
-#                      station(s)  geodetic code (do not enter code if -p or -g switch
-#                                  is applied).
-#                                  
-# EXAMPLE        for all PositioNZ stations:  getrinex -p 2014 001
-#
-#                for selected stations:       getrinex 2014 001 AUCK MAST
-#
-#
-# DEPENDENCIES:
-#
-# MODIFICATION HISTORY
-#
-# NAME                 DATE        DESCRIPTION
-#====================  ==========  ============================================
-# Paula Gentle         08/01/2014  Created
-#==============================================================================
-#First be in the correct directory, such as opt/bern52/DATAPOOL/RINEX.  
-#Then in Terminal, type eg: getrinex 2013 364 AUCK
-#This will get just PositioNZ station AUCK, day 30 Dec, 2013.
 
 use strict;
 use warnings;
 use Time::Local;
 use Net::FTP;
+use LINZ::BERN::BernUtil;
+use LINZ::GNSS;
+use LINZ::GNSS::FileCache;
+
 use Getopt::Std;
 
-
-if( ! @ARGV )
-{
-    print <<EOD;
-
-test_pnz: Test PositioNZ-PP PCF using downloaded GNS RINEX data
-
-Syntax: test_pnz [options] code year day sess_len ntests
-
-    code     The Geonet station code to use for testing
-    year     The year for the first test session
-    day      The day of year of the first session
-    sess_len The length session (##:## hours, minutes)
-    ntests   The number of tests to run
-
-Options can include
-
-    -o orbit The orbit type to use (eg ULTRA, RAPID, FINAL)
-    -p pcf   Alternative PCF to run
-    -r rcode Base name for generated rinex file (default is station code)
-    -s csv   Base name of csv file (default is test_pnz)
-    -c camp  Campaign name (Can include #)
-    -x #     Number of sessions to skip (to repeat selected sessions)
-    -v       Set to verbose mode
-
-EOD
-
-    exit();
-}
-
 my %opts;
-getopts('o:p:r:s:c:x:v',\%opts);
+getopts('o:p:r:s:c:x:t:d:vh',\%opts);
+
+help(!$opts{h}) if $opts{h} || ! @ARGV;
 
 die "Incorrect number of parameters\n" if scalar(@ARGV) != 5;
-
 my($code,$year,$doy,$sess_len,$ntests)=@ARGV;
 
 my $orb = uc($opts{o} // '') || 'FINAL';
 my $pcf = uc($opts{p} // '') || 'RUN_PNZ';
 my $camp = uc($opts{c} // '') || 'TEST_PNZ';
 my $nskip = ($opts{x} // '') || 0;
+my $offsets = ($opts{t} // '') || '0:00';
+my $rnxdir = ($opts{d} // '.');
 
 my $csv = $opts{s} || 'test_pnz';
-my $rnxbase = uc($opts{r} // '') || uc($code);
 my $verbose = $opts{v};
 
-$code =~ /^\w{4}$/ || die "Invalid code $code - must be four letters\n";
+$code =~ /^\w{4}(\+\w{4})*$/ || die "Invalid code $code - must be four letters\n";
 $code = uc($code);
-$year =~ /^(?:19|20)(\d\d)$/ || die "Invalid year $year\n";
-my $yy = $1;
-($doy =~ /^\d{3}$/ && $doy <= 366) || die "Invalid doy $doy\n";
-$sess_len =~ /^(\d\d?)(?:\:(\d\d))?$/ || die "Invalid session length $sess_len\n";
-my $sess_secs = 60*($1*60 + ($2 // 0));
+$year =~ /^(?:19|20)(\d\d)(\+((19|20)\d\d))*$/ || die "Invalid year $year\n";
+$doy =~ /^[0123]\d\d(\+[0123]\d\d)*$/ || die "Invalid doy $doy\n";
+$sess_len =~ /^(\d\d?)(?:\:(\d\d))?(\+\d\d?(\:\d\d)?)*$/ || die "Invalid session length $sess_len\n";
 $ntests =~ /^\d\d?\d?$/ || die "Invalid number of tests $ntests\n";
 $nskip =~ /^\d\d?\d?$/ || die "Invalid number of tests to skip $nskip\n";
-$orb =~ /^(ULTRA|RAPID|FINAL)$/ || die "Invalid orbit $orb, must be ULTRA, RAPID, or FINAL\n";
-$pcf =~ /^\w{3,8}$/ || die "Invalid pcf name, must be 3-8 characters\n";
+$orb =~ /^(ULTRA|RAPID|FINAL)(\+(ULTRA|RAPID|FINAL))*$/ || die "Invalid orbit $orb, must be ULTRA, RAPID, or FINAL\n";
+$pcf =~ /^\w{3,8}(\+w{3,8})*$/ || die "Invalid pcf name, must be 3-8 characters\n";
 $camp =~ /^[\w\#]{1,8}$/ || die "Invalid campaign name, must be 1-8 characters\n";
-$rnxbase =~ /^\w{1,8}$/ || die "Invalid rinex base code $rnxbase\n";
+$offsets =~ /^(\d?\d)(?:\:(\d\d))$/ || die "Invalid time offset $offsets\n";
+my $offset_secs=($1*60+$2)*60;
+-d $rnxdir || die "Invalid rinex directory $rnxdir\n";
+
+# Set up environment variables used by get data, then load the configuration
+LINZ::BERN::BernUtil::SetBerneseEnv();
+LINZ::GNSS::LoadConfig();
 
 if( $verbose )
 {
@@ -119,159 +57,215 @@ if( $verbose )
     print "orbit: $orb\n";
     print "pcf name: $pcf\n";
     print "campaign name: $camp\n";
-    print "rinex base: $rnxbase\n";
+    print "rinex directory: $rnxdir\n" if $rnxdir;
 }
+
+my @fileprms=();
+foreach my $code1 (split(/\+/,$code))
+{
+    foreach my $year1 (split(/\+/,$year))
+    {
+        foreach my $doy1 (split(/\+/,$doy))
+        {
+            foreach my $sess1 (split(/\+/,$sess_len))
+            {
+                push(@fileprms,{code=>$code1, year=>$year1, doy=>$doy1, sess_len=>$sess1});
+            }
+        }
+    }
+}
+
+my @procprms=();
+foreach my $pcf1 (split(/\+/,$pcf))
+{
+    foreach my $orb1 (split(/\+/,$orb))
+    {
+        push(@procprms,{pcf=>$pcf1,orb=>$orb1})
+    }
+}
+
+my $nskip0=$nskip;
 
 # Calculate timestamp for start of session (1 Jan + doy*secs_per_day)
 
-my $sess0_start=timegm(0,0,0,1,0,$year-1900)+($doy-1)*(60*60*24);
-
-foreach my $testno (1 .. $ntests)
+foreach my $fileprm (@fileprms)
 {
-    next if $nskip && $nskip--;
-    print "="x60,"\n";
-    # Beginning and end of test session in seconds
-    my $teststart=$sess0_start + ($testno-1)*$sess_secs;
-    my $testend=$teststart+$sess_secs-1;
-    my ($year,$mon,$day,$hour,$min,$sec,$doy)=(gmtime($teststart))[5,4,3,2,1,0,7];
-    my ($yend,$dend)=(gmtime($testend))[5,7];
-    if( $year != $yend )
-    {
-        print "Skipping session $testno - start and end years differ\n";
-        next;
-    }
-    $year += 1900;
-    $mon++;
-    $doy++;
-    $dend++;
-    my @rnx=getFiles($code,$year,$doy,$dend,$verbose);
+    my $code=$fileprm->{code};
+    my $year=$fileprm->{year};
+    my $doy=$fileprm->{doy};
+    my $sess_len=$fileprm->{sess_len};
+    $nskip=$nskip0;
 
-    # Construct teqc command to extract requires session.
-    # Start time
-    # Number of minutes
-    # Output file name
-    my $tstart=sprintf("%04d-%02d-%02d-%02d:%02d:%02d",$year,$mon,$day,$hour,$min,$sec);
-    my $tlen=$sess_secs/60-0.1;
-    my $tsuffix=$rnx[0];
-    $tsuffix=~ s/.*\.//;
-    my $tname=sprintf("%s_%03d.%s",$code,$testno,$tsuffix);
-    system('teqc','+st',$tstart,'-dm',$tlen,'+out',$tname,@rnx);
-    print "Session $testno RINEX file: $tname\n";
-    system('run_positionzpp_pcf','-c',$camp,'-o','-O',$orb,'-p',$pcf,'-s',$csv,$tname);
+    $sess_len =~ /^(\d\d?)(?:\:(\d\d))?$/;
+    my $sess_secs = 60*($1*60 + ($2 // 0));
+
+    my $yy = substr($year,2);
+
+    my $sess0_start=timegm(0,0,0,1,0,$year-1900)+($doy-1)*(60*60*24);
+
+    foreach my $testno (1 .. $ntests)
+    {
+        print "="x60,"\n";
+        # Beginning and end of test session in seconds
+        my $teststart=$sess0_start + ($testno-1)*$sess_secs+$offset_secs;
+        my $testend=$teststart+$sess_secs-1;
+        my ($year,$mon,$day,$hour,$min,$sec,$doy)=(gmtime($teststart))[5,4,3,2,1,0,7];
+        my ($yend,$dend)=(gmtime($testend))[5,7];
+        if( $year != $yend )
+        {
+            print "Skipping session $testno - start and end years differ\n";
+            next;
+        }
+        next if $nskip && $nskip--;
+        $year += 1900;
+        $mon++;
+        $doy++;
+        $dend++;
+        my @rnx=getFiles($rnxdir,$code,$year,$doy,$dend,$verbose);
+
+        # Construct teqc command to extract requires session.
+        # Start time
+        # Number of minutes
+        # Output file name
+        my $tstart=sprintf("%04d-%02d-%02d-%02d:%02d:%02d",$year,$mon,$day,$hour,$min,$sec);
+        my $tlen=$sess_secs/60-0.1;
+        my $tsuffix=$rnx[0];
+        $tsuffix=~ s/.*\.//;
+        my $tname=sprintf("%s_%03d.%s",$code,$testno,$tsuffix);
+        system('teqc','+st',$tstart,'-dm',$tlen,'+out',$tname,@rnx);
+        print "Session $testno RINEX file: $tname\n";
+        foreach my $procprm (@procprms)
+        {
+            $pcf=$procprm->{pcf};
+            $orb=$procprm->{orb};
+            my $extradata="pcf=$pcf:orb=$orb";
+            system('run_positionzpp_pcf','-c',$camp,'-o','-O',$orb,'-p',$pcf,'-s',$csv,'-a',$extradata,$tname);
+        }
+    }
 }
 
 sub getFiles
 {
-    my($code,$year,$dstart,$dend,$verbose) = @_;
-   
-    my $y2=substr($year,2,2);
+    my($rnxdir, $code,$year,$dstart,$dend,$verbose) = @_;
 
-    # Build array names of required rinex files
-    my @rnxfiles=map { sprintf("%s%03d0.%02dO",$code,$_,$y2) } ($dstart .. $dend);
-    
-    # Select out missing files
-    my @missing= grep { ! -e $_ } @rnxfiles;
+    my $cache=LINZ::GNSS::FileCache::Cache();
+    my $request=sprintf("OBS:DAILY %04d:%03d-%03d %s",$year,$dstart,$dend,$code);
+    my ($status,$when,$files)=$cache->getData($request,$rnxdir,queue=>0);
 
-    return @rnxfiles if ! @missing;
+    die "Cannot download RINEX files ($request)\n" if ! @$files;
 
-    # Try to get missing files!
-
-    my $ftp = Net::FTP->new("ftp.geonet.org.nz", Debug => 0)
-    or die "Cannot connect to ftp.geonet.org.nz: $@";
-
-    $ftp->login("anonymous",'positionz@linz.govt.nz')
-    or die "Cannot login ", $ftp->message;
-
-    $ftp->binary();
-    $ftp->cwd("gps/rinex/$year")                          
-    or die "Cannot change working directory ", $ftp->message;
-
-    my @gnsfiles=();
-    foreach my $f (@missing)
-    {         
-        my $gnsfile = lc($f);
-        $gnsfile =~ s/o$/d.Z/;
-        my $doyd=substr($gnsfile,4,3);
-        
-        # Change directory to day of year
-        $ftp->cwd($doyd);
-        if( $ftp->get($gnsfile) )
-        {               
-            push(@gnsfiles,$gnsfile);
-            print "$f downloaded\n" if $verbose;
-        }
-        else 
-        {
-            die "Get $gnsfile failed: ", $ftp->message;
-        }
-        $ftp->cwd('..');
-    }
-    $ftp->quit or die "Error closing ftp connection: ", $ftp->message;
-
-    foreach my $gnsfile (@gnsfiles)
-    {
-        system('compress','-d',$gnsfile);
-        $gnsfile =~ s/\.Z$//;
-        die "Uncompressing $gnsfile failed\n" if ! -e $gnsfile;
-        system('crx2rnx',$gnsfile);
-        unlink($gnsfile);
-        $gnsfile =~ s/d$/o/;
-        die "crx2rnx $gnsfile failed\n" if ! -e $gnsfile;
-        rename($gnsfile,uc($gnsfile));
-    }
-
-    foreach my $rnxfile (@missing)
-    {
-        die "Failed to retrieve $rnxfile\n" if ! -e $rnxfile;
-    }
+    my @rnxfiles = map {$_->filepath} @$files;
 
     return @rnxfiles;
 }
 
-__END__
+sub help
+{
+    my ($brief)=@_;
+    require Pod::Usage;
+    Pod::Usage::pod2usage(
+    {
+        -verbose=>$brief ? 99 : 2,
+        -sections=>'Synopsis',
+        -exitval=>2,
+    });
 }
 
-print "\nThe End\n";
+__DATA__
 
-__END__
+=head1
 
+test_geonet_pnzpp: Test PositioNZ-PP PCF using downloaded GNS RINEX data
 
-RESEARCH NOTES/COMMANDS THAT COULD COME IN HANDY: 
+=head1 Synopsis
 
-Option 1 for NK research - looks like the preferred option....
-For each station, go to site, download it. If successful, print X downloaded. Move on to the next station download.
-If download unsucessful, print X get failed and move on to the next station download. Carry on.
-(Currently the download script stops as soon as it encounters a station it can't download).
+ test_geonet_pnzpp [options] code year day sess_len ntests
+ test_geonet_pnzpp -h
 
-Option 2 for NK research:
-Check if file exists on FTP site, if it does, download it.  Print X downloaded. Move on to next station download.
-If file doesn't exist, print X get failed. Move on to next station in the list and see if it exists. Carry on.
+=head1 Description
 
+Script for compiling test statistics for analysis of the PostioNZ-PP 
+bernese PCF script.  The script constructs a series of RINEX files extracted from
+downloaded Geonet files.  It runs the PCF on each of these files and compiles 
+statistics of the results into a CSV file for further analysis.
 
+RINEX files are built for a sequence of sessions of the same length, starting
+at a specified time.
 
-foreach my $f (@station) {
-if ($ftp->exists($f)) {
-print "$f exists\n";
-$ftp->get($f,uc($f));
-print "$f downloaded\n";
-next;
-}
-else {
-print "get failed ", $ftp->message;
-}
-next;
-}
+=head1 Parameters
 
-The below commands could be useful later...
-if
-print "$f downloaded\n";
-then move on to the next one... 
-If download is unsuccessful...            
-else print "get failed ", $ftp->message;
-next;
-}
+=over
 
-This is for a slightly modified Net::FTP module:
-following lines are copied and pasted from website, unsure if they're useful commands...
-@file = $ez->grep(Grep => qr/[A-M]*[.]txt/);
-$ez->exists(RemoteFile => 'needed-file.txt');
+=item code
+
+The Geonet station code to use for testing.  Multiple stations can be specified
+separated by '+', eg RAKW+VGMT
+
+=item year
+
+The year for the first test session
+
+=item day
+
+The day of year of the first session
+
+=item sess_len
+
+The length session formatted as H, HH or HH:MM, where H is the number of hours and 
+MM the number of minutes (eg 2, 10, 3:30).  Multiple session lengths may be 
+specified separated by '+', eg 0:30+1+2+3+5
+
+=item ntests
+
+The number of sessions to create
+
+=back
+
+=head1 Options
+
+=over 
+
+=item -o orbit
+
+The orbit type to use (eg ULTRA, RAPID, FINAL).  Multiple orbit types
+can be specified separated by '+'.
+
+=item -p pcf
+
+Bernese PCF to run.  Multiple PCF files can be specified separated by '+'.
+The default is RUN_PNZ.
+
+=item -t hh:mm
+
+Start time of day of the first session. Default is 0:00.
+
+=item -s csv
+
+Base name of csv file (default is test_pnz)
+
+=item -c camp
+
+Campaign name to create.  The default is TEST_PNZ, and the campaign is
+overwritten for each test.  If the campaign name contains # then this 
+will be replaced with a sequence number so that each job is preserved.
+
+=item -x #
+
+Number of sessions to skip (use to repeat selected sessions)
+
+=item -d
+
+Directory for RINEX files, default is the current directory
+
+=item -v
+
+Set to verbose mode
+
+=item -h
+
+Print help
+
+=back
+
+=cut
+
