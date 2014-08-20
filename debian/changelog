@@ -1,3 +1,9 @@
+linz-positionzpp-pcf (1.9.1-1) precise; urgency=low
+
+  * Fix bug with multiple PCF names
+
+ -- Chris Crook <ccrook@linz.govt.nz>  Thu, 21 Aug 2014 10:11:13 +1200
+
 linz-positionzpp-pcf (1.9.0-1) precise; urgency=low
 
   * Force ORBGEN to use at least 15 min session to avoid "NO TWO SATELLITE POSITIONS FOUND" error
