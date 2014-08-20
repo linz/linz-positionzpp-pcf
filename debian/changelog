@@ -1,3 +1,12 @@
+linz-positionzpp-pcf (1.9.0-1) precise; urgency=low
+
+  * Force ORBGEN to use at least 15 min session to avoid "NO TWO SATELLITE POSITIONS FOUND" error
+  * Making session start end values more readable
+  * Adding script for testing Geonet RINEX files against the PositioNZ-PP PCF
+  * Updating test script to allow multiple version of options and use LINZ::GNSS::FileCache
+
+ -- Chris Crook <ccrook@linz.govt.nz>  Thu, 21 Aug 2014 09:50:04 +1200
+
 linz-positionzpp-pcf (1.8.3-1) precise; urgency=low
 
   * Updating panels
