@@ -101,13 +101,18 @@ foreach my $fileprm (@fileprms)
 
     my $yy = substr($year,2);
 
-    my $sess0_start=timegm(0,0,0,1,0,$year-1900)+($doy-1)*(60*60*24);
+    my $sess0_start=timegm(0,0,0,1,0,$year-1900)+($doy-1)*(60*60*24)+$offset_secs;
+    my $now=time();
 
-    foreach my $testno (1 .. $ntests)
+
+    my $testno=0;
+    while( $testno < $ntests )
     {
         print "="x60,"\n";
         # Beginning and end of test session in seconds
-        my $teststart=$sess0_start + ($testno-1)*$sess_secs+$offset_secs;
+        my $teststart=$sess0_start;
+        last if $teststart > $now;
+        $sess0_start += $sess_secs;
         my $testend=$teststart+$sess_secs-1;
         my ($year,$mon,$day,$hour,$min,$sec,$doy)=(gmtime($teststart))[5,4,3,2,1,0,7];
         my ($yend,$dend)=(gmtime($testend))[5,7];
@@ -116,12 +121,25 @@ foreach my $fileprm (@fileprms)
             print "Skipping session $testno - start and end years differ\n";
             next;
         }
-        next if $nskip && $nskip--;
+        if($nskip && $nskip--)
+        {
+            $testno++;
+            next;
+        }
         $year += 1900;
         $mon++;
         $doy++;
         $dend++;
-        my @rnx=getFiles($rnxdir,$code,$year,$doy,$dend,$verbose);
+        my @rnx;
+        eval
+        {
+            @rnx=getFiles($rnxdir,$code,$year,$doy,$dend,$verbose);
+        };
+        if( $@ )
+        {
+            $sess0_start += (24*60*60)-$sess_secs;
+            next;
+        }
 
         # Construct teqc command to extract requires session.
         # Start time
@@ -141,6 +159,7 @@ foreach my $fileprm (@fileprms)
             my $extradata="pcf=$pcf:orb=$orb";
             system('run_positionzpp_pcf','-c',$camp,'-o','-O',$orb,'-p',$pcf,'-s',$csv,'-a',$extradata,$tname);
         }
+        $testno++;
     }
 }
 
