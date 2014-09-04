@@ -10,6 +10,41 @@ use LINZ::GNSS::FileCache;
 
 use Getopt::Std;
 
+my $batch=0;
+my $batchlog=0;
+
+if( $ARGV[0] eq '-b' )
+{
+    $batch=1;
+    shift(@ARGV);
+    my($sc,$mi,$hr,$dy,$mo,$yr)=(localtime())[0,1,2,3,4,5];
+    $batchlog=sprintf("test_geonet_pnzpp_%04d%02d%02d%02d%02d%02d.log",
+        $yr+1900,$mo+1,$dy,$hr,$mi,$sc);
+}
+
+elsif( $ARGV[0] eq '-B' )
+{
+    $batch=1;
+    shift(@ARGV);
+    $batchlog=shift(@ARGV);
+    die "Log file not specified with -B\n" if ! $batchlog;
+}
+
+if( $batch )
+{
+    my $cmd='perl '.$0.' '.join(' ',@ARGV);
+    print "Running in batch mode\n";
+    print "Command: $cmd\n";
+    print "Log file: $batchlog\n";
+
+    $cmd .=' > "'.$batchlog.'" 2>&1';
+    open(my $f,"| at now");
+    print $f $cmd;
+    close($f);
+    exit();
+}
+
+
 my %opts;
 getopts('o:p:r:s:c:x:t:d:vh',\%opts);
 
@@ -198,7 +233,7 @@ test_geonet_pnzpp: Test PositioNZ-PP PCF using downloaded GNS RINEX data
 
 =head1 Synopsis
 
- test_geonet_pnzpp [options] code year day sess_len ntests
+ test_geonet_pnzpp [-b|-B logfile] [options] code year day sess_len ntests
  test_geonet_pnzpp -h
 
 =head1 Description
@@ -210,6 +245,11 @@ statistics of the results into a CSV file for further analysis.
 
 RINEX files are built for a sequence of sessions of the same length, starting
 at a specified time.
+
+If the first parameter is -b then the script will run itself using 'at now' with
+a timestamp based log file for output.  If the first parameter is -B then the 
+script will run itself using at now and taking the name of the log file from the
+second parameter.
 
 =head1 Parameters
 
