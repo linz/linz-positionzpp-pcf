@@ -1,3 +1,10 @@
+linz-positionzpp-pcf (1.10.0-1) trusty; urgency=medium
+
+  * Better handling missing data - skip onto next day
+  * Adding option for starting as at now job
+
+ -- Chris Crook <ccrook@linz.govt.nz>  Tue, 09 Sep 2014 12:12:45 +1200
+
 linz-positionzpp-pcf (1.9.1-1) precise; urgency=low
 
   * Fix bug with multiple PCF names
