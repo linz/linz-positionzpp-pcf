@@ -7,43 +7,9 @@ use Net::FTP;
 use LINZ::BERN::BernUtil;
 use LINZ::GNSS;
 use LINZ::GNSS::FileCache;
+use LINZ::RunBatch;
 
 use Getopt::Std;
-
-my $batch=0;
-my $batchlog=0;
-
-if( $ARGV[0] eq '-b' )
-{
-    $batch=1;
-    shift(@ARGV);
-    my($sc,$mi,$hr,$dy,$mo,$yr)=(localtime())[0,1,2,3,4,5];
-    $batchlog=sprintf("test_geonet_pnzpp_%04d%02d%02d%02d%02d%02d.log",
-        $yr+1900,$mo+1,$dy,$hr,$mi,$sc);
-}
-
-elsif( $ARGV[0] eq '-B' )
-{
-    $batch=1;
-    shift(@ARGV);
-    $batchlog=shift(@ARGV);
-    die "Log file not specified with -B\n" if ! $batchlog;
-}
-
-if( $batch )
-{
-    my $cmd='perl '.$0.' '.join(' ',@ARGV);
-    print "Running in batch mode\n";
-    print "Command: $cmd\n";
-    print "Log file: $batchlog\n";
-
-    $cmd .=' > "'.$batchlog.'" 2>&1';
-    open(my $f,"| at now");
-    print $f $cmd;
-    close($f);
-    exit();
-}
-
 
 my %opts;
 getopts('o:p:r:s:c:x:t:d:vh',\%opts);
