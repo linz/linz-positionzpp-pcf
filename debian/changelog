@@ -1,4 +1,4 @@
-linz-positionzpp-pcf (1.10.2-1) trusty; urgency=medium
+linz-positionzpp-pcf (1.11.0-1) trusty; urgency=medium
 
   * Extracted batch running to LINZ::RunBatch (in GNSS package)
 
