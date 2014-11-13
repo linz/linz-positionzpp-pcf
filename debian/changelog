@@ -1,3 +1,9 @@
+linz-positionzpp-pcf (1.11.1-1) trusty; urgency=medium
+
+  * Updating panels for changes
+
+ -- Chris Crook <ccrook@linz.govt.nz>  Thu, 13 Nov 2014 19:09:51 +1300
+
 linz-positionzpp-pcf (1.11.0-1) trusty; urgency=medium
 
   * Extracted batch running to LINZ::RunBatch (in GNSS package)
