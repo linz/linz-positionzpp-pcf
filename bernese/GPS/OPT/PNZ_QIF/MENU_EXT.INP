@@ -1350,8 +1350,13 @@ EXT_SKL     1  "SKL"
 
 MSG_EXT_SKL 1 "Skeleton files (e.g. for plot files): extension"
 
-! Others: updpan - master and list
+! Others: updpan - master and list, datapool
 ! --------------------------------
+PTH_DTPOOL     1  "${D}"
+  ## widget = lineedit
+
+MSG_PTH_DTPOOL 1 "Datapool directory"
+
 PTH_UPDPAN     1  "${X}/PAN"
   ## widget = lineedit
 
@@ -1664,6 +1669,7 @@ GEN_DATUM_FILE     1  "DATUM."
 #   Skeleton files (e.g. for plot files)  > %%%%%%%%% <  > %%% <               # PTH_SKL EXT_SKL
 #   Directory list for panel update       > %%%%%%%%% <  > %%% <               # PTH_UPD EXT_UPD
 #   Program input master files            > %%%%%%%%% <                        # PTH_UPDPAN
+#   Datapool path                         > %%%%%%%%% <                        # PTH_DTPOOL
 #                                                                              #
 # USER DEPENDENT                                                               #
 #   Program output files (campaign indep.)> %%%%%%%%% <                        # PTH_OUT

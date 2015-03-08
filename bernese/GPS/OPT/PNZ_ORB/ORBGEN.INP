@@ -1,24 +1,31 @@
 
 ! Environment Variables
 ! ---------------------
-ENVIRONMENT 0
+ENVIRONMENT 5
+  "U" "/home/ccrook/BERN52/GPSUSER"
+  "T" "/var/lib/bernese52/tmp"
+  "X" "/opt/bernese52/GPS"
+  "P" "/home/ccrook/BERN52/GPSDATA/CAMPAIGN"
+  "USER" "ccrook"
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! SOME KEYWORDS FOR AUTOMATIC OUTPUT
 ! ----------------------------------
-CAMPAIGN 0
+CAMPAIGN 1  "${P}/POS_PPP"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 0
+SESSION_TABLE 1  "${P}/POS_PPP/STA/SESSIONS.SES"
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
 
-YR4_INFO 1  "$Y+0"
+YR4_INFO 1  "2003"
   ## widget = comment
+  # $Y+0
 
-SES_INFO 1  "$S+0"
+SES_INFO 1  "2740"
   ## widget = comment
+  # $S+0
 
 USR_INFO 1  "${USER}"
   ## widget = comment
@@ -38,8 +45,9 @@ RADIO_T 1  "1"
 
 MSG_RADIO_T 1  "Start with tabular orbits"
 
-TABFIL 1  "*"
+TABFIL 1  "${P}/POS_PPP/ORB/IGS032750.TAB"
   ## widget = selwin; activeif = RADIO_T = 1; path = DIR_TAB; ext = EXT_TAB
+  # *
 
 MSG_TABFIL 1  "Start with tabular orbits"
 
@@ -58,12 +66,12 @@ MSG_PREFIL 1  "Start with precise orbits"
 
 ! Extension of the ERP Files
 ! --------------------------
-PREFIL_EXT_COL_2 0
+PREFIL_EXT_COL_2 1  "ERP"
   ## widget = initmenu; pointer = EXT_ERP
 
 ! Extension of the ERP Files
 ! --------------------------
-PREFIL_PTH_COL_2 0
+PREFIL_PTH_COL_2 1  "${P}/POS_PPP/ORB/"
   ## widget = initmenu; pointer = DIR_ERP
 
 ! Update Modus
@@ -80,6 +88,11 @@ SYSDYX 1  "1"
 
 MSG_SYSDYX 1  "System DYX"
 
+SYSD2X 1  "0"
+  ## widget = radiobutton; group = SYSORB; activeif = RPROUT = _
+
+MSG_SYSD2X 1  "System D2X"
+
 SYSRSW 1  "0"
   ## widget = radiobutton; group = SYSORB
 
@@ -93,34 +106,44 @@ MSG_SYSDSW 1  "System DSW"
 ! Estimated Parameters
 ! --------------------
 PARD0 1  "1"
-  ## widget = checkbox; activeif = SYSDYX == 1 OR SYSDSW == 1
+  ## widget = checkbox; activeif = SYSDYX == 1 OR SYSDSW == 1 OR SYSD2X == 1
 
 MSG_PARD0 1  "D0 (direct)"
 
 PARDP 1  "1"
   ## widget = checkbox; activeif = SYSDYX == 1
 
-MSG_PARDP 1  "Periodic D terms (cos, sin)"
+MSG_PARDP 1  "Periodic D1 terms (cos, sin)"
+
+PARDP2 1  "1"
+  ## widget = checkbox; activeif = SYSD2X == 1
+
+MSG_PARDP 1  "Periodic D2 terms (cos, sin)"
 
 PARY0 1  "1"
-  ## widget = checkbox; activeif = SYSDYX == 1
+  ## widget = checkbox; activeif = SYSDYX == 1 OR SYSD2X == 1
 
 MSG_PARY0 1  "Y0 (y-bias)"
 
 PARYP 1  "1"
   ## widget = checkbox; activeif = SYSDYX == 1
 
-MSG_PARYP 1  "Periodic Y terms (cos, sin)"
+MSG_PARYP 1  "Periodic Y1 terms (cos, sin)"
+
+PARYP2 1  "1"
+  ## widget = checkbox; activeif = SYSD2X == 1
+
+MSG_PARYP 1  "Periodic D4 terms (cos, sin)"
 
 PARX0 1  "1"
-  ## widget = checkbox; activeif = SYSDYX == 1
+  ## widget = checkbox; activeif = SYSDYX == 1 OR SYSD2X == 1
 
 MSG_PARX0 1  "X0"
 
 PARXP 1  "1"
-  ## widget = checkbox; activeif = SYSDYX == 1
+  ## widget = checkbox; activeif = SYSDYX == 1 OR SYSD2X == 1
 
-MSG_PARXP 1  "Periodic X terms (cos, sin)"
+MSG_PARXP 1  "Periodic X1/X1 terms (cos, sin)"
 
 PARR0 1  "0"
   ## widget = checkbox; activeif = SYSRSW == 1
@@ -160,14 +183,16 @@ STOCH_NUMBER 1  "NONE"
 
 MSG_STOCH_NUMBER 1  "Satellite number for stochastic pulses"
 
-STOCH_MANUAL 1  ""
+STOCH_MANUAL 0
   ## widget = lineedit; activeif = STOCH_NUMBER = MANUAL AND RPROUT = _
+  # 
 
 MSG_STOCH_MANUAL 1  "Manual satellite selection for stochastic pulses"
 
-STOCH_INTER 1  ""
+STOCH_INTER 0
   ## widget = lineedit; check_type = time
   ## activeif = STOCH_NUMBER / NONE AND STOCH_NUMBER / SATCRUX  AND RPROUT = _
+  # 
 
 MSG_STOCH_INTER 1  "Interval for stochastic pulses"
 
@@ -194,15 +219,17 @@ MSG_SHOWGEN 1  "Show all general files"
 
 ! General Constants
 ! -----------------
-CONST 1  "CONST."
+CONST 1  "${X}/GEN/CONST."
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
+  # CONST.
 
 DESCR_CONST 1  "General constants"
 
 ! Pole File
 ! ---------
-POLE 1  "IG?$S+0"
+POLE 0
   ## widget = selwin; path = DIR_ERP; ext = EXT_ERP; maxfiles = 1
+  # IG?$S+0
 
 DESCR_POLE 1  "Pole file"
 
@@ -224,84 +251,95 @@ MSG_ALBEMIS 1  "Albedo emissivity"
 
 ! Ocean loading tables
 ! --------------------
-OCNLOAD 1  ""
+OCNLOAD 0
   ## widget = selwin; path = DIR_BLQ; ext = EXT_BLQ; maxfiles = 1
   ## emptyallowed = true; activeif = RADIO_P == 1 OR RADIO_T == 1
+  # 
 
 DESCR_OCNLOAD 1  "Ocean loading corrections"
 
 ! Atmospheric loading tables
 ! --------------------------
-ATMLOAD 1  ""
+ATMLOAD 0
   ## widget = selwin; path = DIR_ATL; ext = EXT_ATL; maxfiles = 1
   ## emptyallowed = true; activeif = RADIO_P == 1 OR RADIO_T == 1
+  # 
 
 DESCR_ATMLOAD 1  "Atmospheric loading corrections"
 
 ! Subdaily Pole Model
 ! -------------------
-SUBMOD 1  "IERS2010XY"
+SUBMOD 1  "${X}/GEN/IERS2010XY.SUB"
   ## widget = selwin; path = PTH_GEN; ext = EXT_SUB; maxfiles = 1
+  # IERS2010XY
 
 DESCR_SUBMOD 1  "Subdaily pole model"
 
 ! Nutation Model
 ! -------------------
-NUTMOD 1  "IAU2000R06"
+NUTMOD 1  "${X}/GEN/IAU2000R06.NUT"
   ## widget = selwin; path = PTH_GEN; ext = EXT_NUT; maxfiles = 1
+  # IAU2000R06
 
 DESCR_NUTMOD 1  "Nutation model"
 
 ! Earth Potential
 ! ---------------
-POTCOE 1  "EGM2008_SMALL."
+POTCOE 1  "${X}/GEN/EGM2008_SMALL."
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
+  # EGM2008_SMALL.
 
 DESCR_POTCOE 1  "Coeff. of Earth potential"
 
 ! Satellite Problems
 ! ------------------
-SATCRUX 1  "SAT_$Y+0"
+SATCRUX 1  "${X}/GEN/SAT_2003.CRX"
   ## widget = selwin; path = PTH_GEN; ext = EXT_CRX; maxfiles = 1
+  # SAT_$Y+0
 
 DESCR_SATCRUX 1  "Satellite problems"
 
 ! Satellite Information
 ! ---------------------
-SATELL 1  "SATELLIT.I08"
+SATELL 1  "${X}/GEN/SATELLIT.I08"
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
+  # SATELLIT.I08
 
 DESCR_SATELL 1  "Satellite information"
 
 ! Planetary Ephemeris
 ! -------------------
-JPLEPH 1  "DE405"
+JPLEPH 1  "${X}/GEN/DE405.EPH"
   ## widget = selwin; path = PTH_GEN; ext = EXT_EPH; maxfiles = 1
   ## emptyallowed = true
+  # DE405
 
 DESCR_JPLEPH 1  "Planetary ephemeris file"
 
 ! Solid Earth Tides File
 ! -----------------------
-SETIDES 1  "TIDE2000"
+SETIDES 1  "${X}/GEN/TIDE2000.TPO"
   ## widget = selwin; path = PTH_GEN; ext = EXT_TPO; maxfiles = 1
   ## emptyallowed = true
+  # TIDE2000
 
 DESCR_SETIDES 1  "Solid Earth tides file"
 
 ! Ocean Tides File
 ! ----------------
-OTIDES 1  "OT_FES2004"
+OTIDES 1  "${X}/GEN/OT_FES2004.TID"
   ## widget = selwin; path = PTH_GEN; ext = EXT_TID; maxfiles = 1
   ## emptyallowed = true
+  # OT_FES2004
 
 DESCR_OTIDES 1  "Ocean tides file"
 
 ! Correction GPS-UTC
 ! ------------------
-GPSUTC 1  "GPSUTC."
+GPSUTC 1  "${X}/GEN/GPSUTC."
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
   ## emptyallowed = true
+  # GPSUTC.
 
 DESCR_GPSUTC 1  "Correction GPS-UTC"
 
@@ -330,57 +368,65 @@ DESCR_IMPORB2 1  "Orbital elements, file 2"
 
 ! Standard Orbit File
 ! -------------------
-STDOUT 1  "IGS$S+0"
+STDOUT 1  "${P}/POS_PPP/ORB/IGS2740.STD"
   ## widget = lineedit; path = DIR_STD; ext = EXT_STD
+  # IGS$S+0
 
 DESCR_STDOUT 1  "Standard orbits"
 
 ! Radiation Pressure File
 ! -----------------------
-RPROUT 1  ""
+RPROUT 0
   ## widget = lineedit; path = DIR_RPR; ext = EXT_RPR
+  # 
 
 DESCR_RPROUT 1  "Radiation pressure coeff."
 
 ! File with Residuals
 ! -------------------
-RESIDRS 1  ""
+RESIDRS 0
   ## widget = lineedit; path = DIR_RES; ext = EXT_RES
   ## activeif = RADIO_T == 1 OR RADIO_P == 1
+  # 
 
 DESCR_RESIDRS 1  "Residual file"
 
 ! Summary File
 ! ------------
-SUMFIL 1  ""
+SUMFIL 0
   ## widget = lineedit; path = DIR_LST; ext = EXT_LST
   ## activeif = RADIO_T == 1 OR RADIO_P == 1
+  # 
 
 DESCR_SUMFIL 1  "Summary file"
 
-SUMACC 1  ""
+SUMACC 0
   ## widget = lineedit; path = DIR_LST; ext = EXT_LST
   ## activeif = RADIO_T == 1 OR RADIO_P == 1
+  # 
 
 DESCR_SUMACC 1  "Summary file for IGS-ACC"
 
 ! Plot file of residuals
 ! ----------------------
-RESPLOT 1  ""
+RESPLOT 0
   ## widget = lineedit; path = DIR_RES; ext = EXT_PLT
   ## activeif = RADIO_T == 1 OR RADIO_P == 1
+  # 
 
 DESCR_RESPLOT 1  "Residual plot file"
 
 ! Scratch Files
 ! -------------
-AUXFIL 1  "ORBGEN$J"
+AUXFIL 1  "${U}/WORK/ORBGEN.SCR"
   ## widget = lineedit; path = PTH_SCR; ext = EXT_SCR; emptyallowed = false
+  # ORBGEN$J
 
 DESCR_AUXFIL 1  "Scratch file"
 
-TABAUX 1  "ORBGEN$J"
+TABAUX 1  "${U}/WORK/ORBGEN.SC2"
   ## widget = lineedit; path = PTH_SCR; ext = EXT_SC2; emptyallowed = false
+  # ORBGEN$J
 
 DESCR_TABAUX 1  "Scratch file"
 
@@ -395,7 +441,7 @@ SYSODEF 1  "1"
 
 MSG_SYSODEF 1  "Program output"
 
-SYSOUT 1  "${P}/PNZPP270/OUT/ORBGEN.L01"
+SYSOUT 1  "${P}/POS_PPP/OUT/ORBGEN.L03"
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF == 0; emptyallowed = false
   # ORBGEN
@@ -409,9 +455,10 @@ ERRMRG 1  "0"
 
 MSG_ERRMRG 1  "Error message"
 
-SYSERR 1  "ERROR"
+SYSERR 1  "${U}/WORK/ERROR.MSG"
   ## widget = lineedit; path = PTH_ERR; ext = EXT_ERR
   ## activeif = ERRMRG == 0; emptyallowed = false
+  # ERROR
 
 DESCR_SYSERR 1  "Error message"
 
@@ -541,18 +588,21 @@ RADIO_2 1  "1"
 
 MSG_RADIO_2 1  "Obs. window defined by start and end times"
 
-SESSION_YEAR 1  "$Y+0"
+SESSION_YEAR 1  "2003"
   ## widget = lineedit; multilineallowed = true; emptyallowed = false
+  # $Y+0
 
 MSG_SESSION_YEAR 1  "Year for sessions def. the time window"
 
-SESSION_STRG 1  "$S+0"
+SESSION_STRG 1  "2740"
   ## widget = lineedit; multilineallowed = true; emptyallowed = false
+  # $S+0
 
 MSG_SESSION_STRG 1  "Sessions defining the time window"
 
-STADAT 1  "$YMD_STR+0"
+STADAT 1  "2003 10 01"
   ## widget = lineedit; activeif = RADIO_2 = 1; check_type = date
+  # $YMD_STR+0
 
 MSG_STADAT 1  "Start of time window (year month day)"
 
@@ -562,8 +612,9 @@ STATIM 1  "00 00 00"
 
 MSG_STATIM 1  "Start of time window (hour min. sec.)"
 
-ENDDAT 1  "$YMD_STR+0"
+ENDDAT 1  "2003 10 01"
   ## widget = lineedit; activeif = RADIO_2 = 1; check_type = date
+  # $YMD_STR+0
 
 MSG_ENDDAT 1  "End of time window (year month day)"
 
@@ -660,9 +711,10 @@ MSG_TITLE 1  "Title line"
 #   Apply antenna offset         > % <                                         # ANTOFF
 #                                                                              #
 # SYSTEM FOR DYNAMICAL ORBIT PARAMETERS                                        #
-#   DYX Sun-oriented (Direct, Y, X)                      > % <                 # SYSDYX
-#   RSW (radial, S, cross-track)                         > % <                 # SYSRSW
-#   DRSW (Direct, radial, along-track/S, cross-track)    > % <                 # SYSDSW
+#   DYX Sun-oriented (constant + D1, Y1, X1) - old CODE model   > % <          # SYSDYX
+#   D2X Sun-oriented (constant + D2, D4, X1) - new CODE model   > % <          # SYSD2X
+#   RSW (radial, along-track, cross-track) - LEO + SLR          > % <          # SYSRSW
+#   DRSW (Direct, radial, along-track, cross-track) - LEO + SLR > % <          # SYSDSW
 #                                                                              #
 # END_PANEL ####################################################################
 
@@ -694,14 +746,15 @@ MSG_TITLE 1  "Title line"
 # DYNAMICAL ORBIT PARAMETERS                                                   #
 #   Apart from six osculating elements, estimate the following parameters:     #
 #                                                                              #
-#   D0 (direct)       > % <          Periodic D terms (cos, sin)  > % <        # PARD0 PARDP
+#   D0 (direct)       > % <          Periodic D1 terms (cos, sin)     > % <    # PARD0 PARDP
+#                                    Periodic D2 terms (cos, sin)     > % <    # PARDP2
+#                                    Periodic D4 terms (cos, sin)     > % <    # PARYP2
+#   Y0 (y-bias)       > % <          Periodic Y1 terms (cos, sin)     > % <    # PARY0 PARYP
+#   X0                > % <          Periodic X1 terms (cos, sin)     > % <    # PARX0 PARXP
 #                                                                              #
-#   Y0 (y-bias)       > % <          Periodic Y terms (cos, sin)  > % <        # PARY0 PARYP
-#   X0                > % <          Periodic X terms (cos, sin)  > % <        # PARX0 PARXP
-#                                                                              #
-#   R (radial)        > % <          Periodic R terms (cos, sin)  > % <        # PARR0 PARRP
-#   S (along-track)   > % <          Periodic S terms (cos, sin)  > % <        # PARS0 PARSP
-#   W (out-of-plane)  > % <          Periodic W terms (cos, sin)  > % <        # PARW0 PARWP
+#   R (radial)        > % <          Periodic R1 terms (cos, sin)     > % <    # PARR0 PARRP
+#   S (along-track)   > % <          Periodic S1 terms (cos, sin)     > % <    # PARS0 PARSP
+#   W (out-of-plane)  > % <          Periodic W1 terms (cos, sin)     > % <    # PARW0 PARWP 
 #                                                                              #
 # STOCHASTIC PULSES IN (R, S, W)-DIRECTIONS                                    #
 #   Satellite selection                                 > %%%%%%%% <           # STOCH_NUMBER
