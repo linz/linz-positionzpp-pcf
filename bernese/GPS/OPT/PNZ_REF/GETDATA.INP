@@ -47,6 +47,7 @@ MSG_ORBTYP 1  "Orbit type, '+' = 'or better'"
 ! -------------------------------------------------------------------------
 ! Download earth rotation parameters
 ! ------------------
+
 DNLDERP 1  "0"
   ## widget = checkbox
 
@@ -83,6 +84,12 @@ DNLDION 1  "0"
 
 MSG_DNLDION 1  "Download Bernese ionospheric models"
 
+IONTYP 1  "FINAL"
+  ## widget=combobox; editable=false
+  ## cards = PREDICT PREDICT+ RAPID RAPID+ FINAL
+
+MSG_IONTYP 1  "Ionosphere model quality, '+' = 'or better'"
+
 MERGEION 1  "0"
   ## widget = checkbox
   ## activeif = DNLDION = 1
@@ -116,11 +123,17 @@ VMFFILE 0
   ## activeif = DNLDVMF = 1 AND MERGEVMF = 1
   # VMF$S+0
 
-MSG_VMFFILE 1  "Name of combined VMF files
+MSG_VMFFILE 1  "Name of combined VMF files"
 
 ! -------------------------------------------------------------------------
 ! Download CODE monthly DCB files
 ! ------------------
+
+DCBTYP 1  "FINAL"
+  ## widget=combobox; editable=false
+  ## cards = RAPID RAPID+ FINAL
+
+MSG_DCBTYP 1  "DCB product quality, '+' = 'or better'"
 
 DNLDP1C1 1  "0"
   ## widget = checkbox
@@ -204,7 +217,6 @@ MSG_MAXDLY 1 "Maximum number of delayed stations that will be tolerated before g
 
 STAFLAG 0
   ## widget = lineedit; activeif = DNLDRS_F = 1
-  # 
 
 MSG_STAFLAG 1  "Flag used to select stations to download"
 
@@ -334,6 +346,7 @@ DESCR_SYSERR 1  "Error message"
 #   (clock files only available in RAPID and FINAL)                            #
 #                                                                              #
 #   CODE DCB products                                                          #
+#      DCB product quality                           > %%%%%%% <               # DCBTYP
 #      Download monthly P1-C1 biases                 > % <                     # DNLDP1C1
 #      Download monthly P1-P2 biases                 > % <                     # DNLDP1P2
 #                                                                              #
@@ -341,12 +354,14 @@ DESCR_SYSERR 1  "Error message"
 #                                                                              #
 # END_PANEL ####################################################################
 
+
 # BEGIN_PANEL NO_CONDITION #####################################################
 # DOWNLOAD REFERENCE DATA - GETDATA 3: Bernese atmospheric files and VMF       #
 #                                                                              #
 #   Download tropospheric models (.TRP)              > % <                     # DNLDTRP
 #                                                                              #
 #   Download ionospheric models (.ION)               > % <                     # DNLDION
+#       Ionosphere model quality                     > %%%%%%%% <              # IONTYP
 #       Merge ION files to a single file             > % <                     # MERGEION
 #       Name of merged ION file                      > %%%%%%%% <              # IONFILE
 #                                                                              #
@@ -360,16 +375,14 @@ DESCR_SYSERR 1  "Error message"
 
 
 # BEGIN_PANEL NO_CONDITION #####################################################
-# DOWNLOAD REFERENCE DATA - GETDATA 4: Reference station data                  # 
+# DOWNLOAD REFERENCE DATA - GETDATA 4: Reference station RINEX files           # 
 #                                                                              #
-#   Choice of stations to download                                             #
+#   > % <   Don't download reference station data                              # DNLDRS_0
 #                                                                              #
-#   > % <   Don't download reference station observation data                  # DNLDRS_0
-#                                                                              #
-#   > % <   Download station observation data for specified stations           # DNLDRS_C
+#   > % <   Download data for specified stations                               # DNLDRS_C
 #           > %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <    # REFSTNS
 #                                                                              #
-#   > % <   Download station observation data for stations in coord file       # DNLDRS_F
+#   > % <   Download data for stations in coord file (below)                   # DNLDRS_F
 #             Only stations with flag > %%%%%%%%%%%%%% <                       # STAFLAG
 #                                                                              #
 #   > % <   Automatically select reference stations based on existing coord    # DNLDRS_A
@@ -377,7 +390,7 @@ DESCR_SYSERR 1  "Error message"
 #             Number of marks to select         > %%%%%%%% <                   # NSTASEL
 #             Minimum percentage of data reqd   > %%%%%%%% <                   # MINDATA
 #             Maximum no delayed stations       > %%%% <                       # MAXDLY
-#             Add/update marks in coordfile     > % <                          # UPDTCRD
+#             Add/update marks in coord file    > % <                          # UPDTCRD
 #             Flag for updated coordinates      > %%%% <                       # UPDTFLAG
 #             Reference station list file       > %%%%%%%% <                   # RFSTFL
 #                                                                              #
@@ -385,7 +398,6 @@ DESCR_SYSERR 1  "Error message"
 #   Maximum number of missing stations    > %%%% <                             # MAXMSSTN
 #   RINEX data type                       > %%%%%%% <                          # RSDTYPE
 #   Merge RINEX files to session file     > % <                                # MRGRINEX
-#   Fix invalid RINEX antenna/receive     > % <                                # FIXRINEX
-#                                                                              #
+#   Fix invalid RINEX antenna/receiver    > % <                                # FIXRINEX
 #                                                                              #
 # END_PANEL ####################################################################
