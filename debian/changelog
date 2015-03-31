@@ -1,3 +1,9 @@
+linz-positionzpp-pcf (1.13.0-1) trusty; urgency=medium
+
+  * Updating input panels to reflect program updates
+
+ -- Chris Crook <ccrook@linz.govt.nz>  Tue, 31 Mar 2015 13:26:45 +1300
+
 linz-positionzpp-pcf (1.12.1-1) trusty; urgency=medium
 
   * Panel file updates
