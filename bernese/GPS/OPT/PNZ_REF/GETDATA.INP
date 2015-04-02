@@ -70,7 +70,12 @@ MSG_ERPNAM 1 "Name for downloaded ERP file(s)"
 DNLDCLK 1  "0"
   ## widget = checkbox
 
-MSG_DNLDCLK 1  "Download earth rotation parameters"
+MSG_DNLDCLK 1  "Download clock files"
+
+CLKNAM 0
+  ## widget=lineedit; check_strlen=24
+
+MSG_CLKNAM 1 "Name for downloaded clock file(s)"
 
 ! -------------------------------------------------------------------------
 ! Plus/minus session range in orbits
