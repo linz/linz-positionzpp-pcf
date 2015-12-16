@@ -296,12 +296,12 @@ __DATA__
 
 =head1 Name
 
-run_positionz_pcf - Script to run the PositioNZ-PP Bernese PCF file
+run_positionzpp_pcf - Script to run the PositioNZ-PP Bernese PCF file
 
 =head1 Synopsis
 
- run_positionz_pcf [options] <rinex_file_name>
- run_positionz_pcf -h
+ run_positionzpp_pcf [options] <rinex_file_name>
+ run_positionzpp_pcf -h
 
 =head1 Description
 

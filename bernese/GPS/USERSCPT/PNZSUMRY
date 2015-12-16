@@ -18,7 +18,7 @@ use LINZ::BERN::CrdFile;
 use LINZ::GNSS;
 use LINZ::GNSS::Util;
 use LINZ::GNSS::SinexFile;
-use LINZ::GNSS::Time qw/seconds_decimal_yr/;
+use LINZ::GNSS::Time qw/seconds_decimal_year/;
 
 use JSON;
 
@@ -300,7 +300,7 @@ sub GetSinexCoords
             my $xyz=$stn->{xyz};
             my $covxyz=$stn->{covar};
             my ($llh,$covllh)=LINZ::GNSS::Util::ConvertXYZToLLH($xyz,$covxyz);
-            my $year=seconds_decimal_yr($stn->{epoch});
+            my $year=seconds_decimal_year($stn->{epoch});
             my $crdnz2k;
             eval
             {
