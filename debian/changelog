@@ -1,3 +1,9 @@
+linz-positionzpp-pcf (1.15.0-1) trusty; urgency=medium
+
+  * Changing seconds_decimal_yr function name and fixing documentation error
+
+ -- Chris Crook <ccrook@linz.govt.nz>  Fri, 18 Dec 2015 11:19:20 +1300
+
 linz-positionzpp-pcf (1.14.1-1) trusty; urgency=medium
 
   * Updating panels
