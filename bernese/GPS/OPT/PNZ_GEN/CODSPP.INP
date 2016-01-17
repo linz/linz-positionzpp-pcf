@@ -81,10 +81,10 @@ DESCR_STAINFO 1  "Station information"
 
 ! Receiver information
 ! --------------------
-RECEIVR 1  "${X}/GEN/RECEIVER."
+RECEIVR 1  "${X}/GEN/RECEIVER.ALL"
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
   ## emptyallowed = true
-  # RECEIVER.
+  # RECEIVER.ALL
 
 DESCR_RECEIVR 1  "Receiver information"
 

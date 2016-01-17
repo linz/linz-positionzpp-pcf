@@ -63,7 +63,7 @@ DESCR_SATELL 1  "Satellite information"
 
 ! Receiver Information
 ! --------------------
-RECEIVR 1  "RECEIVER."
+RECEIVR 1  "RECEIVER.ALL"
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
   ## emptyallowed = true
 
