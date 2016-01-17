@@ -1,3 +1,9 @@
+linz-positionzpp-pcf (1.15.1-1) trusty; urgency=medium
+
+  * Replacing RECEIVER. with RECEIVER.ALL
+
+ -- Chris Crook <ccrook@linz.govt.nz>  Mon, 18 Jan 2016 08:53:20 +1300
+
 linz-positionzpp-pcf (1.15.0-1) trusty; urgency=medium
 
   * Changing seconds_decimal_yr function name and fixing documentation error
