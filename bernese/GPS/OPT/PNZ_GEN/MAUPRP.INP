@@ -292,9 +292,8 @@ DESCR_STAINFO 1  "Station information"
 
 ! Resulting Coordinates
 ! ---------------------
-COORDRS 1  "${P}/PNZPP1/STA/MAUP302Y.CRD"
+COORDRS 1  ""
   ## widget = lineedit; path = DIR_CRD; ext = EXT_CRD
-  # MAUP$S+0
 
 DESCR_COORDRS 1  "Coordinate results"
 
