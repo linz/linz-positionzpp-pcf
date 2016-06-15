@@ -1,3 +1,9 @@
+linz-positionzpp-pcf (1.15.2-1) trusty; urgency=medium
+
+  * Removing generation of CRD file by MAUPRP - not used and can cause segmentation fault with bad clocks
+
+ -- Chris Crook <ccrook@linz.govt.nz>  Wed, 15 Jun 2016 15:32:31 +1200
+
 linz-positionzpp-pcf (1.15.1-1) trusty; urgency=medium
 
   * Replacing RECEIVER. with RECEIVER.ALL
