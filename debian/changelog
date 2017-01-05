@@ -1,3 +1,10 @@
+linz-positionzpp-pcf (1.16.0-1) xenial; urgency=medium
+
+  * Panel errors in PCF
+  * Updating panels for Bernese release 2016-12-26
+
+ -- Chris Crook <ccrook@linz.govt.nz>  Fri, 06 Jan 2017 07:19:20 +1300
+
 linz-positionzpp-pcf (1.15.2-1) trusty; urgency=medium
 
   * Removing generation of CRD file by MAUPRP - not used and can cause segmentation fault with bad clocks
