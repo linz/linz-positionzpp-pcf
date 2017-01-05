@@ -1911,7 +1911,7 @@ MSG_GIM_RSIG 1  "Global ionosphere parameters: relative"
 
 ! Maximum time interval for relativ constraints
 ! ---------------------------------------------
-TRP_RDT 1  "3600"
+TRP_RDT 1  "00 60 00"
   ## widget = lineedit; activeif = TRP_RSIG / _; emptyallowed = false
 
 MSG_TRP_RDT 1  "Troposphere zenith delays: maximum time interval"

@@ -495,7 +495,7 @@ MSG_ANTVER 1  "Check phase center file for antenna type"
 
 ! What to do in case of event flag
 ! --------------------------------
-EPOFLAG 1  "SKIP"
+EPOFLAG 1  "ERROR"
   ## widget = combobox; editable = false; cards = WARNING SKIP ERROR
 
 MSG_EPOFLAG 1  "What to do in case of event flag"
