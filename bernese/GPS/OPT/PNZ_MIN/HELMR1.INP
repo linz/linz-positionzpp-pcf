@@ -1,24 +1,26 @@
 
 ! Environment Variables
 ! ---------------------
-ENVIRONMENT 0
+ENVIRONMENT     1 "" ""
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! SOME KEYWORDS FOR AUTOMATIC OUTPUT
 ! ----------------------------------
-CAMPAIGN 0
+CAMPAIGN 1  "${P}/PZDTEST"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 0
+SESSION_TABLE 1  "${P}/PZDTEST/STA/SESSIONS.SES"
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
 
-YR4_INFO 1  "$Y+0"
+YR4_INFO 0
   ## widget = comment
+  # $Y+0
 
-SES_INFO 1  "$S+0"
+SES_INFO 0
   ## widget = comment
+  # $S+0
 
 USR_INFO 1  "${USER}"
   ## widget = comment
@@ -33,47 +35,71 @@ MSG_SHOWGEN 1  "Show all general files"
 
 ! Constants
 ! ---------
-CONST 1  "CONST."
+CONST 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
+  # CONST.
 
 DESCR_CONST 1  "General constants"
 
 ! Local Geodetic Datum
 ! --------------------
-DATUM 1  "DATUM."
+DATUM 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
+  # DATUM.
 
 DESCR_DATUM 1  "Geodetic datum"
 
 ! Coordinate and Velocity Files
 ! -----------------------------
-COORD1 1  "ITRF$S+0"
+COORD1 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
+  # ITRF$S+0
 
 DESCR_COORD1 1  "First coordinate file"
 
-VELAPR 1  ""
+VELAPR 0
   ## widget = selwin; path = DIR_VEL; ext = EXT_VEL; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_VELAPR 1  "Velocities for first file"
 
-COORD2 1  "MIN$S+0"
+! PSD corrections for ITRF2014
+! ----------------------------
+PSDDAT 0
+  ## widget = selwin; path = DIR_PSD; ext = EXT_PSD; maxfiles = 1
+  ## emptyallowed = true; activeif = VELAPR / _
+  # 
+
+DESCR_PSDDAT 1  "PSD corrections (ITRF14)"
+
+! What to do with the other stations
+! ----------------------------------
+PSDSTA 1  "USE"
+  ## widget = combobox; editable = false; cards = USE MARK EXCLUDE
+  ## activeif = PSDDAT / _ AND VELAPR / _
+
+MSG_OTHSTA 1  "Handling of stations with PSD corrections"
+
+COORD2 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
+  # MIN$S+0
 
 DESCR_COORD2 1  "Second coordinate file"
 
 ! Transformed Coordinates
 ! -----------------------
-COORDRS 1  ""
+COORDRS 0
   ## widget = lineedit; path = DIR_CRD; ext = EXT_CRD
+  # 
 
 DESCR_COORDRS 1  "Coordinates"
 
 ! Output station fix file
 ! -----------------------
-OKSTA 1  ""
+OKSTA 0
   ## widget = lineedit; path = DIR_FIX; ext = EXT_FIX
+  # 
 
 DESCR_OKSTA 1  "File with list of stations"
 
@@ -84,9 +110,10 @@ SYSODEF 1  "0"
 
 MSG_SYSODEF 1  "Program output"
 
-SYSOUT 1  "HLM$S+0"
+SYSOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF == 0; emptyallowed = false
+  # HLM$S+0
 
 DESCR_SYSOUT 1  "Program output"
 
@@ -97,16 +124,18 @@ ERRMRG 1  "0"
 
 MSG_ERRMRG 1  "Error message"
 
-SYSERR 1  "ERROR"
+SYSERR 0
   ## widget = lineedit; path = PTH_ERR; ext = EXT_ERR
   ## activeif = ERRMRG == 0; emptyallowed = false
+  # ERROR
 
 DESCR_SYSERR 1  "Error message"
 
 ! Scratch File
 ! ------------
-AUXFIL 1  "HELMR1$J"
+AUXFIL 0
   ## widget = lineedit; path = PTH_SCR; ext = EXT_SCR; emptyallowed = false
+  # HELMR1$J
 
 DESCR_AUXFIL 1  "Scratch file"
 
@@ -114,9 +143,10 @@ DELETE_FILES 1  "AUXFIL"
 
 ! List of Used Stations
 ! ---------------------
-USESTA 1  "REFSTN"
+USESTA 0
   ## widget = selwin; path = DIR_FIX; ext = EXT_FIX; maxfiles = 1
   ## emptyallowed = true
+  # REFSTN
 
 DESCR_USESTA 1  "File with list of stations"
 
@@ -243,8 +273,9 @@ DESCR_LISTFIL 1  "List of rejected stations"
 
 ! Title: new entry
 ! ----------------
-TITLE 1  "PNZ-PP VERIFICATION OF REFERENCE STATIONS $S+0"
+TITLE 0
   ## widget = lineedit
+  # PNZ-PP VERIFICATION OF REFERENCE STATIONS $S+0
 
 MSG_TITLE 1  "Title line"
 
@@ -257,9 +288,10 @@ MSG_TITLE 1  "Title line"
 #                                                                              #
 # INPUT FILES                                                                  #
 #   First coordinate file      > %%%%%%%% <                                    # COORD1
-#   Velocities for first file  > %%%%%%%% <      (blank: no veloc. applied)    # VELAPR
+#   Velocities for first file  > %%%%%%%% <    (blank: no veloc. applied)      # VELAPR
+#   PSD correction (ITRF14)    > %%%%%%%% <    stations with PSD > %%%%%%%% <  # PSDDAT PSDSTA
 #   Second coordinate file     > %%%%%%%% <                                    # COORD2
-#   File with list of stations > %%%%%%%% <      other stations  > %%%%%%%% <  # USESTA OTHSTA
+#   File with list of stations > %%%%%%%% <    other stations    > %%%%%%%% <  # USESTA OTHSTA
 #                                                                              #
 # RESULT FILES                                                                 #
 #   Coordinates                > %%%%%%%% <                                    # COORDRS

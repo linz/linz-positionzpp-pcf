@@ -1,19 +1,19 @@
 
 ! Some keywords for automatic output
 ! ----------------------------------
-CAMPAIGN 1  "${P}/PNZPP1"
+CAMPAIGN 1  "${P}/PZDTEST"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 1  "${P}/PNZPP1/STA/SESSIONS.SES"
+SESSION_TABLE 1  "${P}/PZDTEST/STA/SESSIONS.SES"
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
 
-YR4_INFO 1  "2013"
+YR4_INFO 0
   ## widget = comment
   # $Y+0
 
-SES_INFO 1  "302Y"
+SES_INFO 0
   ## widget = comment
   # $S+0
 
@@ -23,12 +23,7 @@ USR_INFO 1  "${USER}"
 ! -------------------------------------------------------------------------
 ! Environment Variables
 ! ---------------------
-ENVIRONMENT 5
-  "U" "/home/ccrook/BERN52/GPSUSER"
-  "T" "/home/ccrook/BERN52/GPSTEMP"
-  "X" "/opt/bern52/BERN52/GPS"
-  "P" "/home/ccrook/BERN52/GPSDATA/CAMPAIGN"
-  "USER" "ccrook"
+ENVIRONMENT     1 "" ""
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! -------------------------------------------------------------------------
@@ -39,7 +34,7 @@ SHOWGEN 1  "1"
 
 MSG_SHOWGEN 1  "Show all general files"
 
-CONST 1  "${X}/GEN/CONST."
+CONST 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
   # CONST.
 
@@ -77,7 +72,7 @@ OUTPUT_TXT_COL_1 1  "GPSEST/ADDNEQ output files"
 
 ! Title
 ! -----
-TITLE 1  "PNZ-PP EXTRACT AMBIGUITY RESULTS 302Y"
+TITLE 0
   ## widget = lineedit
   # PNZ-PP EXTRACT AMBIGUITY RESULTS $S+0
 
@@ -138,7 +133,7 @@ MSG_CLKDEV 1  "Clock summary: Allan deviation"
 
 ! QIF Summary
 ! -----------
-QIFOUT 1  "${P}/PNZPP1/OUT/QIF302Y.SUM"
+QIFOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_SUM; maxfiles = -1
   # QIF$S+0
 
@@ -183,7 +178,7 @@ SYSODEF 1  "0"
 
 MSG_SYSODEF 1  "Program output"
 
-SYSOUT 1  "${P}/PNZPP1/OUT/XTR302Y.OUT"
+SYSOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF == 0; emptyallowed = false
   # XTR$S+0
@@ -197,7 +192,7 @@ ERRMRG 1  "0"
 
 MSG_ERRMRG 1  "Error message"
 
-SYSERR 1  "${U}/WORK/ERROR.MSG"
+SYSERR 0
   ## widget = lineedit; path = PTH_ERR; ext = EXT_ERR
   ## activeif = ERRMRG == 0; emptyallowed = false
   # ERROR

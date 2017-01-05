@@ -1,24 +1,26 @@
 
-CAMPAIGN 0
+CAMPAIGN 1  "${P}/PZDTEST"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 0
+SESSION_TABLE 1  "${P}/PZDTEST/STA/SESSIONS.SES"
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
 
-YR4_INFO 1  "$Y+0"
+YR4_INFO 0
   ## widget = comment
+  # $Y+0
 
-SES_INFO 1  "$S+0"
+SES_INFO 0
   ## widget = comment
+  # $S+0
 
 USR_INFO 1  "${USER}"
   ## widget = comment
 
 ! Environment Variables
 ! ---------------------
-ENVIRONMENT 0
+ENVIRONMENT     1 "" ""
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! ----------------------------------------------------------------------
@@ -58,44 +60,50 @@ MSG_SHOWGEN 1  "Show all general files"
 ! ----------------------------------------------------------------------
 ! General Constants
 ! -----------------
-CONST 1  "CONST."
+CONST 0
   ## widget = selwin; path = PTH_GEN; maxfiles = 1
+  # CONST.
 
 DESCR_CONST 1  "General constants"
 
 ! Local Geodetic Datum
 ! --------------------
-DATUM 1  "DATUM."
+DATUM 0
   ## widget = selwin; path = PTH_GEN; maxfiles = 1
+  # DATUM.
 
 DESCR_DATUM 1  "Geodetic datum"
 
 ! Phase Center Eccentricities
 ! ---------------------------
-PHASECC 1  "PCV_COD.I08"
+PHASECC 0
   ## widget = selwin; path = DIR_STA; maxfiles = 1
+  # PCV_COD.I08
 
 DESCR_PHASECC 1  "Phase center eccentricities"
 
 ! Receiver information
 ! --------------------
-RECEIVR 1  "RECEIVER.ALL"
+RECEIVR 0
   ## widget = selwin; path = PTH_GEN; maxfiles = 1
+  # RECEIVER.ALL
 
 DESCR_RECEIVR 1  "Receiver information"
 
 ! Satellite Information
 ! ---------------------
-SATELL 1  "SATELLIT.I08"
+SATELL 0
   ## widget = selwin; path = PTH_GEN; maxfiles = 1
+  # SATELLIT.I08
 
 DESCR_SATELL 1  "Satellite information"
 
 ! Satellite Problems
 ! ------------------
-SATCRUX 1  "SAT_$Y+0"
+SATCRUX 0
   ## widget = selwin; path = PTH_GEN; ext = EXT_CRX; maxfiles = 1
   ## emptyallowed = true
+  # SAT_$Y+0
 
 DESCR_SATCRUX 1  "Satellite problems"
 
@@ -109,37 +117,42 @@ DESCR_POTCOE 1  "Earth potential coefficients"
 
 ! Subdaily Pole Model
 ! -------------------
-SUBMOD 1  "IERS2010XY"
+SUBMOD 0
   ## widget = selwin; path = PTH_GEN; ext = EXT_SUB; maxfiles = 1
+  # IERS2010XY
 
 DESCR_SUBMOD 1  "Subdaily pole model"
 
 ! Nutation Model
 ! -------------------
-NUTMOD 1  "IAU2000R06"
+NUTMOD 0
   ## widget = selwin; path = PTH_GEN; ext = EXT_NUT; maxfiles = 1
+  # IAU2000R06
 
 DESCR_NUTMOD 1  "Nutation model"
 
 ! SINEX General Input File
 ! ------------------------
-SINEXIN 1  "SINEX."
+SINEXIN 0
   ## widget = selwin; path = PTH_GEN; maxfiles = 1
+  # SINEX.
 
 DESCR_SINEXIN 1  "SINEX general input file"
 
 ! IONEX Control File
 ! ------------------
-IONEXCF 1  "IONEX."
+IONEXCF 0
   ## widget = selwin; path = PTH_GEN; maxfiles = 1
+  # IONEX.
 
 DESCR_IONEXCF 1  "IONEX control file"
 
 ! GPS-UTC file
 ! -------------
-GPSUTC 1  "GPSUTC."
+GPSUTC 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
   ## emptyallowed = false
+  # GPSUTC.
 
 DESCR_GPSUTC 1  "Difference GPS-UTC"
 
@@ -154,18 +167,21 @@ DESCR_FRQINFO 1  "Frequency information"
 
 ! Scratch Files
 ! -------------
-AUXFIL 1  "GPSEST$J"
+AUXFIL 0
   ## widget = lineedit; path = PTH_SCR; ext = EXT_SCR; emptyallowed = false
+  # GPSEST$J
 
 DESCR_AUXFIL 1  "Scratch file"
 
-AUXFIL1 1  "GPSEST$J"
+AUXFIL1 0
   ## widget = lineedit; path = PTH_SCR; ext = EXT_SC1; emptyallowed = false
+  # GPSEST$J
 
 DESCR_AUXFIL1 1  "Scratch files"
 
-KINSCR 1  "GPSEST$J"
+KINSCR 0
   ## widget = lineedit; path = PTH_SCR; ext = EXT_SC2; emptyallowed = false
+  # GPSEST$J
 
 MSG_KINSCR 1  "Scratch files"
 
@@ -185,10 +201,10 @@ PZFILES 0
 
 MSG_PZFILES 1  "Phase observation files"
 
-PZFILES_PTH_COL_2 0
+PZFILES_PTH_COL_2 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_PZO
 
-PZFILES_EXT_COL_2 0
+PZFILES_EXT_COL_2 1  "PZO"
   ## widget = initmenu; pointer = EXT_PZO
 
 PZFILES_TXT_COL_1 1  "OBSERVATION FILE HEADER"
@@ -196,16 +212,17 @@ PZFILES_TXT_COL_1 1  "OBSERVATION FILE HEADER"
 PZFILES_TXT_COL_2 1  "OBSERVATION FILE"
 
 ! Phase Single Differences
-PSFILES 1  "$(CCCC)$S+0"
+PSFILES 0
   ## widget = selwin; path = DIR_PSH; ext = EXT_PSH; emptyallowed = true
   ## activeif = DIFLVL = DOUBLE
+  # $(CCCC)$S+0
 
 MSG_PSFILES 1  "Phase observation files"
 
-PSFILES_PTH_COL_2 0
+PSFILES_PTH_COL_2 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_PSO
 
-PSFILES_EXT_COL_2 0
+PSFILES_EXT_COL_2 1  "PSO"
   ## widget = initmenu; pointer = EXT_PSO
 
 PSFILES_TXT_COL_1 1  "OBSERVATION FILE HEADER"
@@ -220,10 +237,10 @@ CZFILES 0
 
 MSG_CZFILES 1  "Code observation files"
 
-CZFILES_PTH_COL_2 0
+CZFILES_PTH_COL_2 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_CZO
 
-CZFILES_EXT_COL_2 0
+CZFILES_EXT_COL_2 1  "CZO"
   ## widget = initmenu; pointer = EXT_CZO
 
 CZFILES_TXT_COL_1 1  "OBSERVATION FILE HEADER"
@@ -231,16 +248,17 @@ CZFILES_TXT_COL_1 1  "OBSERVATION FILE HEADER"
 CZFILES_TXT_COL_2 1  "OBSERVATION FILE"
 
 ! Code Single Differences
-CSFILES 1  ""
+CSFILES 0
   ## widget = selwin; path = DIR_CSH; ext = EXT_CSH; emptyallowed = true
   ## activeif = DIFLVL = DOUBLE
+  # 
 
 MSG_CSFILES 1  "Code observation files"
 
-CSFILES_PTH_COL_2 0
+CSFILES_PTH_COL_2 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_CSO
 
-CSFILES_EXT_COL_2 0
+CSFILES_EXT_COL_2 1  "CSO"
   ## widget = initmenu; pointer = EXT_CSO
 
 CSFILES_TXT_COL_1 1  "OBSERVATION FILE HEADER"
@@ -255,10 +273,10 @@ RZFILES 0
 
 MSG_RZFILES 1  "Range observation files"
 
-RZFILES_PTH_COL_2 0
+RZFILES_PTH_COL_2 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_RZO
 
-RZFILES_EXT_COL_2 0
+RZFILES_EXT_COL_2 1  "RZO"
   ## widget = initmenu; pointer = EXT_RZO
 
 RZFILES_TXT_COL_1 1  "OBSERVATION FILE HEADER"
@@ -267,22 +285,25 @@ RZFILES_TXT_COL_2 1  "OBSERVATION FILE"
 
 ! A priori Coordinates
 ! --------------------
-COORD 1  "APR$S+0"
+COORD 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
+  # APR$S+0
 
 DESCR_COORD 1  "A priori station coordinates"
 
 ! Standard Orbit
 ! --------------
-STDORB 1  "IGS$S+0"
+STDORB 0
   ## widget = selwin; path = DIR_STD; ext = EXT_STD; maxfiles = 1
+  # IGS$S+0
 
 DESCR_STDORB 1  "Satellite standard orbits"
 
 ! Pole File
 ! ---------
-POLE 1  "IGS$S+0"
+POLE 0
   ## widget = selwin; path = DIR_ERP; ext = EXT_ERP; maxfiles = 1
+  # IGS$S+0
 
 DESCR_POLE 1  "Earth rotation parameters"
 
@@ -297,48 +318,54 @@ DESCR_SATCLK 1  "Satellite clock corrections"
 
 ! Code Biases
 ! -----------
-DCBINP 1  ""
+DCBINP 0
   ## widget = selwin; path = DIR_DCB; ext = EXT_DCB; maxfiles = 1
   ## emptyallowed = true; activeif = GEOTEC = GNSS
+  # 
 
 DESCR_DCBINP 1  "Differential code biases"
 
 ! VMF grid files
 ! --------------
-VMF1_FILES 1  ""
+VMF1_FILES 0
   ## widget = selwin; path = DIR_GRD; ext = EXT_GRD; emptyallowed = true
+  # 
 
 MSG_VMF1_FILES 1  "Gridded VMF1 coefficients"
 
 ! Ionosphere Models
 ! -----------------
-IONOS 1  ""
+IONOS 0
   ## widget = selwin; path = DIR_ION; ext = EXT_ION; maxfiles = 1
   ## emptyallowed = true; activeif = GEOTEC = GNSS
+  # 
 
 DESCR_IONOS 1  "Ionosphere models"
 
 ! Ocean Loading Tables
 ! --------------------
-OCNLOAD 1  ""
+OCNLOAD 0
   ## widget = selwin; path = DIR_BLQ; ext = EXT_BLQ; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_OCNLOAD 1  "Ocean tidal loading tables"
 
 ! Atmospheric Tidal Loading Tables
 ! --------------------------------
-ATMLOAD 1  ""
+ATMLOAD 0
   ## widget = selwin; path = DIR_ATL; ext = EXT_ATL; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_ATMLOAD 1  "Atmospheric tidal loading tables"
 
 ! Radiation Pressure Coef.
 ! ------------------------
-RPRCOE 1  ""
+RPRCOE 0
   ## widget = selwin; path = DIR_RPR; ext = EXT_RPR; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_RPRCOE 1  "Satellite orbit partials"
 
@@ -361,16 +388,18 @@ DESCR_ISBINP 1  "Inter-system biases"
 
 ! Troposphere Estimates
 ! ---------------------
-TROPEST 1  "TFLT$S+0"
+TROPEST 0
   ## widget = selwin; path = DIR_TRP; ext = EXT_TRP; maxfiles = 1
   ## emptyallowed = true; activeif = GEOTEC = GNSS
+  # TFLT$S+0
 
 DESCR_TROPEST 1  "Troposphere estimates"
 
 ! Meteo Data
 ! ----------
-METFIL 1  ""
+METFIL 0
   ## widget = selwin; path = DIR_MET; ext = EXT_MET; emptyallowed = true
+  # 
 
 MSG_METFIL 1  "Meteorological data"
 
@@ -397,41 +426,46 @@ MSG_HLOAD_FILES 1  "Grid files for hydrostatic pressure loading"
 
 ! Station crux file
 ! -----------------
-STAINFO 1  ""
+STAINFO 0
   ## widget = selwin; path = DIR_STA; ext = EXT_STA; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_STAINFO 1  "Station information"
 
 ! Kinematic positions for LEOs and Stations
 ! -----------------------------------------
-KININP 1  ""
+KININP 0
   ## widget = selwin; path = DIR_KIN; ext = EXT_KIN; maxfiles = 1
   ## emptyallowed = true; activeif = GEOTEC = GNSS
+  # 
 
 DESCR_KININP 1  "Kinematic coordinates"
 
 ! Receiver Antenna Orientations
 ! -----------------------------
-ANTAZI 1  ""
+ANTAZI 0
   ## widget = selwin; path = DIR_AZI; ext = EXT_AZI; maxfiles = 1
   ## emptyallowed = true; activeif = GEOTEC = GNSS
+  # 
 
 DESCR_ANTAZI 1  "Receiver antenna orientation"
 
 ! Station Observation sigma factors for scaling the outlier limits
 ! ----------------------------------------------------------------
-STAWGT 1  ""
+STAWGT 0
   ## widget = selwin; path = DIR_SOS; ext = EXT_SOS; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_STAWGT 1  "Observation sigma factors"
 
 ! Site Eccentricities
 ! -------------------
-ECCENT 1  ""
+ECCENT 0
   ## widget = selwin; path = DIR_ECC; ext = EXT_ECC; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_ECCENT 1  "Station eccentricities"
 
@@ -499,9 +533,10 @@ SYSODEF 1  "0"
 
 MSG_SYSODEF 1  "Program output"
 
-SYSOUT 1  "$(CCCC)$S+0_Q"
+SYSOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF == 0; emptyallowed = false
+  # $(CCCC)$S+0_Q
 
 DESCR_SYSOUT 1  "Program output"
 
@@ -512,84 +547,95 @@ ERRMRG 1  "0"
 
 MSG_ERRMRG 1  "Error message"
 
-SYSERR 1  "ERROR"
+SYSERR 0
   ## widget = lineedit; path = PTH_ERR; ext = EXT_ERR
   ## activeif = ERRMRG == 0; emptyallowed = false
+  # ERROR
 
 DESCR_SYSERR 1  "Error message"
 
 ! Normal Equations
 ! ----------------
-NEQUARS 1  ""
+NEQUARS 0
   ## widget = lineedit; path = DIR_NEQ; ext = EXT_NEQ
+  # 
 
 DESCR_NEQUARS 1  "Normal equations"
 
 ! Coordinate Results
 ! ------------------
-COORDRS 1  ""
+COORDRS 0
   ## widget = lineedit; path = DIR_CRD; ext = EXT_CRD
+  # 
 
 DESCR_COORDRS 1  "Station coordinates"
 
 ! Orbital Elements
 ! ----------------
-ORBITRS 1  ""
+ORBITRS 0
   ## widget = lineedit; path = DIR_ELE; ext = EXT_ELE
+  # 
 
 DESCR_ORBITRS 1  "GNSS orbital elements"
 
 ! Earth Rotation Parameters
 ! -------------------------
-POLERS 1  ""
+POLERS 0
   ## widget = lineedit; path = DIR_ERP; ext = EXT_ERP
+  # 
 
 DESCR_POLERS 1  "Bernese ERP file"
 
 ! Pole in IERS Format
 ! -------------------
-IERSPOL 1  ""
+IERSPOL 0
   ## widget = lineedit; path = DIR_IEP; ext = EXT_IEP
+  # 
 
 DESCR_IERSPOL 1  "IERS ERP file"
 
 ! Troposphere Parameters
 ! ----------------------
-TROPSAV 1  ""
+TROPSAV 0
   ## widget = lineedit; path = DIR_TRP; ext = EXT_TRP
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_TROPSAV 1  "Troposphere estimates"
 
 ! Troposphere SINEX
 ! -----------------
-TROPSNX 1  ""
+TROPSNX 0
   ## widget = lineedit; path = DIR_TRO; ext = EXT_TRO
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_TROPSNX 1  "Troposphere SINEX"
 
 ! Ionosphere Models
 ! -----------------
-IONOSRS 1  ""
+IONOSRS 0
   ## widget = lineedit; path = DIR_ION; ext = EXT_ION
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_IONOSRS 1  "Ionosphere models"
 
 ! Ionosphere Maps
 ! ---------------
-IONEXRS 1  ""
+IONEXRS 0
   ## widget = lineedit; path = DIR_INX; ext = EXT_INX
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_IONEXRS 1  "IONEX"
 
 ! Code Bias Output File
 ! ---------------------
-DCBOUT 1  ""
+DCBOUT 0
   ## widget = lineedit; path = DIR_DCB; ext = EXT_DCB
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_DCBOUT 1  "Differential code biases"
 
@@ -602,17 +648,19 @@ DESCR_ISBOUT 1  "Inter-system biases"
 
 ! Receiver and Satellite Antenna PCV (Grid)
 ! -----------------------------------------
-PHASRSG 1  ""
+PHASRSG 0
   ## widget = lineedit; path = DIR_PHG; ext = EXT_PHG
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_PHASRSG 1  "Phase center variations (grid)"
 
 ! Receiver Antenna PCV (Harm)
 ! ---------------------------
-PHASRSH 1  ""
+PHASRSH 0
   ## widget = lineedit; path = DIR_PHH; ext = EXT_PHH
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_PHASRSH 1  "Phase center variations (harm)"
 
@@ -636,30 +684,34 @@ DESCR_CLKRNX 1  "Clock RINEX"
 
 ! Kinem. Coordinates (output)
 ! ---------------------------
-KINOUT 1  ""
+KINOUT 0
   ## widget = lineedit; path = DIR_KIN; ext = EXT_KIN
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_KINOUT 1  "Kinematic coordinates"
 
 ! Residuals
 ! ---------
-RESIDRS 1  ""
+RESIDRS 0
   ## widget = lineedit; path = DIR_RES; ext = EXT_RES
+  # 
 
 DESCR_RESIDRS 1  "Residuals"
 
 ! Covariances (All)
 ! -----------------
-COVTTRS 1  ""
+COVTTRS 0
   ## widget = lineedit; path = DIR_COV; ext = EXT_COV
+  # 
 
 DESCR_COVTTRS 1  "Full covariance matrix"
 
 ! Covariances (Coords)
 ! --------------------
-COVARRS 1  ""
+COVARRS 0
   ## widget = lineedit; path = DIR_COV; ext = EXT_COV
+  # 
 
 DESCR_COVARRS 1  "Coordinate covariance matrix"
 
@@ -686,8 +738,9 @@ DESCR_RGBOUT 1  "Range biases"
 ! ----------------------------------------------------------------------
 ! Title
 ! -----
-TITLE 1  "PNZ-PP $S+0 $(CCCC): QIF ambiguity resolution"
+TITLE 0
   ## widget = lineedit
+  # PNZ-PP $S+0 $(CCCC): QIF ambiguity resolution
 
 MSG_TITLE 1  "Title line"
 
@@ -810,37 +863,43 @@ MSG_RADIO1_2 1  "Observation window defined by start and end times"
 
 ! Observation Window: defined by session
 ! --------------------------------------
-SESSION_YEAR1 1  "$Y+0"
+SESSION_YEAR1 0
   ## widget = lineedit; multilineallowed = true; emptyallowed = false
+  # $Y+0
 
 MSG_SESSION_YEAR1 1  "Year"
 
-SESSION_STRG1 1  "$S+0"
+SESSION_STRG1 0
   ## widget = lineedit; multilineallowed = true; emptyallowed = false
+  # $S+0
 
 MSG_SESSION_STRG1 1  "Session"
 
 ! Observation Window: defined by date
 ! -----------------------------------
-STADAT1 1  ""
+STADAT1 0
   ## widget = lineedit; activeif = RADIO1_2 = 1; check_type = date
+  # 
 
 MSG_STADAT1 1  "Start time(year month day)"
 
-STATIM1 1  ""
+STATIM1 0
   ## widget = lineedit; emptyallowed = false
   ## activeif = RADIO1_2 = 1 AND STADAT1 / _; check_type = time
+  # 
 
 MSG_STATIM1 1  "Start time(hour minutes seconds)"
 
-ENDDAT1 1  ""
+ENDDAT1 0
   ## widget = lineedit; activeif = RADIO1_2 = 1; check_type = date
+  # 
 
 MSG_ENDDAT1 1  "End time(year month day)"
 
-ENDTIM1 1  ""
+ENDTIM1 0
   ## widget = lineedit; emptyallowed = false
   ## activeif = RADIO1_2 = 1 AND ENDDAT1 / _; check_type = time
+  # 
 
 MSG_ENDTIM1 1  "End time(hour minutes seconds)"
 
@@ -1146,7 +1205,7 @@ MSG_MXAMBIT 1  "Maximal number of ambiguities fixed per iteration step"
 LEAST 1  "3.0"
   ## widget = lineedit; check_type = real; check_min = 0.0
 
-MSG_LEAST 1  "Ambiguity resolvable if exactly 1 integer within"
+MSG_LEAST 1  "Ambiguity resolvable if exactly one integer within"
 
 ! Amb-Sigma: Maximal Sigma of a Resolvable Ambiguity
 ! --------------------------------------------------
@@ -1237,7 +1296,7 @@ USERXCLK 1  "BERNESE_FILE"
   ## widget = combobox; cards = BERNESE_FILE CLOCK_RINEX; editable = false
   ## activeif = SATCLK / _ AND RXCLKIN / _ AND DIFLVL = ZERO
 
-MSG_USERXCLK 1  "Use clock RINEX input file for satellite clocks"
+MSG_USERXCLK 1  "Primary source for satellite clocks"
 
 ! Clk est.: Skip obs. w/o rec clock in input clock RINEX
 ! ------------------------------------------------------
@@ -1246,7 +1305,7 @@ NORXCLKR 1  "CLK_FROM_OBS_FILE"
   ## cards = DO_NOT_USE_OBSERV CLK_FROM_OBS_FILE INTERPOLATE
   ## activeif = RXCLKIN / _ AND DIFLVL = ZERO
 
-MSG_NORXCLKR 1  "Receiver clock not in input clock RINEX file"
+MSG_NORXCLKR 1  "Receiver clock missing in clock RINEX file"
 
 ! Clk est.: Skip obs. w/o sat clock in input clock RINEX
 ! ------------------------------------------------------
@@ -1255,7 +1314,7 @@ NORXCLKS 1  "SAT_CLK_IS_ZERO"
   ## cards = DO_NOT_USE_OBSERV INTERPOLATE SAT_CLK_IS_ZERO TRY_SAT_CLK_FILE
   ## activeif = RXCLKIN / _ AND DIFLVL = ZERO
 
-MSG_NORXCLKS 1  "Satellite clock not in input clock RINEX file"
+MSG_NORXCLKS 1  "Satellite clock missing in clock RINEX file"
 
 ! Clk est.: Skip obs. w/o sat clock
 ! ---------------------------------
@@ -1264,7 +1323,7 @@ NOSATCLK 1  "0"
   ## cards = DO_NOT_USE_OBSERV INTERPOLATE SAT_CLK_IS_ZERO
   ## activeif = SATCLK / _ AND DIFLVL = ZERO
 
-MSG_NOSATCLK 1  "Observation without an input clock value"
+MSG_NOSATCLK 1  "Satellite clock missing in Bernese clock file"
 
 ! Interpolation of clocks
 ! -----------------------
@@ -1272,7 +1331,7 @@ SECIPL 1  "0"
   ## widget = lineedit; check_typ = real; check_min = 0
   ## activeif = NORXCLKR = INTERPOLATE OR NORXCLKS = INTERPOLATE OR NOSATCLK = INTERPOLATE AND DIFLVL = ZERO
 
-MSG_SECIPL 1  "Interpolation of clocks"
+MSG_SECIPL 1  "Clock interpolation allowed over"
 
 ! Use only phase observations for epoch parameter computation
 ! -----------------------------------------------------------
@@ -1305,9 +1364,10 @@ MSG_SAMPLEP2 1  "Sampling rate for preelimination"
 
 ! Clk est.: Edit Level
 ! --------------------
-EDTLVL 1  ""
+EDTLVL 0
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = DIFLVL / DOUBLE
+  # 
 
 MSG_EDTLVL 1  "Maximum tolerated O-C term"
 
@@ -1358,8 +1418,9 @@ MSG_FIXSTA 1  "Coordinates fixed"
 
 ! Positioning: Manual selection (fixed)
 ! -------------------------------------
-STATION1 1  ""
+STATION1 0
   ## widget = selwin; activeif = FIXSTA == MANUAL; pointer = CENLST
+  # 
 
 MSG_STATION1 1  "Stations to be fixed (Manual selection)"
 
@@ -1394,8 +1455,9 @@ MSG_SIGSTA 1  "Coordinates constrained"
 
 ! Positioning: manual selected Sigma Station(s)
 ! ---------------------------------------------
-STATION4 1  ""
+STATION4 0
   ## widget = selwin; activeif = SIGSTA == MANUAL; pointer = CENLST
+  # 
 
 MSG_STATION4 1  "Stations to be constrained (Manual selection)"
 
@@ -1410,12 +1472,12 @@ MSG_STAFILE4 1  "List of stations (and sigmas) from file"
 
 ! Flags for Sigma station(s)
 ! --------------------------
-STAFLAG4 4
-  "I"
-  "G"
-  "M"
-  "N"
+STAFLAG4 0
   ## widget = lineedit; activeif = SIGSTA = WITH_FLAG
+  # I
+  # G
+  # M
+  # N
 
 MSG_STAFLAG4 1  "Constrain: Stations with specific flags in CRD file"
 
@@ -1478,9 +1540,10 @@ SEMIAXIS 1  "1"
 
 MSG_SEMIAXIS 1  "Orb.est: Semi major axis"
 
-SIGSEMI 1  ""
+SIGSEMI 0
   ## widget = lineedit; activeif = SEMIAXIS = 1; check_type = real
   ## check_min = 0.0
+  # 
 
 MSG_SIGSEMI 1  "Orb.est: a priori sigma of semi major axis"
 
@@ -1491,9 +1554,10 @@ ECCENTR 1  "1"
 
 MSG_ECCENTR 1  "Orb.est: eccentricity"
 
-SIGECCE 1  ""
+SIGECCE 0
   ## widget = lineedit; activeif = ECCENTR = 1; check_type = real
   ## check_min = 0.0
+  # 
 
 MSG_SIGECCE 1  "Orb.est: a priori sigma of eccentricity"
 
@@ -1504,9 +1568,10 @@ INCLIN 1  "1"
 
 MSG_INCLIN 1  "Orb.est: inclination"
 
-SIGINCL 1  ""
+SIGINCL 0
   ## widget = lineedit; activeif = INCLIN = 1; check_type = real
   ## check_min = 0.0
+  # 
 
 MSG_SIGINCL 1  "Orb.est: a priori sigma of inclination"
 
@@ -1517,9 +1582,10 @@ ASCNODE 1  "1"
 
 MSG_ASCNODE 1  "Orb.est: ascending node"
 
-SIGASCN 1  ""
+SIGASCN 0
   ## widget = lineedit; activeif = ASCNODE = 1; check_type = real
   ## check_min = 0.0
+  # 
 
 MSG_SIGASCN 1  "Orb.est: a priori sigma of ascending node"
 
@@ -1530,9 +1596,10 @@ PERIGEE 1  "1"
 
 MSG_PERIGEE 1  "Orb.est: perigee"
 
-SIGPERI 1  ""
+SIGPERI 0
   ## widget = lineedit; activeif = PERIGEE = 1; check_type = real
   ## check_min = 0.0
+  # 
 
 MSG_SIGPERI 1  "Orb.est: a priori sigma of perigee"
 
@@ -1543,9 +1610,10 @@ ARGLAT 1  "1"
 
 MSG_ARGLAT 1  "Orb.est: argument of latitude"
 
-SIGARGL 1  ""
+SIGARGL 0
   ## widget = lineedit; activeif = ARGLAT = 1; check_type = real
   ## check_min = 0.0
+  # 
 
 MSG_SIGARGL 1  "Orb.est: a priori sigma of argument of latitude"
 
@@ -1556,9 +1624,10 @@ PARD0 1  "1"
 
 MSG_PARD0 1  "Orb.est: Constant D term"
 
-SIGD0 1  ""
+SIGD0 0
   ## widget = lineedit; activeif = PARD0 = 1; check_type = real
   ## check_min = 0.0
+  # 
 
 MSG_SIGD0 1  "Orb.est: a priori sigma of constant D term"
 
@@ -1569,9 +1638,10 @@ PARY0 1  "1"
 
 MSG_PARY0 1  "Orb.est: Constant Y term"
 
-SIGY0 1  ""
+SIGY0 0
   ## widget = lineedit; activeif = PARY0 = 1; check_type = real
   ## check_min = 0.0
+  # 
 
 MSG_SIGY0 1  "Orb.est: a priori sigma of constant Y term"
 
@@ -1582,9 +1652,10 @@ PARX0 1  "0"
 
 MSG_PARX0 1  "Orb.est: Constant X term"
 
-SIGX0 1  ""
+SIGX0 0
   ## widget = lineedit; activeif = PARX0 = 1; check_type = real
   ## check_min = 0.0
+  # 
 
 MSG_SIGX0 1  "Orb.est: a priori sigma of constant X term"
 
@@ -1595,9 +1666,10 @@ PRPARD0 1  "0"
 
 MSG_PRPARD0 1  "Orb.est: periodic D terms"
 
-SIGPRD0 1  ""
+SIGPRD0 0
   ## widget = lineedit; activeif = PRPARD0 = 1; check_type = real
   ## check_min = 0.0
+  # 
 
 MSG_SIGPRD0 1  "Orb.est: a priori sigma of periodic D terms"
 
@@ -1608,9 +1680,10 @@ PRPARY0 1  "0"
 
 MSG_PRPARY0 1  "Orb.est: periodic Y terms"
 
-SIGPRY0 1  ""
+SIGPRY0 0
   ## widget = lineedit; activeif = PRPARY0 = 1; check_type = real
   ## check_min = 0.0
+  # 
 
 MSG_SIGPRY0 1  "Orb.est: a priori sigma of periodic Y terms"
 
@@ -1621,9 +1694,10 @@ PRPARX0 1  "0"
 
 MSG_PRPARX0 1  "Orb.est: periodic X terms"
 
-SIGPRX0 1  ""
+SIGPRX0 0
   ## widget = lineedit; activeif = PRPARX0 = 1; check_type = real
   ## check_min = 0.0
+  # 
 
 MSG_SIGPRX0 1  "Orb.est: a priori sigma of periodic X terms"
 
@@ -1948,8 +2022,9 @@ ESTSUN2 1  "0"
 
 MSG_ESTSUN2 1  "Direction to Sun pulses"
 
-SIGSUN2 1  ""
+SIGSUN2 0
   ## widget = lineedit
+  # 
 
 MSG_SIGSUN2 1  "Sigma direction to Sun pulses"
 
@@ -1960,8 +2035,9 @@ ESTYDIR2 1  "0"
 
 MSG_ESTYDIR2 1  "Y-direction pulses"
 
-SIGYDIR2 1  ""
+SIGYDIR2 0
   ## widget = lineedit
+  # 
 
 MSG_SIGYDIR2 1  "Sigma Y-direction pulses"
 
@@ -1972,8 +2048,9 @@ ESTXDIR2 1  "0"
 
 MSG_ESTXDIR2 1  "X-direction pulses"
 
-SIGXDIR2 1  ""
+SIGXDIR2 0
   ## widget = lineedit
+  # 
 
 MSG_SIGXDIR2 1  "Sigma X-direction pulses"
 
@@ -2070,7 +2147,7 @@ MSG_SIGREL_G 1  "Tropo: relative horizontal gradients a priori sigma"
 ! -------------------------------
 SPESEL 1  "NONE"
   ## widget = combobox; editable = false
-  ## cards = NONE FIRST LAST FROM_FILE MANUAL WITH_TROPO
+  ## cards = NONE FIRST LAST FROM_FILE MANUAL
 
 MSG_SPESEL 1  "Tropo: special sigma station selection"
 
@@ -2118,8 +2195,9 @@ MSG_SPEREL_G 1  "Tropo: relative special gradient a priori sigma"
 
 ! Tropo: Stations with special Troposphere
 ! ----------------------------------------
-STATION3 1  ""
+STATION3 0
   ## widget = selwin; activeif = SPESEL == MANUAL; pointer = STALST
+  # 
 
 MSG_STATION3 1  "Tropo: special sigma for stations"
 
@@ -2134,9 +2212,10 @@ MSG_STAFILE3 1  "Tropo: file with stations for special sigma"
 
 ! Tropo: Stations with no Troposphere
 ! -----------------------------------
-STATION6 1  ""
+STATION6 0
   ## widget = selwin; activeif = SITEROP == 1 AND NTRPSEL == MANUAL
   ## pointer = STALST
+  # 
 
 MSG_STATION6 1  "Tropo: stations with no troposphere est."
 
@@ -2209,15 +2288,17 @@ MSG_LTRPPAR 1  "Local Tropo Model: polynomial degree"
 
 ! L-trp: absolute a priori sigma
 ! ------------------------------
-LTRPSIG1 1  ""
+LTRPSIG1 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_LTRPSIG1 1  "Local Tropo: a priori sigma for zero-order term"
 
 ! L-trp: relative a priori sigma
 ! -----------------------------
-LTRPSIG2 1  ""
+LTRPSIG2 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_LTRPSIG2 1  "Local Tropo: a priori sigma for other terms"
 
@@ -2322,8 +2403,9 @@ MSG_LONPOL 1  "GIM: longitude of geomagnetic pole"
 
 ! GIM: Absolute Sigma for Coefficients
 ! ------------------------------------
-SIGCOE 1  ""
+SIGCOE 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_SIGCOE 1  "GIM: absolute sigma for coefficients"
 
@@ -2344,17 +2426,19 @@ MSG_HGTEST 1  "GIM: number of height parameters"
 
 ! GIM: Absolute Sigma for Height Parameters
 ! -----------------------------------------
-SIGHGT 1  ""
+SIGHGT 0
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = IONOS / _ AND HGTEST / NONE
+  # 
 
 MSG_SIGHGT 1  "GIM: absolute sigma for height parameters"
 
 ! GIM: Relative Sigma for Height Parameters
 ! -----------------------------------------
-RELHGT 1  ""
+RELHGT 0
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = IONOS / _ AND HGTEST = EACH
+  # 
 
 MSG_RELHGT 1  "GIM: relative sigma for height parameters"
 
@@ -2480,7 +2564,7 @@ ERP 1  "0"
   ## widget = checkbox
   ## activeif = FREQUENCY / L4 AND FREQUENCY / MELWUEBB AND FREQUENCY / DTEC
 
-MSG_ERP 1  "Parameter Setup: Earth rotation parameters"
+MSG_ERP 1  "Parameter Setup: Earth orientation parameters"
 
 ! Erp: Total number of sets
 ! -------------------------
@@ -2631,35 +2715,41 @@ RADIO7_2 1  "1"
 
 ! Erp: Time Window (session definition)
 ! -------------------------------------
-SESSION_YEAR7 1  "$Y+0"
+SESSION_YEAR7 0
   ## widget = lineedit; multilineallowed = true
+  # $Y+0
 
 MSG_SESSION_YEAR7 1  "ERP: time interval(YEAR)"
 
-SESSION_STRG7 1  "$S+0"
+SESSION_STRG7 0
   ## widget = lineedit; multilineallowed = true
+  # $S+0
 
 MSG_SESSION_STRG7 1  "ERP: time interval(SESSION)"
 
 ! Erp: Time Window (definition by date/time)
 ! ------------------------------------------
-STADAT7 1  ""
+STADAT7 0
   ## widget = lineedit
+  # 
 
 MSG_STADAT7 1  "ERP: start time(Year Month Day)"
 
-STATIM7 1  ""
+STATIM7 0
   ## widget = lineedit
+  # 
 
 MSG_STATIM7 1  "ERP: start time(Hour Minutes Seconds)"
 
-ENDDAT7 1  ""
+ENDDAT7 0
   ## widget = lineedit
+  # 
 
 MSG_ENDDAT7 1  "ERP: end time(Year Month Day)"
 
-ENDTIM7 1  ""
+ENDTIM7 0
   ## widget = lineedit
+  # 
 
 MSG_ENDTIM7 1  "ERP: end time(Hour Minutes Seconds)"
 
@@ -2687,9 +2777,10 @@ MSG_COMX 1  "X component"
 
 ! Sigma for Center of Mass X
 ! --------------------------
-SIGCOMX 1  ""
+SIGCOMX 0
   ## widget = lineedit; activeif = COMX = 1; check_type = real
   ## check_min = 0.0
+  # 
 
 MSG_SIGCOMX 1  "A priori sigma for Geocenter, comp. X"
 
@@ -2702,9 +2793,10 @@ MSG_COMY 1  "Y-component"
 
 ! Sigma for Center of Mass Y
 ! --------------------------
-SIGCOMY 1  ""
+SIGCOMY 0
   ## widget = lineedit; activeif = COMY = 1; check_type = real
   ## check_min = 0.0
+  # 
 
 MSG_SIGCOMY 1  "A priori sigma for Geocenter, comp. Y"
 
@@ -2717,9 +2809,10 @@ MSG_COMZ 1  "Z component"
 
 ! Sigma for Center of Mass Z
 ! --------------------------
-SIGCOMZ 1  ""
+SIGCOMZ 0
   ## widget = lineedit; activeif = COMZ = 1; check_type = real
   ## check_min = 0.0
+  # 
 
 MSG_SIGCOMZ 1  "A priori sigma for Geocenter, comp. Z"
 
@@ -2819,25 +2912,28 @@ MSG_SATANTZ 1  "Z component"
 
 ! Sat. ant. off: sigma for X comp.
 ! --------------------------------
-SATANTSX 1  ""
+SATANTSX 0
   ## widget = lineedit; activeif = SATANTX = 1; check_type = real
   ## check_min = 0.0
+  # 
 
 MSG_SATANTSX 1  "Sat.ant.offset: sigma for X comp."
 
 ! Sat. ant. off: sigma for Y comp.
 ! --------------------------------
-SATANTSY 1  ""
+SATANTSY 0
   ## widget = lineedit; activeif = SATANTY = 1; check_type = real
   ## check_min = 0.0
+  # 
 
 MSG_SATANTSY 1  "Sat.ant.offset: sigma for Y comp."
 
 ! Sat. ant. off: sigma for Z comp.
 ! --------------------------------
-SATANTSZ 1  ""
+SATANTSZ 0
   ## widget = lineedit; activeif = SATANTZ = 1; check_type = real
   ## check_min = 0.0
+  # 
 
 MSG_SATANTSZ 1  "Sat.ant.offset: sigma for Z comp."
 
@@ -2937,8 +3033,9 @@ MSG_SAPDAZI 1  "Sat.Ant.PCV: azimuth increment"
 
 ! Sat. ant. PCV: sigma for estimation
 ! -----------------------------------
-SAPSIGMA 1  ""
+SAPSIGMA 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_SAPSIGMA 1  "Sat.Ant.PCV: sigma for estimation"
 
@@ -3034,17 +3131,19 @@ MSG_RAOFRQ 1  "Receiver antenna offsets Frequencies"
 
 ! Rec. ant. off: sigma (horiz)
 ! ----------------------------
-RAOSIGH 1  ""
+RAOSIGH 0
   ## widget = lineedit; activeif = RAON == 1 OR RAOE == 1 OR RAOU == 1
   ## check_type = real; check_min = 0.0
+  # 
 
 MSG_RAOSIGH 1  "Rec.Ant.offset: sigma of horizontal comp."
 
 ! Rec. ant. off: sigma (vert)
 ! ---------------------------
-RAOSIGV 1  ""
+RAOSIGV 0
   ## widget = lineedit; activeif = RAON == 1 OR RAOE == 1 OR RAOU == 1
   ## check_type = real; check_min = 0.0
+  # 
 
 MSG_RAOSIGV 1  "Rec.Ant.offset: sigma of vertical comp."
 
@@ -3059,47 +3158,53 @@ MSG_RAOSEL 1  "Rec. ant. off.: Manual setup: Grouping"
 
 ! Rec. ant. off: list of indiv. antennas
 ! --------------------------------------
-RAOANT 1  ""
+RAOANT 0
   ## widget = selwin; pointer = ANTLST; activeif = RAOSEL = INDIVIDUAL
+  # 
 
 MSG_RAOANT 1  "Rec.Ant.Offset: list of estimated antennas"
 
 ! Rec. ant. off: list of indiv. reference antennas
 ! ------------------------------------------------
-RAOREFI 1  ""
+RAOREFI 0
   ## widget = selwin; pointer = ANTLST; activeif = RAOSEL = INDIVIDUAL
+  # 
 
 MSG_RAOREFI 1  "Rec.Ant.offset: list of reference antennas"
 
 ! Rec. ant. off: list of antenna groups (rec.-indep.)
 ! ---------------------------------------------------
-RAOGRPI 1  ""
+RAOGRPI 0
   ## widget = selwin; pointer = ANTGRPRI
   ## activeif = RAOSEL = RECEIVER-INDEPENDENT
+  # 
 
 MSG_RAOGRPI 1  "Rec.Ant.offset: list of estimated antenna groups (rec.-indep.)"
 
 ! Rec. ant. off: list of reference antennas (rec.-indep.)
 ! -------------------------------------------------------
-RAOREFGI 1  ""
+RAOREFGI 0
   ## widget = selwin; pointer = ANTGRPRI
   ## activeif = RAOSEL = RECEIVER-INDEPENDENT
+  # 
 
 MSG_RAOREFGI 1  "Rec.Ant.offset: list of reference antennas (rec.-indep.)"
 
 ! Rec. ant. off: list of antenna groups (rec.-dep.)
 ! -------------------------------------------------
-RAOGRP 1  ""
+RAOGRP 0
   ## widget = selwin; pointer = ANTGRP
   ## activeif = RAOSEL = RECEIVER-DEPENDENT
+  # 
 
 MSG_RAOGRP 1  "Rec.Ant.offset: list of antenna groups (rec.-dep.)"
 
 ! Rec. ant. off: list of reference antennas (rec.-dep.)
 ! -----------------------------------------------------
-RAOREFG 1  ""
+RAOREFG 0
   ## widget = selwin; pointer = ANTGRP
   ## activeif = RAOSEL = RECEIVER-DEPENDENT
+  # 
 
 MSG_RAOREFG 1  "Rec.Ant.offset: list of reference antennas (rec.-dep.)"
 
@@ -3272,8 +3377,9 @@ MSG_RAPFRQ 1  "Rec. ant. PCV: Frequencies"
 
 ! Rec. ant. PCV: sigma for estimation
 ! -----------------------------------
-RAPSIGMA 1  ""
+RAPSIGMA 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_RAPSIGMA 1  "Rec.Ant.PCV: a priori sigma"
 
@@ -3342,47 +3448,53 @@ MSG_RAPSEL 1  "Rec. Ant. PCV: Grouping"
 
 ! Rec. ant. PCV: List of individual antennas
 ! ------------------------------------------
-RAPANT 1  ""
+RAPANT 0
   ## widget = selwin; pointer = ANTLST; activeif = RAPSEL = INDIVIDUAL
+  # 
 
 MSG_RAPANT 1  "Rec.Ant.PCV: list of individual antennas"
 
 ! Rec. ant. PCV: List of indiv. reference antennas
 ! ------------------------------------------------
-RAPREFI 1  ""
+RAPREFI 0
   ## widget = selwin; pointer = ANTLST; activeif = RAPSEL = INDIVIDUAL
+  # 
 
 MSG_RAPREFI 1  "Rec.Ant.PCV: list of indiv. ref. antennas"
 
 ! Rec. ant. PCV: List of antenna groups (rec.-indep.)
 ! ---------------------------------------------------
-RAPGRPI 1  ""
+RAPGRPI 0
   ## widget = selwin; pointer = ANTGRPRI
   ## activeif = RAPSEL = RECEIVER-INDEPENDENT
+  # 
 
 MSG_RAPGRPI 1  "Rec.Ant.PCV: list of antenna groups (rec.-indep.)"
 
 ! Rec. ant. PCV: List of reference antennas (rec.-indep.)
 ! -------------------------------------------------------
-RAPREFGI 1  ""
+RAPREFGI 0
   ## widget = selwin; pointer = ANTGRPRI
   ## activeif = RAPSEL = RECEIVER-INDEPENDENT
+  # 
 
 MSG_RAPREFGI 1  "Rec.Ant.PCV: list of ref. antennas (rec.-indep.)"
 
 ! Rec. ant. PCV: List of antenna groups (rec.-dep.)
 ! -------------------------------------------------
-RAPGRP 1  ""
+RAPGRP 0
   ## widget = selwin; pointer = ANTGRP
   ## activeif = RAPSEL = RECEIVER-DEPENDENT
+  # 
 
 MSG_RAPGRP 1  "Rec.Ant.PCV: list of antenna groups (rec.-dep.)"
 
 ! Rec. ant. PCV: List of reference antennas (rec.-dep.)
 ! -----------------------------------------------------
-RAPREFG 1  ""
+RAPREFG 0
   ## widget = selwin; pointer = ANTGRP
   ## activeif = RAPSEL = RECEIVER-DEPENDENT
+  # 
 
 MSG_RAPREFG 1  "Rec.Ant.PCV: list of ref. antennas (rec.-dep.)"
 
@@ -3528,7 +3640,7 @@ GRDLOAD 1  "0"
   ## widget = checkbox
   ## activeif = ALOAD_FILES / _ OR ONTLD_FILES / _ OR HLOAD_FILES / _ AND FREQUENCY / L4 AND FREQUENCY / MELWUEBB AND FREQUENCY / DTEC
 
-MSG_GRDLOAD 1  "Scaling factors for Vienna grid file"
+MSG_GRDLOAD 1  "Scaling related to loading effects"
 
 ! ATM-LOAD: Atmospheric pressure loading
 ! --------------------------------------
@@ -3667,7 +3779,7 @@ MSG_CLOCKR 1  "Receiver clock offsets"
 CLOCKS 1  "0"
   ## widget = checkbox; activeif = DIFLVL = ZERO
 
-MSG_CLOCKS 1  "GNSS clock offsets"
+MSG_CLOCKS 1  "Satellite clock offsets"
 
 ! Sum condition for ref clocks
 ! ----------------------------
@@ -3886,37 +3998,43 @@ MSG_RADIO5_2 1  "Defined by start and end times"
 
 ! Rclk.off: Time Interval (Session spec.)
 ! ------------------------------------------
-SESSION_YEAR5 1  "$Y+0"
+SESSION_YEAR5 0
   ## widget = lineedit; multilineallowed = true; emptyallowed = false
+  # $Y+0
 
 MSG_SESSION_YEAR5 1  "Rclk.off: Time Interval(YEAR)"
 
-SESSION_STRG5 1  "$S+0"
+SESSION_STRG5 0
   ## widget = lineedit; multilineallowed = true; emptyallowed = false
+  # $S+0
 
 MSG_SESSION_STRG5 1  "Rclk.off: Time Interval(SESSION)"
 
 ! Rclk.off: Time Interval (date/time)
 ! --------------------------------------
-STADAT5 1  ""
+STADAT5 0
   ## widget = lineedit; activeif = RADIO5_2 = 1; check_type = date
+  # 
 
 MSG_STADAT5 1  "Rclk.off:Start Time(Year Month Day)"
 
-STATIM5 1  ""
+STATIM5 0
   ## widget = lineedit; emptyallowed = false
   ## activeif = RADIO5_2 = 1 AND STADAT5 / _; check_type = time
+  # 
 
 MSG_STATIM5 1  "Rclk.off:Start Time(Hour Minutes Seconds)"
 
-ENDDAT5 1  ""
+ENDDAT5 0
   ## widget = lineedit; activeif = RADIO5_2 = 1; check_type = date
+  # 
 
 MSG_ENDDAT5 1  "Rclk.off:End Time(Year Month Day)"
 
-ENDTIM5 1  ""
+ENDTIM5 0
   ## widget = lineedit; emptyallowed = false
   ## activeif = RADIO5_2 = 1 AND ENDDAT5 / _; check_type = time
+  # 
 
 MSG_ENDTIM5 1  "Rclk.off:End Time(Hour Minutes Seconds)"
 
@@ -4175,9 +4293,10 @@ MSG_HILC1 1  "Radial"
 
 ! Hill: Sigma for constant radial force
 ! -------------------------------------
-SIGHILC1 1  ""
+SIGHILC1 0
   ## widget = lineedit; activeif = HILC1 == 1 AND HILL_D == 1
   ## check_type = real; check_min = 0.0
+  # 
 
 MSG_SIGHILC1 1  "Hill: Sigma for constant radial force"
 
@@ -4190,9 +4309,10 @@ MSG_HILC2 1  "Along track"
 
 ! Hill: Sigma for constant force in plane
 ! ---------------------------------------
-SIGHILC2 1  ""
+SIGHILC2 0
   ## widget = lineedit; activeif = HILC2 == 1 AND HILL_D == 1
   ## check_type = real; check_min = 0.0
+  # 
 
 MSG_SIGHILC2 1  "Hill: Sigma for along track"
 
@@ -4205,9 +4325,10 @@ MSG_HILC3 1  "Out of plane"
 
 ! Hill: Sigma for constant force out of plane
 ! -------------------------------------------
-SIGHILC3 1  ""
+SIGHILC3 0
   ## widget = lineedit; activeif = HILC3 == 1 AND HILL_D == 1
   ## check_type = real; check_min = 0.0
+  # 
 
 MSG_SIGHILC3 1  "Hill: Sigma for constant force out of plane"
 
@@ -4220,9 +4341,10 @@ MSG_HILP1 1  "Periodic Radial"
 
 ! Hill: Sigma for periodic radial force
 ! -------------------------------------
-SIGHILP1 1  ""
+SIGHILP1 0
   ## widget = lineedit; activeif = HILP1 == 1 AND HILL_D == 1
   ## check_type = real; check_min = 0.0
+  # 
 
 MSG_SIGHILP1 1  "Hill: Sigma for periodic radial force"
 
@@ -4235,9 +4357,10 @@ MSG_HILP2 1  "Periodic along track"
 
 ! Hill: Sigma for periodic force in plane
 ! ---------------------------------------
-SIGHILP2 1  ""
+SIGHILP2 0
   ## widget = lineedit; activeif = HILP2 == 1 AND HILL_D == 1
   ## check_type = real; check_min = 0.0
+  # 
 
 MSG_SIGHILP2 1  "Hill: Sigma for periodic force along track"
 
@@ -4250,9 +4373,10 @@ MSG_HILP3 1  "Periodic out of plane"
 
 ! Hill: Sigma for periodic force out of plane
 ! -------------------------------------------
-SIGHILP3 1  ""
+SIGHILP3 0
   ## widget = lineedit; activeif = HILP3 == 1 AND HILL_D == 1
   ## check_type = real; check_min = 0.0
+  # 
 
 MSG_SIGHILP3 1  "Hill: Sigma for periodic force out of plane"
 
@@ -4304,8 +4428,9 @@ MSG_POTORD 1  "Gravity: Max order of development"
 
 ! Gravity: a priori sigma
 ! -----------------------
-POTSIG 1  ""
+POTSIG 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_POTSIG 1  "Gravity: a priori sigma"
 
@@ -4611,8 +4736,9 @@ MSG_PRE30 1  "Pre-elimination: GNSS-Specific parameters"
 
 ! Define Time Offset
 ! ------------------
-PAR_OFF 1  ""
+PAR_OFF 0
   ## widget = lineedit; emptyallowed = true
+  # 
 
 MSG_PAR_OFF 1  "Time offset for Parameter intervals"
 
@@ -4849,7 +4975,7 @@ USESYNCR 1  "0"
 # GENERAL INPUT FILES                                                          #
 #   General constants           > %%%%%%%%%%%% <                               # CONST
 #   Geodetic datum              > %%%%%%%%%%%% <                               # DATUM
-#   Phase center variations     > %%%%%%%%%%%% <  Moved to STA                 # PHASECC
+#   Phase center variations     > %%%%%%%%%%%% < Moved to STA                  # PHASECC
 #   Receiver information        > %%%%%%%%%%%% <                               # RECEIVR
 #   Satellite information       > %%%%%%%%%%%% <                               # SATELL
 #   Satellite problems          > %%%%%%%%%%%% <                               # SATCRUX

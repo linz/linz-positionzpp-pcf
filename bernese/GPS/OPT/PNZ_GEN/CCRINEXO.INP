@@ -1,30 +1,25 @@
 
 ! Environment Variables
 ! ---------------------
-ENVIRONMENT 5
-  "U" "/home/ccrook/BERN52/GPSUSER"
-  "T" "/home/ccrook/BERN52/GPSTEMP"
-  "X" "/opt/bern52/BERN52/GPS"
-  "P" "/home/ccrook/BERN52/GPSDATA/CAMPAIGN"
-  "USER" "ccrook"
+ENVIRONMENT     1 "" ""
   ## widget = initmenu; pointer = ENVIR_LIST
 
-CAMPAIGN 1  "${P}/PNZPP1"
+CAMPAIGN 1  "${P}/PZDTEST"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
 USR_INFO 1  "${USER}"
   ## widget = comment
 
-SESSION_TABLE 1  "${P}/PNZPP1/STA/SESSIONS.SES"
+SESSION_TABLE 1  "${P}/PZDTEST/STA/SESSIONS.SES"
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
 
-YR4_INFO 1  "2013"
+YR4_INFO 0
   ## widget = comment
   # $Y+0
 
-SES_INFO 1  "302Y"
+SES_INFO 0
   ## widget = comment
   # $S+0
 
@@ -110,19 +105,19 @@ RADIO_2 1  "0"
 
 MSG_RADIO_2 1  "Defined by start and end times"
 
-SESSION_YEAR 1  "2013"
+SESSION_YEAR 0
   ## widget = lineedit; multilineallowed = true; emptyallowed = false
   # $Y+0
 
 MSG_SESSION_YEAR 1  "Year for sessions def. the time window"
 
-SESSION_STRG 1  "302Y"
+SESSION_STRG 0
   ## widget = lineedit; multilineallowed = true; emptyallowed = false
   # $S+0
 
 MSG_SESSION_STRG 1  "Sessions defining the time window"
 
-STADAT 1  "2013 10 29"
+STADAT 0
   ## widget = lineedit; activeif = RADIO_2 = 1; check_type = date
   # $YMD_STR+0
 
@@ -134,7 +129,7 @@ STATIM 1  "00 00 00"
 
 MSG_STATIM 1  "Start of time window (hour min. sec.)"
 
-ENDDAT 1  "2013 10 29"
+ENDDAT 0
   ## widget = lineedit; activeif = RADIO_2 = 1; check_type = date
   # $YMD_STR+0
 
@@ -159,7 +154,7 @@ FILELIST_TXT_COL_1 1  "Input RINEX files"
 
 MSG_FILELIST 1  "RINEX files"
 
-DEVOUT 1  "${P}/PNZPP1/RAW/"
+DEVOUT 1  "${P}/PZDTEST/RAW/"
   ## widget = initmenu; pointer = DIR_RXO
 
 DESCR_DEVOUT 1  "Output path"
@@ -169,7 +164,7 @@ REFEPO 0
 
 MSG_REFEPO 1  "Reference epoch for output files"
 
-FILSEQ 1  "302Y"
+FILSEQ 1  "0"
   ## widget = initmenu; pointer = SESSION_CHAR
 
 MSG_FILSEQ 1  "Session character"
@@ -181,7 +176,7 @@ SYSODEF 1  "0"
 
 MSG_SYSODEF 1  "Program output"
 
-SYSOUT 1  "${P}/PNZPP1/OUT/CCRINEXO.OUT"
+SYSOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF == 0; emptyallowed = false
   # CCRINEXO
@@ -195,7 +190,7 @@ ERRMRG 1  "0"
 
 MSG_ERRMRG 1  "Error message"
 
-SYSERR 1  "${U}/WORK/ERROR.MSG"
+SYSERR 0
   ## widget = lineedit; path = PTH_ERR; ext = EXT_ERR
   ## activeif = ERRMRG == 0; emptyallowed = false
   # ERROR

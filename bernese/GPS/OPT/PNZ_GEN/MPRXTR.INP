@@ -1,19 +1,19 @@
 
 ! Some keywords for automatic output
 ! ----------------------------------
-CAMPAIGN 1  "${P}/POS_PPP"
+CAMPAIGN 1  "${P}/PZDTEST"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 1  "${P}/POS_PPP/STA/SESSIONS.SES"
+SESSION_TABLE 1  "${P}/PZDTEST/STA/SESSIONS.SES"
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
 
-YR4_INFO 1  "2003"
+YR4_INFO 0
   ## widget = comment
   # $Y+0
 
-SES_INFO 1  "2740"
+SES_INFO 0
   ## widget = comment
   # $S+0
 
@@ -22,33 +22,28 @@ USR_INFO 1  "${USER}"
 
 ! Environment variables
 ! ---------------------
-ENVIRONMENT 5
-  "U" "/home/ccrook/BERN52/GPSUSER"
-  "T" "/var/lib/bernese52/tmp"
-  "X" "/opt/bernese52/GPS"
-  "P" "/home/ccrook/BERN52/GPSDATA/CAMPAIGN"
-  "USER" "ccrook"
+ENVIRONMENT     1 "" ""
   ## widget = initmenu; pointer = ENVIR_LIST
 
-DPZH 1  "${P}/POS_PPP/OBS/"
+DPZH 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_PZH
 
 EPZH 1  "PZH"
   ## widget = initmenu; pointer = EXT_PZH
 
-DPZO 1  "${P}/POS_PPP/OBS/"
+DPZO 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_PZO
 
 EPZO 1  "PZO"
   ## widget = initmenu; pointer = EXT_PZO
 
-DPSH 1  "${P}/POS_PPP/OBS/"
+DPSH 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_PSH
 
 EPSH 1  "PSH"
   ## widget = initmenu; pointer = EXT_PSH
 
-DPSO 1  "${P}/POS_PPP/OBS/"
+DPSO 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_PSO
 
 EPSO 1  "PSO"
@@ -61,7 +56,7 @@ SHOWGEN 1  "1"
 
 MSG_SHOWGEN 1  "Show all general files"
 
-CONST 1  "${X}/GEN/CONST."
+CONST 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
   # CONST.
 
@@ -69,7 +64,7 @@ DESCR_CONST 1  "General constants"
 
 ! Station name abbreviations
 ! --------------------------
-ABBREV 1  "${P}/POS_PPP/STA/ABBREV.ABB"
+ABBREV 0
   ## widget = selwin; path = DIR_ABB; ext = EXT_ABB; maxfiles = 1
   # ABBREV
 
@@ -105,7 +100,7 @@ OUTPUT_TXT_COL_1 1  "Input files"
 
 ! MAUPRP summary
 ! --------------
-SUMMARY 1  "${P}/POS_PPP/OUT/MPR2740.SUM"
+SUMMARY 0
   ## widget = lineedit; path = DIR_SUM; ext = EXT_SUM; emptyallowed = false
   # MPR$S+0
 
@@ -134,7 +129,7 @@ SYSODEF 1  "0"
 
 MSG_SYSODEF 1  "Program output"
 
-SYSOUT 1  "${P}/POS_PPP/OUT/MPRXTR2740.OUT"
+SYSOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF == 0; emptyallowed = false
   # MPRXTR$S+0
@@ -148,7 +143,7 @@ ERRMRG 1  "0"
 
 MSG_ERRMRG 1  "Error message"
 
-SYSERR 1  "${U}/WORK/ERROR.MSG"
+SYSERR 0
   ## widget = lineedit; path = PTH_ERR; ext = EXT_ERR
   ## activeif = ERRMRG == 0; emptyallowed = false
   # ERROR
@@ -165,7 +160,7 @@ MSG_ISNGDF 1  "Include in deletion file"
 
 ! Title
 ! -----
-TITLE 1  "PNZ-PP TRIPLE DIFFERENCE SUMMARY 2740"
+TITLE 0
   ## widget = lineedit
   # PNZ-PP TRIPLE DIFFERENCE SUMMARY $S+0
 

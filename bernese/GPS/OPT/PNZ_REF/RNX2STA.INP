@@ -1,19 +1,19 @@
 
 ! Some title information
 ! ----------------------
-CAMPAIGN 1  "${P}/PNZPP1"
+CAMPAIGN 1  "${P}/PZDTEST"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 1  "${P}/PNZPP1/STA/SESSIONS.SES"
+SESSION_TABLE 1  "${P}/PZDTEST/STA/SESSIONS.SES"
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
 
-YR4_INFO 1  "2013"
+YR4_INFO 0
   ## widget = comment
   # $Y+0
 
-SES_INFO 1  "302Y"
+SES_INFO 0
   ## widget = comment
   # $S+0
 
@@ -22,12 +22,7 @@ USR_INFO 1  "${USER}"
 
 ! Environment Variables
 ! ---------------------
-ENVIRONMENT 5
-  "U" "/home/ccrook/BERN52/GPSUSER"
-  "T" "/home/ccrook/BERN52/GPSTEMP"
-  "X" "/opt/bern52/BERN52/GPS"
-  "P" "/home/ccrook/BERN52/GPSDATA/CAMPAIGN"
-  "USER" "ccrook"
+ENVIRONMENT     1 "" ""
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! Show general files
@@ -44,11 +39,7 @@ RADIO_O 1  "1"
 
 MSG_RADIO_O 1  "Original RINEX observation files"
 
-RXOFILE 4
-  "${P}/PNZPP1/RAW/AUCK3020.13O"
-  "${P}/PNZPP1/RAW/HAMT3020.13O"
-  "${P}/PNZPP1/RAW/TRNG3020.13O"
-  "${P}/PNZPP1/RAW/U0013020.13O"
+RXOFILE 0
   ## widget = selwin; path = DIR_RXO; ext = EXT_RXO
   # ????$+0?
 
@@ -73,7 +64,7 @@ SMTFILE_TXT_COL_1 1  "RINEX files"
 
 ! STAINFO with information requested in the RINEX files
 ! -----------------------------------------------------
-RNXINFO 1  "${P}/PNZPP1/STA/STATIONS.STA"
+RNXINFO 0
   ## widget = lineedit; path = DIR_STA; ext = EXT_STA
   # STATIONS
 
@@ -86,7 +77,7 @@ SYSODEF 1  "1"
 
 MSG_SYSODEF 1  "Program output"
 
-SYSOUT 1  "${P}/PNZPP1/OUT/RNX2STA.L02"
+SYSOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF == 0
   # RNX2STA
@@ -100,7 +91,7 @@ ERRMRG 1  "0"
 
 MSG_ERRMRG 1  "Error message"
 
-SYSERR 1  "${U}/WORK/ERROR.MSG"
+SYSERR 0
   ## widget = lineedit; path = PTH_ERR; ext = EXT_ERR
   ## activeif = ERRMRG == 0
   # ERROR

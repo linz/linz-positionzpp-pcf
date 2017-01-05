@@ -1,26 +1,28 @@
 
 ! Some keywords for automatic output
 ! ----------------------------------
-CAMPAIGN 0
+CAMPAIGN 1  "${P}/PZDTEST"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 0
+SESSION_TABLE 1  "${P}/PZDTEST/STA/SESSIONS.SES"
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
 
-YR4_INFO 1  "$Y+0"
+YR4_INFO 0
   ## widget = comment
+  # $Y+0
 
-SES_INFO 1  "$S+0"
+SES_INFO 0
   ## widget = comment
+  # $S+0
 
 USR_INFO 1  "${USER}"
   ## widget = comment
 
 ! Environment variables
 ! ---------------------
-ENVIRONMENT 0
+ENVIRONMENT     1 "" ""
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! =========================================================================
@@ -35,8 +37,9 @@ MSG_SHOWGEN 1  "Show all general files"
 
 ! Normal equations
 ! ----------------
-INPFILE 1  "AFS$S+0"
+INPFILE 0
   ## widget = selwin; path = DIR_NEQ; ext = EXT_NEQ
+  # AFS$S+0
 
 MSG_INPFILE 1  "Normal equations"
 
@@ -44,56 +47,63 @@ INPFILE_TXT_COL_1 1  "Name"
 
 ! Variance rescaling factors
 ! --------------------------
-COVCOMI 1  ""
+COVCOMI 0
   ## widget = selwin; path = DIR_WGT; ext = EXT_WGT; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_COVCOMI 1  "Variance rescaling factors"
 
 ! Station coordinates
 ! -------------------
-COORD 1  "ITRF$S+0"
+COORD 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
+  # ITRF$S+0
 
 DESCR_COORD 1  "Station coordinates"
 
 ! Station velocities
 ! ------------------
-VELAPR 1  ""
+VELAPR 0
   ## widget = selwin; path = DIR_VEL; ext = EXT_VEL; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_VELAPR 1  "Station velocities"
 
 ! Station information
 ! -------------------
-STAINFO 1  "STATIONS"
+STAINFO 0
   ## widget = selwin; path = DIR_STA; ext = EXT_STA; maxfiles = 1
   ## emptyallowed = true
+  # STATIONS
 
 DESCR_STAINFO 1  "Station information"
 
 ! Troposphere estimates
 ! ---------------------
-TROPEST 1  ""
+TROPEST 0
   ## widget = selwin; path = DIR_TRP; ext = EXT_TRP; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_TROPEST 1  "Troposphere estimates"
 
 ! Ionosphere master file
 ! ----------------------
-IONOS 1  ""
+IONOS 0
   ## widget = selwin; path = DIR_ION; ext = EXT_ION; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_IONOS 1  "Ionosphere master file"
 
 ! Differential code biases
 ! ------------------------
-DCBINP 1  ""
+DCBINP 0
   ## widget = selwin; path = DIR_DCB; ext = EXT_DCB; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_DCBINP 1  "Differential code biases"
 
@@ -115,9 +125,10 @@ DESCR_RGBINP 1  "SLR biases, CoM"
 
 ! Earth rotation parameters
 ! -------------------------
-POLE 1  ""
+POLE 0
   ## widget = selwin; path = DIR_ERP; ext = EXT_ERP; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_POLE 1  "Earth rotation parameters"
 
@@ -139,23 +150,26 @@ DESCR_RXCLKIN 1  "Clock RINEX file"
 
 ! Geocenter coordinates
 ! ---------------------
-GCCINP 1  ""
+GCCINP 0
   ## widget = selwin; path = DIR_GCC; ext = EXT_GCC; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_GCCINP 1  "Geocenter coordinates"
 
 ! Covariances (Coords)
 ! --------------------
-COVARRS 1  ""
+COVARRS 0
   ## widget = lineedit; path = DIR_COV; ext = EXT_COV
+  # 
 
 DESCR_COVARRS 1  "Var-covar w.r.t. coord."
 
 ! Covariances (All)
 ! -----------------
-COVTTRS 1  ""
+COVTTRS 0
   ## widget = lineedit; path = DIR_COV; ext = EXT_COV
+  # 
 
 DESCR_COVTTRS 1  "Full var-covar matrix"
 
@@ -172,81 +186,92 @@ DESCR_PARAMIN 1  "Parameter estimates"
 ! =========================================================================
 ! General constants
 ! -----------------
-CONST 1  "CONST."
+CONST 0
   ## widget = selwin; path = PTH_GEN; maxfiles = 1
+  # CONST.
 
 DESCR_CONST 1  "General constants"
 
 ! Geodetic datum
 ! --------------
-DATUM 1  "DATUM."
+DATUM 0
   ## widget = selwin; path = PTH_GEN; maxfiles = 1
+  # DATUM.
 
 DESCR_DATUM 1  "Geodetic datum"
 
 ! Phase center variations
 ! -----------------------
-PHASECC 1  "PCV_COD.I08"
+PHASECC 0
   ## widget = selwin; path = DIR_STA; maxfiles = 1; emptyallowed = true
+  # PCV_COD.I08
 
 DESCR_PHASECC 1  "Phase center variations"
 
 ! Satellite information
 ! ---------------------
-SATELL 1  "SATELLIT.I01"
+SATELL 0
   ## widget = selwin; path = PTH_GEN; maxfiles = 1; emptyallowed = true
+  # SATELLIT.I01
 
 DESCR_SATELL 1  "Satellite information"
 
 ! Receiver information
 ! --------------------
-RECEIVR 1  "RECEIVER.ALL"
+RECEIVR 0
   ## widget = selwin; path = PTH_GEN; maxfiles = 1
+  # RECEIVER.ALL
 
 DESCR_RECEIVR 1  "Receiver information"
 
 ! Satellite problems
 ! ------------------
-SATCRUX 1  "SAT_$Y+0"
+SATCRUX 0
   ## widget = selwin; path = PTH_GEN; ext = EXT_CRX; maxfiles = 1
   ## emptyallowed = true
+  # SAT_$Y+0
 
 DESCR_SATCRUX 1  "Satellite problems"
 
 ! Subdaily pole model
 ! -------------------
-SUBMOD 1  "IERS2010XY"
+SUBMOD 0
   ## widget = selwin; path = PTH_GEN; ext = EXT_SUB; maxfiles = 1
   ## emptyallowed = true
+  # IERS2010XY
 
 DESCR_SUBMOD 1  "Subdaily pole model"
 
 ! Nutation Model
 ! -------------------
-NUTMOD 1  "IAU2000R06"
+NUTMOD 0
   ## widget = selwin; path = PTH_GEN; ext = EXT_NUT; maxfiles = 1
   ## emptyallowed = true
+  # IAU2000R06
 
 DESCR_NUTMOD 1  "Nutation model"
 
 ! Sinex header file
 ! -----------------
-SINEXIN 1  "SINEX.PNZPP"
+SINEXIN 0
   ## widget = selwin; path = PTH_GEN; maxfiles = 1; emptyallowed = true
+  # SINEX.PNZPP
 
 DESCR_SINEXIN 1  "SINEX general input file"
 
 ! IONEX control file
 ! ------------------
-IONEXCF 1  "IONEX."
+IONEXCF 0
   ## widget = selwin; path = PTH_GEN; maxfiles = 1; emptyallowed = true
+  # IONEX.
 
 DESCR_IONEXCF 1  "IONEX control file"
 
 ! Scratch file
 ! ------------
-AUXFIL 1  "ADDNEQ2$J"
+AUXFIL 0
   ## widget = lineedit; path = PTH_SCR; ext = EXT_SCR; emptyallowed = false
+  # ADDNEQ2$J
 
 DESCR_AUXFIL 1  "Scratch file"
 
@@ -262,9 +287,10 @@ SYSODEF 1  "0"
 
 MSG_SYSODEF 1  "Program output"
 
-SYSOUT 1  "MIN$S+0"
+SYSOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF == 0; emptyallowed = false
+  # MIN$S+0
 
 DESCR_SYSOUT 1  "Program output"
 
@@ -275,16 +301,18 @@ ERRMRG 1  "0"
 
 MSG_ERRMRG 1  "Error message"
 
-SYSERR 1  "ERROR"
+SYSERR 0
   ## widget = lineedit; path = PTH_ERR; ext = EXT_ERR
   ## activeif = ERRMRG == 0; emptyallowed = false
+  # ERROR
 
 DESCR_SYSERR 1  "Error message"
 
 ! Normal equations
 ! ----------------
-NEQOUT 1  ""
+NEQOUT 0
   ## widget = lineedit; path = DIR_NEQ; ext = EXT_NEQ
+  # 
 
 DESCR_NEQOUT 1  "Resulting normal equations"
 
@@ -296,57 +324,65 @@ SNXCONT 1  "COV"
 
 MSG_SNXCONT 1  "Content of SINEX"
 
-SINEXRS 1  "MIN$S+0"
+SINEXRS 0
   ## widget = lineedit; path = DIR_SNX; ext = EXT_SNX
+  # MIN$S+0
 
 DESCR_SINEXRS 1  "SINEX"
 
 ! Station coordinates
 ! -------------------
-COORDRS 1  "MIN$S+0"
+COORDRS 0
   ## widget = lineedit; path = DIR_CRD; ext = EXT_CRD
+  # MIN$S+0
 
 DESCR_COORDRS 1  "Station coordinate results"
 
 ! Velocities
 ! ----------
-VELORS 1  ""
+VELORS 0
   ## widget = lineedit; path = DIR_VEL; ext = EXT_VEL
+  # 
 
 DESCR_VELORS 1  "Station velocity results"
 
 ! Troposphere estimates
 ! ---------------------
-TROPSAV 1  ""
+TROPSAV 0
   ## widget = lineedit; path = DIR_TRP; ext = EXT_TRP
+  # 
 
 DESCR_TROPSAV 1  "Troposphere estimates"
 
 ! Troposphere SINEX
 ! -----------------
-TROPSNX 1  ""
+TROPSNX 0
   ## widget = lineedit; path = DIR_TRO; ext = EXT_TRO
+  # 
 
 DESCR_TROPSNX 1  "Troposphere estimates (SINEX)"
 
 ! Ionosphere models
 ! -----------------
-IONOSRS 1  ""
+IONOSRS 0
   ## widget = lineedit; path = DIR_ION; ext = EXT_ION
+  # 
 
 DESCR_IONOSRS 1  "Ionosphere models"
 
 ! IONEX
 ! -----
-IONEXRS 1  ""
+IONEXRS 0
   ## widget = lineedit; path = DIR_INX; ext = EXT_INX
+  # 
 
 DESCR_IONEXRS 1  "IONEX"
 
 ! Code biases
 ! -----------
-DCBOUT 1  ""
+DCBOUT 0
   ## widget = lineedit; path = DIR_DCB; ext = EXT_DCB
+  # 
 
 DESCR_DCBOUT 1  "Code bias results"
 
@@ -366,55 +402,62 @@ DESCR_RGBOUT 1  "SLR biases, CoM (output)"
 
 ! BIAS SINEX
 ! ----------
-BIASSNX 1  ""
+BIASSNX 0
   ## widget = lineedit; path = DIR_BIA; ext = EXT_BIA
+  # 
 
 MSG_BIASSNX 1  "BIAS SINEX"
 
 ! Orbital elements
 ! ----------------
-ELEFILE 1  ""
+ELEFILE 0
   ## widget = lineedit; path = DIR_ELE; ext = EXT_ELE
+  # 
 
 DESCR_ELEFILE 1  "Orbital elements"
 
 ! Bernese ERP file
 ! ----------------
-POLERS 1  ""
+POLERS 0
   ## widget = lineedit; path = DIR_ERP; ext = EXT_ERP
+  # 
 
 DESCR_POLERS 1  "Bernese ERP file"
 
 ! IERS ERP file
 ! -------------
-IERSPOL 1  ""
+IERSPOL 0
   ## widget = lineedit; path = DIR_IEP; ext = EXT_IEP
+  # 
 
 DESCR_IERSPOL 1  "IERS ERP file"
 
 ! Geocenter coordinates
 ! ---------------------
-GCCOUT 1  ""
+GCCOUT 0
   ## widget = lineedit; path = DIR_GCC; ext = EXT_GCC
+  # 
 
 DESCR_GCCOUT 1  "Geocenter coordinates"
 
 ! Station residuals
 ! -----------------
-PLOTRS 1  ""
+PLOTRS 0
   ## widget = lineedit; path = DIR_PLT; ext = EXT_PLT
+  # 
 
 DESCR_PLOTRS 1  "Station residuals"
 
 PLOT_ALL 0
   ## widget = lineedit; path = DIR_PLT; ext = EXT_PLT
 
-DESCR_PLOT_ALL 1  "Indiv. for all parameters"
+DESCR_PLOT_ALL 1  "All parameter residuals"
 
 ! Weekly summary file
 ! -------------------
-WEKSUM 1  ""
+WEKSUM 0
   ## widget = lineedit; path = DIR_SUM; ext = EXT_SUM
+  # 
 
 DESCR_WEKSUM 1  "Weekly summary file"
 
@@ -462,8 +505,9 @@ DESCR_PARAMRS 1  "Parameter estimate results"
 ! =========================================================================
 ! Title
 ! -----
-TITLE 1  "PNZ-PP MINIMUM CONSTRAINED SOLUTION RESULTS $S+0"
+TITLE 0
   ## widget = lineedit
+  # PNZ-PP MINIMUM CONSTRAINED SOLUTION RESULTS $S+0
 
 MSG_TITLE 1  "Title line"
 
@@ -499,9 +543,10 @@ MSG_INDVSOL 1  "Compute and compare individual solutions"
 
 ! Reference epoch for the coordinates
 ! -----------------------------------
-TIMREF 1  ""
+TIMREF 0
   ## widget = lineedit; activeif = CRD_NINT == 1 AND NOINV = 0
   ## check_type = date
+  # 
 
 MSG_TIMREF 1  "Reference epoch for station coordinates"
 
@@ -630,15 +675,17 @@ STEP2 1  "0"
 
 MSG_STEP2 1  "Correct step2 tide bug"
 
-STEP2A 1  ""
+STEP2A 0
   ## widget = lineedit; emptyallowed = true; check_type = date
   ## activeif = STEP2 == 1
+  # 
 
 MSG_STEP2A 1  "Step2 tide bug start MJD"
 
-STEP2B 1  ""
+STEP2B 0
   ## widget = lineedit; emptyallowed = true; check_type = date
   ## activeif = STEP2 == 1
+  # 
 
 MSG_STEP2B 1  "Step2 tide bug end MJD"
 
@@ -778,9 +825,10 @@ MSG_C_SIGMAU 1  "Up"
 ! =========================================================================
 ! Stations considered for minimum constraint conditions
 ! -----------------------------------------------------
-FREESTA_L 1  ""
+FREESTA_L 0
   ## widget = selwin; activeif = FREESTA == MANUAL AND RADIO2_3 == 1
   ## pointer = STALST
+  # 
 
 MSG_FREESTA_L 1  "Manual selection"
 
@@ -791,12 +839,12 @@ FREESTA_F 0
 
 MSG_FREESTA_F 1  "List of stations from file"
 
-FREESTA_G 4
-  "I"
-  "G"
-  "M"
-  "N"
+FREESTA_G 0
   ## widget = lineedit; activeif = FREESTA == WITH_FLAG AND RADIO2_3 == 1
+  # I
+  # G
+  # M
+  # N
 
 MSG_FREESTA_G 1  "Stations with specific flags in CRD file"
 
@@ -815,8 +863,9 @@ STAFILE4 0
 
 MSG_STAFILE4 1  "List of stations (and sigmas) from file"
 
-STAFLAG4 1  ""
+STAFLAG4 0
   ## widget = lineedit; activeif = SIGSTA == WITH_FLAG AND RADIO2_2 == 1
+  # 
 
 MSG_STAFLAG4 1  "Stations with specific flags in CRD file"
 
@@ -835,8 +884,9 @@ STAFILE1 0
 
 MSG_STAFILE1 1  "List of stations from file"
 
-STAFLAG1 1  ""
+STAFLAG1 0
   ## widget = lineedit; activeif = FIXSTA == WITH_FLAG AND RADIO2_1 == 1
+  # 
 
 MSG_STAFLAG1 1  "Stations with specific flags in CRD file"
 
@@ -939,8 +989,9 @@ FREEVEL_F 0
 
 MSG_FREEVEL_F 1  "List of stations from file"
 
-FREEVEL_G 1  ""
+FREEVEL_G 0
   ## widget = lineedit; activeif = FREEVEL == WITH_FLAG AND RADIO3_3 == 1
+  # 
 
 MSG_FREEVEL_G 1  "Stations with specific flags in VEL file"
 
@@ -960,8 +1011,9 @@ VELFILE4 0
 
 MSG_VELFILE4 1  "List of stations (and sigmas) from file"
 
-VELFLAG4 1  ""
+VELFLAG4 0
   ## widget = lineedit; activeif = SIGVEL == WITH_FLAG AND RADIO3_2 == 1
+  # 
 
 MSG_VELFLAG4 1  "Stations with specific flags in VEL file"
 
@@ -980,8 +1032,9 @@ VELFILE1 0
 
 MSG_VELFILE1 1  "List of stations from file"
 
-VELFLAG1 1  ""
+VELFLAG1 0
   ## widget = lineedit; activeif = FIXVEL == WITH_FLAG AND RADIO3_1 == 1
+  # 
 
 MSG_VELFLAG1 1  "Stations with specific flags in VEL file"
 
@@ -1798,20 +1851,23 @@ MSG_RADIO_2 1  "Observation window defined by start and end times"
 
 ! Preelimination Window: defined by session
 ! -----------------------------------------
-SESSION_YEAR 1  "$Y+0"
+SESSION_YEAR 0
   ## widget = lineedit; multilineallowed = true; emptyallowed = false
+  # $Y+0
 
 MSG_SESSION_YEAR 1  "Year"
 
-SESSION_STRG 1  "$S+0"
+SESSION_STRG 0
   ## widget = lineedit; multilineallowed = true; emptyallowed = false
+  # $S+0
 
 MSG_SESSION_STRG 1  "Session"
 
 ! Preelimination Window: defined by date
 ! --------------------------------------
-STADAT 1  "$YMD_STR+0"
+STADAT 0
   ## widget = lineedit; activeif = RADIO_2 = 1; check_type = date
+  # $YMD_STR+0
 
 MSG_STADAT 1  "Start time(year month day)"
 
@@ -1821,8 +1877,9 @@ STATIM 1  "00 00 00"
 
 MSG_STATIM 1  "Start time(hour minutes seconds)"
 
-ENDDAT 1  "$YMD_STR+0"
+ENDDAT 0
   ## widget = lineedit; activeif = RADIO_2 = 1; check_type = date
+  # $YMD_STR+0
 
 MSG_ENDDAT 1  "End time(year month day)"
 
@@ -1879,8 +1936,9 @@ MSG_PAR_OFF 1  "Reference epoch for parameter intervals: Time offset"
 ! --------------------------------------------------------------------
 ! Constraints
 ! -----------
-TRP_ASIG 1  ""
+TRP_ASIG 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_TRP_ASIG 1  "Troposphere zenith delays: absolute"
 
@@ -1889,23 +1947,27 @@ TRP_RSIG 1  "1.0"
 
 MSG_TRP_RSIG 1  "Troposphere zenith delays: relative"
 
-GRD_ASIG 1  ""
+GRD_ASIG 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_GRD_ASIG 1  "Troposphere gradients: absolute"
 
-GRD_RSIG 1  ""
+GRD_RSIG 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_GRD_RSIG 1  "Troposphere gradients: relative"
 
-GIM_ASIG 1  ""
+GIM_ASIG 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_GIM_ASIG 1  "Global ionosphere parameters: absolute"
 
-GIM_RSIG 1  ""
+GIM_RSIG 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_GIM_RSIG 1  "Global ionosphere parameters: relative"
 
@@ -1916,20 +1978,23 @@ TRP_RDT 1  "00 60 00"
 
 MSG_TRP_RDT 1  "Troposphere zenith delays: maximum time interval"
 
-GRD_RDT 1  ""
+GRD_RDT 0
   ## widget = lineedit; activeif = GRD_RSIG / _; emptyallowed = false
+  # 
 
 MSG_GRD_RDT 1  "Troposphere gradients: maximum time interval"
 
-GIM_RDT 1  ""
+GIM_RDT 0
   ## widget = lineedit; activeif = GIM_RSIG / _; emptyallowed = false
+  # 
 
 MSG_GIM_RDT 1  "Global ionosphere parameters: maximum time interval"
 
 ! Extraction of parameters for troposphere SINEX file
 ! ---------------------------------------------------
-TRPOFF 1  ""
+TRPOFF 0
   ## widget = lineedit; activeif = TROPSNX / _
+  # 
 
 MSG_TRPOFF 1  "Offset"
 
@@ -1999,7 +2064,7 @@ MSG_TRAFO 1  "Long-arc computation"
 NUMSTC 1  "0"
   ## widget = checkbox; activeif = TRAFO = 1
 
-MSG_NUMSTC 1  "Stochastic pulses at NQ0 boundaries"
+MSG_NUMSTC 1  "Stochastic pulses at NEQ boundaries"
 
 DTSTC 1  "6 00 00"
   ## widget = lineedit; check_type = time
@@ -2116,7 +2181,7 @@ MSG_STC_X 1  "X-direction in satellite frame"
 BLKRET 1  "0"
   ## widget = combobox; cards = NO YES
 
-MSG_BLKRET 1  "Block retrograde terms in X and Y polar wobble series"
+MSG_BLKRET 1  "Block retrograde terms in polar motion"
 
 ! Constraints (first parameter)
 ! -----------------------------
@@ -2203,21 +2268,24 @@ ALOAD10 1  "ONE"
 
 MSG_ALOAD10 1  "Atm. load: constraining to zero/one"
 
-ALOADSIG1 1  ""
+ALOADSIG1 0
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = ALOADDEC / inactive
+  # 
 
 MSG_ALOADSIG1 1  "Atm. load: a priori sigma 1"
 
-ALOADSIG2 1  ""
+ALOADSIG2 0
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = ALOADDEC = HORIZONTAL/VERTICAL OR ALOADDEC = NORTH/EAST/UP
+  # 
 
 MSG_ALOADSIG2 1  "Atm. load: a priori sigma 2"
 
-ALOADSIG3 1  ""
+ALOADSIG3 0
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = ALOADDEC = NORTH/EAST/UP
+  # 
 
 MSG_ALOADSIG3 1  "Atm. load: a priori sigma 3"
 
@@ -2249,21 +2317,24 @@ ONTLD10 1  "ONE"
 
 MSG_ONTLD10 1  "Atm. load: constraining to zero/one"
 
-ONTLDSIG1 1  ""
+ONTLDSIG1 0
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = ONTLDDEC / inactive
+  # 
 
 MSG_ONTLDSIG1 1  "Ocn. load: a priori sigma 1"
 
-ONTLDSIG2 1  ""
+ONTLDSIG2 0
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = ONTLDDEC = HORIZONTAL/VERTICAL OR ONTLDDEC = NORTH/EAST/UP
+  # 
 
 MSG_ONTLDSIG2 1  "Ocn. load: a priori sigma 2"
 
-ONTLDSIG3 1  ""
+ONTLDSIG3 0
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = ONTLDDEC = NORTH/EAST/UP
+  # 
 
 MSG_ONTLDSIG3 1  "Ocn. load: a priori sigma 3"
 
@@ -2295,21 +2366,24 @@ HLOAD10 1  "ONE"
 
 MSG_HLOAD10 1  "Atm. load: constraining to zero/one"
 
-HLOADSIG1 1  ""
+HLOADSIG1 0
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = HLOADDEC / inactive
+  # 
 
 MSG_HLOADSIG1 1  "Hyd. load: a priori sigma 1"
 
-HLOADSIG2 1  ""
+HLOADSIG2 0
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = HLOADDEC = HORIZONTAL/VERTICAL OR HLOADDEC = NORTH/EAST/UP
+  # 
 
 MSG_HLOADSIG2 1  "Hyd. load: a priori sigma 2"
 
-HLOADSIG3 1  ""
+HLOADSIG3 0
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = ALOADDEC = NORTH/EAST/UP
+  # 
 
 MSG_HLOADSIG3 1  "Hyd. load: a priori sigma 3"
 
@@ -2567,9 +2641,10 @@ SATANTS 1  "ALL"
 
 MSG_SATANTS 1  "Apply satellite antenna offsets sigmas"
 
-SATANTD 1  ""
+SATANTD 0
   ## widget = lineedit; cech_type = date
   ## activeif = SATANTS = LAUNCHED_BEFORE
+  # 
 
 MSG_SATANTD 1  "Date for satellite antenna offsets sigmas"
 
@@ -2619,9 +2694,10 @@ SATSPVS 1  "ALL"
 
 MSG_SATSPVS 1  "Apply satellite antenna pattern sigmas"
 
-SATSPVD 1  ""
+SATSPVD 0
   ## widget = lineedit; cech_type = date
   ## activeif = SATSPVS = LAUNCHED_BEFORE
+  # 
 
 MSG_SATSPVD 1  "Date for satellite antenna pattern sigmas"
 
@@ -2715,12 +2791,12 @@ RCOTOFRQ 1  "0"
 
 MSG_RCOTOFRQ 1  "Transform satellite to frequency biases"
 
-! Inter-frequency bias, alaming limit
+! Inter-frequency bias, alarming limit
 ! -----------------------------------
 IFBMAX 0
   ## widget = lineedit; check_type = real; check_min = 0.0
 
-MSG_IFBMAX 1  "Inter-frequency bias, alaming limit"
+MSG_IFBMAX 1  "Inter-frequency bias, alarming limit"
 
 ! --------------------------------------------------------------------
 ! Constraining the differential code biases
@@ -2883,10 +2959,10 @@ SCLKLST 0
 
 ! Directories and Extensions
 ! --------------------------
-DIR_ORB 0
+DIR_ORB 1  "${P}/PZDTEST/ORB/"
   ## widget = initmenu; pointer = DIR_ELE
 
-EXT_ELE 0
+EXT_ELE 1  "ELE"
   ## widget = initmenu; pointer = EXT_ELE
 
 
@@ -2933,7 +3009,7 @@ EXT_ELE 0
 # GENERAL INPUT FILES                                                          #
 #   General constants           > %%%%%%%%%%%% <                               # CONST
 #   Geodetic datum              > %%%%%%%%%%%% <                               # DATUM
-#   Phase center variations     > %%%%%%%%%%%% <  Moved to STA                 # PHASECC
+#   Phase center variations     > %%%%%%%%%%%% < Moved to STA                  # PHASECC
 #   Receiver information        > %%%%%%%%%%%% <                               # RECEIVR
 #   Satellite information       > %%%%%%%%%%%% <                               # SATELL
 #   Satellite problems          > %%%%%%%%%%%% <                               # SATCRUX
@@ -2993,7 +3069,7 @@ EXT_ELE 0
 #                                                                              #
 # AUXILIARY FILES                                                              #
 #   Weekly summary                     > %%%%%%%% <                            # WEKSUM
-#   Parameter residuals wrt coordinates> %%%%%%%% <                            # PLOTRS
+#   Station residuals                  > %%%%%%%% <                            # PLOTRS
 #   All parameter residuals            > %%%%%%%% <                            # PLOT_ALL
 #   Covariance matrix wrt coordinates  > %%%%%%%% <                            # COVARRS
 #   Full covariance matrix             > %%%%%%%% <                            # COVTTRS

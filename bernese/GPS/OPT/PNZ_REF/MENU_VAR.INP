@@ -4,7 +4,7 @@
 !
 ! 2-digit year
 ! ------------
-YEAR2 1  "13"
+YEAR2 0
   ## widget = comment
   # $Y
 
@@ -12,7 +12,7 @@ MSG_YEAR2 1  "Two digit year of the current session"
 
 ! Month
 ! -----
-MONTH2 1  "10"
+MONTH2 0
   ## widget = comment
   # $M
 
@@ -20,7 +20,7 @@ MSG_MONTH2 1  "Month of the current session"
 
 ! Day of month
 ! ------------
-DAY2 1  "29"
+DAY2 0
   ## widget = comment
   # $D
 
@@ -28,7 +28,7 @@ MSG_DAY2 1  "Day of month of the current session"
 
 ! Job ID
 ! ------
-JOB_ID 1  ""
+JOB_ID 0
   ## widget = comment
   # $J
 

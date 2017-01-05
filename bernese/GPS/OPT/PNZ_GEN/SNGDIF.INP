@@ -1,19 +1,19 @@
 
 ! Some keywords for automatic output
 ! --------------------------------------------------------------------
-CAMPAIGN 1  "${P}/PNZPP1"
+CAMPAIGN 1  "${P}/PZDTEST"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 1  "${P}/PNZPP1/STA/SESSIONS.SES"
+SESSION_TABLE 1  "${P}/PZDTEST/STA/SESSIONS.SES"
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
 
-YR4_INFO 1  "2013"
+YR4_INFO 0
   ## widget = comment
   # $Y+0
 
-SES_INFO 1  "302Y"
+SES_INFO 0
   ## widget = comment
   # $S+0
 
@@ -22,12 +22,7 @@ USR_INFO 1  "${USER}"
 
 ! Environment variables
 ! ---------------------
-ENVIRONMENT 5
-  "U" "/home/ccrook/BERN52/GPSUSER"
-  "T" "/home/ccrook/BERN52/GPSTEMP"
-  "X" "/opt/bern52/BERN52/GPS"
-  "P" "/home/ccrook/BERN52/GPSDATA/CAMPAIGN"
-  "USER" "ccrook"
+ENVIRONMENT     1 "" ""
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! --------------------------------------------------------------------
@@ -42,7 +37,7 @@ MSG_SHOWGEN 1  "Show all general files"
 
 ! General constants
 ! -----------------
-CONST 1  "${X}/GEN/CONST."
+CONST 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
   # CONST.
 
@@ -50,7 +45,7 @@ DESCR_CONST 1  "General constants"
 
 ! Geodetic datum
 ! --------------
-DATUM 1  "${X}/GEN/DATUM."
+DATUM 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
   # DATUM.
 
@@ -58,7 +53,7 @@ DESCR_DATUM 1  "Geodetic datum"
 
 ! Satellite information
 ! ---------------------
-SATELL 1  "${X}/GEN/SATELLIT.I08"
+SATELL 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
   # SATELLIT.I08
 
@@ -66,7 +61,7 @@ DESCR_SATELL 1  "Satellite information"
 
 ! Station name abbreviations
 ! --------------------------
-ABBREV 1  "${P}/PNZPP1/STA/ABBREV.ABB"
+ABBREV 0
   ## widget = selwin; path = DIR_ABB; ext = EXT_ABB; maxfiles = 1
   # ABBREV
 
@@ -74,7 +69,7 @@ DESCR_ABBREV 1  "Abbreviation table"
 
 ! A priori coordinates
 ! --------------------
-COORD 1  "${P}/PNZPP1/STA/APR302Y.CRD"
+COORD 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
   ## activeif = STRATEGY == DEFINED AND REPLACE == 1 OR STRATEGY == OBS-MAX OR STRATEGY == SHORTEST OR STRATEGY == STAR
   ## emptyallowed = false
@@ -119,7 +114,7 @@ CODEREF 0
   ## pointer = CODEZERO
   # 
 
-CODEREF_PTH_COL_2 1  "${P}/PNZPP1/OBS/"
+CODEREF_PTH_COL_2 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_CZO
 
 CODEREF_EXT_COL_2 1  "CZO"
@@ -132,7 +127,7 @@ CODEZERO 0
   ## activeif = MEATYP == CODE AND STRATEGY / MANUAL
   # ????$S+0
 
-CODEZERO_PTH_COL_2 1  "${P}/PNZPP1/OBS/"
+CODEZERO_PTH_COL_2 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_CZO
 
 CODEZERO_EXT_COL_2 1  "CZO"
@@ -145,7 +140,7 @@ CODEZERO1 0
   ## activeif = MEATYP == CODE AND STRATEGY == MANUAL
   # 
 
-CODEZERO1_PTH_COL_2 1  "${P}/PNZPP1/OBS/"
+CODEZERO1_PTH_COL_2 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_CZO
 
 CODEZERO1_EXT_COL_2 1  "CZO"
@@ -158,7 +153,7 @@ CODEZERO2 0
   ## activeif = MEATYP == CODE AND STRATEGY == MANUAL
   # 
 
-CODEZERO2_PTH_COL_2 1  "${P}/PNZPP1/OBS/"
+CODEZERO2_PTH_COL_2 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_CZO
 
 CODEZERO2_EXT_COL_2 1  "CZO"
@@ -168,13 +163,13 @@ MSG_CODEZERO2 1  "Code: Second zero-difference input file"
 
 ! Phase zero-difference files
 ! ---------------------------
-PHASEREF 1  "${P}/PNZPP1/OBS/U001302Y.PZH"
+PHASEREF 0
   ## widget = selwin; path = DIR_PZH; ext = EXT_PZH; maxfiles = 999
   ## emptyallowed = true; activeif = MEATYP == PHASE AND STRATEGY == STAR
   ## pointer = PHASEZERO
   # $(USRMRK)$S+0
 
-PHASEREF_PTH_COL_2 1  "${P}/PNZPP1/OBS/"
+PHASEREF_PTH_COL_2 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_PZO
 
 PHASEREF_EXT_COL_2 1  "PZO"
@@ -182,16 +177,12 @@ PHASEREF_EXT_COL_2 1  "PZO"
 
 DESCR_PHASEREF 1  "Reference station for STAR (P)"
 
-PHASEZERO 4
-  "${P}/PNZPP1/OBS/AUCK302Y.PZH"
-  "${P}/PNZPP1/OBS/HAMT302Y.PZH"
-  "${P}/PNZPP1/OBS/TRNG302Y.PZH"
-  "${P}/PNZPP1/OBS/U001302Y.PZH"
+PHASEZERO 0
   ## widget = selwin; path = DIR_PZH; ext = EXT_PZH; maxfiles = 999
   ## activeif = MEATYP == PHASE AND STRATEGY /= MANUAL
   # ????$S+0
 
-PHASEZERO_PTH_COL_2 1  "${P}/PNZPP1/OBS/"
+PHASEZERO_PTH_COL_2 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_PZO
 
 PHASEZERO_EXT_COL_2 1  "PZO"
@@ -204,7 +195,7 @@ PHASEZERO1 0
   ## activeif = MEATYP == PHASE AND STRATEGY == MANUAL
   # 
 
-PHASEZERO1_PTH_COL_2 1  "${P}/PNZPP1/OBS/"
+PHASEZERO1_PTH_COL_2 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_PZO
 
 PHASEZERO1_EXT_COL_2 1  "PZO"
@@ -217,7 +208,7 @@ PHASEZERO2 0
   ## activeif = MEATYP == PHASE AND STRATEGY == MANUAL
   # 
 
-PHASEZERO2_PTH_COL_2 1  "${P}/PNZPP1/OBS/"
+PHASEZERO2_PTH_COL_2 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_PZO
 
 PHASEZERO2_EXT_COL_2 1  "PZO"
@@ -230,25 +221,25 @@ MSG_PHASEZERO2 1  "Phase: Second phase zero-difference input file"
 EXT_CSH 1  "CSH"
   ## widget = initmenu; pointer = EXT_CSH
 
-DIR_CSH 1  "${P}/PNZPP1/OBS/"
+DIR_CSH 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_CSH
 
 EXT_CSO 1  "CSO"
   ## widget = initmenu; pointer = EXT_CSO
 
-DIR_CSO 1  "${P}/PNZPP1/OBS/"
+DIR_CSO 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_CSO
 
 EXT_PSH 1  "PSH"
   ## widget = initmenu; pointer = EXT_PSH
 
-DIR_PSH 1  "${P}/PNZPP1/OBS/"
+DIR_PSH 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_PSH
 
 EXT_PSO 1  "PSO"
   ## widget = initmenu; pointer = EXT_PSO
 
-DIR_PSO 1  "${P}/PNZPP1/OBS/"
+DIR_PSO 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_PSO
 
 ! --------------------------------------------------------------------
@@ -261,7 +252,7 @@ PHASESNG 0
   ## activeif = STRATEGY == MANUAL and MEATYP == PHASE
   # 
 
-PHASESNG_PTH_COL_2 1  "${P}/PNZPP1/OBS/"
+PHASESNG_PTH_COL_2 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_PSO
 
 PHASESNG_EXT_COL_2 1  "PSO"
@@ -276,7 +267,7 @@ CODESNG 0
   ## activeif = STRATEGY == MANUAL and MEATYP == CODE
   # 
 
-CODESNG_PTH_COL_2 1  "${P}/PNZPP1/OBS/"
+CODESNG_PTH_COL_2 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_CSO
 
 CODESNG_EXT_COL_2 1  "CSO"
@@ -286,7 +277,7 @@ DESCR_CODESNG 1  "Single-diff. output file (C)"
 
 ! Baselines definition
 ! --------------------
-BASPRT 1  "${P}/PNZPP1/STA/BASELINE.BSL"
+BASPRT 0
   ## widget = lineedit; path = DIR_BSL; ext = EXT_BSL
   # BASELINE
 
@@ -308,7 +299,7 @@ SYSODEF 1  "1"
 
 MSG_SYSODEF 1  "Program output"
 
-SYSOUT 1  "${P}/PNZPP1/OUT/SNGDIF.L02"
+SYSOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF == 0; emptyallowed = false
   # SNGDIF
@@ -322,7 +313,7 @@ ERRMRG 1  "0"
 
 MSG_ERRMRG 1  "Error message"
 
-SYSERR 1  "${U}/WORK/ERROR.MSG"
+SYSERR 0
   ## widget = lineedit; path = PTH_ERR; ext = EXT_ERR
   ## activeif = ERRMRG == 0; emptyallowed = false
   # ERROR

@@ -1,29 +1,24 @@
 
 ! Environment Variables
 ! ---------------------
-ENVIRONMENT 5
-  "U" "/home/ccrook/BERN52/GPSUSER"
-  "T" "/var/lib/bernese52/tmp"
-  "X" "/opt/bernese52/GPS"
-  "P" "/home/ccrook/BERN52/GPSDATA/CAMPAIGN"
-  "USER" "ccrook"
+ENVIRONMENT     1 "" ""
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! SOME KEYWORDS FOR AUTOMATIC OUTPUT
 ! ----------------------------------
-CAMPAIGN 1  "${P}/POS_PPP"
+CAMPAIGN 1  "${P}/PZDTEST"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 1  "${P}/POS_PPP/STA/SESSIONS.SES"
+SESSION_TABLE 1  "${P}/PZDTEST/STA/SESSIONS.SES"
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
 
-YR4_INFO 1  "2003"
+YR4_INFO 0
   ## widget = comment
   # $Y+0
 
-SES_INFO 1  "2740"
+SES_INFO 0
   ## widget = comment
   # $S+0
 
@@ -45,7 +40,7 @@ RADIO_T 1  "1"
 
 MSG_RADIO_T 1  "Start with tabular orbits"
 
-TABFIL 1  "${P}/POS_PPP/ORB/IGS032750.TAB"
+TABFIL 0
   ## widget = selwin; activeif = RADIO_T = 1; path = DIR_TAB; ext = EXT_TAB
   # *
 
@@ -71,7 +66,7 @@ PREFIL_EXT_COL_2 1  "ERP"
 
 ! Extension of the ERP Files
 ! --------------------------
-PREFIL_PTH_COL_2 1  "${P}/POS_PPP/ORB/"
+PREFIL_PTH_COL_2 1  "${P}/PZDTEST/ORB/"
   ## widget = initmenu; pointer = DIR_ERP
 
 ! Update Modus
@@ -219,7 +214,7 @@ MSG_SHOWGEN 1  "Show all general files"
 
 ! General Constants
 ! -----------------
-CONST 1  "${X}/GEN/CONST."
+CONST 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
   # CONST.
 
@@ -269,7 +264,7 @@ DESCR_ATMLOAD 1  "Atmospheric loading corrections"
 
 ! Subdaily Pole Model
 ! -------------------
-SUBMOD 1  "${X}/GEN/IERS2010XY.SUB"
+SUBMOD 0
   ## widget = selwin; path = PTH_GEN; ext = EXT_SUB; maxfiles = 1
   # IERS2010XY
 
@@ -277,7 +272,7 @@ DESCR_SUBMOD 1  "Subdaily pole model"
 
 ! Nutation Model
 ! -------------------
-NUTMOD 1  "${X}/GEN/IAU2000R06.NUT"
+NUTMOD 0
   ## widget = selwin; path = PTH_GEN; ext = EXT_NUT; maxfiles = 1
   # IAU2000R06
 
@@ -285,7 +280,7 @@ DESCR_NUTMOD 1  "Nutation model"
 
 ! Earth Potential
 ! ---------------
-POTCOE 1  "${X}/GEN/EGM2008_SMALL."
+POTCOE 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
   # EGM2008_SMALL.
 
@@ -293,7 +288,7 @@ DESCR_POTCOE 1  "Coeff. of Earth potential"
 
 ! Satellite Problems
 ! ------------------
-SATCRUX 1  "${X}/GEN/SAT_2003.CRX"
+SATCRUX 0
   ## widget = selwin; path = PTH_GEN; ext = EXT_CRX; maxfiles = 1
   # SAT_$Y+0
 
@@ -301,7 +296,7 @@ DESCR_SATCRUX 1  "Satellite problems"
 
 ! Satellite Information
 ! ---------------------
-SATELL 1  "${X}/GEN/SATELLIT.I08"
+SATELL 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
   # SATELLIT.I08
 
@@ -309,7 +304,7 @@ DESCR_SATELL 1  "Satellite information"
 
 ! Planetary Ephemeris
 ! -------------------
-JPLEPH 1  "${X}/GEN/DE405.EPH"
+JPLEPH 0
   ## widget = selwin; path = PTH_GEN; ext = EXT_EPH; maxfiles = 1
   ## emptyallowed = true
   # DE405
@@ -318,7 +313,7 @@ DESCR_JPLEPH 1  "Planetary ephemeris file"
 
 ! Solid Earth Tides File
 ! -----------------------
-SETIDES 1  "${X}/GEN/TIDE2000.TPO"
+SETIDES 0
   ## widget = selwin; path = PTH_GEN; ext = EXT_TPO; maxfiles = 1
   ## emptyallowed = true
   # TIDE2000
@@ -327,7 +322,7 @@ DESCR_SETIDES 1  "Solid Earth tides file"
 
 ! Ocean Tides File
 ! ----------------
-OTIDES 1  "${X}/GEN/OT_FES2004.TID"
+OTIDES 0
   ## widget = selwin; path = PTH_GEN; ext = EXT_TID; maxfiles = 1
   ## emptyallowed = true
   # OT_FES2004
@@ -336,7 +331,7 @@ DESCR_OTIDES 1  "Ocean tides file"
 
 ! Correction GPS-UTC
 ! ------------------
-GPSUTC 1  "${X}/GEN/GPSUTC."
+GPSUTC 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
   ## emptyallowed = true
   # GPSUTC.
@@ -368,7 +363,7 @@ DESCR_IMPORB2 1  "Orbital elements, file 2"
 
 ! Standard Orbit File
 ! -------------------
-STDOUT 1  "${P}/POS_PPP/ORB/IGS2740.STD"
+STDOUT 0
   ## widget = lineedit; path = DIR_STD; ext = EXT_STD
   # IGS$S+0
 
@@ -418,13 +413,13 @@ DESCR_RESPLOT 1  "Residual plot file"
 
 ! Scratch Files
 ! -------------
-AUXFIL 1  "${U}/WORK/ORBGEN.SCR"
+AUXFIL 0
   ## widget = lineedit; path = PTH_SCR; ext = EXT_SCR; emptyallowed = false
   # ORBGEN$J
 
 DESCR_AUXFIL 1  "Scratch file"
 
-TABAUX 1  "${U}/WORK/ORBGEN.SC2"
+TABAUX 0
   ## widget = lineedit; path = PTH_SCR; ext = EXT_SC2; emptyallowed = false
   # ORBGEN$J
 
@@ -441,7 +436,7 @@ SYSODEF 1  "1"
 
 MSG_SYSODEF 1  "Program output"
 
-SYSOUT 1  "${P}/POS_PPP/OUT/ORBGEN.L03"
+SYSOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF == 0; emptyallowed = false
   # ORBGEN
@@ -455,7 +450,7 @@ ERRMRG 1  "0"
 
 MSG_ERRMRG 1  "Error message"
 
-SYSERR 1  "${U}/WORK/ERROR.MSG"
+SYSERR 0
   ## widget = lineedit; path = PTH_ERR; ext = EXT_ERR
   ## activeif = ERRMRG == 0; emptyallowed = false
   # ERROR
@@ -588,19 +583,19 @@ RADIO_2 1  "1"
 
 MSG_RADIO_2 1  "Obs. window defined by start and end times"
 
-SESSION_YEAR 1  "2003"
+SESSION_YEAR 0
   ## widget = lineedit; multilineallowed = true; emptyallowed = false
   # $Y+0
 
 MSG_SESSION_YEAR 1  "Year for sessions def. the time window"
 
-SESSION_STRG 1  "2740"
+SESSION_STRG 0
   ## widget = lineedit; multilineallowed = true; emptyallowed = false
   # $S+0
 
 MSG_SESSION_STRG 1  "Sessions defining the time window"
 
-STADAT 1  "2003 10 01"
+STADAT 0
   ## widget = lineedit; activeif = RADIO_2 = 1; check_type = date
   # $YMD_STR+0
 
@@ -612,7 +607,7 @@ STATIM 1  "00 00 00"
 
 MSG_STATIM 1  "Start of time window (hour min. sec.)"
 
-ENDDAT 1  "2003 10 01"
+ENDDAT 0
   ## widget = lineedit; activeif = RADIO_2 = 1; check_type = date
   # $YMD_STR+0
 

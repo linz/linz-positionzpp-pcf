@@ -1,36 +1,31 @@
 
 ! Environment Variables
 ! ---------------------
-ENVIRONMENT 5
-  "U" "/home/ccrook/BERN52/GPSUSER"
-  "T" "/home/ccrook/BERN52/GPSTEMP"
-  "X" "/opt/bern52/BERN52/GPS"
-  "P" "/home/ccrook/BERN52/GPSDATA/CAMPAIGN"
-  "USER" "ccrook"
+ENVIRONMENT     1 "" ""
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! SOME KEYWORDS FOR AUTOMATIC OUTPUT
 ! ----------------------------------
-CAMPAIGN 1  "${P}/PNZPP1"
+CAMPAIGN 1  "${P}/PZDTEST"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 1  "${P}/PNZPP1/STA/SESSIONS.SES"
+SESSION_TABLE 1  "${P}/PZDTEST/STA/SESSIONS.SES"
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
 
-YR4_INFO 1  "2013"
+YR4_INFO 0
   ## widget = comment
   # $Y+0
 
-SES_INFO 1  "302Y"
+SES_INFO 0
   ## widget = comment
   # $S+0
 
 USR_INFO 1  "${USER}"
   ## widget = comment
 
-ABBREV 1  "${P}/PNZPP1/STA/ABBREV.ABB"
+ABBREV 0
   ## widget = lineedit; path = DIR_ABB; ext = EXT_ABB; emptyallowed = false
   # ABBREV
 
@@ -38,7 +33,7 @@ DESCR_ABBREV 1  "Abbreviation table"
 
 ! A priori coordinates
 ! --------------------
-CRDFILE 1  "${P}/PNZPP1/STA/APR302Y.CRD"
+CRDFILE 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
   ## emptyallowed = false
   # APR$S+0
@@ -52,7 +47,7 @@ SYSODEF 1  "1"
 
 MSG_SYSODEF 1  "Program output"
 
-SYSOUT 1  "${P}/PNZPP1/OUT/CREATABB.L01"
+SYSOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF == 0; emptyallowed = false
   # PRETAB
@@ -66,7 +61,7 @@ ERRMRG 1  "0"
 
 MSG_ERRMRG 1  "Error message"
 
-SYSERR 1  "${U}/WORK/ERROR.MSG"
+SYSERR 0
   ## widget = lineedit; path = PTH_ERR; ext = EXT_ERR
   ## activeif = ERRMRG == 0; emptyallowed = false
   # ERROR

@@ -1,19 +1,19 @@
 
 ! Some keywords for automatic output
 ! ----------------------------------
-CAMPAIGN 1  "${P}/PNZPP1"
+CAMPAIGN 1  "${P}/PZDTEST"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 1  "${P}/PNZPP1/STA/SESSIONS.SES"
+SESSION_TABLE 1  "${P}/PZDTEST/STA/SESSIONS.SES"
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
 
-YR4_INFO 1  "2013"
+YR4_INFO 0
   ## widget = comment
   # $Y+0
 
-SES_INFO 1  "302Y"
+SES_INFO 0
   ## widget = comment
   # $S+0
 
@@ -22,12 +22,7 @@ USR_INFO 1  "${USER}"
 
 ! Environment Variables
 ! ---------------------
-ENVIRONMENT 5
-  "U" "/home/ccrook/BERN52/GPSUSER"
-  "T" "/home/ccrook/BERN52/GPSTEMP"
-  "X" "/opt/bern52/BERN52/GPS"
-  "P" "/home/ccrook/BERN52/GPSDATA/CAMPAIGN"
-  "USER" "ccrook"
+ENVIRONMENT     1 "" ""
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! General Constants
@@ -39,7 +34,7 @@ MSG_SHOWGEN 1  "Show all general files"
 
 ! Satellite Problems
 ! ------------------
-SATCRUX 1  "${X}/GEN/SAT_2013.CRX"
+SATCRUX 0
   ## widget = selwin; path = PTH_GEN; ext = EXT_CRX; maxfiles = 1
   ## emptyallowed = true
   # SAT_$Y+0
@@ -48,7 +43,7 @@ DESCR_SATCRUX 1  "Satellite problems"
 
 ! Abbreviation Table
 ! ------------------
-ABBREV 1  "${P}/PNZPP1/STA/ABBREV.ABB"
+ABBREV 0
   ## widget = selwin; path = DIR_ABB; ext = EXT_ABB; maxfiles = 1
   # ABBREV
 
@@ -72,7 +67,7 @@ MSG_CODXTR 1  "CODSPP extraction file"
 
 ! RESRMS SUMMARY FILE
 ! ---------------------
-RESRMS 1  "${P}/PNZPP1/OUT/EDT302Y.SUM"
+RESRMS 0
   ## widget = selwin; path = DIR_SUM; ext = EXT_SUM; maxfiles = 1
   # EDT$S+0
 
@@ -80,7 +75,7 @@ MSG_RESRMS 1  "Residual summary"
 
 ! List of stations to be deleted
 ! ------------------------------
-DELSTA 1  "${P}/PNZPP1/OUT/EDT302Y.DEL"
+DELSTA 0
   ## widget = lineedit; path = DIR_DEL; ext = EXT_DEL; emptyallowed = true
   # EDT$S+0
 
@@ -88,16 +83,16 @@ DESCR_DELSTA 1  "Files deletion list"
 
 ! Path to the obs. files
 ! ----------------------
-DIR_CZH 1  "${P}/PNZPP1/OBS/"
+DIR_CZH 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_CZH
 
-DIR_CZO 1  "${P}/PNZPP1/OBS/"
+DIR_CZO 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_CZO
 
-DIR_PZH 1  "${P}/PNZPP1/OBS/"
+DIR_PZH 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_PZH
 
-DIR_PZO 1  "${P}/PNZPP1/OBS/"
+DIR_PZO 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_PZO
 
 ! Extensions of the Output Files
@@ -128,7 +123,7 @@ SYSODEF 1  "0"
 
 MSG_SYSODEF 1  "Program output"
 
-SYSOUT 1  "${P}/PNZPP1/OUT/CHK302Y.OUT"
+SYSOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF == 0; emptyallowed = false
   # CHK$S+0
@@ -137,7 +132,7 @@ DESCR_SYSOUT 1  "Program output"
 
 ! Short summary
 ! -------------
-SUMOUT 1  "${P}/PNZPP1/OUT/CHK302Y.SUM"
+SUMOUT 0
   ## widget = lineedit; path = DIR_SUM; ext = EXT_SUM
   # CHK$S+0
 
@@ -150,7 +145,7 @@ ERRMRG 1  "0"
 
 MSG_ERRMRG 1  "Error message"
 
-SYSERR 1  "${U}/WORK/ERROR.MSG"
+SYSERR 0
   ## widget = lineedit; path = PTH_ERR; ext = EXT_ERR
   ## activeif = ERRMRG == 0; emptyallowed = false
   # ERROR
@@ -159,7 +154,7 @@ DESCR_SYSERR 1  "Error message"
 
 ! Title
 ! -----
-TITLE 1  "AUSPOS DETECT BAD STATIONS 302Y"
+TITLE 0
   ## widget = lineedit
   # AUSPOS DETECT BAD STATIONS $S+0
 

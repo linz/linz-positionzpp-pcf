@@ -1,29 +1,24 @@
 
 ! Environment Variables
 ! ---------------------
-ENVIRONMENT 5
-  "U" "/home/ccrook/BERN52/GPSUSER"
-  "T" "/home/ccrook/BERN52/GPSTEMP"
-  "X" "/opt/bern52/BERN52/GPS"
-  "P" "/home/ccrook/BERN52/GPSDATA/CAMPAIGN"
-  "USER" "ccrook"
+ENVIRONMENT     1 "" ""
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! Information for the title
 ! -------------------------
-CAMPAIGN 1  "${P}/PNZPP1"
+CAMPAIGN 1  "${P}/PZDTEST"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 1  "${P}/PNZPP1/STA/SESSIONS.SES"
+SESSION_TABLE 1  "${P}/PZDTEST/STA/SESSIONS.SES"
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
 
-YR4_INFO 1  "2013"
+YR4_INFO 0
   ## widget = comment
   # $Y+0
 
-SES_INFO 1  "302Y"
+SES_INFO 0
   ## widget = comment
   # $S+0
 
@@ -40,7 +35,7 @@ MSG_SHOWGEN 1  "Show all general files"
 
 ! General Constants
 ! -----------------
-CONST 1  "${X}/GEN/CONST."
+CONST 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
   # CONST.
 
@@ -48,7 +43,7 @@ DESCR_CONST 1  "General constants"
 
 ! Geodetic Datum
 ! --------------
-DATUM 1  "${X}/GEN/DATUM."
+DATUM 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
   # DATUM.
 
@@ -56,7 +51,7 @@ DESCR_DATUM 1  "Geodetic datum"
 
 ! Satellite Information
 ! ---------------------
-SATELL 1  "${X}/GEN/SATELLIT.I08"
+SATELL 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
   # SATELLIT.I08
 
@@ -64,7 +59,7 @@ DESCR_SATELL 1  "Satellite information"
 
 ! Satellite Problems
 ! ------------------
-SATCRUX 1  "${X}/GEN/SAT_2013.CRX"
+SATCRUX 0
   ## widget = selwin; path = PTH_GEN; ext = EXT_CRX; maxfiles = 1
   # SAT_$Y+0
 
@@ -72,7 +67,7 @@ DESCR_SATCRUX 1  "Satellite problems"
 
 ! Pole File
 ! ---------
-POLE 1  "${P}/PNZPP1/ORB/IGS302Y.ERP"
+POLE 0
   ## widget = selwin; path = DIR_ERP; ext = EXT_ERP; maxfiles = 1
   # IGS$S+0
 
@@ -80,7 +75,7 @@ DESCR_POLE 1  "Pole file"
 
 ! Subdaily Pole Model
 ! -------------------
-SUBMOD 1  "${X}/GEN/IERS2010XY.SUB"
+SUBMOD 0
   ## widget = selwin; path = PTH_GEN; ext = EXT_SUB; maxfiles = 1
   # IERS2010XY
 
@@ -88,7 +83,7 @@ DESCR_SUBMOD 1  "Subdaily pole model"
 
 ! Nutation Model
 ! -------------------
-NUTMOD 1  "${X}/GEN/IAU2000R06.NUT"
+NUTMOD 0
   ## widget = selwin; path = PTH_GEN; ext = EXT_NUT; maxfiles = 1
   # IAU2000R06
 
@@ -96,7 +91,7 @@ DESCR_NUTMOD 1  "Nutation model"
 
 ! Phase Center Eccentricities
 ! ---------------------------
-PHASECC 1  "PCV_COD.I08"
+PHASECC 0
   ## widget = selwin; path = DIR_STA; ext = NO_EXT; maxfiles = 1
   # PCV_COD.I08
 
@@ -120,7 +115,7 @@ MSG_PZFILES 1  "Zero-difference observation files"
 
 ! Extensions of the Zero-Difference Obs. Files
 ! ----------------------------------------------
-PZFILES_PTH_COL_2 1  "${P}/PNZPP1/OBS/"
+PZFILES_PTH_COL_2 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_PZO
 
 PZFILES_EXT_COL_2 1  "PZO"
@@ -135,10 +130,7 @@ RADIO_S 1  "1"
 
 MSG_RADIO_S 1  "Single-difference observation files"
 
-OBSFIL 3
-  "${P}/PNZPP1/OBS/PAST0010.PSH"
-  "${P}/PNZPP1/OBS/STTI0010.PSH"
-  "${P}/PNZPP1/OBS/SYTI0010.PSH"
+OBSFIL 0
   ## widget = selwin; path = DIR_PSH; ext = EXT_PSH; maxfiles = 999
   ## emptyallowed = true
   # SELECTED
@@ -149,7 +141,7 @@ MSG_OBSFIL 1  "Single-difference observation files"
 
 ! Extensions of the Single-Difference Obs. Files
 ! ----------------------------------------------
-OBSFIL_PTH_COL_2 1  "${P}/PNZPP1/OBS/"
+OBSFIL_PTH_COL_2 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_PSO
 
 OBSFIL_EXT_COL_2 1  "PSO"
@@ -159,7 +151,7 @@ OBSFIL_TXT_COL_2 1  "Single-difference obs file"
 
 ! A Priori Coordinates
 ! --------------------
-COORD 1  "${P}/PNZPP1/STA/APR302Y.CRD"
+COORD 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
   # APR$S+0
 
@@ -167,7 +159,7 @@ DESCR_COORD 1  "A priori coordinates"
 
 ! GNSS Standard Orbits
 ! --------------------
-STDORB 1  "${P}/PNZPP1/ORB/IGS302Y.STD"
+STDORB 0
   ## widget = selwin; path = DIR_STD; ext = EXT_STD; maxfiles = 1
   # IGS$S+0
 
@@ -235,9 +227,9 @@ DESCR_KININP 1  "Kinematic input coordinates"
 
 ! Satellite Clocks
 ! ----------------
-SATCLK 1  "${P}/PNZPP1/ORB/IGS302Y.CLK"
+SATCLK 0
   ## widget = selwin; path = DIR_CLK; ext = EXT_CLK; maxfiles = 1
-  ## emptyallowed = true
+  ## activeif = RADIO_Z = 1; emptyallowed = true
   # IGS$S+0
 
 DESCR_SATCLK 1  "Satellite clocks"
@@ -275,7 +267,7 @@ DESCR_ATTIT 1  "LEO attitude"
 
 ! GPS-UTC file
 ! -------------
-GPSUTC 1  "${X}/GEN/GPSUTC."
+GPSUTC 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
   # GPSUTC.
 
@@ -283,7 +275,7 @@ DESCR_GPSUTC 1  "Difference GPS-UTC"
 
 ! STAINFO file
 ! ------------
-STAINFO 1  "${P}/PNZPP1/STA/STATIONS.STA"
+STAINFO 0
   ## widget = selwin; path = DIR_STA; ext = EXT_STA; maxfiles = 1
   ## emptyallowed = true
   # STATIONS
@@ -292,14 +284,15 @@ DESCR_STAINFO 1  "Station information"
 
 ! Resulting Coordinates
 ! ---------------------
-COORDRS 1  ""
+COORDRS 0
   ## widget = lineedit; path = DIR_CRD; ext = EXT_CRD
+  # 
 
 DESCR_COORDRS 1  "Coordinate results"
 
 ! Residuals
 ! ---------
-RESIDRS 1  "${P}/PNZPP1/OUT/MPR$(CCC)302Y.RES"
+RESIDRS 0
   ## widget = lineedit; path = DIR_RES; ext = EXT_RES
   # MPR$(CCC)$S+0
 
@@ -307,13 +300,13 @@ DESCR_RESIDRS 1  "Residual file"
 
 ! Scratch Files
 ! -------------
-AUXFIL 1  "${U}/WORK/MAUPRP.SCR"
+AUXFIL 0
   ## widget = lineedit; path = PTH_SCR; ext = EXT_SCR; emptyallowed = false
   # MAUPRP$J
 
 DESCR_AUXFIL 1  "Scratch file"
 
-OBCOPY 1  "${U}/WORK/MAUPRP.SC1"
+OBCOPY 0
   ## widget = lineedit; path = PTH_SCR; ext = EXT_SC1; emptyallowed = false
   # MAUPRP$J
 
@@ -330,7 +323,7 @@ SYSODEF 1  "0"
 
 MSG_SYSODEF 1  "Program output"
 
-SYSOUT 1  "${P}/PNZPP1/OUT/MPR$(CCC)302Y.OUT"
+SYSOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF == 0; emptyallowed = false
   # MPR$(CCC)$S+0
@@ -344,7 +337,7 @@ ERRMRG 1  "0"
 
 MSG_ERRMRG 1  "Error message"
 
-SYSERR 1  "${U}/WORK/ERROR.MSG"
+SYSERR 0
   ## widget = lineedit; path = PTH_ERR; ext = EXT_ERR
   ## activeif = ERRMRG == 0; emptyallowed = false
   # ERROR
@@ -353,7 +346,7 @@ DESCR_SYSERR 1  "Error message"
 
 ! Program title
 ! -------------
-TITLE 1  "PNZ-PP TRIPLE DIFFERENCE PROCESSING $(CCC) 302Y"
+TITLE 0
   ## widget = lineedit
   # PNZ-PP TRIPLE DIFFERENCE PROCESSING $(CCC) $S+0
 
@@ -814,7 +807,7 @@ MSG_MXAMBS 1  "Remove satellites if the file contains more than"
 #   Satellite information       > %%%%%%%%%%%% <                               # SATELL
 #   Satellite problems          > %%%%%%%%%%%% <                               # SATCRUX
 #   Station information         > %%%%%%%%%%%% <                               # STAINFO
-#   Phase center eccentricities > %%%%%%%%%%%% <  Moved to STA                 # PHASECC
+#   Phase center eccentricities > %%%%%%%%%%%% < Moved to STA                  # PHASECC
 #                                                                              #
 # MENU SETTINGS                                                                #
 #   Selected campaign           > %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <# CAMPAIGN

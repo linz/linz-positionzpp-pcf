@@ -33,7 +33,7 @@ MODJULDATE 1  "56594.000000"
 ! ---------------------------------------------
 SESSION_CHAR 1  "302Y"
 
-SESSION_TABLE 1  "${P}/PNZPP1/STA/SESSIONS.SES"
+SESSION_TABLE 0
   ## widget = selwin; path = DIR_SES; ext = EXT_SES; maxfiles = 1
   # SESSIONS
 

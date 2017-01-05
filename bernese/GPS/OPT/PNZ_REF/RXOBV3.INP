@@ -1,7 +1,7 @@
 
 ! Environment Variables
 ! ---------------------
-ENVIRONMENT 0
+ENVIRONMENT     1 "" ""
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! Some title information
@@ -9,20 +9,22 @@ ENVIRONMENT 0
 USR_INFO 1  "${USER}"
   ## widget = comment
 
-SESSION_TABLE 0
+SESSION_TABLE 1  "${P}/PZDTEST/STA/SESSIONS.SES"
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
 
-YR4_INFO 1  "$Y+0"
+YR4_INFO 0
   ## widget = comment
+  # $Y+0
 
-SES_INFO 1  "$S+0"
+SES_INFO 0
   ## widget = comment
+  # $S+0
 
 ! Active Campaign
 ! ---------------
-CAMPAIGN 0
+CAMPAIGN 1  "${P}/PZDTEST"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
 ! General Constants
@@ -34,52 +36,50 @@ SHOWGEN 1  "1"
 
 MSG_SHOWGEN 1  "Show all general files"
 
-CONST 1  "CONST."
+CONST 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
+  # CONST.
 
 DESCR_CONST 1  "General constants"
 
 ! Difference of GPS-TIME - UTC-TIME
 ! ---------------------------------
-GPSUTC 1  "GPSUTC."
+GPSUTC 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
+  # GPSUTC.
 
 DESCR_GPSUTC 1  "Difference GPS-UTC"
 
 ! Satellite Problems
 ! ------------------
-SATCRUX 1  "SAT_$Y+0"
+SATCRUX 0
   ## widget = selwin; path = PTH_GEN; ext = EXT_CRX; maxfiles = 1
   ## emptyallowed = true
+  # SAT_$Y+0
 
 DESCR_SATCRUX 1  "Satellite problems"
 
 ! Satellite Information
 ! ---------------------
-SATELL 1  "SATELLIT.I08"
+SATELL 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
+  # SATELLIT.I08
 
 DESCR_SATELL 1  "Satellite information"
 
-! Receiver Information
-! --------------------
-RECEIVR 1  "RECEIVER.ALL"
-  ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
-  ## emptyallowed = true
-
-DESCR_RECEIVR 1  "Receiver information"
-
 ! Phase Center Eccentricities
 ! ---------------------------
-PHASECC 1  "PCV_COD.I08"
-  ## widget = selwin; path = PTH_GEN; maxfiles = 1; emptyallowed = true
+PHASECC 0
+  ## widget = selwin; path = DIR_STA; maxfiles = 1; emptyallowed = true
+  # PCV_COD.I08
 
 DESCR_PHASECC 1  "Phase center eccentricities"
 
 ! Station Name Abbreviations
 ! --------------------------
-ABBREV 1  "ABBREV"
+ABBREV 0
   ## widget = selwin; path = DIR_ABB; ext = EXT_ABB; maxfiles = 1
+  # ABBREV
 
 DESCR_ABBREV 1  "Abbreviation table"
 
@@ -92,14 +92,6 @@ FRQINFO 0
 
 DESCR_FRQINFO 1  "Frequency information"
 
-! Observation selection for Galileo and SBAS
-! ------------------------------------------
-GEOSFILE 1  ""
-  ## widget = selwin; path = PTH_GEN; maxfiles = 1; emptyallowed = true
-  ## activeif = RADIO_O == 1
-
-DESCR_GEOSFILE 1  "Galileo satellite-specific observation type selection"
-
 ! List of RINEX Input Files
 ! -------------------------
 RADIO_O 1  "1"
@@ -107,12 +99,13 @@ RADIO_O 1  "1"
 
 MSG_RADIO_O 1  "Select original RINEX observation files"
 
-RXOFILE 1  "????????"
+RXOFILE 0
   ## widget = selwin; path = DIR_RXO; ext = EXT_RXO; maxfiles = 999
+  # ????????
 
 RXOFILE_TXT_COL_1 1  "RINEX files"
 
-MSG_RXOFILE 1  "original RINEX observation files"
+MSG_RXOFILE 1  "Original RINEX observation files"
 
 ! List of RINEX Input Files
 ! -------------------------
@@ -121,17 +114,19 @@ RADIO_S 1  "0"
 
 MSG_RADIO_S 1  "Select Smoothed RINEX obs. files"
 
-SMTFILE 1  "????$S+0"
+SMTFILE 0
   ## widget = selwin; path = DIR_SMT; ext = EXT_SMT; maxfiles = 999
+  # ????$S+0
 
 SMTFILE_TXT_COL_1 1  "RINEX files"
 
-MSG_SMTFILE 1  "Smoothed RINEX obs. files"
+MSG_SMTFILE 1  "Smoothed RINEX observation files"
 
 ! STAINFO with information for the Bernese files
 ! ----------------------------------------------
-STAINFO 1  "STATIONS"
+STAINFO 0
   ## widget = selwin; path = DIR_STA; ext = EXT_STA; emptyallowed = true
+  # STATIONS
 
 DESCR_STAINFO 1  "Station information file"
 
@@ -165,9 +160,10 @@ MSG_SAVPHS 1  "types to save: Phase"
 
 ! Coordinates to be updated
 ! -------------------------
-COORD 1  "APR$S+0"
+COORD 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
   ## emptyallowed = true
+  # APR$S+0
 
 MSG_COORD 1  "Update coordinates"
 
@@ -178,7 +174,7 @@ SYSODEF 1  "1"
 
 MSG_SYSODEF 1  "Program output"
 
-SYSOUT 1  "${P}/EXAMPLE/OUT/RXOBV3.XXX"
+SYSOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF == 0; emptyallowed = false
   # RXOBV3
@@ -192,30 +188,34 @@ ERRMRG 1  "0"
 
 MSG_ERRMRG 1  "Error message"
 
-SYSERR 1  "ERROR"
+SYSERR 0
   ## widget = lineedit; path = PTH_ERR; ext = EXT_ERR
   ## activeif = ERRMRG == 0; emptyallowed = false
+  # ERROR
 
 DESCR_SYSERR 1  "Error messages"
 
 ! Scratch File
 ! ------------
-AUXFIL 1  "RXOBV3$J"
+AUXFIL 0
   ## widget = lineedit; path = PTH_SCR; ext = EXT_SCR; emptyallowed = false
+  # RXOBV3$J
 
 DESCR_AUXFIL 1  "Scratch file 1"
 
 ! Scratch File: Code Obs.
 ! -----------------------
-AUXCOD 1  "RXOBV3$J"
+AUXCOD 0
   ## widget = lineedit; path = PTH_SCR; ext = EXT_SC1; emptyallowed = false
+  # RXOBV3$J
 
 DESCR_AUXCOD 1  "Scratch file 2"
 
 ! Scratch File: Phase Obs.
 ! ------------------------
-AUXPHS 1  "RXOBV3$J"
+AUXPHS 0
   ## widget = lineedit; path = PTH_SCR; ext = EXT_SC2; emptyallowed = false
+  # RXOBV3$J
 
 DESCR_AUXPHS 1  "Scratch file 3"
 
@@ -257,8 +257,9 @@ MSG_ABBUPD 1  "Action if station not in abbreviation list"
 
 ! Session ID
 ! ----------
-SESSID 1  "$S+0"
+SESSID 0
   ## widget = lineedit; check_strlen = 4
+  # $S+0
 
 MSG_SESSID 1  "Session ID used for Bernese observation files"
 
@@ -295,20 +296,23 @@ RADIO_2 1  "0"
 
 MSG_RADIO_2 1  "Observation window defined by start and end times"
 
-SESSION_YEAR 1  "$Y+0"
+SESSION_YEAR 0
   ## widget = lineedit; multilineallowed = true; emptyallowed = false
+  # $Y+0
 
 MSG_SESSION_YEAR 1  "Year for sessions def. the time window"
 
-SESSION_STRG 1  "$S+0"
+SESSION_STRG 0
   ## widget = lineedit; multilineallowed = true; emptyallowed = false
+  # $S+0
 
 MSG_SESSION_STRG 1  "Sessions defining the time window"
 
 ! Use Obs. Window
 ! ---------------
-STADAT 1  "$YMD_STR+0"
+STADAT 0
   ## widget = lineedit; emptyallowed = false; check_type = date
+  # $YMD_STR+0
 
 MSG_STADAT 1  "Start of time window (year month day)"
 
@@ -317,8 +321,9 @@ STATIM 1  "00 00 00"
 
 MSG_STATIM 1  "Start of time window (hour min. sec.)"
 
-ENDDAT 1  "$YMD_STR+0"
+ENDDAT 0
   ## widget = lineedit; emptyallowed = false; check_type = date
+  # $YMD_STR+0
 
 MSG_ENDDAT 1  "End of time window (year month day)"
 
@@ -461,15 +466,10 @@ MSG_STAVER 1  "Verify station name/number"
 
 ! Verify frequency
 ! ----------------
-DOFRQVER 1  "1"
-  ## widget = checkbox; activeif = RADIO_R == 1
-
-MSG_DOFRQVER 1  "Check frequency information file for frequency"
-
 FRQVER 1  "WARNING"
   ## widget = combobox; editable = false
-  ## activeif = DOFRQVER = 1 AND RADIO_R == 1
-  ## cards = WARNING SKIP ERROR UPDATE
+  ## activeif = RADIO_R == 1 AND FRQINFO / _
+  ## cards = NO_CHECK WARNING SKIP ERROR UPDATE
 
 MSG_FRQVER 1  "Check frequency information file for frequency"
 
@@ -502,85 +502,86 @@ MSG_EPOFLAG 1  "What to do in case of event flag"
 
 ! STAINFO with information requested in the RINEX files
 ! -----------------------------------------------------
-RNXINFO 1  ""
+RNXINFO 0
   ## widget = selwin; path = DIR_STA; ext = EXT_CRX; emptyallowed = true
+  # 
 
 DESCR_RNXINFO 1  "Accepted station information"
 
 ! Extensions of the Output Files
 ! ------------------------------
-RXOFILE_EXT_COL_2 0
+RXOFILE_EXT_COL_2 1  "CZH"
   ## widget = initmenu; pointer = EXT_CZH
 
-RXOFILE_EXT_COL_3 0
+RXOFILE_EXT_COL_3 1  "CZO"
   ## widget = initmenu; pointer = EXT_CZO
 
-RXOFILE_EXT_COL_4 0
+RXOFILE_EXT_COL_4 1  "PZH"
   ## widget = initmenu; pointer = EXT_PZH
 
-RXOFILE_EXT_COL_5 0
+RXOFILE_EXT_COL_5 1  "PZO"
   ## widget = initmenu; pointer = EXT_PZO
 
-RXOFILE_EXT_COL_6 0
+RXOFILE_EXT_COL_6 1  "RZH"
   ## widget = initmenu; pointer = EXT_RZH
 
-RXOFILE_EXT_COL_7 0
+RXOFILE_EXT_COL_7 1  "RZO"
   ## widget = initmenu; pointer = EXT_RZO
 
-SMTFILE_EXT_COL_2 0
+SMTFILE_EXT_COL_2 1  "CZH"
   ## widget = initmenu; pointer = EXT_CZH
 
-SMTFILE_EXT_COL_3 0
+SMTFILE_EXT_COL_3 1  "CZO"
   ## widget = initmenu; pointer = EXT_CZO
 
-SMTFILE_EXT_COL_4 0
+SMTFILE_EXT_COL_4 1  "PZH"
   ## widget = initmenu; pointer = EXT_PZH
 
-SMTFILE_EXT_COL_5 0
+SMTFILE_EXT_COL_5 1  "PZO"
   ## widget = initmenu; pointer = EXT_PZO
 
-SMTFILE_EXT_COL_6 0
+SMTFILE_EXT_COL_6 1  "RZH"
   ## widget = initmenu; pointer = EXT_RZH
 
-SMTFILE_EXT_COL_7 0
+SMTFILE_EXT_COL_7 1  "RZO"
   ## widget = initmenu; pointer = EXT_RZO
 
 ! Path of the Output Files
 ! ------------------------
-RXOFILE_PTH_COL_2 0
+RXOFILE_PTH_COL_2 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_CZH
 
-RXOFILE_PTH_COL_3 0
+RXOFILE_PTH_COL_3 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_CZO
 
-RXOFILE_PTH_COL_4 0
+RXOFILE_PTH_COL_4 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_PZH
 
-RXOFILE_PTH_COL_5 0
+RXOFILE_PTH_COL_5 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_PZO
 
-RXOFILE_PTH_COL_6 0
+RXOFILE_PTH_COL_6 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_RZH
 
-RXOFILE_PTH_COL_7 0
+RXOFILE_PTH_COL_7 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_RZO
 
-SMTFILE_PTH_COL_2 0
+SMTFILE_PTH_COL_2 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_CZH
 
-SMTFILE_PTH_COL_3 0
+SMTFILE_PTH_COL_3 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_CZO
 
-SMTFILE_PTH_COL_4 0
+SMTFILE_PTH_COL_4 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_PZH
 
-SMTFILE_PTH_COL_5 0
+SMTFILE_PTH_COL_5 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_PZO
 
-SMTFILE_PTH_COL_6 0
+SMTFILE_PTH_COL_6 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_RZH
 
-SMTFILE_PTH_COL_7 0
+SMTFILE_PTH_COL_7 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_RZO
 
 
@@ -616,8 +617,7 @@ SMTFILE_PTH_COL_7 0
 #   General constants       > %%%%%%%%%%%% <                                   # CONST
 #   Satellite information   > %%%%%%%%%%%% <                                   # SATELL
 #   Satellite problems      > %%%%%%%%%%%% <                                   # SATCRUX
-#   Receiver information    > %%%%%%%%%%%% <                                   # RECEIVR
-#   Phase center offsets    > %%%%%%%%%%%% <                                   # PHASECC
+#   Phase center offsets    > %%%%%%%%%%%% < Moved to STA                      # PHASECC
 #   GPS-UTC seconds         > %%%%%%%%%%%% <                                   # GPSUTC
 #   Abbreviation table      > %%%%%%%%%%%% <                                   # ABBREV
 #   Frequency information   > %%%%%%%%%%%% <                                   # FRQINFO
@@ -691,6 +691,9 @@ SMTFILE_PTH_COL_7 0
 # EVENT FLAG HANDLING                                                          #
 #   What to do in case of event flags               > %%%%%%%% <               # EPOFLAG
 #                                                                              #
+# FREQUENCY CHECK FOR SLR                                                      #
+#   Check frequency information file for frequency  > %%%%%%%% <               # FRQVER
+#
 # END_PANEL ####################################################################
 
 
@@ -738,7 +741,6 @@ SMTFILE_PTH_COL_7 0
 # ADDITIONAL VERIFICATION                                                      #
 #   Verify station name/number using                > % < > %%%%%%%%%%%%%% <   # DOSTAVER STAVER
 #   Verify station name using RINEX filename        > % <                      # RNXVER
-#   Check frequency information file for frequency  > % <   else > %%%%%%%% <  # DOFRQVER FRQVER
 #                                                                              #
 # HANDLING OF KNOWN INCONSISTENCIES                                            #
 #   Accepted station information                    > %%%%%%%%% <              # RNXINFO

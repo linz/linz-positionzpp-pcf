@@ -1,24 +1,26 @@
 
-CAMPAIGN 0
+CAMPAIGN 1  "${P}/PZDTEST"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 0
+SESSION_TABLE 1  "${P}/PZDTEST/STA/SESSIONS.SES"
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
 
-YR4_INFO 1  "$Y+0"
+YR4_INFO 0
   ## widget = comment
+  # $Y+0
 
-SES_INFO 1  "$S+0"
+SES_INFO 0
   ## widget = comment
+  # $S+0
 
 USR_INFO 1  "${USER}"
   ## widget = comment
 
 ! Environment Variables
 ! ---------------------
-ENVIRONMENT 0
+ENVIRONMENT     1 "" ""
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! ----------------------------------------------------------------------
@@ -58,44 +60,50 @@ MSG_SHOWGEN 1  "Show all general files"
 ! ----------------------------------------------------------------------
 ! General Constants
 ! -----------------
-CONST 1  "CONST."
+CONST 0
   ## widget = selwin; path = PTH_GEN; maxfiles = 1
+  # CONST.
 
 DESCR_CONST 1  "General constants"
 
 ! Local Geodetic Datum
 ! --------------------
-DATUM 1  "DATUM."
+DATUM 0
   ## widget = selwin; path = PTH_GEN; maxfiles = 1
+  # DATUM.
 
 DESCR_DATUM 1  "Geodetic datum"
 
 ! Phase Center Eccentricities
 ! ---------------------------
-PHASECC 1  "PCV_COD.I08"
+PHASECC 0
   ## widget = selwin; path = DIR_STA; maxfiles = 1
+  # PCV_COD.I08
 
 DESCR_PHASECC 1  "Phase center eccentricities"
 
 ! Receiver information
 ! --------------------
-RECEIVR 1  "RECEIVER.ALL"
+RECEIVR 0
   ## widget = selwin; path = PTH_GEN; maxfiles = 1
+  # RECEIVER.ALL
 
 DESCR_RECEIVR 1  "Receiver information"
 
 ! Satellite Information
 ! ---------------------
-SATELL 1  "SATELLIT.I08"
+SATELL 0
   ## widget = selwin; path = PTH_GEN; maxfiles = 1
+  # SATELLIT.I08
 
 DESCR_SATELL 1  "Satellite information"
 
 ! Satellite Problems
 ! ------------------
-SATCRUX 1  "SAT_$Y+0"
+SATCRUX 0
   ## widget = selwin; path = PTH_GEN; ext = EXT_CRX; maxfiles = 1
   ## emptyallowed = true
+  # SAT_$Y+0
 
 DESCR_SATCRUX 1  "Satellite problems"
 
@@ -109,37 +117,42 @@ DESCR_POTCOE 1  "Earth potential coefficients"
 
 ! Subdaily Pole Model
 ! -------------------
-SUBMOD 1  "IERS2010XY"
+SUBMOD 0
   ## widget = selwin; path = PTH_GEN; ext = EXT_SUB; maxfiles = 1
+  # IERS2010XY
 
 DESCR_SUBMOD 1  "Subdaily pole model"
 
 ! Nutation Model
 ! -------------------
-NUTMOD 1  "IAU2000R06"
+NUTMOD 0
   ## widget = selwin; path = PTH_GEN; ext = EXT_NUT; maxfiles = 1
+  # IAU2000R06
 
 DESCR_NUTMOD 1  "Nutation model"
 
 ! SINEX General Input File
 ! ------------------------
-SINEXIN 1  "SINEX."
+SINEXIN 0
   ## widget = selwin; path = PTH_GEN; maxfiles = 1
+  # SINEX.
 
 DESCR_SINEXIN 1  "SINEX general input file"
 
 ! IONEX Control File
 ! ------------------
-IONEXCF 1  "IONEX."
+IONEXCF 0
   ## widget = selwin; path = PTH_GEN; maxfiles = 1
+  # IONEX.
 
 DESCR_IONEXCF 1  "IONEX control file"
 
 ! GPS-UTC file
 ! -------------
-GPSUTC 1  "GPSUTC."
+GPSUTC 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
   ## emptyallowed = false
+  # GPSUTC.
 
 DESCR_GPSUTC 1  "Difference GPS-UTC"
 
@@ -154,18 +167,21 @@ DESCR_FRQINFO 1  "Frequency information"
 
 ! Scratch Files
 ! -------------
-AUXFIL 1  "GPSEST$J"
+AUXFIL 0
   ## widget = lineedit; path = PTH_SCR; ext = EXT_SCR; emptyallowed = false
+  # GPSEST$J
 
 DESCR_AUXFIL 1  "Scratch file"
 
-AUXFIL1 1  "GPSEST$J"
+AUXFIL1 0
   ## widget = lineedit; path = PTH_SCR; ext = EXT_SC1; emptyallowed = false
+  # GPSEST$J
 
 DESCR_AUXFIL1 1  "Scratch files"
 
-KINSCR 1  "GPSEST$J"
+KINSCR 0
   ## widget = lineedit; path = PTH_SCR; ext = EXT_SC2; emptyallowed = false
+  # GPSEST$J
 
 MSG_KINSCR 1  "Scratch files"
 
@@ -185,10 +201,10 @@ PZFILES 0
 
 MSG_PZFILES 1  "Phase observation files"
 
-PZFILES_PTH_COL_2 0
+PZFILES_PTH_COL_2 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_PZO
 
-PZFILES_EXT_COL_2 0
+PZFILES_EXT_COL_2 1  "PZO"
   ## widget = initmenu; pointer = EXT_PZO
 
 PZFILES_TXT_COL_1 1  "OBSERVATION FILE HEADER"
@@ -196,16 +212,17 @@ PZFILES_TXT_COL_1 1  "OBSERVATION FILE HEADER"
 PZFILES_TXT_COL_2 1  "OBSERVATION FILE"
 
 ! Phase Single Differences
-PSFILES 1  "????$S+0"
+PSFILES 0
   ## widget = selwin; path = DIR_PSH; ext = EXT_PSH; emptyallowed = true
   ## activeif = DIFLVL = DOUBLE
+  # ????$S+0
 
 MSG_PSFILES 1  "Phase observation files"
 
-PSFILES_PTH_COL_2 0
+PSFILES_PTH_COL_2 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_PSO
 
-PSFILES_EXT_COL_2 0
+PSFILES_EXT_COL_2 1  "PSO"
   ## widget = initmenu; pointer = EXT_PSO
 
 PSFILES_TXT_COL_1 1  "OBSERVATION FILE HEADER"
@@ -220,10 +237,10 @@ CZFILES 0
 
 MSG_CZFILES 1  "Code observation files"
 
-CZFILES_PTH_COL_2 0
+CZFILES_PTH_COL_2 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_CZO
 
-CZFILES_EXT_COL_2 0
+CZFILES_EXT_COL_2 1  "CZO"
   ## widget = initmenu; pointer = EXT_CZO
 
 CZFILES_TXT_COL_1 1  "OBSERVATION FILE HEADER"
@@ -231,16 +248,17 @@ CZFILES_TXT_COL_1 1  "OBSERVATION FILE HEADER"
 CZFILES_TXT_COL_2 1  "OBSERVATION FILE"
 
 ! Code Single Differences
-CSFILES 1  ""
+CSFILES 0
   ## widget = selwin; path = DIR_CSH; ext = EXT_CSH; emptyallowed = true
   ## activeif = DIFLVL = DOUBLE
+  # 
 
 MSG_CSFILES 1  "Code observation files"
 
-CSFILES_PTH_COL_2 0
+CSFILES_PTH_COL_2 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_CSO
 
-CSFILES_EXT_COL_2 0
+CSFILES_EXT_COL_2 1  "CSO"
   ## widget = initmenu; pointer = EXT_CSO
 
 CSFILES_TXT_COL_1 1  "OBSERVATION FILE HEADER"
@@ -255,10 +273,10 @@ RZFILES 0
 
 MSG_RZFILES 1  "Range observation files"
 
-RZFILES_PTH_COL_2 0
+RZFILES_PTH_COL_2 1  "${P}/PZDTEST/OBS/"
   ## widget = initmenu; pointer = DIR_RZO
 
-RZFILES_EXT_COL_2 0
+RZFILES_EXT_COL_2 1  "RZO"
   ## widget = initmenu; pointer = EXT_RZO
 
 RZFILES_TXT_COL_1 1  "OBSERVATION FILE HEADER"
@@ -267,22 +285,25 @@ RZFILES_TXT_COL_2 1  "OBSERVATION FILE"
 
 ! A priori Coordinates
 ! --------------------
-COORD 1  "ITRF$S+0"
+COORD 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
+  # ITRF$S+0
 
 DESCR_COORD 1  "A priori station coordinates"
 
 ! Standard Orbit
 ! --------------
-STDORB 1  "IGS$S+0"
+STDORB 0
   ## widget = selwin; path = DIR_STD; ext = EXT_STD; maxfiles = 1
+  # IGS$S+0
 
 DESCR_STDORB 1  "Satellite standard orbits"
 
 ! Pole File
 ! ---------
-POLE 1  "IGS$S+0"
+POLE 0
   ## widget = selwin; path = DIR_ERP; ext = EXT_ERP; maxfiles = 1
+  # IGS$S+0
 
 DESCR_POLE 1  "Earth rotation parameters"
 
@@ -297,48 +318,54 @@ DESCR_SATCLK 1  "Satellite clock corrections"
 
 ! Code Biases
 ! -----------
-DCBINP 1  ""
+DCBINP 0
   ## widget = selwin; path = DIR_DCB; ext = EXT_DCB; maxfiles = 1
   ## emptyallowed = true; activeif = GEOTEC = GNSS
+  # 
 
 DESCR_DCBINP 1  "Differential code biases"
 
 ! VMF grid files
 ! --------------
-VMF1_FILES 1  ""
+VMF1_FILES 0
   ## widget = selwin; path = DIR_GRD; ext = EXT_GRD; emptyallowed = true
+  # 
 
 MSG_VMF1_FILES 1  "Gridded VMF1 coefficients"
 
 ! Ionosphere Models
 ! -----------------
-IONOS 1  ""
+IONOS 0
   ## widget = selwin; path = DIR_ION; ext = EXT_ION; maxfiles = 1
   ## emptyallowed = true; activeif = GEOTEC = GNSS
+  # 
 
 DESCR_IONOS 1  "Ionosphere models"
 
 ! Ocean Loading Tables
 ! --------------------
-OCNLOAD 1  ""
+OCNLOAD 0
   ## widget = selwin; path = DIR_BLQ; ext = EXT_BLQ; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_OCNLOAD 1  "Ocean tidal loading tables"
 
 ! Atmospheric Tidal Loading Tables
 ! --------------------------------
-ATMLOAD 1  ""
+ATMLOAD 0
   ## widget = selwin; path = DIR_ATL; ext = EXT_ATL; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_ATMLOAD 1  "Atmospheric tidal loading tables"
 
 ! Radiation Pressure Coef.
 ! ------------------------
-RPRCOE 1  ""
+RPRCOE 0
   ## widget = selwin; path = DIR_RPR; ext = EXT_RPR; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_RPRCOE 1  "Satellite orbit partials"
 
@@ -361,16 +388,18 @@ DESCR_ISBINP 1  "Inter-system biases"
 
 ! Troposphere Estimates
 ! ---------------------
-TROPEST 1  ""
+TROPEST 0
   ## widget = selwin; path = DIR_TRP; ext = EXT_TRP; maxfiles = 1
   ## emptyallowed = true; activeif = GEOTEC = GNSS
+  # 
 
 DESCR_TROPEST 1  "Troposphere estimates"
 
 ! Meteo Data
 ! ----------
-METFIL 1  ""
+METFIL 0
   ## widget = selwin; path = DIR_MET; ext = EXT_MET; emptyallowed = true
+  # 
 
 MSG_METFIL 1  "Meteorological data"
 
@@ -397,41 +426,46 @@ MSG_HLOAD_FILES 1  "Grid files for hydrostatic pressure loading"
 
 ! Station crux file
 ! -----------------
-STAINFO 1  ""
+STAINFO 0
   ## widget = selwin; path = DIR_STA; ext = EXT_STA; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_STAINFO 1  "Station information"
 
 ! Kinematic positions for LEOs and Stations
 ! -----------------------------------------
-KININP 1  ""
+KININP 0
   ## widget = selwin; path = DIR_KIN; ext = EXT_KIN; maxfiles = 1
   ## emptyallowed = true; activeif = GEOTEC = GNSS
+  # 
 
 DESCR_KININP 1  "Kinematic coordinates"
 
 ! Receiver Antenna Orientations
 ! -----------------------------
-ANTAZI 1  ""
+ANTAZI 0
   ## widget = selwin; path = DIR_AZI; ext = EXT_AZI; maxfiles = 1
   ## emptyallowed = true; activeif = GEOTEC = GNSS
+  # 
 
 DESCR_ANTAZI 1  "Receiver antenna orientation"
 
 ! Station Observation sigma factors for scaling the outlier limits
 ! ----------------------------------------------------------------
-STAWGT 1  ""
+STAWGT 0
   ## widget = selwin; path = DIR_SOS; ext = EXT_SOS; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_STAWGT 1  "Observation sigma factors"
 
 ! Site Eccentricities
 ! -------------------
-ECCENT 1  ""
+ECCENT 0
   ## widget = selwin; path = DIR_ECC; ext = EXT_ECC; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_ECCENT 1  "Station eccentricities"
 
@@ -499,9 +533,10 @@ SYSODEF 1  "0"
 
 MSG_SYSODEF 1  "Program output"
 
-SYSOUT 1  "AFS$S+0"
+SYSOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF == 0; emptyallowed = false
+  # AFS$S+0
 
 DESCR_SYSOUT 1  "Program output"
 
@@ -512,84 +547,95 @@ ERRMRG 1  "0"
 
 MSG_ERRMRG 1  "Error message"
 
-SYSERR 1  "ERROR"
+SYSERR 0
   ## widget = lineedit; path = PTH_ERR; ext = EXT_ERR
   ## activeif = ERRMRG == 0; emptyallowed = false
+  # ERROR
 
 DESCR_SYSERR 1  "Error message"
 
 ! Normal Equations
 ! ----------------
-NEQUARS 1  "AFS$S+0"
+NEQUARS 0
   ## widget = lineedit; path = DIR_NEQ; ext = EXT_NEQ
+  # AFS$S+0
 
 DESCR_NEQUARS 1  "Normal equations"
 
 ! Coordinate Results
 ! ------------------
-COORDRS 1  "JHP$S+0"
+COORDRS 0
   ## widget = lineedit; path = DIR_CRD; ext = EXT_CRD
+  # JHP$S+0
 
 DESCR_COORDRS 1  "Station coordinates"
 
 ! Orbital Elements
 ! ----------------
-ORBITRS 1  ""
+ORBITRS 0
   ## widget = lineedit; path = DIR_ELE; ext = EXT_ELE
+  # 
 
 DESCR_ORBITRS 1  "GNSS orbital elements"
 
 ! Earth Rotation Parameters
 ! -------------------------
-POLERS 1  ""
+POLERS 0
   ## widget = lineedit; path = DIR_ERP; ext = EXT_ERP
+  # 
 
 DESCR_POLERS 1  "Bernese ERP file"
 
 ! Pole in IERS Format
 ! -------------------
-IERSPOL 1  ""
+IERSPOL 0
   ## widget = lineedit; path = DIR_IEP; ext = EXT_IEP
+  # 
 
 DESCR_IERSPOL 1  "IERS ERP file"
 
 ! Troposphere Parameters
 ! ----------------------
-TROPSAV 1  ""
+TROPSAV 0
   ## widget = lineedit; path = DIR_TRP; ext = EXT_TRP
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_TROPSAV 1  "Troposphere estimates"
 
 ! Troposphere SINEX
 ! -----------------
-TROPSNX 1  ""
+TROPSNX 0
   ## widget = lineedit; path = DIR_TRO; ext = EXT_TRO
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_TROPSNX 1  "Troposphere SINEX"
 
 ! Ionosphere Models
 ! -----------------
-IONOSRS 1  ""
+IONOSRS 0
   ## widget = lineedit; path = DIR_ION; ext = EXT_ION
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_IONOSRS 1  "Ionosphere models"
 
 ! Ionosphere Maps
 ! ---------------
-IONEXRS 1  ""
+IONEXRS 0
   ## widget = lineedit; path = DIR_INX; ext = EXT_INX
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_IONEXRS 1  "IONEX"
 
 ! Code Bias Output File
 ! ---------------------
-DCBOUT 1  ""
+DCBOUT 0
   ## widget = lineedit; path = DIR_DCB; ext = EXT_DCB
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_DCBOUT 1  "Differential code biases"
 
@@ -602,17 +648,19 @@ DESCR_ISBOUT 1  "Inter-system biases"
 
 ! Receiver and Satellite Antenna PCV (Grid)
 ! -----------------------------------------
-PHASRSG 1  ""
+PHASRSG 0
   ## widget = lineedit; path = DIR_PHG; ext = EXT_PHG
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_PHASRSG 1  "Phase center variations (grid)"
 
 ! Receiver Antenna PCV (Harm)
 ! ---------------------------
-PHASRSH 1  ""
+PHASRSH 0
   ## widget = lineedit; path = DIR_PHH; ext = EXT_PHH
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_PHASRSH 1  "Phase center variations (harm)"
 
@@ -636,30 +684,34 @@ DESCR_CLKRNX 1  "Clock RINEX"
 
 ! Kinem. Coordinates (output)
 ! ---------------------------
-KINOUT 1  ""
+KINOUT 0
   ## widget = lineedit; path = DIR_KIN; ext = EXT_KIN
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_KINOUT 1  "Kinematic coordinates"
 
 ! Residuals
 ! ---------
-RESIDRS 1  ""
+RESIDRS 0
   ## widget = lineedit; path = DIR_RES; ext = EXT_RES
+  # 
 
 DESCR_RESIDRS 1  "Residuals"
 
 ! Covariances (All)
 ! -----------------
-COVTTRS 1  ""
+COVTTRS 0
   ## widget = lineedit; path = DIR_COV; ext = EXT_COV
+  # 
 
 DESCR_COVTTRS 1  "Full covariance matrix"
 
 ! Covariances (Coords)
 ! --------------------
-COVARRS 1  ""
+COVARRS 0
   ## widget = lineedit; path = DIR_COV; ext = EXT_COV
+  # 
 
 DESCR_COVARRS 1  "Coordinate covariance matrix"
 
@@ -686,8 +738,9 @@ DESCR_RGBOUT 1  "Range biases"
 ! ----------------------------------------------------------------------
 ! Title
 ! -----
-TITLE 1  "PNZ-PP AMBIGUITY FIXED SOLUTION $S+0"
+TITLE 0
   ## widget = lineedit
+  # PNZ-PP AMBIGUITY FIXED SOLUTION $S+0
 
 MSG_TITLE 1  "Title line"
 
@@ -810,20 +863,23 @@ MSG_RADIO1_2 1  "Observation window defined by start and end times"
 
 ! Observation Window: defined by session
 ! --------------------------------------
-SESSION_YEAR1 1  "$Y+0"
+SESSION_YEAR1 0
   ## widget = lineedit; multilineallowed = true; emptyallowed = false
+  # $Y+0
 
 MSG_SESSION_YEAR1 1  "Year"
 
-SESSION_STRG1 1  "$S+0"
+SESSION_STRG1 0
   ## widget = lineedit; multilineallowed = true; emptyallowed = false
+  # $S+0
 
 MSG_SESSION_STRG1 1  "Session"
 
 ! Observation Window: defined by date
 ! -----------------------------------
-STADAT1 1  "$YMD_STR+0"
+STADAT1 0
   ## widget = lineedit; activeif = RADIO1_2 = 1; check_type = date
+  # $YMD_STR+0
 
 MSG_STADAT1 1  "Start time(year month day)"
 
@@ -833,8 +889,9 @@ STATIM1 1  "00 00 00"
 
 MSG_STATIM1 1  "Start time(hour minutes seconds)"
 
-ENDDAT1 1  "$YMD_STR+0"
+ENDDAT1 0
   ## widget = lineedit; activeif = RADIO1_2 = 1; check_type = date
+  # $YMD_STR+0
 
 MSG_ENDDAT1 1  "End time(year month day)"
 
@@ -1146,7 +1203,7 @@ MSG_MXAMBIT 1  "Maximal number of ambiguities fixed per iteration step"
 LEAST 1  "3.0"
   ## widget = lineedit; check_type = real; check_min = 0.0
 
-MSG_LEAST 1  "Ambiguity resolvable if exactly 1 integer within"
+MSG_LEAST 1  "Ambiguity resolvable if exactly one integer within"
 
 ! Amb-Sigma: Maximal Sigma of a Resolvable Ambiguity
 ! --------------------------------------------------
@@ -1237,7 +1294,7 @@ USERXCLK 1  "BERNESE_FILE"
   ## widget = combobox; cards = BERNESE_FILE CLOCK_RINEX; editable = false
   ## activeif = SATCLK / _ AND RXCLKIN / _ AND DIFLVL = ZERO
 
-MSG_USERXCLK 1  "Use clock RINEX input file for satellite clocks"
+MSG_USERXCLK 1  "Primary source for satellite clocks"
 
 ! Clk est.: Skip obs. w/o rec clock in input clock RINEX
 ! ------------------------------------------------------
@@ -1246,7 +1303,7 @@ NORXCLKR 1  "CLK_FROM_OBS_FILE"
   ## cards = DO_NOT_USE_OBSERV CLK_FROM_OBS_FILE INTERPOLATE
   ## activeif = RXCLKIN / _ AND DIFLVL = ZERO
 
-MSG_NORXCLKR 1  "Receiver clock not in input clock RINEX file"
+MSG_NORXCLKR 1  "Receiver clock missing in clock RINEX file"
 
 ! Clk est.: Skip obs. w/o sat clock in input clock RINEX
 ! ------------------------------------------------------
@@ -1255,7 +1312,7 @@ NORXCLKS 1  "SAT_CLK_IS_ZERO"
   ## cards = DO_NOT_USE_OBSERV INTERPOLATE SAT_CLK_IS_ZERO TRY_SAT_CLK_FILE
   ## activeif = RXCLKIN / _ AND DIFLVL = ZERO
 
-MSG_NORXCLKS 1  "Satellite clock not in input clock RINEX file"
+MSG_NORXCLKS 1  "Satellite clock missing in clock RINEX file"
 
 ! Clk est.: Skip obs. w/o sat clock
 ! ---------------------------------
@@ -1264,7 +1321,7 @@ NOSATCLK 1  "0"
   ## cards = DO_NOT_USE_OBSERV INTERPOLATE SAT_CLK_IS_ZERO
   ## activeif = SATCLK / _ AND DIFLVL = ZERO
 
-MSG_NOSATCLK 1  "Observation without an input clock value"
+MSG_NOSATCLK 1  "Satellite clock missing in Bernese clock file"
 
 ! Interpolation of clocks
 ! -----------------------
@@ -1272,7 +1329,7 @@ SECIPL 1  "0"
   ## widget = lineedit; check_typ = real; check_min = 0
   ## activeif = NORXCLKR = INTERPOLATE OR NORXCLKS = INTERPOLATE OR NOSATCLK = INTERPOLATE AND DIFLVL = ZERO
 
-MSG_SECIPL 1  "Interpolation of clocks"
+MSG_SECIPL 1  "Clock interpolation allowed over"
 
 ! Use only phase observations for epoch parameter computation
 ! -----------------------------------------------------------
@@ -1305,9 +1362,10 @@ MSG_SAMPLEP2 1  "Sampling rate for preelimination"
 
 ! Clk est.: Edit Level
 ! --------------------
-EDTLVL 1  ""
+EDTLVL 0
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = DIFLVL / DOUBLE
+  # 
 
 MSG_EDTLVL 1  "Maximum tolerated O-C term"
 
@@ -1358,8 +1416,9 @@ MSG_FIXSTA 1  "Coordinates fixed"
 
 ! Positioning: Manual selection (fixed)
 ! -------------------------------------
-STATION1 1  ""
+STATION1 0
   ## widget = selwin; activeif = FIXSTA == MANUAL; pointer = CENLST
+  # 
 
 MSG_STATION1 1  "Stations to be fixed (Manual selection)"
 
@@ -1374,11 +1433,11 @@ MSG_STAFILE1 1  "List of stations to fix from file"
 
 ! Flags for fixed station(s)
 ! ---------------------------
-STAFLAG1 3
-  "I"
-  "N"
-  "G"
+STAFLAG1 0
   ## widget = lineedit; activeif = FIXSTA = WITH_FLAG
+  # I
+  # N
+  # G
 
 MSG_STAFLAG1 1  "Stations with specific flags in CRD file"
 
@@ -1397,8 +1456,9 @@ MSG_SIGSTA 1  "Coordinates constrained"
 
 ! Positioning: manual selected Sigma Station(s)
 ! ---------------------------------------------
-STATION4 1  ""
+STATION4 0
   ## widget = selwin; activeif = SIGSTA == MANUAL; pointer = CENLST
+  # 
 
 MSG_STATION4 1  "Stations to be constrained (Manual selection)"
 
@@ -1413,12 +1473,12 @@ MSG_STAFILE4 1  "List of stations (and sigmas) from file"
 
 ! Flags for Sigma station(s)
 ! --------------------------
-STAFLAG4 4
-  "I"
-  "G"
-  "M"
-  "N"
+STAFLAG4 0
   ## widget = lineedit; activeif = SIGSTA = WITH_FLAG
+  # I
+  # G
+  # M
+  # N
 
 MSG_STAFLAG4 1  "Constrain: Stations with specific flags in CRD file"
 
@@ -2023,8 +2083,9 @@ MSG_SITETROP 1  "Parameter setup: site-specific troposphere parameters"
 
 ! Offset for troposphere SINEX file
 ! ---------------------------------
-TRPOFF 1  ""
+TRPOFF 0
   ## widget = lineedit; activeif = TROPSNX / _
+  # 
 
 MSG_TRPOFF 1  "Offset for troposphere SINEX file"
 
@@ -2037,31 +2098,35 @@ MSG_TRPRES 1  "Time resolution for troposphere SINEX file"
 
 ! Tropo: Absolute General Zenith A Priori Sigma
 ! ---------------------------------------------
-SIGABS 1  ""
+SIGABS 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_SIGABS 1  "Tropo: Zenith path delay"
 
 ! Tropo: Absolute General Gradient A Priori Sigma
 ! -----------------------------------------------
-SIGABS_G 1  ""
+SIGABS_G 0
   ## widget = lineedit; activeif = TRPGRD / NONE = 1; check_type = real
   ## check_min = 0.0
+  # 
 
 MSG_SIGABS_G 1  "Tropo: Horizontal gradients"
 
 ! Tropo: Relative General Zenith A Priori Sigma
 ! ---------------------------------------------
-SIGREL 1  ""
+SIGREL 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_SIGREL 1  "Tropo: relative zenith path delay a priori sigma"
 
 ! Tropo: Relative General Gradient A Priori Sigma
 ! -----------------------------------------------
-SIGREL_G 1  ""
+SIGREL_G 0
   ## widget = lineedit; activeif = TRPGRD / NONE = 1; check_type = real
   ## check_min = 0.0
+  # 
 
 MSG_SIGREL_G 1  "Tropo: relative horizontal gradients a priori sigma"
 
@@ -2069,7 +2134,7 @@ MSG_SIGREL_G 1  "Tropo: relative horizontal gradients a priori sigma"
 ! -------------------------------
 SPESEL 1  "NONE"
   ## widget = combobox; editable = false
-  ## cards = NONE FIRST LAST FROM_FILE MANUAL WITH_TROPO
+  ## cards = NONE FIRST LAST FROM_FILE MANUAL
 
 MSG_SPESEL 1  "Tropo: special sigma station selection"
 
@@ -2083,42 +2148,47 @@ MSG_NTRPSEL 1  "Tropo: list of stations with no troposphere estimation"
 
 ! Tropo: Absolute Special Zenith A Priori Sigma
 ! ---------------------------------------------
-SPEABS 1  ""
+SPEABS 0
   ## widget = lineedit; activeif = SPESEL / NONE AND SPESEL / FROM_FILE = 1
   ## check_type = real; check_min = 0.0
+  # 
 
 MSG_SPEABS 1  "Tropo: Absolute special zenith path delay sigma"
 
 ! Tropo: Absolute Special Gradient A Priori Sigma
 ! -----------------------------------------------
-SPEABS_G 1  ""
+SPEABS_G 0
   ## widget = lineedit
   ## activeif = SPESEL / NONE AND SPESEL / FROM_FILE AND TRPGRD / NONE = 1
   ## check_type = real; check_min = 0.0
+  # 
 
 MSG_SPEABS_G 1  "Tropo: Absolute special horizontal gradient sigma"
 
 ! Tropo: Relative Special Zenith A Priori Sigma
 ! ---------------------------------------------
-SPEREL 1  ""
+SPEREL 0
   ## widget = lineedit; activeif = SPESEL / NONE AND SPESEL / FROM_FILE = 1
   ## check_type = real; check_min = 0.0
+  # 
 
 MSG_SPEREL 1  "Tropo: relative special zenith a priori sigma"
 
 ! Tropo: Relative Special Gradient A Priori Sigma
 ! -----------------------------------------------
-SPEREL_G 1  ""
+SPEREL_G 0
   ## widget = lineedit
   ## activeif = SPESEL / NONE AND SPESEL / FROM_FILE AND TRPGRD / NONE = 1
   ## check_type = real; check_min = 0.0
+  # 
 
 MSG_SPEREL_G 1  "Tropo: relative special gradient a priori sigma"
 
 ! Tropo: Stations with special Troposphere
 ! ----------------------------------------
-STATION3 1  ""
+STATION3 0
   ## widget = selwin; activeif = SPESEL == MANUAL; pointer = STALST
+  # 
 
 MSG_STATION3 1  "Tropo: special sigma for stations"
 
@@ -2133,9 +2203,10 @@ MSG_STAFILE3 1  "Tropo: file with stations for special sigma"
 
 ! Tropo: Stations with no Troposphere
 ! -----------------------------------
-STATION6 1  ""
+STATION6 0
   ## widget = selwin; activeif = SITEROP == 1 AND NTRPSEL == MANUAL
   ## pointer = STALST
+  # 
 
 MSG_STATION6 1  "Tropo: stations with no troposphere est."
 
@@ -2244,8 +2315,9 @@ MSG_NUMION 1  "GIM: Parameter spacing/interval"
 
 ! GIM: Number of Coefficient Sets Per Session
 ! -------------------------------------------
-GIMNAM 1  "$S+0"
+GIMNAM 0
   ## widget = lineedit; activeif = MLTMOD = 0
+  # $S+0
 
 MSG_GIMNAM 1  "GIM: 4-figure model name"
 
@@ -2479,7 +2551,7 @@ ERP 1  "0"
   ## widget = checkbox
   ## activeif = FREQUENCY / L4 AND FREQUENCY / MELWUEBB AND FREQUENCY / DTEC
 
-MSG_ERP 1  "Parameter Setup: Earth rotation parameters"
+MSG_ERP 1  "Parameter Setup: Earth orientation parameters"
 
 ! Erp: Total number of sets
 ! -------------------------
@@ -2630,13 +2702,15 @@ RADIO7_2 1  "0"
 
 ! Erp: Time Window (session definition)
 ! -------------------------------------
-SESSION_YEAR7 1  "$Y+0"
+SESSION_YEAR7 0
   ## widget = lineedit; multilineallowed = true
+  # $Y+0
 
 MSG_SESSION_YEAR7 1  "ERP: time interval(YEAR)"
 
-SESSION_STRG7 1  "$S+0"
+SESSION_STRG7 0
   ## widget = lineedit; multilineallowed = true
+  # $S+0
 
 MSG_SESSION_STRG7 1  "ERP: time interval(SESSION)"
 
@@ -3298,7 +3372,7 @@ GRDLOAD 1  "0"
   ## widget = checkbox
   ## activeif = ALOAD_FILES / _ OR ONTLD_FILES / _ OR HLOAD_FILES / _ AND FREQUENCY / L4 AND FREQUENCY / MELWUEBB AND FREQUENCY / DTEC
 
-MSG_GRDLOAD 1  "Scaling factors for Vienna grid file"
+MSG_GRDLOAD 1  "Scaling related to loading effects"
 
 ! ATM-LOAD: Atmospheric pressure loading
 ! --------------------------------------
@@ -3437,7 +3511,7 @@ MSG_CLOCKR 1  "Receiver clock offsets"
 CLOCKS 1  "0"
   ## widget = checkbox; activeif = DIFLVL = ZERO
 
-MSG_CLOCKS 1  "GNSS clock offsets"
+MSG_CLOCKS 1  "Satellite clock offsets"
 
 ! Sum condition for ref clocks
 ! ----------------------------
@@ -4375,8 +4449,9 @@ MSG_PRE30 1  "Pre-elimination: GNSS-Specific parameters"
 
 ! Define Time Offset
 ! ------------------
-PAR_OFF 1  ""
+PAR_OFF 0
   ## widget = lineedit; emptyallowed = true
+  # 
 
 MSG_PAR_OFF 1  "Time offset for Parameter intervals"
 
@@ -4613,7 +4688,7 @@ USESYNCR 1  "0"
 # GENERAL INPUT FILES                                                          #
 #   General constants           > %%%%%%%%%%%% <                               # CONST
 #   Geodetic datum              > %%%%%%%%%%%% <                               # DATUM
-#   Phase center variations     > %%%%%%%%%%%% <  Moved to STA                 # PHASECC
+#   Phase center variations     > %%%%%%%%%%%% < Moved to STA                  # PHASECC
 #   Receiver information        > %%%%%%%%%%%% <                               # RECEIVR
 #   Satellite information       > %%%%%%%%%%%% <                               # SATELL
 #   Satellite problems          > %%%%%%%%%%%% <                               # SATCRUX
