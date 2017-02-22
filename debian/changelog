@@ -1,3 +1,9 @@
+linz-positionzpp-pcf (1.16.0-2) xenial; urgency=medium
+
+  * Adding missing dependency on linz-coordsys package
+
+ -- Chris Crook <ccrook@linz.govt.nz>  Thu, 23 Feb 2017 11:23:58 +1300
+
 linz-positionzpp-pcf (1.16.0-1) xenial; urgency=medium
 
   * Panel errors in PCF
