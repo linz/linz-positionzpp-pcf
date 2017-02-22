@@ -12,6 +12,7 @@ Depends: ${misc:Depends},
     linz-bernese52,
     linz-bernese52-util,
     linz-bernese52-spm,
+    linz-coordsys,
     libjson-perl,
     liblinz-gnss-perl,
     liblinz-bern-perl
