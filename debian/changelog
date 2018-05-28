@@ -1,3 +1,12 @@
+linz-positionzpp-pcf (1.17.0-1) xenial; urgency=medium
+
+  [ dnhansen50 ]
+  * added more processing information to SINEX header template, including reference frame
+
+  [ Chris Crook ]
+
+ -- Chris Crook <ccrook@linz.govt.nz>  Tue, 29 May 2018 11:09:04 +1200
+
 linz-positionzpp-pcf (1.16.0-2) xenial; urgency=medium
 
   * Adding missing dependency on linz-coordsys package
