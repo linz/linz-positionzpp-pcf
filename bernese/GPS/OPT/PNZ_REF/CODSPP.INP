@@ -425,7 +425,7 @@ MSG_CLKSAVE 1  "Save clock estimates"
 
 ! Estimate Coordinates ?
 ! ----------------------
-COORDEST 1  "NO"
+COORDEST 1  "STATIC"
   ## widget = combobox; editable = false; cards = NO STATIC KINEMATIC
 
 MSG_COORDEST 1  "Estimate coordinates"
