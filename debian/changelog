@@ -1,3 +1,11 @@
+linz-positionzpp-pcf (1.17.1-1) xenial; urgency=medium
+
+  [ Chris Crook ]
+  * Workaround for not finding information in GETREF.OUT.  This is in lieu
+    of correct handling of datums in station coordinate models.
+
+ -- Chris Crook <ccrook@linz.govt.nz>  Wed, 07 Apr 2021 11:00:00 +1200
+
 linz-positionzpp-pcf (1.17.0-1) xenial; urgency=medium
 
   [ dnhansen50 ]
