@@ -1,0 +1,58 @@
+package POLUPD;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  POLUPD
+#
+# Purpose :  Execute POLUPD
+#
+# Remark  :  USERATE is automatically adjusted according to the existence
+#            of midnight epochs in the IERS pole file or not
+#
+# PARAMs  :
+#
+# Author  :  M. Meindl
+# Created :  23-Jul-2003
+#
+# Changes :  11-Aug-2011 RD: Updated for version 5.2
+#
+# ============================================================================
+use strict;
+
+sub run {
+  my $bpe = shift;
+
+# Run program
+# -----------
+  my $PGMNAM = "POLUPD";
+  $bpe->RUN_PGMS($PGMNAM);
+
+
+# Check whether the use of the ERP rate must switched off
+# -------------------------------------------------------
+  my $iepFil = $bpe->getKey("$ENV{U}/INP/POLUPD.INP","IEPFIL");
+  my $isRate = $bpe->getKey("$ENV{U}/INP/POLUPD.INP","USERATE");
+  my $doRate = 1;
+
+  open(IEP,"$iepFil");
+  while ( <IEP> ) {
+   if ( /^[ ]*([\d][\d][\d][\d][\d]\.[\d]*) / ) {
+     my $epo = $1;
+     if ( $epo == int($epo) ) {
+       $doRate = 0;
+       last;
+     }
+   }
+  }
+  close IEP;
+
+# Repeat the program if necessary
+# -------------------------------
+  if ( $doRate != $isRate ) {
+    $bpe->putKey("$ENV{U}/PAN/POLUPD.INP","USERATE","$doRate");
+
+    my $PGMNAM = "POLUPD";
+    $bpe->RUN_PGMS($PGMNAM);
+  }
+
+}

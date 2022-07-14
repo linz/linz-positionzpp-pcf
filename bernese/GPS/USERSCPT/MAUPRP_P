@@ -1,0 +1,61 @@
+package MAUPRP_P;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  MAUPRP_P
+#
+# Purpose :  Execute MAUPRP (parallel mode)
+#
+# Remark  :  This script may be used to process zero or single difference
+#            observation files (both input fields are filled in).
+#
+# PARAMs  :  PARAM1 - temporary file for parallel processing
+#
+# Author  :  M. Meindl
+# Created :  20-Oct-2003
+#
+# Changes :  11-Aug-2011 RD: Updated for version 5.2
+#
+# ============================================================================
+use strict;
+
+use lib $ENV{BPE};
+use bpe_util qw(prtMess prtBPEfile replaceSel setUserVar);
+
+sub run {
+  my $bpe = shift;
+
+# Get variables
+# -------------
+  my ($ssss ,
+      $param1 , $subPid ,  $clu   ) =
+  $bpe->getKeys
+     ('$S+0',
+      'PARAM1', 'SUB_PID', 'V_CLU');
+
+# Set cluster number and input files
+# ----------------------------------
+  my $cluster = $clu eq "" ? "$ssss$param1" : "$ssss$subPid";
+  my $ffff    = $clu eq "" ? $param1        : "____";
+
+  setUserVar($bpe,"CLUSTER",$cluster,"FFFF",$ffff,"CCC",$subPid);
+
+  if ($clu eq "") {
+    prtMess($bpe,"PROCESSING FILE $param1$ssss");
+    $bpe->putKey("$ENV{U}/PAN/MAUPRP.INP","PZFILES","$param1$ssss");
+    $bpe->putKey("$ENV{U}/PAN/MAUPRP.INP","OBSFIL","$param1$ssss");
+  } else {
+    replaceSel($bpe,"MAUPRP","PZFILES",$param1);
+    replaceSel($bpe,"MAUPRP","OBSFIL",$param1);
+  }
+
+# Run program
+# -----------
+  my $PGMNAM = "MAUPRP";
+  $bpe->RUN_PGMS($PGMNAM);
+
+# Print processed stations BPE file
+# ---------------------------------
+  prtBPEfile($param1,0) if ($clu ne "");
+
+}

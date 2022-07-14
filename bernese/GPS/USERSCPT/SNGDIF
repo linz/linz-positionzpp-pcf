@@ -1,0 +1,36 @@
+package SNGDIF;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  SNGDIF
+#
+# Purpose :  Execute SNGDIF
+#
+# PARAMs  :
+#
+# Author  :  M. Meindl
+# Created :  20-Oct-2003
+#
+# Changes :  11-Aug-2011 RD: Updated for version 5.2
+#
+# ============================================================================
+use strict;
+
+sub run {
+  my $bpe = shift;
+
+# Get variables
+# -------------
+  my ($bl1,$bl2) = $bpe->getKeys('V_BL_L12','V_BL_L53');
+
+# Set BONLEN1 and BONLEN2 if defined
+# ----------------------------------
+  $bpe->putKey("$ENV{U}/PAN/SNGDIF.INP","BONLEN1",$bl1) unless $bl1 eq "";
+  $bpe->putKey("$ENV{U}/PAN/SNGDIF.INP","BONLEN2",$bl2) unless $bl2 eq "";
+
+# Run program
+# -----------
+  my $PGMNAM = "SNGDIF";
+  $bpe->RUN_PGMS($PGMNAM);
+
+}

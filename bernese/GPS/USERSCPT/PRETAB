@@ -1,0 +1,28 @@
+package PRETAB;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  PRETAB
+#
+# Purpose :  Execute PRETAB
+#
+# PARAMs  :
+#
+# Author  :  M. Meindl
+# Created :  20-Oct-2003
+#
+# Changes :  11-Aug-2011 RD: Updated for version 5.2
+#
+# ============================================================================
+use strict;
+
+sub run {
+  my $bpe = shift;
+
+
+# Run program
+# -----------
+  my $PGMNAM = "PRETAB";
+  $bpe->RUN_PGMS($PGMNAM);
+
+}

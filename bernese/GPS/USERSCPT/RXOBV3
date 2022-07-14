@@ -1,0 +1,27 @@
+package RXOBV3;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  RXOBV3
+#
+# Purpose :  Execute RXOBV3
+#
+# PARAMs  :
+#
+# Author  :  D. Thaller
+# Created :  10-Feb-2012
+#
+# Changes :
+#
+# ============================================================================
+use strict;
+
+sub run {
+  my $bpe = shift;
+
+# Run program
+# -----------
+  my $PGMNAM = "RXOBV3";
+  $bpe->RUN_PGMS($PGMNAM);
+
+}

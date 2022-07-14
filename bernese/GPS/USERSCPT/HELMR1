@@ -1,0 +1,27 @@
+package HELMR1;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  HELMR1
+#
+# Purpose :  Execute HELMR1
+#
+# PARAMs  :
+#
+# Author  :  M. Meindl, S. Schaer
+# Created :  19-Oct-2003
+#
+# Changes :  11-Aug-2011 RD: Updated for version 5.2
+#
+# ============================================================================
+use strict;
+
+sub run {
+  my $bpe = shift;
+
+# Run program
+# -----------
+  my $PGMNAM = "HELMR1";
+  $bpe->RUN_PGMS($PGMNAM);
+
+}

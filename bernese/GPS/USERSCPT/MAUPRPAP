@@ -1,0 +1,82 @@
+package MAUPRPAP;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  MAUPRPAP
+#
+# Purpose :  Prepare parallel MAUPRP run
+#
+# Remark  :  This script may be used to process zero or signel difference
+#            observation files (the switch is taken from the input file).
+#
+# PARAMs  :  PARAM2 - output file identifier (default: MPR)
+#            PARAM3 - empty: stop if no PZH/PSH files are found
+#
+# Author  :  M. Meindl, S. Schaer
+# Created :  30-Oct-2003
+#
+# Changes :  11-Aug-2011 RD: Updated for version 5.2
+#
+# ============================================================================
+use strict;
+
+use File::Basename;
+
+use lib $ENV{BPE};
+use bpe_util qw(initPar_Bl initPar_Cl prtErr);
+
+sub run {
+  my $bpe = shift;
+
+# Get variables
+# -------------
+  my ($ssss    , $yyssss  ,
+      $param2  , $param3  , $clu     , $dirBpe,
+      $dirPzh  , $dirPsh  , $dirOut  ,
+      $extPzh  , $extPsh  , $extOut  ) =
+  $bpe->getKeys
+     ('$S+0'   , '$YSS+0' ,
+      'PARAM2' , 'PARAM3' , 'V_CLU'  , 'DIR_BPEPRT',
+      'DIR_PZH', 'DIR_PSH', 'DIR_OUT',
+      'EXT_PZH', 'EXT_PSH', 'EXT_OUT');
+
+# Delete old files (OUT, SMC)
+# ---------------------------
+  my $mpr = "MPR";
+  if ( $param2 ne "" ) {
+    $mpr = defined $$bpe{$param2} ? $$bpe{$param2} : $param2;
+  }
+  if ($clu ne "") {
+    unlink glob("${dirOut}${mpr}${ssss}???.${extOut}");
+  } else {
+    unlink glob("${dirOut}${mpr}${ssss}????.${extOut}");
+  }
+
+# Initialize parallel run
+# -----------------------
+  my $bpeFil = "${dirBpe}MPR${ssss}";
+  my $isZero = $bpe->getKey("$ENV{U}/PAN/MAUPRP.INP","RADIO_Z") eq "1";
+  my @obsFil = $isZero ?
+               glob("${dirPzh}????${ssss}.${extPzh}") :
+               glob("${dirPsh}????${ssss}.${extPsh}");
+
+  if ($clu ne "") {
+    initPar_Cl($bpe,$bpeFil,@obsFil,0,$clu,0);
+  } else {
+    @obsFil = map { substr(basename($_),0,4) } @obsFil;
+    initPar_Bl($bpe,@obsFil);
+  }
+
+# Stop if no PZH/PSH files found
+# ------------------------------
+  if (@obsFil == 0 && $param3 eq "") {
+    if ( $isZero ) {
+      prtErr($bpe,"No PZH files found") and
+        die "No PZH files found for session ${ssss}";
+    } else {
+      prtErr($bpe,"No PSH files found") and
+        die "No PSH files found for session ${ssss}";
+    }
+  }
+
+}
