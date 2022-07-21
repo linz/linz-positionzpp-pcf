@@ -82,7 +82,7 @@ sub run
     
     my $statusfile=$bpe->{PARAM8} || 'STATUS';
     my $statuspath=$dirout.$statusfile.$lockext;
-    my $runtime=seconds_datetime(localtime());
+    my $runtime=seconds_datetime(time());
 
     foreach my $i (2,3,4)
     {
