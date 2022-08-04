@@ -36,7 +36,7 @@ DESCR_ABBREV 1  "Abbreviation table"
 CRDFILE 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
   ## emptyallowed = false
-  # APR$S+0
+  # APRIORI
 
 DESCR_CRDFILE 1  "Coordinate file"
 

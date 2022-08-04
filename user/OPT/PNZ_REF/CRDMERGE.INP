@@ -45,13 +45,13 @@ MSG_RADIO_2 1  "Velocities"
 CRDMTR 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
   ## emptyallowed = true
-  # APR$S+0
+  # APRIORI
 
 DESCR_CRDMTR 1  "Coordinates master file"
 
 CRDMRG 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD
-  # APR$S+0
+  # APRIORI
 
 MSG_CRDMRG 1  "Merge files"
 

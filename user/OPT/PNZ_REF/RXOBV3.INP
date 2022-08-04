@@ -163,7 +163,7 @@ MSG_SAVPHS 1  "types to save: Phase"
 COORD 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
   ## emptyallowed = true
-  # APR$S+0
+  # APRIORI
 
 MSG_COORD 1  "Update coordinates"
 

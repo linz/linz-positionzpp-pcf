@@ -287,7 +287,7 @@ RZFILES_TXT_COL_2 1  "OBSERVATION FILE"
 ! --------------------
 COORD 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
-  # APR$S+0
+  # APRIORI
 
 DESCR_COORD 1  "A priori station coordinates"
 

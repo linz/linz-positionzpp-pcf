@@ -73,7 +73,7 @@ COORD 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
   ## activeif = STRATEGY == DEFINED AND REPLACE == 1 OR STRATEGY == OBS-MAX OR STRATEGY == SHORTEST OR STRATEGY == STAR
   ## emptyallowed = false
-  # APR$S+0
+  # APRIORI
 
 DESCR_COORD 1  "Station coordinates"
 

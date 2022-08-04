@@ -1,0 +1,16 @@
+{
+    "PcfName": "RUN_PNZ",
+    "ItrfCoordsys": "ITRF2008",
+    "OutputStatusFile": "STATUS.LCK",
+    "OutputSummaryJson": "SUMMARY.JSON",
+    "SaveFiles": [
+        {
+            "source": "SOL/MIN{session}.SNX",
+            "target": "min_{jobcode}_{subjobid}.snx"
+        },
+        {
+            "source": "SOL/FIN{session}.SNX",
+            "target": "fin_{jobcode}_{subjobid}.snx"
+        }
+    ]
+}
