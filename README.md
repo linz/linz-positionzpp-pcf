@@ -49,3 +49,7 @@ MMM | the 3 character month of year (eg JAN)
 hh | the hour of the middle of the processing session
 mm | the minute of the middle of the processing session
 ss | the second of the middle of the processing session
+files | the user's RINEX files used after renaming
+origfiles | the user's RINEX files used
+codes | the user's mark codes after renaming
+origcodes | the original user's make names

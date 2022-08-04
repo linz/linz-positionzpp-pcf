@@ -6,11 +6,13 @@
     "SaveFiles": [
         {
             "source": "SOL/MIN{session}.SNX",
-            "target": "min_{jobcode}_{subjobid}.snx"
+            "target": "min_{jobcode}_{subjobid}.snx",
+            "description": "SINEX file of minimum constraints calculation for {origcodes} ({origfiles})"
         },
         {
             "source": "SOL/FIN{session}.SNX",
-            "target": "fin_{jobcode}_{subjobid}.snx"
+            "target": "fin_{jobcode}_{subjobid}.snx",
+            "description": "SINEX file of final coordinate calculation for {origcodes} ({origfiles})"
         }
     ]
 }
