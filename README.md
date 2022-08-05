@@ -23,11 +23,13 @@ The structure of the configuration file (config/config.json) is as follows:
     "SaveFiles": [
         {
             "source": "SOL/MIN{session}.SNX",
-            "target": "min_{subjobcode}_{subjobid}.snx"
+            "target": "min_{subjobcode}_{subjobid}.snx",
+            "description": "SINEX file of minimum constraints calculation for {origcodes} ({origfiles})"            
         },
         {
             "source": "SOL/FIN{session}.SNX",
-            "target": "fin_{subjobcode}_{subjobid}.snx"
+            "target": "fin_{subjobcode}_{subjobid}.snx",
+            "description": "SINEX file of final coordinate calculation for {origcodes} ({origfiles})"
         }
     ]
 }
