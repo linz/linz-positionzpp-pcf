@@ -20,15 +20,22 @@ The structure of the configuration file (config/config.json) is as follows:
     "ItrfCoordsys": "ITRF2008",
     "OutputStatusFile": "STATUS.LCK",
     "OutputSummaryJson": "SUMMARY.JSON",
-    "SaveFiles": [
+    "ConfigOutputFiles": [
+        {
+            "source": "output_files/readme.txt",
+            "target": "readme.txt",
+            "description": "Information about these results"
+        }
+    ],
+    "CampaignOutputFiles": [
         {
             "source": "SOL/MIN{session}.SNX",
-            "target": "min_{subjobcode}_{subjobid}.snx",
-            "description": "SINEX file of minimum constraints calculation for {origcodes} ({origfiles})"            
+            "target": "min_{jobcode}_{subjobid}.snx",
+            "description": "SINEX file of minimum constraints calculation for {origcodes} ({origfiles})"
         },
         {
             "source": "SOL/FIN{session}.SNX",
-            "target": "fin_{subjobcode}_{subjobid}.snx",
+            "target": "fin_{jobcode}_{subjobid}.snx",
             "description": "SINEX file of final coordinate calculation for {origcodes} ({origfiles})"
         }
     ]
@@ -55,3 +62,6 @@ files | the user's RINEX files used after renaming
 origfiles | the user's RINEX files used
 codes | the user's mark codes after renaming
 origcodes | the original user's make names
+
+ConfigOutputFiles are files sourced relative to this configuration file.
+CampaignOutputFiles are copied for each Bernese campaign run by the job and are sourced relative to the Bernese campaign directory.

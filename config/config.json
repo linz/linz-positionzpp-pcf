@@ -3,7 +3,14 @@
     "ItrfCoordsys": "ITRF2008",
     "OutputStatusFile": "STATUS.LCK",
     "OutputSummaryJson": "SUMMARY.JSON",
-    "SaveFiles": [
+    "ConfigOutputFiles": [
+        {
+            "source": "output_files/readme.txt",
+            "target": "readme.txt",
+            "description": "Information about these results"
+        }
+    ],
+    "CampaignOutputFiles": [
         {
             "source": "SOL/MIN{session}.SNX",
             "target": "min_{jobcode}_{subjobid}.snx",
