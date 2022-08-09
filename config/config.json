@@ -1,8 +1,8 @@
 {
     "PcfName": "RUN_PNZ",
     "ItrfCoordsys": "ITRF2008",
-    "OutputStatusFile": "STATUS.LCK",
-    "OutputSummaryJson": "SUMMARY.JSON",
+    "OutputStatusFile": "OUT/STATUS.LCK",
+    "OutputSummaryJson": "OUT/SUMMARY.JSON",
     "ConfigOutputFiles": [
         {
             "source": "output_files/readme.txt",
