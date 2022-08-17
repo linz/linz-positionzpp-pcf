@@ -1,6 +1,6 @@
 {
     "PcfName": "RUN_PNZ",
-    "ItrfCoordsys": "ITRF2008",
+    "ReferenceFrame": "ITRF2008",
     "OutputStatusFile": "OUT/STATUS.LCK",
     "OutputSummaryJson": "OUT/SUMMARY.JSON",
     "ConfigOutputFiles": [

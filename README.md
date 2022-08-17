@@ -17,9 +17,9 @@ The structure of the configuration file (config/config.json) is as follows:
 ```json
 {
     "PcfName": "RUN_PNZ",
-    "ItrfCoordsys": "ITRF2008",
-    "OutputStatusFile": "STATUS.LCK",
-    "OutputSummaryJson": "SUMMARY.JSON",
+    "ReferenceFrame": "ITRF2008",
+    "OutputStatusFile": "OUT/STATUS.LCK",
+    "OutputSummaryJson": "OUT/SUMMARY.JSON",
     "ConfigOutputFiles": [
         {
             "source": "output_files/readme.txt",
