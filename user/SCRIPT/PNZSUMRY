@@ -48,7 +48,7 @@ sub CreateSummary
     my $js=new JSON;
     if( open(my $sf,">$summfile"))
     {
-        print $sf $js->pretty->encode($summary);
+        print $sf $js->pretty->canonical->encode($summary);
         print $sf "\n";
         close $sf;
     }
@@ -58,20 +58,6 @@ sub GetSummary
 {
     my( $dirout, $dircrd, $dirsnx, $ssss ) = @_;
     my $summary={};
-    # Load the settings if they are available...
-    if( -e "$dirout/SETTINGS.JSON" )
-    {
-        if( open(my $sf,"<$dirout/SETTINGS.JSON") )
-        {
-            eval
-            {
-                my $sdata=join('',<$sf>);
-                close($sf);
-                $summary=JSON->new->decode($sdata);
-            };
-            close($sf);
-        }
-    }
     GetOrbitType($summary,$dirout);
     GetRef($summary,$dirout,$dircrd,$ssss);
     my $refstns=$summary->{refstns};
@@ -128,8 +114,8 @@ sub GetRef
         while( my $line=<$rf> )
         {
             $line=~ s/\s*$//;
-            $start=$' if $line =~ /Session\s+start\:\s+/;
-            $end=$' if $line =~ /Session\s+end\:\s+/;
+            $start=$' if $line =~ /Session\s+start\s*\:\s+/;
+            $end=$' if $line =~ /Session\s+end\s*\:\s+/;
             if( $line=~/Adding\s+reference\s+station\s+(.*?)\:/ )
             {
                 my $name=$1;
@@ -278,19 +264,6 @@ sub GetSinexCoords
     my $sfdata={};
     eval
     {
-        my $cslist=LINZ::GNSS::CoordSysList();
-        my $itrf08xyz;
-        my $nzgd2k;
-        eval
-        {
-            $itrf08xyz=$cslist->coordsys('ITRF2008_XYZ');
-            $nzgd2k=$cslist->coordsys('NZGD2000');
-        };
-        if( $@ )
-        {
-            print $@;
-        }
-
         my $sf=new LINZ::GNSS::SinexFile($snxfile);
         my %codelist=();
 
@@ -306,13 +279,6 @@ sub GetSinexCoords
             my $covxyz=$stn->{covar};
             my ($llh,$covllh)=LINZ::GNSS::Util::ConvertXYZToLLH($xyz,$covxyz);
             my $year=seconds_decimal_year($stn->{epoch});
-            my $crdnz2k;
-            eval
-            {
-                my $crd=$itrf08xyz->coord(@$xyz);
-                $crd->setepoch($year);
-                $crdnz2k=$crd->as($nzgd2k);
-            };
             if( $@ )
             {
                 print $@;
@@ -323,7 +289,6 @@ sub GetSinexCoords
                 covxyz=>$covxyz,
                 llh=>[_wrapLon($llh->lon),$llh->lat,$llh->hgt],
                 covenu=>$covllh,
-                nzgd2kllh=>$crdnz2k ? [_wrapLon($crdnz2k->lon),$crdnz2k->lat,$crdnz2k->hgt] : [0.0,0.0,0.0],
                 year=>$year,
             };
         }
@@ -341,15 +306,12 @@ sub GetBaselineWkt
     $self->{baseline_wkt}='';
     eval
     {
-        my $cslist=LINZ::GNSS::CoordSysList();
-        my $itrf08xyz=$cslist->coordsys('ITRF2008_XYZ');
-        my $itrf08=$cslist->coordsys('ITRF2008');
-        my $markname=$self->{files}->[0]->{markname};
+        my $markname=(keys %{$self->{calc_coords}})[0];
         my $llh=$self->{calc_coords}->{$markname}->{llh};
         my @lines=();
         foreach my $rfs (values %{$self->{refstns}})
         {
-            my $rfllh=$itrf08xyz->coord(@{$rfs->{xyz}})->as($itrf08);
+            my ($rfllh)=LINZ::GNSS::Util::ConvertXYZToLLH($rfs->{xyz});
             push(@lines,sprintf("(%.8f %.8f, %.8f %.8f)",
                     $llh->[0],$llh->[1],_wrapLon($rfllh->lon),$rfllh->lat));
         }
