@@ -12,7 +12,7 @@ package PNZSUMRY;
 use strict;
 
 use lib $ENV{BPE};
-use bpe_util qw(prtMess prtErr prtGoto);
+use bpe_util qw(prtMess prtErr);
 use Time::Local;
 use LINZ::GNSS;
 use LINZ::GNSS::Util;
@@ -91,7 +91,7 @@ sub GetOrbitType
         close($of);
     }
     substr($orbtype,1)=lc(substr($orbtype,1));
-    $self->{orbittype}=$orbtype;
+    $self->{orbit_type}=$orbtype;
 }
 
 sub GetRef
@@ -116,7 +116,7 @@ sub GetRef
             if( $line=~/Adding\s+reference\s+station\s+(.*?)\:/ )
             {
                 my $name=$1;
-                $stn={name=>$name};
+                $stn={markname=>$name};
                 $refstns->{$name}=$stn;
                 $rfcodes .= ' '.$name;
                 $nrefstn++;
@@ -145,22 +145,28 @@ sub GetRef
         my $endtime=<$rf>;
     }
 
-    $self->{refstns}=$refstns;
+    $self->{reference_stations}=$refstns;
+    my @marknames=sort {$refstns->{$a}->{offset} <=> $refstns->{$b}->{offset}}
+            keys %$refstns;
     $self->{refstn_summary}={
         count=>$nrefstn,
-        marknames=>join(' ',
-            sort {$refstns->{$a}->{offset} <=> $refstns->{$b}->{offset}}
-            keys %$refstns),
+        marknames=>\@marknames,
         minoffset=>$minoffset,
         maxoffset=>$maxoffset
     };
 
-    my $duration=TimeSeconds($end)-TimeSeconds($start);
+    my $startepoch=TimeSeconds($start);
+    my $endepoch=TimeSeconds($end);
+    my $duration=$endepoch-$startepoch;
+    my $year=seconds_decimal_year(($startepoch+$endepoch)/2.0);
+    $year=sprintf("%.3lf",$year)+0.0;
+
     $self->{session}=
     { 
         start=>$start,
         end=>$end,
-        duration=>$duration
+        duration=>$duration,
+        year=>$year
     };
     return;
 }
@@ -179,7 +185,7 @@ sub GetFinalStats
         }
         close($fsf);
     }
-    $self->{final}=$final;
+    $self->{final_adjustment_statistics}=$final;
 }
 
 sub GetHelmert
@@ -189,7 +195,7 @@ sub GetHelmert
     my $helmert={};
     my $ncrd=0;
     my $sum=[0.0,0.0,0.0];
-    my $refstns=$self->{refstns};
+    my $refstns=$self->{reference_stations};
     if( open( my $hmf, $hmfile ) )
     {
         while( my $line=<$hmf> )
@@ -201,20 +207,22 @@ sub GetHelmert
             next if $line !~ /^\s*\|\s*\d+\s*\|\s*([\w\s]+?)\s*\|\s*(\w)\s*\w\s*\|([\-\s\d\.]+)\|/;
             my ($name,$flag,$crds)=($1,$2,$3);
             next if ! exists $refstns->{$name};
-            my $refstn=$refstns->{name};
+            my $refstn=$refstns->{$name};
             my ($n,$e,$u)=split(' ',$crds);
             $ncrd++;
             $sum->[0] += $e;
             $sum->[1] += $n;
             $sum->[2] += $u;
             $refstn->{helmert_flag}=$flag;
-            $refstn->{residual_enu}=[$e+0.0,$n+0.0,$u+0.0];
+            $refstn->{residual_enu_mm}=[$e+0.0,$n+0.0,$u+0.0];
         }
         close($hmf);
     }
 }
 
 sub _wrapLon { return $_[0] < 0 ? $_[0]+360.0 : $_[0]; }
+
+sub _mmError { return sprintf("%.1f",sqrt($_[0])*1000)+0.0; }
 
 sub GetSinexCoords
 {
@@ -237,26 +245,22 @@ sub GetSinexCoords
             my $xyz=$stn->{xyz};
             my $covxyz=$stn->{covar};
             my ($llh,$covllh)=LINZ::GNSS::Util::ConvertXYZToLLH($xyz,$covxyz);
-            my $year=seconds_decimal_year($stn->{epoch});
-            if( $@ )
-            {
-                print $@;
-            }
+            my $errenu=[_mmError($covllh->[0]->[0]),_mmError($covllh->[1]->[1]),_mmError($covllh->[2]->[2])];
             $sfdata->{$code}={
-                code=>$code,
+                markname=>$code,
                 xyz=>$xyz,
-                covxyz=>$covxyz,
+                covariance_xyz=>$covxyz,
                 llh=>[_wrapLon($llh->lon),$llh->lat,$llh->hgt],
-                covenu=>$covllh,
-                year=>$year,
+                covariance_enu=>$covllh,
+                error_enu_mm=>$errenu,
             };
         }
     };
     if( $@ )
     {
-        print $@;
+        $sfdata->{calculation_error}=$@;
     }
-    $self->{calc_coords} = $sfdata;
+    $self->{user_stations} = $sfdata;
 }
 
 sub GetBaselineWkt
@@ -265,10 +269,10 @@ sub GetBaselineWkt
     $self->{baseline_wkt}='';
     eval
     {
-        my $markname=(keys %{$self->{calc_coords}})[0];
-        my $llh=$self->{calc_coords}->{$markname}->{llh};
+        my $markname=(keys %{$self->{user_stations}})[0];
+        my $llh=$self->{user_stations}->{$markname}->{llh};
         my @lines=();
-        foreach my $rfs (values %{$self->{refstns}})
+        foreach my $rfs (values %{$self->{reference_stations}})
         {
             my ($rfllh)=LINZ::GNSS::Util::ConvertXYZToLLH($rfs->{xyz});
             push(@lines,sprintf("(%.8f %.8f, %.8f %.8f)",
@@ -277,10 +281,6 @@ sub GetBaselineWkt
         $self->{baseline_wkt}='MULTILINESTRING('.
            join(',',@lines).')';
     };
-    if( $@ )
-    {
-        print $@;
-    }
 }
 
 1;
