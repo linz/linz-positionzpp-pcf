@@ -14,7 +14,6 @@ use strict;
 use lib $ENV{BPE};
 use bpe_util qw(prtMess prtErr prtGoto);
 use Time::Local;
-use LINZ::BERN::CrdFile;
 use LINZ::GNSS;
 use LINZ::GNSS::Util;
 use LINZ::GNSS::SinexFile;
@@ -60,11 +59,9 @@ sub GetSummary
     my $summary={};
     GetOrbitType($summary,$dirout);
     GetRef($summary,$dirout,$dircrd,$ssss);
-    my $refstns=$summary->{refstns};
-    # GetFinalCoords($summary,$dirout,$dircrd,$ssss);
     GetSinexCoords($summary,$dirsnx,$ssss);
     GetFinalStats($summary,$dirout,$dircrd,$ssss);
-    GetHelmert($summary,$refstns,$dirout,$dircrd,$ssss);
+    GetHelmert($summary,$dirout,$dircrd,$ssss);
     GetBaselineWkt($summary);
     return $summary;
 }
@@ -187,11 +184,12 @@ sub GetFinalStats
 
 sub GetHelmert
 {
-    my ($self,$refstns,$dirout,$dircd,$ssss) = @_;
+    my ($self,$dirout,$dircd,$ssss) = @_;
     my $hmfile="$dirout/HLM$ssss.OUT";
     my $helmert={};
     my $ncrd=0;
     my $sum=[0.0,0.0,0.0];
+    my $refstns=$self->{refstns};
     if( open( my $hmf, $hmfile ) )
     {
         while( my $line=<$hmf> )
@@ -202,57 +200,18 @@ sub GetHelmert
         {
             next if $line !~ /^\s*\|\s*\d+\s*\|\s*([\w\s]+?)\s*\|\s*(\w)\s*\w\s*\|([\-\s\d\.]+)\|/;
             my ($name,$flag,$crds)=($1,$2,$3);
-	    next if ! exists $refstns->{$name};
+            next if ! exists $refstns->{$name};
+            my $refstn=$refstns->{name};
             my ($n,$e,$u)=split(' ',$crds);
             $ncrd++;
             $sum->[0] += $e;
             $sum->[1] += $n;
             $sum->[2] += $u;
-            $helmert->{$name}={name=>$name,flag=>$flag,residual_enu=>[$e+0.0,$n+0.0,$u+0.0]};
+            $refstn->{helmert_flag}=$flag;
+            $refstn->{residual_enu}=[$e+0.0,$n+0.0,$u+0.0];
         }
         close($hmf);
     }
-    my $maxres=[0.0,0.0,0.0];
-    if( $ncrd )
-    {
-        $sum->[0] /= $ncrd;
-        $sum->[1] /= $ncrd;
-        $sum->[2] /= $ncrd;
-        foreach my $v (values %$helmert)
-        {
-            my $renu=$v->{residual_enu};
-            foreach my $i (0,1,2)
-            {
-                my $rv=$renu->[$i]-$sum->[$i];
-                $renu->[$i]=$rv;
-                $rv=abs($rv);
-                $maxres->[$i]=$rv if $rv > $maxres->[$i];
-            }
-        }
-    }
-    $self->{helmert} = $helmert;
-    $self->{ref_stn_residual_enu}=$maxres;
-}
-
-sub GetFinalCoords
-{
-    my ($self,$dirout,$dircrd,$ssss) = @_;
-    my $fcdfile="$dircrd/FIN$ssss.CRD";
-    my $crds={};
-    eval
-    {
-        my $cf=new LINZ::BERN::CrdFile($fcdfile);
-        foreach my $s ($cf->stations)
-        {
-            my $stn={
-                name=>$s->name,
-                xyz=>$s->xyz,
-                flag=>$s->flag
-            };
-            $crds->{$s->name}=$stn;
-        }
-    };
-    $self->{final_coords}=$crds;
 }
 
 sub _wrapLon { return $_[0] < 0 ? $_[0]+360.0 : $_[0]; }
