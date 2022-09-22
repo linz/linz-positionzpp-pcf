@@ -1,0 +1,56 @@
+package GPSQIFAP;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  GPSQIFAP 
+#
+# Purpose :  Prepare parallel QIF ambiguity resolution process for a set of 
+#            baselines selected by BASLST
+#
+# PARAMs  :  PARAM1 - temporary file for parallel processing
+#
+# Author  :  M. Meindl
+# Created :  20-Oct-2003
+#
+# ============================================================================
+use lib $ENV{BPE};
+use bpe_util;
+
+sub run {
+  my $bpe = shift;
+
+# Get variables
+# -------------
+  my ($yyssss  , $ssss    , $param1  , 
+      $dirBsl  , $dirOut  , $extOut  , $dirTmp) = 
+  $bpe->getKeys
+     ('$YSS+0' , '$S+0'   , 'PARAM1' ,
+      'DIR_BSL', 'DIR_OUT', 'EXT_OUT', 'T'    );
+
+# Delete old files (OUT, SEL)
+# ---------------------------
+  #my $basFil = "${dirBsl}QIF${yyssss}.SEL";
+  my $basFil = "${dirBsl}QIF${ssss}.SEL";
+  unlink ($basFil);
+  unlink glob("${dirOut}????${ssss}_Q.${extOut}");
+
+# Run program
+# -----------
+  my $PGMNAM = "BASLST";
+  $bpe->RUN_PGMS($PGMNAM);
+
+# Get baselines to be processed
+# -----------------------------
+  my @basLin;
+  open (BAS,$basFil);
+  push (@basLin,<BAS>);
+  close BAS;
+  chomp(@basLin);
+
+# Initialize parallel run
+# -----------------------
+  my $tmpFil = "${dirTmp}/AUTO_TMP/${param1}";
+
+  initPar_Bl($tmpFil,@basLin);
+
+}

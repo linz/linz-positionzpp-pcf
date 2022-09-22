@@ -1,0 +1,31 @@
+{
+    "PcfName": "RUN_PNZ",
+    "ReferenceFrame": "ITRF2008",
+    "OutputStatusFile": "OUT/STATUS.LCK",
+    "OutputSummaryJson": "OUT/SUMMARY.JSON",
+    "ConfigOutputFiles": [
+        {
+            "source": "output_files/readme.txt",
+            "target": "readme.txt",
+            "description": "Information about these results"
+        }
+    ],
+    "CampaignOutputFiles": [
+        {
+            "source": "SOL/MIN{session}.SNX",
+            "target": "min_{jobcode}_{subjobid}.snx",
+            "description": "SINEX file of minimum constraints calculation for {origcodes} ({origfiles})"
+        },
+        {
+            "source": "SOL/FIN{session}.SNX",
+            "target": "fin_{jobcode}_{subjobid}.snx",
+            "description": "SINEX file of final coordinate calculation for {origcodes} ({origfiles})"
+        }
+    ],
+    "ReferenceDataFiles": {
+        "AntennaFile": "PCV_COD.I08",
+        "ReceiverFile": "RECEIVER.",
+        "ExtraReceiverConfigFile": "config/RECEIVER.MISSING",
+        "CombinedReceiverFile": "RECEIVER.ALL"
+    }
+}

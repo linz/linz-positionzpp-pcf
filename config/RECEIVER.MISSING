@@ -1,0 +1,61 @@
+RECEIVER INFORMATION FILE, BERNESE GNSS SOFTWARE 5.2                 11-Oct-2021
+--------------------------------------------------------------------------------
+
+RECEIVER TYPE        #FREQ  CODE  FREQ  WAVE.F.  SYST
+********************   *     **    L*:     *     ****
+
+CHC N71                2     P1    L1:     1     GRE
+                             P2    L2:     1
+
+ITT 3750300            2     P1    L1:     1     G
+                             P2    L2:     1
+
+JAVAD TRE_G3TH         2     P1    L1:     1     GRE
+                             P2    L2:     1
+
+LEICA GS16             2     C1    L1:     1     GR
+                             P2    L2:     1
+
+LEICA GS18             2     C1    L1:     1     GR
+                             P2    L2:     1
+
+LEICA GMX902GNSS       2     C1    L1:     1     GRE
+                             P2    L2:     1
+
+ASHTECH LM-XII3        2     P1    L1:     1     G
+                             P2    L2:     1
+
+NOV OEM6               2     C1    L1:     1     GRES
+                             P2    L2:     1
+
+TRIMBLE R7 GNSS        2     C1    L1:     1     GR
+                             P2    L2:     1
+
+TRIMBLE R8 GNSS3       2     C1    L1:     1     GR
+                             P2    L2:     1
+
+TRIMBLE R10            2     C1    L1:     1     GRES
+                             P2    L2:     1
+
+TRIMBLE R9S            2     C1    L1:     1     GRE
+                             P2    L2:     1
+
+TRIMBLE SPS850         2     C1    L1:     1     GR
+                             P2    L2:     1
+
+TRIMBLE SPS851         2     C1    L1:     1     GR
+                             P2    L2:     1
+
+TRIMBLE SPS852         2     C1    L1:     1     GR
+                             P2    L2:     1
+
+
+
+REMARK:
+
+  X2=C1+(P2-P1)
+
+  G: GPS
+  R: GLONASS
+  E: GALILEO
+  S: SBAS
