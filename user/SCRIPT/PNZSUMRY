@@ -127,7 +127,7 @@ sub GetRef
             # models they are built from.  This line tests ITRF\d{4} rather than as it was
             # ITRF2008 as GETDATA has been amended to 2014, even though what it actually
             # generates is the cordinate from the SCM, currently (2014-04-07) ITRF2008
-            if( $stn && $line=~/Calculated\s+ITRF\d{4}\s+coordinate\s+as\s+\[(.*)\]/)
+            if( $stn && $line=~/Calculated\s+ITRF(?:\d{4})?\s+coordinate\s+as\s+\[(.*)\]/)
             {
                 my @crds=split(' ',$1);
                 $stn->{xyz}=[$crds[0]+0.0,$crds[1]+0.0,$crds[2]+0.0];
