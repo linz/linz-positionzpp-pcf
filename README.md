@@ -8,7 +8,7 @@ By default the tag "pnzpp-prod" is used for processing in the production environ
 
 This contains the following directories:
 
-* config: contains the configuration information used by the processing script in config.json.  Also may contain a template for files that will be installed into the campaign directory before the processing is run.
+* config: contains the configuration information used by the processing script in config.json.  Also may contain a template for files that will be installed into the campaign directory before the processing is run in config/campaign_template
 * user: contains the Bernese USER directory files defining the processing strategy
 * bernese: contains files that will be installed into the Bernese system GPS directory before the processing is run.
 
@@ -38,11 +38,17 @@ The structure of the configuration file (config/config.json) is as follows:
             "target": "fin_{jobcode}_{subjobid}.snx",
             "description": "SINEX file of final coordinate calculation for {origcodes} ({origfiles})"
         }
-    ]
+    ],
+    "ReferenceDataFiles": {
+        "AntennaFile": "PCV_COD.I08",
+        "ReceiverFile": "RECEIVER.",
+        "ExtraReceiverConfigFile": "config/RECEIVER.MISSING",
+        "CombinedReceiverFile": "RECEIVER.ALL"
+    }
 }
 ```
 
-The configuration items in this file and the files in the config/campaign template may include strings {_varname_} which are replaced as follows:
+The configuration items in this file and the files in the config/campaign_template may include strings {_varname_} which are replaced as follows:
 
 varname | value
 --- | ---
@@ -64,4 +70,7 @@ codes | the user's mark codes after renaming
 origcodes | the original user's make names
 
 ConfigOutputFiles are files sourced relative to this configuration file.
+
 CampaignOutputFiles are copied for each Bernese campaign run by the job and are sourced relative to the Bernese campaign directory.
+
+ReferenceDataFiles are used when the Bernese reference data (mainly GPS/GEN contents) are updated by the daily sync-config task.  This includes the option of adding extra receivers to the Bernese receivers file using a file of receivers in this configuration.  The AntennaFile and CombinedReceiverFile (or ReceiverFile if it is not defined) are used to compile the list of valid antennae and receivers used by the front end GUI.

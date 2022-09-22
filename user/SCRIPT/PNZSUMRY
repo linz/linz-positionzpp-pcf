@@ -196,6 +196,7 @@ sub GetHelmert
     my $ncrd=0;
     my $sum=[0.0,0.0,0.0];
     my $refstns=$self->{reference_stations};
+    my @crds=[];
     if( open( my $hmf, $hmfile ) )
     {
         while( my $line=<$hmf> )
@@ -215,8 +216,21 @@ sub GetHelmert
             $sum->[2] += $u;
             $refstn->{helmert_flag}=$flag;
             $refstn->{residual_enu_mm}=[$e+0.0,$n+0.0,$u+0.0];
+            push(@crds,$refstn->{residual_enu_mm});
         }
         close($hmf);
+    }
+    if( $ncrd )
+    { 
+        $sum->[0]/=$ncrd;
+        $sum->[1]/=$ncrd;
+        $sum->[2]/=$ncrd;
+        foreach my $crd (@crds)
+        {
+            $crd->[0] -= $sum->[0];
+            $crd->[1] -= $sum->[1];
+            $crd->[2] -= $sum->[2];
+        }
     }
 }
 
