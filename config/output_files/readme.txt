@@ -26,9 +26,8 @@ For each file the GPS processing includes the following steps:
   * Calculation of a minimum constraints solution
   * Constraining the solution to fit the reference station coordinates
     (generates the final coordinate for the user station)
-  * Converting the coordinate to an ITRF96 epoch coordinate, and then
-    applying the NZGD2000 deformation model to determine the NZGD2000 
-    coordinate.
+  * Conversion to NZGD2000 and New Zealand cooridnate systems using
+    the NZGD2000 deformation model and NZVD2016 geod model.
 
 The processing is carried out using the Bernese 5.2 GNSS processing software.
 
@@ -125,9 +124,6 @@ date           The UTC date and time of the start of the observation session
 itrf2008_X     The ITRF2008 X,Y,Z epoch coordinate (metres)
 itrf2008_Y
 itrf2008_Z
-itrf96_X       The ITRF96 X,Y,Z epoch coordinate (metres)
-itrf96_Y
-itrf96_Z
 err_e          The apriori error in the east, north, and up direction (metres)
 err_n
 err_u
