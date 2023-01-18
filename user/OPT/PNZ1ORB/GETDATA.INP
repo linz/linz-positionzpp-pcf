@@ -8,12 +8,17 @@
 !*cards IGSCTYP IGSC
 ! Environment Variables
 ! ---------------------
-ENVIRONMENT     1 "" ""
+ENVIRONMENT 5
+  "U" "/home/dhansen/BERN52/GPSUSER"
+  "T" "/var/lib/bernese52/tmp"
+  "X" "/opt/bernese52/GPS"
+  "P" "/home/dhansen/BERN52/GPSDATA/CAMPAIGN"
+  "USER" "dhansen"
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! SOME KEYWORDS FOR AUTOMATIC OUTPUT
 ! ----------------------------------
-CAMPAIGN 1  "${P}/PZDTEST"
+CAMPAIGN 1  "${P}/TEST_PP1"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
 SESSION_TABLE 0
@@ -49,12 +54,13 @@ MSG_DNLDORB 1  "Download orbit files"
 
 ORBTYP 1  "$(ORBTYP)"
   ## widget=combobox; editable=false
-  ## cards = BROADCAST ULTRA ULTRA+ RAPID RAPID+ FINAL
+  ## cards = FINAL RAPID+ RAPID ULTRA+ ULTRA BROADCAST CO2 CODE CODE_MGEX FINAL_GLO
 
 MSG_ORBTYP 1  "Orbit type, '+' = 'or better'"
 
 ORBNAM 0
   ## widget=lineedit; check_strlen=24
+  # 
 
 MSG_ORBNAM 1  "Name for downloaded orbit file(s)"
 
@@ -68,6 +74,7 @@ MSG_DNLDERP 1  "Download earth rotation parameters"
 
 ERPNAM 0
   ## widget=lineedit; check_strlen=24
+  # 
 
 MSG_ERPNAM 1  "Name for downloaded ERP file(s)"
 
@@ -81,6 +88,7 @@ MSG_DNLDCLK 1  "Download clock files"
 
 CLKNAM 0
   ## widget=lineedit; check_strlen=24
+  # 
 
 MSG_CLKNAM 1  "Name for downloaded clock file(s)"
 
@@ -100,7 +108,7 @@ DNLDTRP 1  "0"
 
 MSG_DNLDTRP 1  "Download Bernese troposheric models"
 
-DNLDION 1  "0"
+DNLDION 1  "1"
   ## widget = checkbox
 
 MSG_DNLDION 1  "Download Bernese ionospheric models"
@@ -110,13 +118,13 @@ TRPNAM 0
 
 MSG_TRPNAM 1  "Name for downloaded troposphere files"
 
-IONTYP 1  "FINAL"
+IONTYP 1  "$(IONTYP)"
   ## widget=combobox; editable=false
   ## cards = PREDICT PREDICT+ RAPID RAPID+ FINAL
 
 MSG_IONTYP 1  "Ionosphere model quality, '+' = 'or better'"
 
-MERGEION 1  "0"
+MERGEION 1  "1"
   ## widget = checkbox; activeif = DNLDION = 1
 
 MSG_MERGEION 1  "Merge downloaded ionospheric files into a single file"
@@ -136,12 +144,12 @@ MSG_IONNAM 1  "Name for downloaded ionosphere file(s)"
 ! -------------------------------------------------------------------------
 ! Download VMF files
 ! ------------------
-DNLDVMF 1  "0"
+DNLDVMF 1  "1"
   ## widget = checkbox
 
 MSG_DNLDVMF 1  "Download Vienna mapping functions"
 
-MERGEVMF 1  "0"
+MERGEVMF 1  "1"
   ## widget = checkbox; activeif = DNLDVMF = 1
 
 MSG_MERGEVMF 1  "Merge downloaded VMF files into a single file"
@@ -156,28 +164,30 @@ MSG_VMFFILE 1  "Name of combined VMF files"
 ! -------------------------------------------------------------------------
 ! Download CODE monthly DCB files
 ! ------------------
-DCBTYP 1  "FINAL"
+DCBTYP 1  "RAPID"
   ## widget=combobox; editable=false; cards = RAPID RAPID+ FINAL
 
 MSG_DCBTYP 1  "DCB product quality, '+' = 'or better'"
 
-DNLDP1C1 1  "0"
+DNLDP1C1 1  "1"
   ## widget = checkbox
 
 MSG_DNLDP1C1 1  "Download CODE monthly P1C1 DCB files"
 
 P1C1NAM 0
   ## widget=lineedit; check_strlen=24
+  # P1C1$Y$M.DCB
 
 MSG_P1C1NAM 1  "Name for downloaded CODE P1C1 DCB files"
 
-DNLDP1P2 1  "0"
+DNLDP1P2 1  "1"
   ## widget = checkbox
 
 MSG_DNLDP1P2 1  "Download CODE P1P2 DCB files"
 
 P1P2NAM 0
   ## widget=lineedit; check_strlen=24
+  # P1P2$Y$M.DCB
 
 MSG_P1P2NAM 1  "Name for downloaded CODE P1P2 DCB files"
 
@@ -205,6 +215,7 @@ MSG_RSDTYPE 1  "RINEX file selection"
 
 IGSCNAM 0
   ## widget=lineedit; check_strlen=24
+  # 
 
 MSG_IGSCNAM 1  "Name for downloaded IGS solution file"
 

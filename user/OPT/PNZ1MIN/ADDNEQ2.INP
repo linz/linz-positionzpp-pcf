@@ -1,7 +1,7 @@
 
 ! Some keywords for automatic output
 ! ----------------------------------
-CAMPAIGN 1  "${P}/PZDTEST"
+CAMPAIGN 1  "${P}/TEST_PP1"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
 SESSION_TABLE 0
@@ -22,7 +22,12 @@ USR_INFO 1  "${USER}"
 
 ! Environment variables
 ! ---------------------
-ENVIRONMENT     1 "" ""
+ENVIRONMENT 5
+  "U" "/home/dhansen/BERN52/GPSUSER"
+  "T" "/var/lib/bernese52/tmp"
+  "X" "/opt/bernese52/GPS"
+  "P" "/home/dhansen/BERN52/GPSDATA/CAMPAIGN"
+  "USER" "dhansen"
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! =========================================================================
@@ -112,6 +117,7 @@ DESCR_DCBINP 1  "Differential code biases"
 ISBINP 0
   ## widget = selwin; path = DIR_ISB; ext = EXT_ISB; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_ISBINP 1  "Inter-system biases"
 
@@ -120,6 +126,7 @@ DESCR_ISBINP 1  "Inter-system biases"
 RGBINP 0
   ## widget = selwin; path = DIR_RGB; ext = EXT_RGB; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_RGBINP 1  "SLR biases, CoM"
 
@@ -137,6 +144,7 @@ DESCR_POLE 1  "Earth rotation parameters"
 SATCLK 0
   ## widget = selwin; path = DIR_CLK; ext = EXT_CLK; maxfiles = 1
   ## emptyallowed = true; activeif = RXCLKIN = _
+  # 
 
 DESCR_SATCLK 1  "GNSS satellite clocks"
 
@@ -145,6 +153,7 @@ DESCR_SATCLK 1  "GNSS satellite clocks"
 RXCLKIN 0
   ## widget = selwin; path = DIR_RXC; ext = EXT_RXC; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_RXCLKIN 1  "Clock RINEX file"
 
@@ -178,6 +187,7 @@ DESCR_COVTTRS 1  "Full var-covar matrix"
 PARAMIN 0
   ## widget = selwin; path = DIR_EST; ext = EXT_EST; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_PARAMIN 1  "Parameter estimates"
 
@@ -204,7 +214,7 @@ DESCR_DATUM 1  "Geodetic datum"
 ! -----------------------
 PHASECC 0
   ## widget = selwin; path = DIR_STA; maxfiles = 1; emptyallowed = true
-  # PCV_COD.I08
+  # PCV_COD.$(PCV)
 
 DESCR_PHASECC 1  "Phase center variations"
 
@@ -212,7 +222,7 @@ DESCR_PHASECC 1  "Phase center variations"
 ! ---------------------
 SATELL 0
   ## widget = selwin; path = PTH_GEN; maxfiles = 1; emptyallowed = true
-  # SATELLIT.I01
+  # SATELLIT.$(PCV)
 
 DESCR_SATELL 1  "Satellite information"
 
@@ -390,6 +400,7 @@ DESCR_DCBOUT 1  "Code bias results"
 ! -------------------
 ISBOUT 0
   ## widget = lineedit; path = DIR_ISB; ext = EXT_ISB
+  # 
 
 DESCR_ISBOUT 1  "Inter-system biases (output)"
 
@@ -397,6 +408,7 @@ DESCR_ISBOUT 1  "Inter-system biases (output)"
 ! ------------
 RGBOUT 0
   ## widget = lineedit; path = DIR_RGB; ext = EXT_RGB
+  # 
 
 DESCR_RGBOUT 1  "SLR biases, CoM (output)"
 
@@ -450,6 +462,7 @@ DESCR_PLOTRS 1  "Station residuals"
 
 PLOT_ALL 0
   ## widget = lineedit; path = DIR_PLT; ext = EXT_PLT
+  # 
 
 DESCR_PLOT_ALL 1  "All parameter residuals"
 
@@ -466,6 +479,7 @@ DESCR_WEKSUM 1  "Weekly summary file"
 COVCOMO 0
   ## widget = lineedit; path = DIR_WGT; ext = EXT_WGT; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_COVCOMO 1  "Variance rescaling factors"
 
@@ -476,6 +490,7 @@ DESCR_COVCOMO 1  "Variance rescaling factors"
 PHASRSG 0
   ## widget = lineedit; path = DIR_PHG; ext = EXT_PHG; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_PHASRSG 1  "Antenna model results"
 
@@ -483,6 +498,7 @@ DESCR_PHASRSG 1  "Antenna model results"
 ! --------------------
 CLKSAV 0
   ## widget = lineedit; path = DIR_CLK; ext = EXT_CLK
+  # 
 
 DESCR_CLKSAV 1  "Satellite clock file"
 
@@ -490,6 +506,7 @@ DESCR_CLKSAV 1  "Satellite clock file"
 ! ----------------
 CLKRNX 0
   ## widget = lineedit; path = DIR_RXC; ext = EXT_RXC
+  # 
 
 DESCR_CLKRNX 1  "clock RINEX file"
 
@@ -497,6 +514,7 @@ DESCR_CLKRNX 1  "clock RINEX file"
 ! -------------------
 PARAMRS 0
   ## widget = lineedit; path = DIR_EST; ext = EXT_EST
+  # 
 
 DESCR_PARAMRS 1  "Parameter estimate results"
 
@@ -839,12 +857,8 @@ FREESTA_F 0
 
 MSG_FREESTA_F 1  "List of stations from file"
 
-FREESTA_G 0
+FREESTA_G 1  "I"
   ## widget = lineedit; activeif = FREESTA == WITH_FLAG AND RADIO2_3 == 1
-  # I
-  # G
-  # M
-  # N
 
 MSG_FREESTA_G 1  "Stations with specific flags in CRD file"
 
@@ -1052,6 +1066,7 @@ MSG_CRD_ELIM 1  "Station coordinates"
 CRD_EXCP 0
   ## widget = lineedit
   ## activeif = CRD_ELIM == BEFORE_STACKING OR CRD_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_CRD_EXCP 1  "Except for files: Station coordinates"
 
@@ -1098,6 +1113,7 @@ MSG_CLK_ELIM 1  "GLONASS receiver clock biases"
 CLK_EXCP 0
   ## widget = lineedit
   ## activeif = CLK_ELIM == BEFORE_STACKING OR CLK_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_CLK_EXCP 1  "Except for files: Receiver clock offsets"
 
@@ -1138,12 +1154,14 @@ MSG_CLK_EXFLG 1  "Selection for station exceptions from flag: receiver clock off
 ISB_ELIM 0
   ## widget = combobox; editable = false
   ## cards = "" "NO" "BEFORE_STACKING" "AFTER_STACKING" "EXCEPT_FOR_BOUNDARIES" "OUTSIDE_FROM_WINDOW" "DELETE"
+  # 
 
 MSG_ISB_ELIM 1  "Time-dependent GLONASS ISB"
 
 ISB_EXCP 0
   ## widget = lineedit
   ## activeif = ISB_ELIM == BEFORE_STACKING OR CLK_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_ISB_EXCP 1  "Except for files: inter-system bias"
 
@@ -1184,12 +1202,14 @@ MSG_ISB_EXFLG 1  "Selection for station exceptions from flag: inter-system bias"
 RAO_ELIM 0
   ## widget = combobox; editable = false
   ## cards = "" "NO" "BEFORE_STACKING" "AFTER_STACKING" "EXCEPT_FOR_BOUNDARIES" "OUTSIDE_FROM_WINDOW" "DELETE"
+  # 
 
 MSG_RAO_ELIM 1  "Receiver antenna offsets"
 
 RAO_EXCP 0
   ## widget = lineedit
   ## activeif = RAO_ELIM == BEFORE_STACKING OR RAO_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_RAO_EXCP 1  "Except for files: Receiver antenna offsets"
 
@@ -1198,12 +1218,14 @@ MSG_RAO_EXCP 1  "Except for files: Receiver antenna offsets"
 RAP_ELIM 0
   ## widget = combobox; editable = false
   ## cards = "" "NO" "BEFORE_STACKING" "AFTER_STACKING" "EXCEPT_FOR_BOUNDARIES" "OUTSIDE_FROM_WINDOW" "DELETE"
+  # 
 
 MSG_RAP_ELIM 1  "Receiver antenna pattern"
 
 RAP_EXCP 0
   ## widget = lineedit
   ## activeif = RAP_ELIM == BEFORE_STACKING OR RAP_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_RAP_EXCP 1  "Except for files: Receiver antenna pattern"
 
@@ -1218,6 +1240,7 @@ MSG_DCBR_ELIM 1  "Receiver DCB parameters"
 DCBR_EXCP 0
   ## widget = lineedit
   ## activeif = DCBR_ELIM == BEFORE_STACKING OR DCBR_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_DCBR_EXCP 1  "Except for files: Receiver DCB parameters"
 
@@ -1258,12 +1281,14 @@ MSG_DCBR_EXFLG 1  "Selection for station exceptions from flag: receiver DCB para
 GTRA_ELIM 0
   ## widget = combobox; editable = false
   ## cards = "" "NO" "BEFORE_STACKING" "AFTER_STACKING" "EXCEPT_FOR_BOUNDARIES" "OUTSIDE_FROM_WINDOW" "DELETE"
+  # 
 
 MSG_GTRA_ELIM 1  "GNSS-specific station translation"
 
 GTRA_EXCP 0
   ## widget = lineedit
   ## activeif = GTRA_ELIM == BEFORE_STACKING OR GTRA_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_GTRA_EXCP 1  "Except for files: GNSS-specific station translation"
 
@@ -1304,12 +1329,14 @@ MSG_GTRA_EXFLG 1  "Selection for station exceptions from flag: GNSS-spec transla
 GTRP_ELIM 0
   ## widget = combobox; editable = false
   ## cards = "" "NO" "BEFORE_STACKING" "AFTER_STACKING" "EXCEPT_FOR_BOUNDARIES" "OUTSIDE_FROM_WINDOW" "DELETE"
+  # 
 
 MSG_GTRP_ELIM 1  "GNSS-specific ZPD bias"
 
 GTRP_EXCP 0
   ## widget = lineedit
   ## activeif = GTRP_ELIM == BEFORE_STACKING OR GTRP_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_GTRP_EXCP 1  "Except for files: GNSS-specific ZPD bias"
 
@@ -1356,6 +1383,7 @@ MSG_RNG_ELIM 1  "Range biases"
 RNG_EXCP 0
   ## widget = lineedit
   ## activeif = RNG_ELIM == BEFORE_STACKING OR RNG_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_RNG_EXCP 1  "Except for files: Range biases"
 
@@ -1370,6 +1398,7 @@ MSG_TRP_ELIM 1  "Troposphere zenith path delays"
 TRP_EXCP 0
   ## widget = lineedit
   ## activeif = TRP_ELIM == BEFORE_STACKING OR TRP_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_TRP_EXCP 1  "Except for files: troposphere ZPDs"
 
@@ -1416,6 +1445,7 @@ MSG_GRD_ELIM 1  "Troposphere gradients"
 GRD_EXCP 0
   ## widget = lineedit
   ## activeif = GRD_ELIM == BEFORE_STACKING OR GRD_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_GRD_EXCP 1  "Except for files: Troposphere gradients"
 
@@ -1462,18 +1492,21 @@ MSG_GIM_ELIM 1  "Global ionosphere parameters"
 GIM_EXCP 0
   ## widget = lineedit
   ## activeif = GIM_ELIM == BEFORE_STACKING OR GIM_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_GIM_EXCP 1  "Except for files: Global ionosphere parameters"
 
 HOI_ELIM 0
   ## widget = combobox; editable = false
   ## cards = "" "NO" "BEFORE_STACKING" "AFTER_STACKING" "EXCEPT_FOR_BOUNDARIES" "OUTSIDE_FROM_WINDOW" "DELETE"
+  # 
 
 MSG_HOI_ELIM 1  "HOI scaling factors"
 
 HOI_EXCP 0
   ## widget = lineedit
   ## activeif = HOI_ELIM == BEFORE_STACKING OR HOI_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_HOI_EXCP 1  "Except for files: HOI scaling factors"
 
@@ -1482,36 +1515,42 @@ MSG_HOI_EXCP 1  "Except for files: HOI scaling factors"
 TRANS_ELIM 0
   ## widget = combobox; editable = false
   ## cards = "" "NO" "BEFORE_STACKING" "AFTER_STACKING" "EXCEPT_FOR_BOUNDARIES" "OUTSIDE_FROM_WINDOW" "DELETE"
+  # 
 
 MSG_TRANS_ELIM 1  "Helmert: Translations"
 
 TRANS_EXCP 0
   ## widget = lineedit
   ## activeif = TRANS_ELIM == BEFORE_STACKING OR TRANS_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_TRANS_EXCP 1  "Except for files: Helmert translations"
 
 ROT_ELIM 0
   ## widget = combobox; editable = false
   ## cards = "" "NO" "BEFORE_STACKING" "AFTER_STACKING" "EXCEPT_FOR_BOUNDARIES" "OUTSIDE_FROM_WINDOW" "DELETE"
+  # 
 
 MSG_ROT_ELIM 1  "Helmert: Rotations"
 
 ROT_EXCP 0
   ## widget = lineedit
   ## activeif = ROT_ELIM == BEFORE_STACKING OR ROT_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_ROT_EXCP 1  "Except for files: Helmert rotations"
 
 SCALE_ELIM 0
   ## widget = combobox; editable = false
   ## cards = "" "NO" "BEFORE_STACKING" "AFTER_STACKING" "EXCEPT_FOR_BOUNDARIES" "OUTSIDE_FROM_WINDOW" "DELETE"
+  # 
 
 MSG_SCALE_ELIM 1  "Helmert: Scale"
 
 SCALE_EXCP 0
   ## widget = lineedit
   ## activeif = SCALE_ELIM == BEFORE_STACKING OR SCALE_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_SCALE_EXCP 1  "Except for files: Helmert scale"
 
@@ -1529,6 +1568,7 @@ MSG_ORB_ELIM 1  "Orbital elements"
 ORB_EXCP 0
   ## widget = lineedit
   ## activeif = ORB_ELIM == BEFORE_STACKING OR ORB_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_ORB_EXCP 1  "Except for files: Orbital elements"
 
@@ -1543,6 +1583,7 @@ MSG_STO_ELIM 1  "Stochastic pulses"
 STO_EXCP 0
   ## widget = lineedit
   ## activeif = STO_ELIM == BEFORE_STACKING OR STO_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_STO_EXCP 1  "Except for files: Stochastic pulses"
 
@@ -1557,18 +1598,21 @@ MSG_ANT_ELIM 1  "Satellite antenna offsets"
 ANT_EXCP 0
   ## widget = lineedit
   ## activeif = ANT_ELIM == BEFORE_STACKING OR ANT_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_ANT_EXCP 1  "Except for files: Satellite antenna offsets"
 
 ANTX_ELIM 0
   ## widget = combobox; editable = false
   ## cards = "" "NO" "BEFORE_STACKING" "AFTER_STACKING" "EXCEPT_FOR_BOUNDARIES" "OUTSIDE_FROM_WINDOW" "DELETE"
+  # 
 
 MSG_ANTX_ELIM 1  "Satellite antenna offsets (XY)"
 
 ANTX_EXCP 0
   ## widget = lineedit
   ## activeif = ANTX_ELIM == BEFORE_STACKING OR ANTX_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_ANTX_EXCP 1  "Except for files: Satellite antenna offsets (XY)"
 
@@ -1583,6 +1627,7 @@ MSG_SPV_ELIM 1  "Satellite antenna variations"
 SPV_EXCP 0
   ## widget = lineedit
   ## activeif = SPV_ELIM == BEFORE_STACKING OR SPV_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_SPV_EXCP 1  "Except for files: Satellite antenna variations"
 
@@ -1597,6 +1642,7 @@ MSG_DCBS_ELIM 1  "Satellite DCB parameters"
 DCBS_EXCP 0
   ## widget = lineedit
   ## activeif = DCBS_ELIM == BEFORE_STACKING OR DCBS_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_DCBS_EXCP 1  "Except for files: Satellite DCB parameters"
 
@@ -1611,6 +1657,7 @@ MSG_ERP_ELIM 1  "Earth rotation parameters (Pole)"
 ERP_EXCP 0
   ## widget = lineedit
   ## activeif = ERP_ELIM == BEFORE_STACKING OR ERP_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_ERP_EXCP 1  "Except for files: Earth rotation parameters (Pole)"
 
@@ -1619,12 +1666,14 @@ MSG_ERP_EXCP 1  "Except for files: Earth rotation parameters (Pole)"
 UT_ELIM 0
   ## widget = combobox; editable = false
   ## cards = "" "NO" "BEFORE_STACKING" "AFTER_STACKING" "EXCEPT_FOR_BOUNDARIES" "OUTSIDE_FROM_WINDOW" "DELETE"
+  # 
 
 MSG_UT_ELIM 1  "Earth rotation parameters (UT)"
 
 UT_EXCP 0
   ## widget = lineedit
   ## activeif = UT_ELIM == BEFORE_STACKING OR UT_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_UT_EXCP 1  "Except for files: Earth rotation parameters (UT)"
 
@@ -1633,12 +1682,14 @@ MSG_UT_EXCP 1  "Except for files: Earth rotation parameters (UT)"
 LOD_ELIM 0
   ## widget = combobox; editable = false
   ## cards = "" "NO" "BEFORE_STACKING" "AFTER_STACKING" "EXCEPT_FOR_BOUNDARIES" "OUTSIDE_FROM_WINDOW" "DELETE"
+  # 
 
 MSG_LOD_ELIM 1  "Earth rotation parameters (LOD)"
 
 LOD_EXCP 0
   ## widget = lineedit
   ## activeif = LOD_ELIM == BEFORE_STACKING OR LOD_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_LOD_EXCP 1  "Except for files: Earth rotation parameters (LOD)"
 
@@ -1653,6 +1704,7 @@ MSG_NUT_ELIM 1  "Nutation parameters"
 NUT_EXCP 0
   ## widget = lineedit
   ## activeif = NUT_ELIM == BEFORE_STACKING OR NUT_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_NUT_EXCP 1  "Except for files: Nutation parameters"
 
@@ -1661,12 +1713,14 @@ MSG_NUT_EXCP 1  "Except for files: Nutation parameters"
 ALD_ELIM 0
   ## widget = combobox; editable = false
   ## cards = "" "NO" "BEFORE_STACKING" "AFTER_STACKING" "EXCEPT_FOR_BOUNDARIES" "OUTSIDE_FROM_WINDOW" "DELETE"
+  # 
 
 MSG_ALD_ELIM 1  "Atmospheric pressure loading"
 
 ALD_EXCP 0
   ## widget = lineedit
   ## activeif = ALD_ELIM == BEFORE_STACKING OR ALD_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_ALD_EXCP 1  "Except for files: Atmospheric pressure loading"
 
@@ -1707,12 +1761,14 @@ MSG_ALD_EXFLG 1  "Selection for station exceptions from flag: Atmospheric pressu
 OLD_ELIM 0
   ## widget = combobox; editable = false
   ## cards = "" "NO" "BEFORE_STACKING" "AFTER_STACKING" "EXCEPT_FOR_BOUNDARIES" "OUTSIDE_FROM_WINDOW" "DELETE"
+  # 
 
 MSG_OLD_ELIM 1  "Ocean non-tidal loading"
 
 OLD_EXCP 0
   ## widget = lineedit
   ## activeif = OLD_ELIM == BEFORE_STACKING OR OLD_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_OLD_EXCP 1  "Except for files: Ocean non-tidal loading"
 
@@ -1753,12 +1809,14 @@ MSG_OLD_EXFLG 1  "Selection for station exceptions from flag: Ocean non-tidal lo
 HLD_ELIM 0
   ## widget = combobox; editable = false
   ## cards = "" "NO" "BEFORE_STACKING" "AFTER_STACKING" "EXCEPT_FOR_BOUNDARIES" "OUTSIDE_FROM_WINDOW" "DELETE"
+  # 
 
 MSG_HLD_ELIM 1  "Hydrostatic pressure loading"
 
 HLD_EXCP 0
   ## widget = lineedit
   ## activeif = HLD_ELIM == BEFORE_STACKING OR HLD_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_HLD_EXCP 1  "Except for files: Hydrostatic pressure loading"
 
@@ -1805,6 +1863,7 @@ MSG_MSS_ELIM 1  "Geocenter coordinates"
 MSS_EXCP 0
   ## widget = lineedit
   ## activeif = MSS_ELIM == BEFORE_STACKING OR MSS_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_MSS_EXCP 1  "Except for files: Geocenter coordinates"
 
@@ -1813,12 +1872,14 @@ MSG_MSS_EXCP 1  "Except for files: Geocenter coordinates"
 CLKR_ELIM 0
   ## widget = combobox; editable = false
   ## cards = "" "NO" "BEFORE_STACKING" "AFTER_STACKING" "EXCEPT_FOR_BOUNDARIES" "OUTSIDE_FROM_WINDOW" "DELETE"
+  # 
 
 MSG_CLKR_ELIM 1  "Receiver clock offsets"
 
 CLKR_EXCP 0
   ## widget = lineedit
   ## activeif = CLKR_ELIM == BEFORE_STACKING OR CLKR_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_CLKR_EXCP 1  "Except for files: Station clock"
 
@@ -1827,12 +1888,14 @@ MSG_CLKR_EXCP 1  "Except for files: Station clock"
 CLKS_ELIM 0
   ## widget = combobox; editable = false
   ## cards = "" "NO" "BEFORE_STACKING" "AFTER_STACKING" "EXCEPT_FOR_BOUNDARIES" "OUTSIDE_FROM_WINDOW" "DELETE"
+  # 
 
 MSG_CLKS_ELIM 1  "Satellite clock offsets"
 
 CLKS_EXCP 0
   ## widget = lineedit
   ## activeif = CLKS_ELIM == BEFORE_STACKING OR CLKS_ELIM == EXCEPT_FOR_BOUNDARIES
+  # 
 
 MSG_CLKS_EXCP 1  "Except for files: Satellite clock"
 
@@ -1896,26 +1959,31 @@ MSG_ENDTIM 1  "End time(hour minutes seconds)"
 ! -----------------
 TRP_NINT 0
   ## widget = lineedit
+  # 
 
 MSG_TRP_NINT 1  "Troposphere zenith path delays"
 
 GRD_NINT 0
   ## widget = lineedit
+  # 
 
 MSG_GRD_NINT 1  "Troposphere gradients"
 
 ISB_NINT 0
   ## widget = lineedit
+  # 
 
 MSG_ISB_NINT 1  "Inter-system bias"
 
 ERP_NINT 0
   ## widget = lineedit
+  # 
 
 MSG_ERP_NINT 1  "Earth rotation parameters"
 
 NUT_NINT 0
   ## widget = lineedit
+  # 
 
 MSG_NUT_NINT 1  "Nutation parameters"
 
@@ -1923,11 +1991,13 @@ MSG_NUT_NINT 1  "Nutation parameters"
 ! ---------------------------------------
 PAR_REF 0
   ## widget = lineedit; emptyallowed = true; check_type = date
+  # 
 
 MSG_PAR_REF 1  "Reference epoch for parameter intervals"
 
 PAR_OFF 0
   ## widget = lineedit; check_type = time
+  # 
 
 MSG_PAR_OFF 1  "Reference epoch for parameter intervals: Time offset"
 
@@ -2081,31 +2151,37 @@ MSG_SPLTDYN 1  "No stacking of dynamical orbit parameters"
 ! --------------------------------
 ORB_A 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_ORB_A 1  "Semi major axis"
 
 ORB_E 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_ORB_E 1  "Eccentricity"
 
 ORB_I 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_ORB_I 1  "Inclination"
 
 ORB_OM 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_ORB_OM 1  "Ascending node"
 
 ORB_P 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_ORB_P 1  "Perigee"
 
 ORB_U 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_ORB_U 1  "Argument of latitude"
 
@@ -2113,16 +2189,19 @@ MSG_ORB_U 1  "Argument of latitude"
 ! ------------------------------------
 ORB_D0 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_ORB_D0 1  "Constant D terms"
 
 ORB_Y0 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_ORB_Y0 1  "Constant Y terms"
 
 ORB_X0 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_ORB_X0 1  "Constant X terms"
 
@@ -2138,6 +2217,7 @@ MSG_ORB_YP 1  "Periodic Y terms"
 
 ORB_XP 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_ORB_XP 1  "Periodic X terms"
 
@@ -2204,16 +2284,19 @@ MSG_POL_PSF 1  "Delta psi: first parameter"
 ! ------------------------------
 POL_XY 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_POL_XY 1  "X and Y pole components"
 
 POL_UTN 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_POL_UTN 1  "UT1-UTC: other parameters"
 
 POL_LOD 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_POL_LOD 1  "LOD: all parameters"
 
@@ -2622,16 +2705,19 @@ MSG_RECANTU 1  "Receiver antenna offsets: U"
 
 SATANTX 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_SATANTX 1  "Satellite antenna offsets: X"
 
 SATANTY 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_SATANTY 1  "Satellite antenna offsets: Y"
 
 SATANTZ 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_SATANTZ 1  "Satellite antenna offsets: Z"
 
@@ -2661,16 +2747,19 @@ MSG_SATANTGLO 1  "Modify satellite antenna offsets parameter"
 
 COFMASSX 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_COFMASSX 1  "Geocenter coordinates: X"
 
 COFMASSY 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_COFMASSY 1  "Geocenter coordinates: Y"
 
 COFMASSZ 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_COFMASSZ 1  "Geocenter coordinates: Z"
 
@@ -2685,6 +2774,7 @@ MSG_RECSPV 1  "Receiver antenna patterns"
 ! ----------------------------------
 SATSPV 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_SATSPV 1  "Satellite antenna patterns"
 
@@ -2767,6 +2857,7 @@ MSG_SAPGRP 1  "Satellite antenna PCV group definition and sigmas"
 ! -----------------------------------
 RCOSIGMA 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_RCOSIGMA 1  "Receiver clock offsets"
 
@@ -2795,6 +2886,7 @@ MSG_RCOTOFRQ 1  "Transform satellite to frequency biases"
 ! -----------------------------------
 IFBMAX 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_IFBMAX 1  "Inter-frequency bias, alarming limit"
 
@@ -2812,6 +2904,7 @@ MSG_P1C1REF 1  "P1-C1: Reference satellite(s)"
 ! --------------------------------------------------
 P1C1SIG 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_P1C1SIG 1  "P1-C1: A Priori Sigma for Reference Satellite Biases"
 
@@ -2826,6 +2919,7 @@ MSG_P1P2REF 1  "P1-P2: Reference satellite(s)"
 ! --------------------------------------------------
 P1P2SIG 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_P1P2SIG 1  "P1-P2: A Priori Sigma for Reference Satellite Biases"
 
@@ -2833,6 +2927,7 @@ MSG_P1P2SIG 1  "P1-P2: A Priori Sigma for Reference Satellite Biases"
 ! ---------------------------------------
 P1P2SIGR 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_P1P2SIGR 1  "P1-P2: A Priori Sigma for Receiver Biases"
 
@@ -2847,6 +2942,7 @@ MSG_LCREF 1  "LC: Reference station(s)"
 ! ---------------------------------------
 LCSIGR 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_LCSIGR 1  "LC: A Priori Sigma for Receiver Biases"
 
@@ -2854,6 +2950,7 @@ MSG_LCSIGR 1  "LC: A Priori Sigma for Receiver Biases"
 ! -------------------------
 RGBSIG 0
   ## widget = lineedit; check_type = real; check_min = 0.0
+  # 
 
 MSG_RGBSIG 1  "Range bias parameters"
 

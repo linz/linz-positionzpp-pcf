@@ -78,12 +78,12 @@ MSG_NEWOLD 1  "SELECTION OF ORBITAL ELEMENTS"
 
 ! System for dynamical parameters
 ! -------------------------------
-SYSDYX 1  "1"
+SYSDYX 1  "0"
   ## widget = radiobutton; group = SYSORB
 
 MSG_SYSDYX 1  "System DYX"
 
-SYSD2X 1  "0"
+SYSD2X 1  "1"
   ## widget = radiobutton; group = SYSORB; activeif = RPROUT = _
 
 MSG_SYSD2X 1  "System D2X"
@@ -298,7 +298,7 @@ DESCR_SATCRUX 1  "Satellite problems"
 ! ---------------------
 SATELL 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
-  # SATELLIT.I08
+  # SATELLIT.$(PCV)
 
 DESCR_SATELL 1  "Satellite information"
 

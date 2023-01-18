@@ -156,7 +156,7 @@ DESCR_SYSERR 1  "Error message"
 ! -----
 TITLE 0
   ## widget = lineedit
-  # AUSPOS DETECT BAD STATIONS $S+0
+  # LINZ DETECT BAD STATIONS $S+0
 
 MSG_TITLE 1  "Title line"
 

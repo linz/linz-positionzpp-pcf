@@ -209,7 +209,7 @@ DESCR_DATUM 1  "Geodetic datum"
 ! -----------------------
 PHASECC 0
   ## widget = selwin; path = DIR_STA; maxfiles = 1; emptyallowed = true
-  # PCV_COD.I08
+  # PCV_COD.$(PCV)
 
 DESCR_PHASECC 1  "Phase center variations"
 
@@ -217,7 +217,7 @@ DESCR_PHASECC 1  "Phase center variations"
 ! ---------------------
 SATELL 0
   ## widget = selwin; path = PTH_GEN; maxfiles = 1; emptyallowed = true
-  # SATELLIT.I01
+  # SATELLIT.$(PCV)
 
 DESCR_SATELL 1  "Satellite information"
 

@@ -1,7 +1,7 @@
 
 ! Some keywords for automatic output
 ! --------------------------------------------------------------------
-CAMPAIGN 1  "${P}/PZDTEST"
+CAMPAIGN 1  "${P}/IGS20_1"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
 SESSION_TABLE 0
@@ -22,7 +22,12 @@ USR_INFO 1  "${USER}"
 
 ! Environment variables
 ! ---------------------
-ENVIRONMENT     1 "" ""
+ENVIRONMENT 5
+  "U" "/home/dhansen/BERN52/GPSUSER"
+  "T" "/var/lib/bernese52/tmp"
+  "X" "/opt/bernese52/GPS"
+  "P" "/home/dhansen/BERN52/GPSDATA/CAMPAIGN"
+  "USER" "dhansen"
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! --------------------------------------------------------------------
@@ -55,7 +60,7 @@ DESCR_DATUM 1  "Geodetic datum"
 ! ---------------------
 SATELL 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
-  # SATELLIT.I08
+  # SATELLIT.$(PCV)
 
 DESCR_SATELL 1  "Satellite information"
 
@@ -73,7 +78,7 @@ COORD 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
   ## activeif = STRATEGY == DEFINED AND REPLACE == 1 OR STRATEGY == OBS-MAX OR STRATEGY == SHORTEST OR STRATEGY == STAR
   ## emptyallowed = false
-  # APRIORI
+  # APR$S+0
 
 DESCR_COORD 1  "Station coordinates"
 
@@ -355,7 +360,7 @@ MSG_TITLE 1  "Title line"
 
 ! Satellite System
 ! ----------------
-SATSYS 1  "GPS"
+SATSYS 1  "$(SATSYS)"
   ## widget = combobox; editable = false; activeif STRATEGY / MANUAL
   ## cards = ANY GPS GLONASS GALILEO GPS&GLO GPS&GAL GLO&GAL
 

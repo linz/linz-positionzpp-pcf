@@ -120,7 +120,7 @@ DESCR_ARSUM 1  "Ambiguity resolution summary"
 ! ----------------------------
 SELBSL 0
   ## widget = lineedit; path = DIR_BSL; ext = NO_EXT
-  # QIF$S+0.SEL
+  # L53$YSS+0.SEL
 
 DESCR_SELBSL 1  "List with accepted baselines"
 
@@ -142,7 +142,7 @@ MSG_SYSODEF 1  "Program output"
 SYSOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF == 0; emptyallowed = false
-  # BASL$S+0
+  # L53$YSS+0
 
 DESCR_SYSOUT 1  "Program output"
 
@@ -167,7 +167,7 @@ DESCR_SYSERR 1  "Error message"
 ! -----
 TITLE 0
   ## widget = lineedit
-  # PNZ-PP Baseline Selection $S+0: QIF Ambiguity Resolution
+  # PNZ-PP Baseline Selection $S+0: Phase-Based L5/L3 Ambiguity Resolution
 
 MSG_TITLE 1  "Title line"
 
@@ -181,7 +181,7 @@ MSG_SATSYS 1  "Baselines with observations from"
 
 ! Baseline length
 ! ---------------
-MAXLEN 1  "2000"
+MAXLEN 1  "200"
   ## widget = spinbox; range = 0 15000 100
 
 MSG_MAXLEN 1  "Maximum baseline length"

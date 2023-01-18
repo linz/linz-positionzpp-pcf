@@ -1,7 +1,7 @@
 
 ! Some keywords for automatic output
 ! ----------------------------------
-CAMPAIGN 1  "${P}/PZDTEST"
+CAMPAIGN 1  "${P}/TEST_01"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
 SESSION_TABLE 0
@@ -73,7 +73,7 @@ MSG_TITLE 1  "Title line"
 ! --------------------------------------
 PHASEXT 0
   ## widget = selwin; path = DIR_OUT; ext = NO_EXT
-  # $(MYATX)
+  # $(REFATX)
 
 DESCR_PHASEXT 1  "External phase center offsets"
 

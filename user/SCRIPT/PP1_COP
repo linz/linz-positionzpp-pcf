@@ -1,0 +1,86 @@
+package PP1_COP;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  PP1_COP
+#
+# Purpose :  Copy NGS and IGS ANTEX files to the OUT directory
+#
+# PARAMs  :
+#
+# Author  :  R. Dach
+# Created :  11-Aug-2011
+#
+# Changes :  13-Feb-2013 SL: Path for crxInf corrected
+#
+# ============================================================================
+use strict;
+
+use File::Copy;
+
+use lib $ENV{BPE};
+use bpe_util qw(isHourly copyRef appFile prtMess);
+use lib "$ENV{X}/EXE";
+use Gps_Date qw(gps_date);
+
+sub run{
+  my $bpe = shift;
+
+# Get variables
+# -------------
+  my (
+      $cleanDirs,$campDir, $campaign,
+      $wwwwd,$wwww,$yymm,$yyssss,$ssss,$yyyy,
+      $refDir,   $crdInf,   $refInf, $dnldInf, $blqInf, $atlInf, $crxInf,
+      $refFix,   $hoiFil,   $gnss,
+      $v_b,  $v_g, $hourly,
+      $dirCrd,  $dirVel,  $dirAbb,  $dirSta,  $dirCrx,  $dirBlq,  $dirAtl,
+      $extCrd,  $extVel,  $extAbb,  $extSta,  $extCrx,  $extBlq,  $extAtl,
+      $dirClu,  $dirFix,  $dirSig,  $dirPld,  $dirPre,  $dirErp,  $dirIep,
+      $extClu,  $extFix,  $extSig,  $extPld,  $extPre,  $extErp,  $extIep,
+      $dirClk,  $dirDcb,  $dirIon,  $dirOut,
+      $extClk,  $extDcb,  $extIon,  $dirSnx,  $extSnx,  $dirPsd,  $extPsd,
+      $myatx,   $refatx,) =
+  $bpe->getKeys (
+      'V_CLEAN','P','CAMPAIGN',
+      '$WD+0','$W+0','$M+0','$YSS+0','$S+0','$Y+0',
+      'V_REFDIR','V_CRDINF','V_REFINF', 'V_OBSSEL', 'V_BLQINF','V_ATLINF','V_CRXINF',
+      'V_REFFIX','V_HOIFIL','V_SATSYS',
+      'V_B','V_G','V_HOURLY',
+      'DIR_CRD','DIR_VEL','DIR_ABB','DIR_STA','DIR_STA','DIR_BLQ','DIR_ATL',
+      'EXT_CRD','EXT_VEL','EXT_ABB','EXT_STA','EXT_CRX','EXT_BLQ','EXT_ATL',
+      'DIR_CLU','DIR_FIX','DIR_SIG','DIR_PLD','DIR_PRE','DIR_ERP','DIR_IEP',
+      'EXT_CLU','EXT_FIX','EXT_SIG','EXT_PLD','EXT_PRE','EXT_ERP','EXT_IEP',
+      'DIR_RXC','DIR_DCB','DIR_ION','DIR_OUT',
+      'EXT_RXC','EXT_DCB','EXT_ION','DIR_SNX','EXT_SNX','DIR_PSD','EXT_PSD',
+      'V_MYATX','V_REFATX', );
+
+# Delete existing files if V_CLEAN is Y.  Assume standard directories are used.
+
+  if( $cleanDirs eq 'Y' )
+  {
+    my $jobpath=$campDir.'/'.$campaign;
+    foreach my $dir ('ATM','GRD','OBS','ORB','ORX','OUT','RAW','SOL','STA')
+    {
+       my $cleandir=$jobpath.'/'.$dir;
+       prtMess($bpe,"Cleaning $cleandir");
+       foreach my $f (glob("$cleandir/*"))
+       {
+           next if $f =~ /SESSIONS.SES$/;
+           # prtMess($bpe,"Unlinking $f");
+           unlink($f);
+       }
+    }
+  }
+
+# Copy Antex files for conversion
+# -------------------------------
+  my $dirGen = "/opt/bernese52/GPS/GEN/";
+  my $file1 = "${dirGen}$myatx";
+  my $file2 = "${dirOut}$myatx";
+  copy( ${file1}, ${file2} );
+  my $file3 = "${dirGen}$refatx";
+  my $file4 = "${dirOut}$refatx"; 
+  copy( ${file3}, ${file4} );
+
+}

@@ -1,8 +1,8 @@
 # ============================================================================
-# PNZ_FINAL.PCF
+# PNZ_PP1.PCF
 # ============================================================================
 #
-# $Id: PNZ_FINAL.PCF 644 2008-09-04 08:31:53Z jpalmer $
+# $Id: PNZ_PP1.PCF 644 2022-09-28 16:39:00Z dhansen $
 #
 #
 PID SCRIPT   OPT_DIR  CAMPAIGN CPU      F WAIT FOR....
@@ -10,57 +10,113 @@ PID SCRIPT   OPT_DIR  CAMPAIGN CPU      F WAIT FOR....
 #
 # Compute ambiguity-fixed network solution, create final NEQ/SNX/TRO files
 # ------------------------------------------------------------------------
-001 PNZSTART PNZ_GEN           ANY      1
+001 PNZSTART PNZ1GEN           ANY      1
 #
 # End of BPE
 # ----------
 #
-010 GETDATA  PNZ_ORB           ANY      1 001
-020 POLUPD   PNZ_ORB           ANY      1 010
-030 PRETAB   PNZ_ORB           ANY      1 020
-040 PNZORB   PNZ_ORB           ANY      1 030
-050 RNX2STA  PNZ_REF           ANY      1 040
-055 PNZATX   PNZ_REF           ANY      1 050
-060 RXOBV3   PNZ_REF           ANY      1 055
-070 CODSPP   PNZ_REF           ANY      1 060
-080 GETDATA  PNZ_REF           ANY      1 070
-085 CRDMERGE PNZ_REF           ANY      1 080
-090 RNX2STA  PNZ_REF           ANY      1 085
-095 PNZATX   PNZ_REF           ANY      1 090
-100 RXOBV3   PNZ_REF           ANY      1 095
-105 CREATABB PNZ_REF           ANY      1 100
-110 CODSPPAP PNZ_GEN           ANY      1 105
-111 CODSPP_P PNZ_GEN           ANY      1 110
-301 SNGDIF   PNZ_GEN           ANY      1 111
-311 MAUPRPAP PNZ_GEN           ANY      1 301
-312 MAUPRP_P PNZ_GEN           ANY      1 311
-313 MPRXTR   PNZ_GEN           ANY      1 312
-321 GPSEDTAP PNZ_GEN           ANY      1 313
-322 GPSEDT_P PNZ_EDT           ANY      1 321
-331 GPSCHK   PNZ_GEN           ANY      1 322
-401 GPSEST   PNZ_GEN           ANY      1 331
-411 GPSQIFAP PNZ_QIF           ANY      1 401
-412 GPSQIF_P PNZ_QIF           ANY      1 411
-413 GPSXTR   PNZ_QIF           ANY      1 412
-501 GPSEST   PNZ_MIN           ANY      1 413
-511 ADDNEQ2  PNZ_MIN           ANY      1 501
-512 HELMR1   PNZ_MIN           ANY      1 511
-513 ADDNEQ2  PNZ_FIN           ANY      1 512
-600 PNZSUMRY PNZ_GEN           ANY      1 513
-999 PNZSTART PNZ_GEN           ANY      1 600
+005 PP1_COP  PNZ1ORB           ANY      1 001
+#
+# Prepare the orbits
+# ------------------
+010 GETDATA  PNZ1ORB           ANY      1 005
+011 DCBMERGE PNZ1ORB           ANY      1 010
+020 POLUPD   PNZ1ORB           ANY      1 011
+030 PRETAB   PNZ1ORB           ANY      1 020
+040 PNZORB   PNZ1ORB           ANY      1 030
+#
+# Prepare the single submitted rinex file,
+# including station information file, PCV
+# calibration file, converting rinex2/3 to a
+# smoothed file, into bernese format and
+# estimating clocks
+# -------------------------------------------
+050 RNX2STA  PNZ1REF           ANY      1 040
+055 PNZATX   PNZ1REF           ANY      1 050
+056 RNXSMT   PNZ1REF           ANY      1 055
+060 RXOBV3   PNZ1REF           ANY      1 056
+070 CODSPP   PNZ1REF           ANY      1 060
+#
+# Get 3 of the nearest sites that have a
+# Station coordinate model, merge these
+# into an APR22146Y.CRD file and generate
+# a station information file containing all
+# -------------------------------------------
+080 GETDATA  PNZ1REF           ANY      1 070
+085 CRDMERGE PNZ1REF           ANY      1 080
+090 RNX2STA  PNZ1REF           ANY      1 085
+#
+# Create PCV file with only sites in STA file
+# Get ORB & EOP products, VMF, ION, DCB data
+# Rename all files to be the same as the ref
+# -------------------------------------------
+094 NGS14TRM PNZ1REF           ANY      1 090
+095 PNZATX   PNZ1REF           ANY      1 094
+096 PNZATX   PNZ1GEN           ANY      1 095
+#
+# Preprocess, convert, and synchronize observation data
+# -----------------------------------------------------
+097 MAKEBLQ  PNZ1GEN           ANY      1 096
+098 GRDS1S2  PNZ1GEN           ANY      1 097
+099 RNXSMT   PNZ1REF           ANY      1 098
+100 RXOBV3   PNZ1GEN           ANY      1 099
+105 CREATABB PNZ1REF           ANY      1 100
+110 CODSPPAP PNZ1GEN           ANY      1 105
+111 CODSPP_P PNZ1GEN           ANY      1 110
+#
+# Form baselines and pre-process phase data (incl. residual screening)
+# --------------------------------------------------------------------
+301 SNGDIF   PNZ1GEN           ANY      1 111
+311 MAUPRPAP PNZ1GEN           ANY      1 301
+312 MAUPRP_P PNZ1GEN           ANY      1 311
+313 MPRXTR   PNZ1GEN           ANY      1 312
+321 GPSEDTAP PNZ1GEN           ANY      1 313
+322 GPSEDT_P PNZ1EDT           ANY      1 321
+331 GPSCHK   PNZ1GEN           ANY      1 322
+#
+# Resolve phase ambiguities
+# -------------------------
+401 GPSEST   PNZ1GEN           ANY      1 331
+421 GNSL53AP PNZ1L53           ANY      1 401
+422 GNSL53_P PNZ1L53           ANY      1 421
+431 GPSQIFAP PNZ1QIF           ANY      1 422
+432 GPSQIF_P PNZ1QIF           ANY      1 431
+441 GNSL12AP PNZ1L12           ANY      1 432
+442 GNSL12_P PNZ1L12           ANY      1 441
+443 AMBXTR2  PNZ1QIF           ANY      1 442
+#
+# Compute ambiguity-fixed network solution, create final NEQ/SNX/TRO files
+# ------------------------------------------------------------------------
+501 GPSEST   PNZ1MIN           ANY      1 443
+511 ADDNEQ2  PNZ1MIN           ANY      1 501
+512 HELMR1   PNZ1MIN           ANY      1 511
+513 ADDNEQ2  PNZ1FIN           ANY      1 512
+600 PZ1SUMRY PNZ1GEN           ANY      1 513
+999 PNZSTART PNZ1GEN           ANY      1 600
 PID USER         PASSWORD PARAM1   PARAM2   PARAM3   PARAM4   PARAM5   PARAM6   PARAM7   PARAM8   PARAM9
 3** 12********** 8******* 8******* 8******* 8******* 8******* 8******* 8******* 8******* 8******* 8*******
 001                       NEXTJOB  010      080               GETORB   GETREF            STATUS
 010                       NEXTJOB  999                                                   GETORB
 080                       NEXTJOB  999                                                   GETREF
+105                       SKIP
 110                       $110
 111                       PARALLEL $110
+#
+# Form baselines and pre-process phase data (incl. residual screening)
+# --------------------------------------------------------------------
 311                       $311
 312                       PARALLEL $311
 321                       $321
 322                       PARALLEL $321
-411                       $411
-412                       PARALLEL $411
+#
+# Resolve phase ambiguities
+# -------------------------
+421                       $421
+422                       PARALLEL $421
+431                       $431
+432                       PARALLEL $431
+441                       $441
+442                       PARALLEL $441
 999                       FINISH                              GETORB   GETREF            STATUS
 VARIABLE DESCRIPTION                              DEFAULT
 8******* 40************************************** 30****************************
@@ -69,16 +125,29 @@ V_B      Orbit/ERP, DCB, ION information          IGS
 V_C      Preliminary (ambiguity-float) results    P1_
 V_E      Final (ambiguity-fixed) results          F1_
 V_F      Size-reduced NEQ information             R1_
+V_PCV    Ref frame phase center calibrations      I14
 V_MERGE  If products/data need to be merged       0
 V_MINUS  Session range begin (for COMPAR)         -6
 V_PLUS   Session range end                        +0
 V_CLU    Maximum number of files per cluster      3
 V_I      ION ESTIMATION                           ION
-V_USRMRK User station code                        U001
+V_USRMRK User station code                        VTES
 V_SAMPL  Sampling rate of solutions               30
 V_ORBTYP Select the orbit quality required        FINAL
+V_DCBTYP Bernese phase/code bias version          FINAL
+V_IONTYP Bernese Ionospheric model version        FINAL
 V_GDDNLD GETDATA download now                     1
 V_GDQUEU GETDATA queue data request               0
+V_GDQUEU GETDATA queue data request               0
+V_PCVINF PCV information file                     PCV_COD
+V_MYATX  ANTEX file for update (name incl. ext)   I14.ATX
+V_REFATX ANTEX file for update (name incl. ext)   NGS14.ATX
+V_REFINF Reference datum                          IGS14
+V_SATSYS Select the GNSS (ALL, GPS, GPS/GAL)      GPS
+V_GNSSAR GNSS to be used for ambiguity resolution GPS
+V_BL_QIF Maximum baseline length for QIF AR       2000
+V_BL_L53 Maximum baseline length for L5/L3 AR     200
+V_BL_L12 Maximum baseline length for L1&L2 AR     20
 #
 # DO NOT USE V_D, V_J, V_M, V_Y VARIABLES!
 #

@@ -1,5 +1,5 @@
 
-CAMPAIGN 1  "${P}/PZDTEST"
+CAMPAIGN 1  "${P}/TEST_PP1"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
 SESSION_TABLE 0
@@ -20,7 +20,12 @@ USR_INFO 1  "${USER}"
 
 ! Environment Variables
 ! ---------------------
-ENVIRONMENT     1 "" ""
+ENVIRONMENT 5
+  "U" "/home/dhansen/BERN52/GPSUSER"
+  "T" "/var/lib/bernese52/tmp"
+  "X" "/opt/bernese52/GPS"
+  "P" "/home/dhansen/BERN52/GPSDATA/CAMPAIGN"
+  "USER" "dhansen"
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! ----------------------------------------------------------------------
@@ -78,7 +83,7 @@ DESCR_DATUM 1  "Geodetic datum"
 ! ---------------------------
 PHASECC 0
   ## widget = selwin; path = DIR_STA; maxfiles = 1
-  # PCV_COD.I08
+  # PCV_COD.$(PCV)
 
 DESCR_PHASECC 1  "Phase center eccentricities"
 
@@ -94,7 +99,7 @@ DESCR_RECEIVR 1  "Receiver information"
 ! ---------------------
 SATELL 0
   ## widget = selwin; path = PTH_GEN; maxfiles = 1
-  # SATELLIT.I08
+  # SATELLIT.$(PCV)
 
 DESCR_SATELL 1  "Satellite information"
 
@@ -112,6 +117,7 @@ DESCR_SATCRUX 1  "Satellite problems"
 POTCOE 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
   ## emptyallowed = true
+  # EGM2008_SMALL.
 
 DESCR_POTCOE 1  "Earth potential coefficients"
 
@@ -287,7 +293,7 @@ RZFILES_TXT_COL_2 1  "OBSERVATION FILE"
 ! --------------------
 COORD 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
-  # APRIORI
+  # APR$S+0
 
 DESCR_COORD 1  "A priori station coordinates"
 
@@ -338,7 +344,7 @@ MSG_VMF1_FILES 1  "Gridded VMF1 coefficients"
 IONOS 0
   ## widget = selwin; path = DIR_ION; ext = EXT_ION; maxfiles = 1
   ## emptyallowed = true; activeif = GEOTEC = GNSS
-  # 
+  # ION$S+0
 
 DESCR_IONOS 1  "Ionosphere models"
 
@@ -347,7 +353,7 @@ DESCR_IONOS 1  "Ionosphere models"
 OCNLOAD 0
   ## widget = selwin; path = DIR_BLQ; ext = EXT_BLQ; maxfiles = 1
   ## emptyallowed = true
-  # 
+  # STATIONS
 
 DESCR_OCNLOAD 1  "Ocean tidal loading tables"
 
@@ -356,7 +362,7 @@ DESCR_OCNLOAD 1  "Ocean tidal loading tables"
 ATMLOAD 0
   ## widget = selwin; path = DIR_ATL; ext = EXT_ATL; maxfiles = 1
   ## emptyallowed = true
-  # 
+  # STATIONS
 
 DESCR_ATMLOAD 1  "Atmospheric tidal loading tables"
 
@@ -383,6 +389,7 @@ DESCR_RXCLKIN 1  "Input clock RINEX file"
 ISBINP 0
   ## widget = selwin; path = DIR_ISB; ext = EXT_ISB; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_ISBINP 1  "Inter-system biases"
 
@@ -407,6 +414,7 @@ MSG_METFIL 1  "Meteorological data"
 ! -----------------------
 ALOAD_FILES 0
   ## widget = selwin; path = DIR_GRD; ext = EXT_GRD; emptyallowed = true
+  # 
 
 MSG_ALOAD_FILES 1  "Grid files for atmospheric pressure loading"
 
@@ -414,6 +422,7 @@ MSG_ALOAD_FILES 1  "Grid files for atmospheric pressure loading"
 ! ----------------------------------
 ONTLD_FILES 0
   ## widget = selwin; path = DIR_GRD; ext = EXT_GRD; emptyallowed = true
+  # 
 
 MSG_ONTLD_FILES 1  "Grid files for ocean non-tidal loading"
 
@@ -421,6 +430,7 @@ MSG_ONTLD_FILES 1  "Grid files for ocean non-tidal loading"
 ! ------------------------------
 HLOAD_FILES 0
   ## widget = selwin; path = DIR_GRD; ext = EXT_GRD; emptyallowed = true
+  # 
 
 MSG_HLOAD_FILES 1  "Grid files for hydrostatic pressure loading"
 
@@ -643,6 +653,7 @@ DESCR_DCBOUT 1  "Differential code biases"
 ! -----------------------------
 ISBOUT 0
   ## widget = lineedit; path = DIR_ISB; ext = EXT_ISB
+  # 
 
 DESCR_ISBOUT 1  "Inter-system biases"
 
@@ -746,7 +757,7 @@ MSG_TITLE 1  "Title line"
 
 ! Satellite System
 ! ----------------
-SATSYS 1  "GPS"
+SATSYS 1  "$(SATSYS)"
   ## widget = combobox; editable = false
   ## cards = GPS GLONASS GALILEO GPS/GLO GPS/GAL GLO/GAL ALL
 
@@ -1352,6 +1363,7 @@ MSG_QXXEPO 1  "Var-covar wrt epoch parameters"
 ! ---------------------------------
 SAMPLEPO 0
   ## widget = lineedit; check_typ = int; check_min = 0
+  # 
 
 MSG_SAMPLEPO 1  "Sampling rate for resubstitution"
 
@@ -1359,6 +1371,7 @@ MSG_SAMPLEPO 1  "Sampling rate for resubstitution"
 ! --------------------------------
 SAMPLEP2 0
   ## widget = lineedit; check_typ = int; check_min = 0
+  # 
 
 MSG_SAMPLEP2 1  "Sampling rate for preelimination"
 
@@ -3893,21 +3906,21 @@ MSG_SATFILE8 1  "Clk.Est.:Ref.Satellites from file"
 
 ! Clk est.: Header of the clk RINEX file: RUNBY
 ! ---------------------------------------------
-RUNBY 1  "AIUB"
+RUNBY 1  "ANONYMOUS"
   ## widget = lineedit
 
 MSG_RUNBY 1  "Clk. RINEX Header: RUNBY"
 
 ! Clk est.: Header of the clk RINEX file: AC
 ! ------------------------------------------
-AC 1  "CODE"
+AC 1  "XYZ"
   ## widget = lineedit
 
 MSG_AC 1  "Clk. RINEX Header: AC"
 
 ! Clk est.: Header of the clk RINEX file: ACName
 ! ----------------------------------------------
-ACNAME 1  "Center of Orbit Determination of Europe"
+ACNAME 1  "Land Information New Zealand"
   ## widget = lineedit
 
 MSG_ACNAME 1  "Clk. RINEX Header: AC Name"

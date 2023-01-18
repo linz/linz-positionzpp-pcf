@@ -209,7 +209,7 @@ MSG_IMEAN 1  "Pole parameter sets"
 
 ! Ambiguity resolution summary detail level
 ! -----------------------------------------
-AMBLOD 1  "ALL"
+AMBLOD 1  "EACH&ALL"
   ## widget = combobox; activeif = QIFOUT / _; editable = false
   ## cards = ALL EACH&ALL GPS GLONASS GALILEO
 

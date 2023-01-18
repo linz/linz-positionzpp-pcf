@@ -45,13 +45,13 @@ MSG_RADIO_2 1  "Velocities"
 CRDMTR 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
   ## emptyallowed = true
-  # APRIORI
+  # APR$S+0
 
 DESCR_CRDMTR 1  "Coordinates master file"
 
 CRDMRG 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD
-  # APRIORI
+  # APR$S+0
 
 MSG_CRDMRG 1  "Merge files"
 
@@ -141,7 +141,7 @@ MSG_TITLE 1  "Title line"
 
 ! New geodetic datum
 ! ------------------
-NEWDAT 0
+NEWDAT 1  "IGS14"
   ## widget = lineedit; check_strlen = 16
   # 
 

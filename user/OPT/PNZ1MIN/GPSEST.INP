@@ -1,5 +1,5 @@
 
-CAMPAIGN 1  "${P}/PZDTEST"
+CAMPAIGN 1  "${P}/TEST_PP1"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
 SESSION_TABLE 0
@@ -20,7 +20,12 @@ USR_INFO 1  "${USER}"
 
 ! Environment Variables
 ! ---------------------
-ENVIRONMENT     1 "" ""
+ENVIRONMENT 5
+  "U" "/home/dhansen/BERN52/GPSUSER"
+  "T" "/var/lib/bernese52/tmp"
+  "X" "/opt/bernese52/GPS"
+  "P" "/home/dhansen/BERN52/GPSDATA/CAMPAIGN"
+  "USER" "dhansen"
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! ----------------------------------------------------------------------
@@ -78,7 +83,7 @@ DESCR_DATUM 1  "Geodetic datum"
 ! ---------------------------
 PHASECC 0
   ## widget = selwin; path = DIR_STA; maxfiles = 1
-  # PCV_COD.I08
+  # PCV_COD.$(PCV)
 
 DESCR_PHASECC 1  "Phase center eccentricities"
 
@@ -94,7 +99,7 @@ DESCR_RECEIVR 1  "Receiver information"
 ! ---------------------
 SATELL 0
   ## widget = selwin; path = PTH_GEN; maxfiles = 1
-  # SATELLIT.I08
+  # SATELLIT.$(PCV)
 
 DESCR_SATELL 1  "Satellite information"
 
@@ -112,6 +117,7 @@ DESCR_SATCRUX 1  "Satellite problems"
 POTCOE 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_POTCOE 1  "Earth potential coefficients"
 
@@ -329,7 +335,7 @@ DESCR_DCBINP 1  "Differential code biases"
 ! --------------
 VMF1_FILES 0
   ## widget = selwin; path = DIR_GRD; ext = EXT_GRD; emptyallowed = true
-  # 
+  # VMF$S+0
 
 MSG_VMF1_FILES 1  "Gridded VMF1 coefficients"
 
@@ -338,7 +344,7 @@ MSG_VMF1_FILES 1  "Gridded VMF1 coefficients"
 IONOS 0
   ## widget = selwin; path = DIR_ION; ext = EXT_ION; maxfiles = 1
   ## emptyallowed = true; activeif = GEOTEC = GNSS
-  # 
+  # ION$S+0
 
 DESCR_IONOS 1  "Ionosphere models"
 
@@ -347,7 +353,7 @@ DESCR_IONOS 1  "Ionosphere models"
 OCNLOAD 0
   ## widget = selwin; path = DIR_BLQ; ext = EXT_BLQ; maxfiles = 1
   ## emptyallowed = true
-  # 
+  # STATIONS
 
 DESCR_OCNLOAD 1  "Ocean tidal loading tables"
 
@@ -356,7 +362,7 @@ DESCR_OCNLOAD 1  "Ocean tidal loading tables"
 ATMLOAD 0
   ## widget = selwin; path = DIR_ATL; ext = EXT_ATL; maxfiles = 1
   ## emptyallowed = true
-  # 
+  # STATIONS
 
 DESCR_ATMLOAD 1  "Atmospheric tidal loading tables"
 
@@ -383,6 +389,7 @@ DESCR_RXCLKIN 1  "Input clock RINEX file"
 ISBINP 0
   ## widget = selwin; path = DIR_ISB; ext = EXT_ISB; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_ISBINP 1  "Inter-system biases"
 
@@ -407,6 +414,7 @@ MSG_METFIL 1  "Meteorological data"
 ! -----------------------
 ALOAD_FILES 0
   ## widget = selwin; path = DIR_GRD; ext = EXT_GRD; emptyallowed = true
+  # 
 
 MSG_ALOAD_FILES 1  "Grid files for atmospheric pressure loading"
 
@@ -414,6 +422,7 @@ MSG_ALOAD_FILES 1  "Grid files for atmospheric pressure loading"
 ! ----------------------------------
 ONTLD_FILES 0
   ## widget = selwin; path = DIR_GRD; ext = EXT_GRD; emptyallowed = true
+  # 
 
 MSG_ONTLD_FILES 1  "Grid files for ocean non-tidal loading"
 
@@ -421,6 +430,7 @@ MSG_ONTLD_FILES 1  "Grid files for ocean non-tidal loading"
 ! ------------------------------
 HLOAD_FILES 0
   ## widget = selwin; path = DIR_GRD; ext = EXT_GRD; emptyallowed = true
+  # 
 
 MSG_HLOAD_FILES 1  "Grid files for hydrostatic pressure loading"
 
@@ -643,6 +653,7 @@ DESCR_DCBOUT 1  "Differential code biases"
 ! -----------------------------
 ISBOUT 0
   ## widget = lineedit; path = DIR_ISB; ext = EXT_ISB
+  # 
 
 DESCR_ISBOUT 1  "Inter-system biases"
 
@@ -746,7 +757,7 @@ MSG_TITLE 1  "Title line"
 
 ! Satellite System
 ! ----------------
-SATSYS 1  "GPS"
+SATSYS 1  "$(SATSYS)"
   ## widget = combobox; editable = false
   ## cards = GPS GLONASS GALILEO GPS/GLO GPS/GAL GLO/GAL ALL
 
@@ -906,7 +917,7 @@ MSG_ENDTIM1 1  "End time(hour minutes seconds)"
 ! ----------------------------------------------------------------------
 ! Tropospheric Model (microwave observations)
 ! -------------------------------------------
-TROPOS 1  "GMF"
+TROPOS 1  "DRY_VMF"
   ## widget = combobox; editable = false
   ## cards = NONE VMF DRY_VMF GMF DRY_GMF NIELL DRY_NIELL SAASTAMOINEN DRY_SAAST HOPFIELD DRY_HOPFIELD ESSEN-FROOME
   ## activeif = GEOTEC = GNSS AND FREQUENCY / L4 AND FREQUENCY / MELWUEBB AND FREQUENCY / DTEC AND TROPEST = _
@@ -1473,12 +1484,8 @@ MSG_STAFILE4 1  "List of stations (and sigmas) from file"
 
 ! Flags for Sigma station(s)
 ! --------------------------
-STAFLAG4 0
+STAFLAG4 1  "I"
   ## widget = lineedit; activeif = SIGSTA = WITH_FLAG
-  # I
-  # G
-  # M
-  # N
 
 MSG_STAFLAG4 1  "Constrain: Stations with specific flags in CRD file"
 
@@ -2221,7 +2228,7 @@ MSG_STAFILE6 1  "Tropo: file with stations(s) with no troposphere est."
 
 ! Tropo: Mapping Function
 ! -----------------------
-MAPPNG 1  "WET_GMF"
+MAPPNG 1  "WET_VMF"
   ## widget = combobox; editable = false; activeif = TROPEST = _
   ## cards = WET_VMF DRY_VMF WET_GMF DRY_GMF WET_NIELL DRY_NIELL COSZ HOPFIELD
 

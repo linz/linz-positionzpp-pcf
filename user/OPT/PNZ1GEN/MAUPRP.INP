@@ -1,12 +1,17 @@
 
 ! Environment Variables
 ! ---------------------
-ENVIRONMENT     1 "" ""
+ENVIRONMENT 5
+  "U" "/home/dhansen/BERN52/GPSUSER"
+  "T" "/var/lib/bernese52/tmp"
+  "X" "/opt/bernese52/GPS"
+  "P" "/home/dhansen/BERN52/GPSDATA/CAMPAIGN"
+  "USER" "dhansen"
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! Information for the title
 ! -------------------------
-CAMPAIGN 1  "${P}/PZDTEST"
+CAMPAIGN 1  "${P}/IGS20_1"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
 SESSION_TABLE 0
@@ -53,7 +58,7 @@ DESCR_DATUM 1  "Geodetic datum"
 ! ---------------------
 SATELL 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
-  # SATELLIT.I08
+  # SATELLIT.$(PCV)
 
 DESCR_SATELL 1  "Satellite information"
 
@@ -93,7 +98,7 @@ DESCR_NUTMOD 1  "Nutation model"
 ! ---------------------------
 PHASECC 0
   ## widget = selwin; path = DIR_STA; ext = NO_EXT; maxfiles = 1
-  # PCV_COD.I08
+  # PCV_COD.$(PCV)
 
 DESCR_PHASECC 1  "Phase center eccentricities"
 
@@ -153,7 +158,7 @@ OBSFIL_TXT_COL_2 1  "Single-difference obs file"
 ! --------------------
 COORD 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
-  # APRIORI
+  # APR$S+0
 
 DESCR_COORD 1  "A priori coordinates"
 
@@ -178,6 +183,7 @@ MSG_METFIL 1  "Meteo data files"
 ! --------------
 VMF1_FILES 0
   ## widget = selwin; path = DIR_GRD; ext = EXT_GRD; emptyallowed = true
+  # 
 
 MSG_VMF1_FILES 1  "Grid files for VMF"
 

@@ -42,7 +42,7 @@ DESCR_CONST 1  "General constants"
 ! ---------------------
 SATELL 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
-  # SATELLIT.I08
+  # SATELLIT.$(PCV)
 
 DESCR_SATELL 1  "Satellite information"
 

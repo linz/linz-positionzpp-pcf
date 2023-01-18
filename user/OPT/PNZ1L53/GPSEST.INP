@@ -83,7 +83,7 @@ DESCR_DATUM 1  "Geodetic datum"
 ! ---------------------------
 PHASECC 0
   ## widget = selwin; path = DIR_STA; maxfiles = 1
-  # PCV_COD.$(PCV)
+  # $(PCVINF).$(PCV)
 
 DESCR_PHASECC 1  "Phase center eccentricities"
 
@@ -117,7 +117,7 @@ DESCR_SATCRUX 1  "Satellite problems"
 POTCOE 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
   ## emptyallowed = true
-  # 
+  # EGM2008_SMALL.
 
 DESCR_POTCOE 1  "Earth potential coefficients"
 
@@ -221,7 +221,7 @@ PZFILES_TXT_COL_2 1  "OBSERVATION FILE"
 PSFILES 0
   ## widget = selwin; path = DIR_PSH; ext = EXT_PSH; emptyallowed = true
   ## activeif = DIFLVL = DOUBLE
-  # ????$S+0
+  # $(FFFF)$S+0
 
 MSG_PSFILES 1  "Phase observation files"
 
@@ -293,7 +293,7 @@ RZFILES_TXT_COL_2 1  "OBSERVATION FILE"
 ! --------------------
 COORD 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
-  # APR$S+0
+  # $A$S+0
 
 DESCR_COORD 1  "A priori station coordinates"
 
@@ -398,7 +398,7 @@ DESCR_ISBINP 1  "Inter-system biases"
 TROPEST 0
   ## widget = selwin; path = DIR_TRP; ext = EXT_TRP; maxfiles = 1
   ## emptyallowed = true; activeif = GEOTEC = GNSS
-  # 
+  # TFLT$S+0
 
 DESCR_TROPEST 1  "Troposphere estimates"
 
@@ -546,7 +546,7 @@ MSG_SYSODEF 1  "Program output"
 SYSOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF == 0; emptyallowed = false
-  # ED$(FL)$(CLUSTER)
+  # $(FFFF)$S+0_5
 
 DESCR_SYSOUT 1  "Program output"
 
@@ -576,7 +576,7 @@ DESCR_NEQUARS 1  "Normal equations"
 ! ------------------
 COORDRS 0
   ## widget = lineedit; path = DIR_CRD; ext = EXT_CRD
-  # RFLT$S+0
+  # 
 
 DESCR_COORDRS 1  "Station coordinates"
 
@@ -706,7 +706,7 @@ DESCR_KINOUT 1  "Kinematic coordinates"
 ! ---------
 RESIDRS 0
   ## widget = lineedit; path = DIR_RES; ext = EXT_RES
-  # ED$(FL)$(CLUSTER)
+  # 
 
 DESCR_RESIDRS 1  "Residuals"
 
@@ -751,7 +751,7 @@ DESCR_RGBOUT 1  "Range biases"
 ! -----
 TITLE 0
   ## widget = lineedit
-  # PNZ-PP GPSEST RESIDUAL RUN $(CCC)_$(FL) $S+0
+  # PNZ-PP $S+0_$(FFFF): L5/L3 ambiguity resolution
 
 MSG_TITLE 1  "Title line"
 
@@ -765,7 +765,7 @@ MSG_SATSYS 1  "Satellite system"
 
 ! Frequency
 ! ---------
-FREQUENCY 1  "L3"
+FREQUENCY 1  "L5"
   ## widget = combobox; editable = false
   ## cards = L1 L2 L3 L4 L5 L1&L2 L3&L4 MELWUEBB DTEC
 
@@ -936,7 +936,7 @@ MSG_TROPOS_S 1  "ZPD model and mapping function (SLR)"
 
 ! Ambiguity Resolution Strategy
 ! -----------------------------
-AMBSTRAT 1  "NONE"
+AMBSTRAT 1  "SIGMA"
   ## widget = combobox; editable = false
   ## activeif = DIFLVL = DOUBLE AND PSFILES / _
   ## cards = NONE ROUND SEARCH SIGMA QIF LAMBDA
@@ -963,14 +963,14 @@ MSG_AMBQCPB 1  "Consider GPS quarter-cycle biases"
 
 ! Save Ambiguities
 ! ----------------
-AMBSAVE 1  "0"
+AMBSAVE 1  "1"
   ## widget = checkbox; activeif = AMBSTRAT / inactive AND AMBSTRAT / NONE
 
 MSG_AMBSAVE 1  "Save resolved ambiguities"
 
 ! Introduce Widelane
 ! ------------------
-APRWIDE 1  "0"
+APRWIDE 1  "1"
   ## widget = checkbox; activeif = DIFLVL = DOUBLE
 
 MSG_APRWIDE 1  "Introduce widelane integers"
@@ -1051,7 +1051,7 @@ MSG_PRTPARAM 1  "Printing: List of all parameters"
 
 ! Printing: Ambiguities for each iteration step
 ! ---------------------------------------------
-PRTAMBIT 1  "0"
+PRTAMBIT 1  "1"
   ## widget = checkbox; activeif = AMBSTRAT / NONE AND PRTAMB = 0
 
 MSG_PRTAMBIT 1  "Printing: Unresolved ambiguities after each iteration step"
@@ -1121,7 +1121,7 @@ MSG_PRTBLH 1  "Printing: RMS of ellipsoidal coordinates and diff."
 
 ! Printing: Slope distances and their RMS
 ! ---------------------------------------
-PRTDIS 1  "0"
+PRTDIS 1  "1"
   ## widget = checkbox
 
 MSG_PRTDIS 1  "Printing: Slope distances and their RMS"
@@ -1246,7 +1246,7 @@ MSG_GLORES 1  "GLONASS ambiguity resolution between different frequency channels
 ! ----------------------------------------------------------------------
 ! Amb.QIF: Max. Number of Amb. Solved in One Iteration Step
 ! ---------------------------------------------------------
-MXAQIF 1  "0"
+MXAQIF 1  "1"
   ## widget = spinbox; range = 0 999 1; check_type = integer; check_min = 0
 
 MSG_MXAQIF 1  "Max. number of amb. solved per iteration step"
@@ -1277,14 +1277,14 @@ MSG_MAXFRAC 1  "Max. fractional part of resolvable NL ambiguity"
 ! ----------------------------------------------------------------------
 ! LAMBDA: Maximum allowed RMS ratio concerning fixed to float
 ! -----------------------------------------------------------
-LAFXFL 0
+LAFXFL 1  "5.0"
   ## widget = lineedit; check_type = real; check_min = 0.0
 
 MSG_LAFXFL 1  "Maximum allowed RMS ratio concerning fixed to float"
 
 ! LAMBDA: Maximum allowed RMS of unit weight for fixed solution
 ! -------------------------------------------------------------
-LAMXFX 0
+LAMXFX 1  "0.005"
   ## widget = lineedit; check_type = real; check_min = 0.0
 
 MSG_LAMXFX 1  "Maximum allowed RMS of unit weight for fixed solution"
@@ -1329,7 +1329,7 @@ MSG_NORXCLKS 1  "Satellite clock missing in clock RINEX file"
 
 ! Clk est.: Skip obs. w/o sat clock
 ! ---------------------------------
-NOSATCLK 1  "0"
+NOSATCLK 1  "SAT_CLK_IS_ZERO"
   ## widget = combobox; editable = false
   ## cards = DO_NOT_USE_OBSERV INTERPOLATE SAT_CLK_IS_ZERO
   ## activeif = SATCLK / _ AND DIFLVL = ZERO
@@ -1338,7 +1338,7 @@ MSG_NOSATCLK 1  "Satellite clock missing in Bernese clock file"
 
 ! Interpolation of clocks
 ! -----------------------
-SECIPL 1  "0"
+SECIPL 0
   ## widget = lineedit; check_typ = real; check_min = 0
   ## activeif = NORXCLKR = INTERPOLATE OR NORXCLKS = INTERPOLATE OR NOSATCLK = INTERPOLATE AND DIFLVL = ZERO
 
@@ -1375,9 +1375,10 @@ MSG_SAMPLEP2 1  "Sampling rate for preelimination"
 
 ! Clk est.: Edit Level
 ! --------------------
-EDTLVL 1  "10"
+EDTLVL 0
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = DIFLVL / DOUBLE
+  # 
 
 MSG_EDTLVL 1  "Maximum tolerated O-C term"
 
@@ -1390,14 +1391,14 @@ MSG_PRELJ2 1  "Periodic relativistic J2 correction"
 
 ! Polarization Effect
 ! -------------------
-POLARI1D 1  "2003 09 14"
+POLARI1D 1  "ALWAYS"
   ## widget = combobox; editable = true
   ## cards = "ALWAYS" "NEVER" "2003 09 14"
   ## activeif = DIFLVL = ZERO AND POLARI2D / ALWAYS
 
 MSG_POLARI1D 1  "Enable polarization effect, geometrical part"
 
-POLARI2D 1  "2006 11 12"
+POLARI2D 1  "ALWAYS"
   ## widget = combobox; editable = true
   ## cards = "ALWAYS" "NEVER" "2006 11 05"; activeif = DIFLVL = ZERO
 
@@ -1415,7 +1416,7 @@ MSG_RADIO8_3 1  "Free network solution"
 
 ! Positioning: Fixed Station(s)
 ! -----------------------------
-RADIO8_1 1  "0"
+RADIO8_1 1  "1"
   ## widget = radiobutton; group = DUMMY
 
 MSG_RADIO8_1 1  "Coordinates fixed"
@@ -1450,14 +1451,14 @@ STAFLAG1 1  "#"
 
 MSG_STAFLAG1 1  "Stations with specific flags in CRD file"
 
-RADIO8_2 1  "1"
+RADIO8_2 1  "0"
   ## widget = radiobutton; group = DUMMY
 
 MSG_RADIO8_2 1  "Coordinates constrained"
 
 ! Positioning: Sigma Station(s)
 ! -----------------------------
-SIGSTA 1  "WITH_FLAG"
+SIGSTA 1  "FIRST"
   ## widget = combobox; editable = false; activeif = RADIO8_2 = 1
   ## cards = FIRST LAST ALL MANUAL FROM_FILE WITH_FLAG
 
@@ -1482,14 +1483,14 @@ MSG_STAFILE4 1  "List of stations (and sigmas) from file"
 
 ! Flags for Sigma station(s)
 ! --------------------------
-STAFLAG4 1  "I"
+STAFLAG4 1  "#"
   ## widget = lineedit; activeif = SIGSTA = WITH_FLAG
 
 MSG_STAFLAG4 1  "Constrain: Stations with specific flags in CRD file"
 
 ! Positioning: Default Sigma north
 ! --------------------------------
-SIGCRDN 1  "0.01"
+SIGCRDN 1  "0.001"
   ## widget = lineedit; activeif = SIGSTA / FROM_FILE AND RADIO8_2 = 1
   ## check_type = real; check_min = 0.0
 
@@ -1497,7 +1498,7 @@ MSG_SIGCRDN 1  "Default a priori sigma north"
 
 ! Positioning: Default Sigma east
 ! -------------------------------
-SIGCRDE 1  "0.01"
+SIGCRDE 1  "0.001"
   ## widget = lineedit; activeif = SIGSTA / FROM_FILE AND RADIO8_2 = 1
   ## check_type = real; check_min = 0.0
 
@@ -1505,7 +1506,7 @@ MSG_SIGCRDE 1  "Default a priori sigma east"
 
 ! Positioning: Default Sigma up
 ! -----------------------------
-SIGCRDU 1  "0.01"
+SIGCRDU 1  "0.001"
   ## widget = lineedit; activeif = SIGSTA / FROM_FILE AND RADIO8_2 = 1
   ## check_type = real; check_min = 0.0
 
@@ -2099,7 +2100,7 @@ MSG_STCGROUP2 1  "Additional setup requests for stoch. pulses"
 !
 ! Enable Site-Specific Troposphere Parameters
 ! -------------------------------------------
-SITETROP 1  "1"
+SITETROP 1  "0"
   ## widget = checkbox
   ## activeif = FREQUENCY / L4 AND FREQUENCY / MELWUEBB AND FREQUENCY / DTEC
 
@@ -2109,7 +2110,6 @@ MSG_SITETROP 1  "Parameter setup: site-specific troposphere parameters"
 ! ---------------------------------
 TRPOFF 0
   ## widget = lineedit; activeif = TROPSNX / _
-  # 
 
 MSG_TRPOFF 1  "Offset for troposphere SINEX file"
 
@@ -2117,7 +2117,6 @@ MSG_TRPOFF 1  "Offset for troposphere SINEX file"
 ! ------------------------------------------
 TRPRES 0
   ## widget = lineedit; activeif = TROPSNX / _
-  # 
 
 MSG_TRPRES 1  "Time resolution for troposphere SINEX file"
 
@@ -2125,7 +2124,6 @@ MSG_TRPRES 1  "Time resolution for troposphere SINEX file"
 ! ---------------------------------------------
 SIGABS 0
   ## widget = lineedit; check_type = real; check_min = 0.0
-  # 
 
 MSG_SIGABS 1  "Tropo: Zenith path delay"
 
@@ -2134,24 +2132,21 @@ MSG_SIGABS 1  "Tropo: Zenith path delay"
 SIGABS_G 0
   ## widget = lineedit; activeif = TRPGRD / NONE = 1; check_type = real
   ## check_min = 0.0
-  # 
 
 MSG_SIGABS_G 1  "Tropo: Horizontal gradients"
 
 ! Tropo: Relative General Zenith A Priori Sigma
 ! ---------------------------------------------
-SIGREL 0
+SIGREL 1  "5.00"
   ## widget = lineedit; check_type = real; check_min = 0.0
-  # 
 
 MSG_SIGREL 1  "Tropo: relative zenith path delay a priori sigma"
 
 ! Tropo: Relative General Gradient A Priori Sigma
 ! -----------------------------------------------
-SIGREL_G 0
+SIGREL_G 1  "5.00"
   ## widget = lineedit; activeif = TRPGRD / NONE = 1; check_type = real
   ## check_min = 0.0
-  # 
 
 MSG_SIGREL_G 1  "Tropo: relative horizontal gradients a priori sigma"
 
@@ -2176,7 +2171,6 @@ MSG_NTRPSEL 1  "Tropo: list of stations with no troposphere estimation"
 SPEABS 0
   ## widget = lineedit; activeif = SPESEL / NONE AND SPESEL / FROM_FILE = 1
   ## check_type = real; check_min = 0.0
-  # 
 
 MSG_SPEABS 1  "Tropo: Absolute special zenith path delay sigma"
 
@@ -2186,7 +2180,6 @@ SPEABS_G 0
   ## widget = lineedit
   ## activeif = SPESEL / NONE AND SPESEL / FROM_FILE AND TRPGRD / NONE = 1
   ## check_type = real; check_min = 0.0
-  # 
 
 MSG_SPEABS_G 1  "Tropo: Absolute special horizontal gradient sigma"
 
@@ -2195,7 +2188,6 @@ MSG_SPEABS_G 1  "Tropo: Absolute special horizontal gradient sigma"
 SPEREL 0
   ## widget = lineedit; activeif = SPESEL / NONE AND SPESEL / FROM_FILE = 1
   ## check_type = real; check_min = 0.0
-  # 
 
 MSG_SPEREL 1  "Tropo: relative special zenith a priori sigma"
 
@@ -2205,7 +2197,6 @@ SPEREL_G 0
   ## widget = lineedit
   ## activeif = SPESEL / NONE AND SPESEL / FROM_FILE AND TRPGRD / NONE = 1
   ## check_type = real; check_min = 0.0
-  # 
 
 MSG_SPEREL_G 1  "Tropo: relative special gradient a priori sigma"
 
@@ -2858,19 +2849,19 @@ MSG_SYSTRA 1  "Station translations: system selection"
 
 ! Station translations: a priori sigmas
 ! -------------------------------------
-SYSTRA_N 1  "0.01"
+SYSTRA_N 1  "0.00001"
   ## widget = lineedit; check_type = real; check_min = 0
   ## activeif = SYSTRA / NONE
 
 MSG_SYSTRA_N 1  "Station translations: a priori sigma north"
 
-SYSTRA_E 1  "0.01"
+SYSTRA_E 1  "0.00001"
   ## widget = lineedit; check_type = real; check_min = 0
   ## activeif = SYSTRA / NONE
 
 MSG_SYSTRA_E 1  "Station translations: a priori sigma east"
 
-SYSTRA_U 1  "0.01"
+SYSTRA_U 1  "0.00001"
   ## widget = lineedit; check_type = real; check_min = 0
   ## activeif = SYSTRA / NONE
 
@@ -2886,7 +2877,7 @@ MSG_SYSTRP 1  "Troposphere bias: system selection"
 
 ! Troposphere bias: a priori sigmas
 ! ---------------------------------
-SYSTRP_A 1  "0.0"
+SYSTRP_A 0
   ## widget = lineedit; check_type = real; check_min = 0
   ## activeif = SYSTRP / NONE
 
@@ -3681,7 +3672,7 @@ ALOADDEC 1  "FULL_EFFECT"
 
 MSG_ALOADDEC 1  "Atm. load: Parameter decomposition"
 
-ALOADSIG1 1  "0.00001"
+ALOADSIG1 0
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = ALOADDEC / inactive
 
@@ -3721,7 +3712,7 @@ ONTLDDEC 1  "FULL_EFFECT"
 
 MSG_ONTLDDEC 1  "Ocn. load: Parameter decomposition"
 
-ONTLDSIG1 1  "0.00001"
+ONTLDSIG1 0
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = ONTLDDEC / inactive
 
@@ -3761,7 +3752,7 @@ HLOADDEC 1  "FULL_EFFECT"
 
 MSG_HLOADDEC 1  "Hyd. load: Parameter decomposition"
 
-HLOADSIG1 1  "0.00001"
+HLOADSIG1 0
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = HLOADDEC / inactive
 
@@ -3839,7 +3830,7 @@ GLOBIAS 1  "0"
 
 MSG_GLOBIAS 1  "GLONASS receiver clock biases"
 
-RCVCLKTYP 1  "NON-GPS_SATELLITES"
+RCVCLKTYP 1  "NONE"
   ## widget = combobox; editable = false
   ## cards = NONE FREQUENCY_SPECIFIC FREQ_SPEC_POLYNOM SATELLITE_SPECIFIC NON-GPS_SATELLITES
 
@@ -3874,7 +3865,7 @@ MSG_MINSAT 1  "Minimum number of obs per satellite clock"
 
 ! Clk est.: Ref.Stations list
 ! ---------------------------
-STATION8 1  "SELECTED"
+STATION8 0
   ## widget = selwin; pointer = CENLST
   ## activeif = CLOCKR = 1 AND CLOCKS = 1 AND REFCLOCKR = MANUAL
 
@@ -3882,7 +3873,7 @@ MSG_STATION8 1  "Manual station selection"
 
 ! Clk est.: Ref.Stations list
 ! ---------------------------
-SATELLITE8 1  "SELECTED"
+SATELLITE8 0
   ## widget = selwin; pointer = SATLST
   ## activeif = CLOCKR = 1 AND CLOCKS = 1 AND REFCLOCKS = MANUAL
 
@@ -3894,7 +3885,7 @@ STAFILE8 0
   ## widget = selwin; path = DIR_FIX; ext = EXT_FIX; maxfiles = 1
   ## emptyallowed = true
   ## activeif = CLOCKR = 1 AND CLOCKS = 1 AND REFCLOCKR = FROM_FILE
-  # CLK01146
+  # 
 
 MSG_STAFILE8 1  "Station list from file"
 
@@ -3904,27 +3895,27 @@ SATFILE8 0
   ## widget = selwin; path = DIR_FIX; ext = EXT_FIX; maxfiles = 1
   ## emptyallowed = true
   ## activeif = CLOCKR = 1 AND CLOCKS = 1 AND REFCLOCKS = FROM_FILE
-  # CLK01146
+  # 
 
 MSG_SATFILE8 1  "Clk.Est.:Ref.Satellites from file"
 
 ! Clk est.: Header of the clk RINEX file: RUNBY
 ! ---------------------------------------------
-RUNBY 1  "AIUB"
+RUNBY 1  "ANONYMOUS"
   ## widget = lineedit
 
 MSG_RUNBY 1  "Clk. RINEX Header: RUNBY"
 
 ! Clk est.: Header of the clk RINEX file: AC
 ! ------------------------------------------
-AC 1  "CODE"
+AC 1  "XYZ"
   ## widget = lineedit
 
 MSG_AC 1  "Clk. RINEX Header: AC"
 
 ! Clk est.: Header of the clk RINEX file: ACName
 ! ----------------------------------------------
-ACNAME 1  "Center of Orbit Determination of Europe"
+ACNAME 1  "MY AGENCY/INSTITUTE"
   ## widget = lineedit
 
 MSG_ACNAME 1  "Clk. RINEX Header: AC Name"
@@ -3974,7 +3965,7 @@ MSG_RCVCLKLST 1  "Station selection"
 
 ! Rclk.off: Manual selection
 ! --------------------------
-STATION5 1  "SELECTED"
+STATION5 0
   ## widget = selwin; pointer = STALST; activeif = RCVCLKLST == MANUAL
 
 MSG_STATION5 1  "Rclk.off:Selection of list of stations"
@@ -3984,7 +3975,7 @@ MSG_STATION5 1  "Rclk.off:Selection of list of stations"
 STAFILE5 0
   ## widget = selwin; path = DIR_FIX; ext = EXT_FIX; maxfiles = 1
   ## activeif = RCVCLKLST == FROM_FILE; emptyallowed = true
-  # CLK01146
+  # 
 
 MSG_STAFILE5 1  "Rclk.off:File with the list of stations"
 
@@ -4069,7 +4060,7 @@ RBIAS 1  "0"
 
 MSG_RBIAS 1  "Range biases"
 
-RGBLST 1  "NONE"
+RGBLST 1  "FROM_FILE"
   ## widget = combobox; editable = false
   ## cards = NONE FIRST LAST ALL MANUAL FROM_FILE
 
@@ -4079,6 +4070,7 @@ MSG_RGBLST 1  "Station selection"
 ! ------------------------------------------
 STATION9 0
   ## widget = selwin; activeif = RGBLST == MANUAL; pointer = STALST
+  # 
 
 MSG_STATION9 1  "Range biases:Selection of list of stations"
 
@@ -4087,7 +4079,7 @@ MSG_STATION9 1  "Range biases:Selection of list of stations"
 STAFILE9 0
   ## widget = selwin; activeif = RGBLST == FROM_FILE; path = DIR_FIX
   ## ext = EXT_FIX; maxfiles = 1; emptyallowed = true
-  # 
+  # SLR_RB
 
 MSG_STAFILE9 1  "Range biases: File with the list of stations"
 
@@ -4101,7 +4093,7 @@ MSG_SATRGB 1  "Range Bias set-up for satellites"
 
 ! Range biases: Default Sigma
 ! ----------------------------
-SIGRGB 0
+SIGRGB 1  "1.0"
   ## widget = lineedit
 
 MSG_SIGRGB 1  "Range biases: a priori sigma"
@@ -4191,7 +4183,7 @@ MSG_KINSTA 1  "Station selection"
 
 ! Kinematic Station(s): Manual Selection
 ! --------------------------------------
-STATION2 1  "SELECTED"
+STATION2 0
   ## widget = selwin; activeif = KINSTA == MANUAL; pointer = CENLST
 
 MSG_STATION2 1  "Kinematic Pos.: List of stations"
@@ -4661,7 +4653,7 @@ MSG_PRE16 1  "Pre-elimination: Geocenter coordinates"
 
 ! Pre: Diff. Ionosphere
 ! ---------------------
-PRE17 1  "NO"
+PRE17 1  "EVERY_EPOCH"
   ## widget = combobox; editable = false
   ## cards = NO EVERY_EPOCH EVERY_SESSION PRIOR_TO_NEQ_SAVING
   ## activeif = DIFFION = 1

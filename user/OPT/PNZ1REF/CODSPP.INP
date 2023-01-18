@@ -1,12 +1,17 @@
 
 ! Environment Variables
 ! ---------------------
-ENVIRONMENT     1 "" ""
+ENVIRONMENT 5
+  "U" "/home/dhansen/BERN52/GPSUSER"
+  "T" "/var/lib/bernese52/tmp"
+  "X" "/opt/bernese52/GPS"
+  "P" "/home/dhansen/BERN52/GPSDATA/CAMPAIGN"
+  "USER" "dhansen"
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! SOME KEYWORDS FOR AUTOMATIC OUTPUT
 ! ----------------------------------
-CAMPAIGN 1  "${P}/PZDTEST"
+CAMPAIGN 1  "${P}/TEST_PP1"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
 SESSION_TABLE 0
@@ -53,7 +58,7 @@ DESCR_DATUM 1  "Geodetic datum"
 ! ---------------------
 SATELL 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
-  # SATELLIT.I08
+  # SATELLIT.$(PCV)
 
 DESCR_SATELL 1  "Satellite information"
 
@@ -70,7 +75,7 @@ DESCR_SATCRUX 1  "Satellite problems"
 STAINFO 0
   ## widget = selwin; path = DIR_STA; ext = EXT_STA; maxfiles = 1
   ## emptyallowed = true
-  # 
+  # STATIONS
 
 DESCR_STAINFO 1  "Station information"
 
@@ -111,7 +116,7 @@ DESCR_NUTMOD 1  "Nutation model"
 ! ---------------------------
 PHASECC 0
   ## widget = selwin; path = DIR_STA; ext = EXT_ANY; maxfiles = 1
-  # PCV_COD.I08
+  # PCV_COD.$(PCV)
 
 DESCR_PHASECC 1  "Phase center eccentricities"
 
@@ -190,7 +195,7 @@ CODEFILE_EXT_COL_4 1  "PZO"
 ! --------------------
 COORD 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
-  # APRIORI
+  # APR$S+0
 
 DESCR_COORD 1  "A priori coordinates"
 
@@ -267,7 +272,7 @@ DESCR_GPSUTC 1  "Difference GPS-UTC"
 DCBINP 0
   ## widget = selwin; path = DIR_DCB; ext = EXT_DCB; maxfiles = 1
   ## emptyallowed = true
-  # 
+  # P1C1$Y$M
 
 DESCR_DCBINP 1  "Code bias input files"
 
@@ -284,7 +289,7 @@ DESCR_STAWGT 1  "Station sigma factors"
 ! ---------------------
 COORDRS 0
   ## widget = lineedit; path = DIR_CRD; ext = EXT_CRD
-  # APRIORI
+  # APR$S+0
 
 DESCR_COORDRS 1  "Coordinate results"
 

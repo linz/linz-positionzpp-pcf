@@ -1,12 +1,17 @@
 
 ! Environment Variables
 ! ---------------------
-ENVIRONMENT     1 "" ""
+ENVIRONMENT 5
+  "U" "/home/dhansen/BERN52/GPSUSER"
+  "T" "/var/lib/bernese52/tmp"
+  "X" "/opt/bernese52/GPS"
+  "P" "/home/dhansen/BERN52/GPSDATA/CAMPAIGN"
+  "USER" "dhansen"
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! SOME KEYWORDS FOR AUTOMATIC OUTPUT
 ! ----------------------------------
-CAMPAIGN 1  "${P}/PZDTEST"
+CAMPAIGN 1  "${P}/TEST_PP1"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
 SESSION_TABLE 0
@@ -25,20 +30,44 @@ SES_INFO 0
 USR_INFO 1  "${USER}"
   ## widget = comment
 
-ABBREV 0
-  ## widget = lineedit; path = DIR_ABB; ext = EXT_ABB; emptyallowed = false
-  # ABBREV
+! Title line
+! ----------
+TITLE 1  "Create BLQ file for new site"
+  ## widget = lineedit
 
-DESCR_ABBREV 1  "Abbreviation table"
+MSG_TITLE 1  "Title line"
 
-! A priori coordinates
+BLQSRC 0
+  ## widget = selwin; path = PTH_DTPOOL; ext = EXT_BLQ; maxfiles = 1
+  # FES2004_SRC
+
+DESCR_BLQSRC 1  "Base datapool BLQ file used for header and precalculated stations"
+
+BLQGRD 0
+  ## widget = selwin; path = PTH_DTPOOL; ext = EXT_BLQ; emptyallowed = false
+  # FES2004_NZGRID
+
+DESCR_BLQGRD 1  "Datapool BLQ grid file used to calculate missing stations"
+
+BLQTRGT 0
+  ## widget = lineedit; path = DIR_STA; ext = EXT_BLQ; emptyallowed = false
+  # STATIONS
+
+DESCR_BLQTRGT 1  "BLQ file to create for the campaign"
+
+! Coordinates for which ocean loading values are required
 ! --------------------
 CRDFILE 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
   ## emptyallowed = false
-  # APR$S+0
+  # $A$S+0
 
-DESCR_CRDFILE 1  "Coordinate file"
+DESCR_CRDFILE 1  "Coordinate file at which ocean loading values are required"
+
+CRDTOL 1  "100.0"
+  ## widget = lineedit; check_type=real check_min = 0.0
+
+DESCR_CRDTOL 1  "Maximum tolerance in metres between station in source BLQ and coordinate file"
 
 ! Program Output File
 ! -------------------
@@ -50,7 +79,7 @@ MSG_SYSODEF 1  "Program output"
 SYSOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF == 0; emptyallowed = false
-  # PRETAB
+  # MAKEBLQ
 
 DESCR_SYSOUT 1  "Program output"
 
@@ -70,20 +99,23 @@ DESCR_SYSERR 1  "Error message"
 
 
 # BEGIN_PANEL NO_CONDITION #####################################################
-# CREATE STATION ABBREVIATION TABLE                                            #
+# CREATE OCEAN LOADING FILE                                                    #
 #                                                                              #
-# Input coordinate file     > %%%%%%%% <                                       # CRDFILE
+# Title > %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <  # TITLE
 #                                                                              #
-# Output abbreviation file  > %%%%%%%% <                                       # ABBREV
+# Template/station source ocean loading file  > %%%%%%%%%%%%%%% <              # BLQSRC
 #                                                                              #
+# Ocean loading grid file                     > %%%%%%%%%%%%%%% <              # BLQGRD
 #                                                                              #
+# Input coordinate file                       > %%%%%%%% <                     # CRDFILE
 #                                                                              #
+# Position tolerance for matched station      > %%%%%%%% <                     # CRDTOL
 #                                                                              #
-#                                                                              #
+# Output ocean loading file                   > %%%%%%%% <                     # BLQTRGT
 #                                                                              #
 # OUTPUT FILES                                                                 #
 #                                                                              #
-#   Program output          > % < use CREATABB.Lnn          or    > %%%%%%%% < # SYSODEF SYSOUT
+#   Program output          > % < use MAKEBLQ.Lnn           or    > %%%%%%%% < # SYSODEF SYSOUT
 #   Error messages          > % < merged to program output  or    > %%%%%%%% < # ERRMRG SYSERR
 #                                                                              #
 # END_PANEL ####################################################################

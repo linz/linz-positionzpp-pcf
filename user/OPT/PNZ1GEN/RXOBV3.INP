@@ -1,7 +1,12 @@
 
 ! Environment Variables
 ! ---------------------
-ENVIRONMENT     1 "" ""
+ENVIRONMENT 5
+  "U" "/home/dhansen/BERN52/GPSUSER"
+  "T" "/var/lib/bernese52/tmp"
+  "X" "/opt/bernese52/GPS"
+  "P" "/home/dhansen/BERN52/GPSDATA/CAMPAIGN"
+  "USER" "dhansen"
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! Some title information
@@ -24,7 +29,7 @@ SES_INFO 0
 
 ! Active Campaign
 ! ---------------
-CAMPAIGN 1  "${P}/PZDTEST"
+CAMPAIGN 1  "${P}/TEST_PP1"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
 ! General Constants
@@ -63,7 +68,7 @@ DESCR_SATCRUX 1  "Satellite problems"
 ! ---------------------
 SATELL 0
   ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
-  # SATELLIT.I08
+  # SATELLIT.$(PCV)
 
 DESCR_SATELL 1  "Satellite information"
 
@@ -71,7 +76,7 @@ DESCR_SATELL 1  "Satellite information"
 ! ---------------------------
 PHASECC 0
   ## widget = selwin; path = DIR_STA; maxfiles = 1; emptyallowed = true
-  # PCV_COD.I08
+  # PCV_COD.$(PCV)
 
 DESCR_PHASECC 1  "Phase center eccentricities"
 
@@ -94,7 +99,7 @@ DESCR_FRQINFO 1  "Frequency information"
 
 ! List of RINEX Input Files
 ! -------------------------
-RADIO_O 1  "1"
+RADIO_O 1  "0"
   ## widget = radiobutton; group = RXOSMT; radiokeys = RXOFILE
 
 MSG_RADIO_O 1  "Select original RINEX observation files"
@@ -109,14 +114,14 @@ MSG_RXOFILE 1  "Original RINEX observation files"
 
 ! List of RINEX Input Files
 ! -------------------------
-RADIO_S 1  "0"
+RADIO_S 1  "1"
   ## widget = radiobutton; group = RXOSMT; radiokeys = SMTFILE
 
 MSG_RADIO_S 1  "Select Smoothed RINEX obs. files"
 
 SMTFILE 0
   ## widget = selwin; path = DIR_SMT; ext = EXT_SMT; maxfiles = 999
-  # ????$S+0
+  # ????????
 
 SMTFILE_TXT_COL_1 1  "RINEX files"
 
@@ -169,7 +174,7 @@ MSG_COORD 1  "Update coordinates"
 
 ! Program Output File
 ! -------------------
-SYSODEF 1  "1"
+SYSODEF 1  "0"
   ## widget = checkbox
 
 MSG_SYSODEF 1  "Program output"
@@ -233,7 +238,7 @@ MSG_TITLE 1  "Title line"
 
 ! Satellite System Selection
 ! --------------------------
-SATSYS 1  "GPS"
+SATSYS 1  "$(SATSYS)"
   ## widget = combobox; editable = false
   ## cards = GPS GLONASS GALILEO GPS/GAL GPS/GLO GLO/GAL ALL
 
