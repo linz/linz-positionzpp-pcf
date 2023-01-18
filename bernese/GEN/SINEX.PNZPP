@@ -1,4 +1,4 @@
-SINEX HEADER INFORMATION FILE                                28-MAY-2018
+SINEX HEADER INFORMATION FILE                                19-JUN-2023
 ------------------------------------------------------------------------
 (REMARK: YES=1,NO=0 ; 2 EMPTY LINES AFTER EVERY INPUT GROUP)
 
@@ -33,10 +33,10 @@ HEADER INFORMATION TO BE INCLUDED:
 *PARAM_TYPE________ INFO________________________________________________________
  OCEAN TIDE LOADING Applied - FES2004
  ATM TIDE LOADING   Applied - global grid based on Ray and Ponte (2003)
- REFERENCE FRAME    IGB08
+ REFERENCE FRAME    IGB14
  EOP PRODUCTS       IGS Final (or Rapid) products depending on selection 
  ORBIT PRODUCTS     IGS Final (or Rapid) products depending on selection
- A PRIORI TROPOS    Global Mapping Function (GMF)  
+ A PRIORI TROPOS    Global Mapping Function (VMF1G)  
 -FILE/COMMENT
 
 +INPUT/ACKNOWLEDGMENTS

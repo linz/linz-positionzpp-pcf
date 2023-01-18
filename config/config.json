@@ -1,6 +1,6 @@
 {
-    "PcfName": "RUN_PNZ",
-    "ReferenceFrame": "ITRF2008",
+    "PcfName": "PNZ_PP1.PCF",
+    "ReferenceFrame": "ITRF2014",
     "OutputStatusFile": "OUT/STATUS.LCK",
     "OutputSummaryJson": "OUT/SUMMARY.JSON",
     "ConfigOutputFiles": [
@@ -23,7 +23,7 @@
         }
     ],
     "ReferenceDataFiles": {
-        "AntennaFile": "PCV_COD.I08",
+        "AntennaFile": "PCV_COD.I14",
         "ReceiverFile": "RECEIVER.",
         "ExtraReceiverConfigFile": "config/RECEIVER.MISSING",
         "CombinedReceiverFile": "RECEIVER.ALL"
