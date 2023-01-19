@@ -2,8 +2,8 @@
 
 This contains the Bernese PCF and configuration scripts for running a PositioNZ-PP job.
 
-When PositioNZ-PP processes a job it clones this repository using a specific branch/tag.
-By default the tag "pnzpp-prod" is used for processing in the production environment, and
+When PositioNZ-PP processes a job it uses this repository for configuration.
+The protected branch "pnzpp-prod" is used for processing in the production environment, and the branch
 "pnzpp-nonprod" for processing in the nonprod environment.
 
 This contains the following directories:
@@ -73,4 +73,9 @@ ConfigOutputFiles are files sourced relative to this configuration file.
 
 CampaignOutputFiles are copied for each Bernese campaign run by the job and are sourced relative to the Bernese campaign directory.
 
-ReferenceDataFiles are used when the Bernese reference data (mainly GPS/GEN contents) are updated by the daily sync-config task.  This includes the option of adding extra receivers to the Bernese receivers file using a file of receivers in this configuration.  The AntennaFile and CombinedReceiverFile (or ReceiverFile if it is not defined) are used to compile the list of valid antennae and receivers used by the front end GUI.
+ReferenceDataFiles are used when the Bernese reference data (mainly GPS/GEN contents) are updated by the daily sync-config task.  This includes the option of adding extra receivers to the Bernese receivers file using a file of receivers in this configuration.  The AntennaFile and CombinedReceiverFile (or ReceiverFile if it is not defined) are used to compile the list of valid antennae and receivers used by the front end GUI.  The AntennaFile value may be a list of files used to compile the full set of antennae, eg 
+
+```json
+"AntennaFile": ["I14.ATX","NGS14.ATX"]
+```
+
