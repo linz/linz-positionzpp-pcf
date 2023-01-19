@@ -6,20 +6,24 @@
 import argparse
 import io
 import re
-import sys
+import json
 import os
 import os.path
-import subprocess
 import tempfile
 import shutil
 import logging
-from distutils.spawn import find_executable
 
-actions = ("import", "export", "clean")
-actions_help = '"import" from local installation, "export" to local installation'
+ACTION_IMPORT = "import"
+ACTION_EXPORT = "export"
+ACTION_CLEAN = "clean"
+CONFIG_PCFNAME = "PcfName"
+
+actions = (ACTION_IMPORT, ACTION_EXPORT, ACTION_CLEAN)
+actions_help = f'"{ACTION_IMPORT}" from local installation, "{ACTION_EXPORT}" to local installation'
 repodir = os.path.realpath(
     os.path.join(os.path.dirname(os.path.realpath(__file__)), "..")
 )
+configfile = os.path.join(repodir, "config", "config.json")
 basedir = os.path.join(repodir, "user")
 placeholder = ".placeholder"
 
@@ -61,6 +65,7 @@ def main():
         action="store_true",
         help="Force overwrite of existing files without prompting on export",
     )
+    parser.add_argument("-p", "--pcf", help="Name of PCF to import/export")
     parser.add_argument("-v", "--verbose", action="store_true", help="More output")
     parser.add_argument("-q", "--quiet", action="store_true", help="Less output")
     args = parser.parse_args()
@@ -86,26 +91,37 @@ def main():
         raise RuntimeError("User directory {userdir} doesn't contain a PCF directory")
 
     pcfdir = os.path.join(basedir, "PCF")
-    strpcf = None
+    strpcf = args.pcf
     if os.path.isdir(pcfdir):
         pcfnames = [f[:-4] for f in os.listdir(pcfdir) if f.endswith(".PCF")]
-        if len(pcfnames) > 1:
-            raise RuntimeError(f"Strategy has more than one PCF: {', '.join(pcfnames)}")
-        elif len(pcfnames) == 1:
-            strpcf = pcfnames[0]
+        if strpcf is None:
+            if len(pcfnames) > 1:
+                raise RuntimeError(
+                    f"Strategy has more than one PCF: {', '.join(pcfnames)}"
+                )
+            elif len(pcfnames) == 1:
+                strpcf = pcfnames[0]
+        elif strpcf not in pcfnames:
+            if action == ACTION_IMPORT:
+                logging.info("Adding a new PCF to PositioNZ-PP installation")
+            elif action == ACTION_EXPORT:
+                raise RuntimeError(
+                    f"PCF {strpcf} is not defined in the PositioNZ-PP installation"
+                )
 
-    if action == "clean":
+    if action == ACTION_CLEAN:
         logging.info(f'"Cleaning" panel files')
         cleanAllPanels(basedir)
 
     # import action
-    elif action == "import":
+    elif action == ACTION_IMPORT:
         logging.info(f"Importing PCF {strpcf}")
         importPcf(userdir, strpcf, basedir)
 
-    elif action == "export":
+    elif action == ACTION_EXPORT:
         logging.info(f"Exporting PCF {strpcf}")
         exportPcf(basedir, strpcf, userdir, force=force)
+        checkConfigPcf(configfile, strpcf)
 
 
 def exportPcf(basedir: str, strpcf: str, userdir: str, force=False) -> bool:
@@ -139,6 +155,17 @@ def importPcf(userdir: str, strpcf: str, strusrdir: str):
             logging.debug("Removing existing strategy user files")
             shutil.rmtree(strusrdir)
         copyFiles(tempdir, strusrdir, force=True, hidden=True)
+
+
+def checkConfigPcf(configfile, strpcf):
+    try:
+        config = json.load(open(configfile))
+        if config.get(CONFIG_PCFNAME, "") != strpcf:
+            logging.info(
+                f"Configuration {CONFIG_PCFNAME} in {configfile} differs from {strpcf}"
+            )
+    except Exception as ex:
+        raise RuntimeError(f"Error reading configuration JSON file {configfile}: {ex}")
 
 
 def copyFiles(
@@ -271,22 +298,27 @@ def getPcfScripts(pcffile: str) -> dict:
        {script:[opt1,opt2...], ...}
     """
     scripts = {}
-    with open(pcffile) as ph:
-        reading = False
-        for l in ph:
-            if l.startswith("PID"):
+    try:
+        with open(pcffile) as ph:
+            reading = False
+            for l in ph:
+                if l.startswith("PID"):
+                    if reading:
+                        break
+                    reading = True
                 if reading:
-                    break
-                reading = True
-            if reading:
-                match = re.match(r"^\d{3}\s(?P<script>\w+)\s+(?P<opt>\w+)(?:\s|$)", l)
-                if match:
-                    script = match.group("script")
-                    opt = match.group("opt")
-                    if script not in scripts:
-                        scripts[script] = set()
-                    scripts[script].add(opt)
-    scripts = {s: list(scripts[s]) for s in scripts}
+                    match = re.match(
+                        r"^\d{3}\s(?P<script>\w+)\s+(?P<opt>\w+)(?:\s|$)", l
+                    )
+                    if match:
+                        script = match.group("script")
+                        opt = match.group("opt")
+                        if script not in scripts:
+                            scripts[script] = set()
+                        scripts[script].add(opt)
+        scripts = {s: list(scripts[s]) for s in scripts}
+    except Exception as ex:
+        raise RuntimeError(f"Error reading {pcffile}: {ex}")
     return scripts
 
 
@@ -379,24 +411,27 @@ def getScriptPrograms(scriptfile: str) -> list:
     logging.debug(f"Processing script file {scriptfile}")
     programs = set()
     vars = {}
-    with open(scriptfile) as sh:
-        for l in sh:
-            l = re.sub(r"\#.*", "", l)
-            match = re.match(
-                r"""^\s*(?:my\s+)?\$(?P<varname>\w+)\s*\=\s*(?P<quote>['"])(?P<value>\w+)(?P=quote)\s*\;\s*$""",
-                l,
-            )
-            if match:
-                vars[match.group("varname")] = match.group("value")
-                continue
-            match = re.search(r"\$bpe\-\>RUN_PGMS\(\s*\$(?P<varname>\w+)\s*\)", l)
-            if match:
-                varname = match.group("varname")
-                if varname not in vars:
-                    raise RuntimeError(
-                        f"Can't handle {l.strip()} in {scriptfile} - {varname} not defined"
-                    )
-                programs.add(vars[varname])
+    try:
+        with open(scriptfile) as sh:
+            for l in sh:
+                l = re.sub(r"\#.*", "", l)
+                match = re.match(
+                    r"""^\s*(?:my\s+)?\$(?P<varname>\w+)\s*\=\s*(?P<quote>['"])(?P<value>\w+)(?P=quote)\s*\;\s*$""",
+                    l,
+                )
+                if match:
+                    vars[match.group("varname")] = match.group("value")
+                    continue
+                match = re.search(r"\$bpe\-\>RUN_PGMS\(\s*\$(?P<varname>\w+)\s*\)", l)
+                if match:
+                    varname = match.group("varname")
+                    if varname not in vars:
+                        raise RuntimeError(
+                            f"Can't handle {l.strip()} in {scriptfile} - {varname} not defined"
+                        )
+                    programs.add(vars[varname])
+    except Exception as ex:
+        raise RuntimeError(f"Processing script file {scriptfile}: {ex}")
     return list(programs)
 
 
@@ -452,7 +487,10 @@ def cleanPanelFile(filename: str):
     """
     Overwrite a panel file with a cleaned version
     """
-    panel = open(filename).read()
+    try:
+        panel = open(filename).read()
+    except Exception as ex:
+        raise RuntimeError(f"Error reading {filename}: {ex}")
     panel = cleanPanel(panel)
     open(filename, "w").write(panel)
 
@@ -477,7 +515,10 @@ def copyPcfFiles(srcdir: str, filelist: list, tgtdir: str, ignoreMissing: bool =
     for filename in filelist:
         srcfile = os.path.join(srcdir, filename)
         if os.path.exists(srcfile):
-            content = open(srcfile).read()
+            try:
+                content = open(srcfile).read()
+            except Exception as ex:
+                raise RuntimeError(f"Error reading {srcfile}: {ex}")
         elif os.path.basename(filename) == placeholder:
             content = ""
         elif ignoreMissing:
