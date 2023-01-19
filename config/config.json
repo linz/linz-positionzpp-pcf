@@ -23,7 +23,7 @@
         }
     ],
     "ReferenceDataFiles": {
-        "AntennaFile": "PCV_COD.I14",
+        "AntennaFile: ["I14.ATX","NGS14.ATX"],
         "ReceiverFile": "RECEIVER.",
         "ExtraReceiverConfigFile": "config/RECEIVER.MISSING",
         "CombinedReceiverFile": "RECEIVER.ALL"
