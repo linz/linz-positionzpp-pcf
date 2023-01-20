@@ -194,7 +194,7 @@ MSG_USEC2 1  "Use C2 if P2 unavailable"
 
 ! Use Obs. Window
 ! ---------------
-USEWIN 1  "1"
+USEWIN 1  "0"
   ## widget = checkbox
 
 MSG_USEWIN 1  "Use observation window"
