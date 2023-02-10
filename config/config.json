@@ -1,5 +1,5 @@
 {
-    "PcfName": "PNZ_PP1.PCF",
+    "PcfName": "PNZ_PP1",
     "ReferenceFrame": "ITRF2014",
     "OutputStatusFile": "OUT/STATUS.LCK",
     "OutputSummaryJson": "OUT/SUMMARY.JSON",
