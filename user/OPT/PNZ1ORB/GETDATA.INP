@@ -164,7 +164,7 @@ MSG_VMFFILE 1  "Name of combined VMF files"
 ! -------------------------------------------------------------------------
 ! Download CODE monthly DCB files
 ! ------------------
-DCBTYP 1  "RAPID"
+DCBTYP 1  "RAPID+"
   ## widget=combobox; editable=false; cards = RAPID RAPID+ FINAL
 
 MSG_DCBTYP 1  "DCB product quality, '+' = 'or better'"
