@@ -1,0 +1,27 @@
+package RXOBV3;
+@ISA = ("RUNBPE");
+# ----------------------------------------------------------------------------
+#
+# Name    :  RNXSMT
+#
+# Purpose :  Execute RNXSMT
+#
+# PARAMs  :
+#
+# Author  :  A. Villiger
+# Created :  14-Dec-2015
+#
+# Changes :
+#
+# ----------------------------------------------------------------------------
+use strict;
+
+sub run{
+  my $bpe = shift;
+
+# Execute Program
+# ---------------
+  my $PGMNAM = "RNXSMT";
+  $bpe->RUN_PGMS($PGMNAM);
+
+}

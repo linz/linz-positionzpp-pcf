@@ -1,0 +1,71 @@
+package GNSL12AP;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  GNSL12AP
+#
+# Purpose :  Prepare parallel L1&L2 ambiguity resolution process for a set of
+#            baselines selected by BASLST
+#
+# Remark  :  The maximum length of a baseline to be selected by BASLST is
+#            taken from variable V_BL_L12
+#
+# PARAMs  :
+#
+# Author  :  S. Schaer
+# Created :  30-Mar-2005
+#
+# Changes :  11-Aug-2011 RD: Updated for version 5.2
+#
+# ============================================================================
+use strict;
+
+use lib $ENV{BPE};
+use bpe_util qw(initPar_Bl);
+
+sub run {
+  my $bpe = shift;
+
+# Get variables
+# -------------
+  my ($yyssss, $ssss,
+      $bl,
+      $dirBsl, $dirOut,
+      $extBsl, $extOut) =
+  $bpe->getKeys
+     ('$YSS+0', '$S+0',
+      'V_BL_L12',
+      'DIR_BSL', 'DIR_OUT',
+      'EXT_BSL', 'EXT_OUT');
+
+# Delete old files (OUT, SEL)
+# ---------------------------
+  my $basFil = "${dirBsl}L12${yyssss}.${extBsl}";
+  unlink ($basFil);
+  unlink glob("${dirOut}????${ssss}_1.${extOut}");
+
+# Set maximum baseline length if defined
+# --------------------------------------
+  $bpe->putKey("$ENV{U}/PAN/BASLST.INP","MAXLEN",$bl) unless $bl eq "";
+  $bpe->putKey("$ENV{U}/PAN/BASLST.INP","SELBSL",$basFil);
+
+# Run program
+# -----------
+  my $PGMNAM = "BASLST";
+  $bpe->RUN_PGMS($PGMNAM);
+
+# Get baselines to be processed
+# -----------------------------
+  my @basLin;
+  if (-s $basFil) {
+    open (BAS,$basFil);
+    push (@basLin,<BAS>);
+    close BAS;
+    chomp(@basLin);
+  }
+
+# Initialize parallel run
+# -----------------------
+  initPar_Bl($bpe,@basLin);
+
+}

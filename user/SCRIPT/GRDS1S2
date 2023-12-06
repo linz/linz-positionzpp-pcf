@@ -1,0 +1,27 @@
+package GRDS1S2;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  GRDS1S2
+#
+# Purpose :  Execute GRDS1S2 
+#
+# PARAMs  :
+#
+# Author  :  M. Meindl
+# Created :  20-Oct-2003
+#
+# Changes :  11-Aug-2011 RD: Updated for version 5.2
+#
+# ============================================================================
+use strict;
+
+sub run {
+  my $bpe = shift;
+
+# Run program
+# -----------
+  my $PGMNAM = "GRDS1S2";
+  $bpe->RUN_PGMS($PGMNAM);
+
+}
