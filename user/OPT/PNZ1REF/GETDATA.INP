@@ -8,17 +8,12 @@
 !*cards IGSCTYP IGSC
 ! Environment Variables
 ! ---------------------
-ENVIRONMENT 5
-  "U" "/home/dhansen/BERN52/GPSUSER"
-  "T" "/var/lib/bernese52/tmp"
-  "X" "/opt/bernese52/GPS"
-  "P" "/home/dhansen/BERN52/GPSDATA/CAMPAIGN"
-  "USER" "dhansen"
+ENVIRONMENT 0
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! SOME KEYWORDS FOR AUTOMATIC OUTPUT
 ! ----------------------------------
-CAMPAIGN 1  "${P}/IGS20_1"
+CAMPAIGN 0
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
 SESSION_TABLE 0

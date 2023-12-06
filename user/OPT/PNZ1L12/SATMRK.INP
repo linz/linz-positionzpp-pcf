@@ -1,7 +1,7 @@
 
 ! Environment Variables
 ! ---------------------
-ENVIRONMENT 1  "" "${}"
+ENVIRONMENT 0
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! SOME KEYWORDS FOR AUTOMATIC OUTPUT

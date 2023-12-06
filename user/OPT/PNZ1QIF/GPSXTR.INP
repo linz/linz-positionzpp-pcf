@@ -1,7 +1,7 @@
 
 ! Some keywords for automatic output
 ! ----------------------------------
-CAMPAIGN 1  "${P}/PZDTEST"
+CAMPAIGN 0
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
 SESSION_TABLE 0
@@ -23,7 +23,7 @@ USR_INFO 1  "${USER}"
 ! -------------------------------------------------------------------------
 ! Environment Variables
 ! ---------------------
-ENVIRONMENT     1 "" ""
+ENVIRONMENT 0
   ## widget = initmenu; pointer = ENVIR_LIST
 
 ! -------------------------------------------------------------------------
