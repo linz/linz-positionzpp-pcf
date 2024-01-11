@@ -249,7 +249,7 @@ MSG_ALBEMIS 1  "Albedo emissivity"
 OCNLOAD 0
   ## widget = selwin; path = DIR_BLQ; ext = EXT_BLQ; maxfiles = 1
   ## emptyallowed = true; activeif = RADIO_P == 1 OR RADIO_T == 1
-  # 
+  # PGIR14
 
 DESCR_OCNLOAD 1  "Ocean loading corrections"
 
@@ -258,7 +258,7 @@ DESCR_OCNLOAD 1  "Ocean loading corrections"
 ATMLOAD 0
   ## widget = selwin; path = DIR_ATL; ext = EXT_ATL; maxfiles = 1
   ## emptyallowed = true; activeif = RADIO_P == 1 OR RADIO_T == 1
-  # 
+  # PGIR14
 
 DESCR_ATMLOAD 1  "Atmospheric loading corrections"
 

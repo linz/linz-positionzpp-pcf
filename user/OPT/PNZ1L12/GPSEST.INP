@@ -94,7 +94,7 @@ DESCR_RECEIVR 1  "Receiver information"
 ! ---------------------
 SATELL 0
   ## widget = selwin; path = PTH_GEN; maxfiles = 1
-  # $(SATINF).$(PCV)
+  # SATELLIT.$(PCV)
 
 DESCR_SATELL 1  "Satellite information"
 
@@ -103,7 +103,7 @@ DESCR_SATELL 1  "Satellite information"
 SATCRUX 0
   ## widget = selwin; path = PTH_GEN; ext = EXT_CRX; maxfiles = 1
   ## emptyallowed = true
-  # $(SATCRX)
+  # SAT_$Y+0
 
 DESCR_SATCRUX 1  "Satellite problems"
 
@@ -296,7 +296,7 @@ DESCR_COORD 1  "A priori station coordinates"
 ! --------------
 STDORB 0
   ## widget = selwin; path = DIR_STD; ext = EXT_STD; maxfiles = 1
-  # $B$YSS+0
+  # $B$S+0
 
 DESCR_STDORB 1  "Satellite standard orbits"
 
@@ -304,7 +304,7 @@ DESCR_STDORB 1  "Satellite standard orbits"
 ! ---------
 POLE 0
   ## widget = selwin; path = DIR_ERP; ext = EXT_ERP; maxfiles = 1
-  # $B$YSS+0
+  # $B$S+0
 
 DESCR_POLE 1  "Earth rotation parameters"
 
