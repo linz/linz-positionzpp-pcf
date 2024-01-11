@@ -125,7 +125,7 @@ V_B      Orbit/ERP, DCB, ION information          IGS
 V_C      Preliminary (ambiguity-float) results    P1_
 V_E      Final (ambiguity-fixed) results          F1_
 V_F      Size-reduced NEQ information             R1_
-V_PCV    Ref frame phase center calibrations      I14
+V_PCV    Ref frame phase center calibrations      I20
 V_MERGE  If products/data need to be merged       0
 V_MINUS  Session range begin (for COMPAR)         -6
 V_PLUS   Session range end                        +0
@@ -140,9 +140,9 @@ V_GDDNLD GETDATA download now                     1
 V_GDQUEU GETDATA queue data request               0
 V_GDQUEU GETDATA queue data request               0
 V_PCVINF PCV information file                     PCV_COD
-V_MYATX  ANTEX file for update (name incl. ext)   I14.ATX
-V_REFATX ANTEX file for update (name incl. ext)   NGS14.ATX
-V_REFINF Reference datum                          IGS14
+V_MYATX  ANTEX file for update (name incl. ext)   I20.ATX
+V_REFATX ANTEX file for update (name incl. ext)   NGS20.ATX
+V_REFINF Reference datum                          IGS20
 V_SATSYS Select the GNSS (ALL, GPS, GPS/GAL)      GPS
 V_GNSSAR GNSS to be used for ambiguity resolution GPS
 V_BL_QIF Maximum baseline length for QIF AR       2000
