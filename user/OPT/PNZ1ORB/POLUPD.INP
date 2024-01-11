@@ -129,7 +129,7 @@ MSG_NUTMOD 1  "Nutation model"
 SUBMOD 0
   ## widget = selwin; path = PTH_GEN; ext = EXT_SUB; maxfiles = 1
   ## emptyallowed = true
-  # IERS2010XY
+  # DESAI2016
 
 SUBMOD_TXT_COL_1 1  "Subdaily ERP Model"
 

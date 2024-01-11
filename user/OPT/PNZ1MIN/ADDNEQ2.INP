@@ -243,7 +243,7 @@ DESCR_SATCRUX 1  "Satellite problems"
 SUBMOD 0
   ## widget = selwin; path = PTH_GEN; ext = EXT_SUB; maxfiles = 1
   ## emptyallowed = true
-  # IERS2010XY
+  # DESAI2016
 
 DESCR_SUBMOD 1  "Subdaily pole model"
 

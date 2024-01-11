@@ -53,7 +53,7 @@ DESCR_POLE 1  "Pole file"
 ! -------------------
 SUBMOD 0
   ## widget = selwin; path = PTH_GEN; ext = EXT_SUB; maxfiles = 1
-  # IERS2010XY
+  # DESAI2016
 
 DESCR_SUBMOD 1  "Subdaily pole model"
 
