@@ -24,7 +24,8 @@ PID SCRIPT   OPT_DIR  CAMPAIGN CPU      F WAIT FOR....
 060 RXOBV3   PNZ_REF           ANY      1 055
 070 CODSPP   PNZ_REF           ANY      1 060
 080 GETDATA  PNZ_REF           ANY      1 070
-085 CRDMERGE PNZ_REF           ANY      1 080
+082 NZGDBCRD PNZ_REF           ANY      1 080
+085 CRDMERGE PNZ_REF           ANY      1 082
 090 RNX2STA  PNZ_REF           ANY      1 085
 095 PNZATX   PNZ_REF           ANY      1 090
 100 RXOBV3   PNZ_REF           ANY      1 095
