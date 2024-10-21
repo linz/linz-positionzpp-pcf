@@ -189,7 +189,7 @@ MSG_P1P2NAM 1  "Name for downloaded CODE P1P2 DCB files"
 ! -------------------------------------------------------------------------
 ! Plus/minus session range in atmosphere products
 ! ------------------
-ATMPLUSM 1  "0"
+ATMPLUSM 1  "1"
   ## widget = checkbox
 
 MSG_ATMPLUSM 1  "Include +/- session range in atmosphere products"

@@ -11,6 +11,7 @@ This contains the following directories:
 * config: contains the configuration information used by the processing script in config.json.  Also may contain a template for files that will be installed into the campaign directory before the processing is run in config/campaign_template
 * user: contains the Bernese USER directory files defining the processing strategy
 * bernese: contains files that will be installed into the Bernese system GPS directory before the processing is run.
+* datapool: contains files that will be installed into the Bernese datapool before the processing is run.
 
 The structure of the configuration file (config/config.json) is as follows:
 
