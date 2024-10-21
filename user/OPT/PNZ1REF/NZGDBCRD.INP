@@ -1,0 +1,148 @@
+
+! Environment Variables
+! ---------------------
+ENVIRONMENT 1 "" ""
+  ## widget = initmenu; pointer = ENVIR_LIST
+
+! SOME KEYWORDS FOR AUTOMATIC OUTPUT
+! ----------------------------------
+CAMPAIGN 1  "${P}/PNZPP1"
+  ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
+
+SESSION_TABLE 1  "${P}/PNZPP1/STA/SESSIONS.SES"
+  ## widget = initmenu; pointer = SESSION_TABLE
+
+DESCR_SESSION_TABLE 1  "Session table"
+
+YR4_INFO 1  "$Y+0"
+  ## widget = comment
+
+SES_INFO 1  "302Y"
+  ## widget = comment
+  # $S+0
+
+USR_INFO 1  "${USER}"
+  ## widget = comment
+
+
+! Title line
+! ----------
+
+TITLE 1  "Update coordinates from NZ geodetic database"
+  ## widget = lineedit
+
+MSG_TITLE 1  "Title line"
+
+! Input coordinate file
+! --------------------
+
+CRDIN 1  "APRIORI"
+  ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1; emptyallowed = true
+
+DESCR_CRDIN 1  "Coordinate file"
+
+UPDATE 1  "1"
+  ## widget = checkbox; activeif = CRDIN /= ""
+
+DESCR_UPDATE 1  "Update existing coordinates"
+
+MAXDIFF 1  "5.0"
+  ## widget = lineedit; emptyallowed = true; check_type = real
+  ## check_min = 0.0; activeif = CRDIN /= ""
+
+DESCR_MAXDIFF 1  "Maximum permitted coordinate change"
+
+ADDCOD 1  ""
+  ## widget = lineedit
+
+MSG_ADDCOD 1  "List of geodetic codes to add to the file"
+
+! Flags for stations in .CRD file
+
+! Additional stations from RINEX files ...
+
+RXOFILE     0
+  ## widget = selwin; path = DIR_RXO; ext = EXT_RXO; maxfiles = 999; emptyallowed = true
+
+RXOFILE_TXT_COL_1 1  "RINEX files"
+
+MSG_RXOFILE 1  "RINEX observation files with codes to add"
+
+RXOCOD     1  "FILE_NAME"
+  ## widget = combobox; editable = false
+  ## cards = MARKER_NAME MARKER_NUMBER FILE_NAME
+
+MSG_RXOCOD 1  "How to get codes from RINEX file"
+
+FLGUPDT 1 ""
+   ## widget = lineedit; emptyallowed = true; check_strlen = 4; activeif = CRDIN /= ""
+
+DESCR_FLGUPDT 1  "Flag given to updated stations - blank to leave unchanged"
+
+FLGNEW 1 ""
+   ## widget = lineedit; emptyallowed = true; check_strlen = 4
+
+DESCR_FLGNEW 1  "Flag given to new stations"
+
+! Output coordinate file
+! --------------------
+
+CRDOUT 1  ""
+  ## widget = lineedit; path = DIR_CRD; ext = EXT_CRD; 
+
+DESCR_CRDOUT 1  "Output coordinate file"
+
+! Program Output File
+! -------------------
+SYSODEF 1  "1"
+  ## widget = checkbox
+
+MSG_SYSODEF 1  "Program output"
+
+SYSOUT 1  ""
+  ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
+  ## activeif = SYSODEF == 0; emptyallowed = false
+  # NZGDBCRD
+
+DESCR_SYSOUT 1  "Program output"
+
+! Error Message File
+! ------------------
+ERRMRG 1  "0"
+  ## widget = checkbox
+
+MSG_ERRMRG 1  "Error message"
+
+SYSERR 1  ""
+  ## widget = lineedit; path = PTH_ERR; ext = EXT_ERR
+  ## activeif = ERRMRG == 0; emptyallowed = false
+  # ERROR
+
+DESCR_SYSERR 1  "Error message"
+
+
+# BEGIN_PANEL NO_CONDITION #####################################################
+# NZGDBCRD: UPDATE COORDINATES FILE FROM NZ GDB DATABASE                       #
+#                                                                              #
+# TITLE > %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <   # TITLE
+#                                                                              #
+# Input coordinate file                        > %%%%%%%%%%%% <  (optional)    # CRDIN
+#   Update existing coordinates                > % <                           # UPDATE
+#   Maximum coordinate change (0=no limit)     > %%%%%%%% <                    # MAXDIFF
+#                                                                              #
+# Add codes  > %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <   # ADDCOD
+#                                                                              #
+# Add codes in RINEX observation files         > %%%%%%%% <                    # RXOFILE
+#   Gather station codes from                  > %%%%%%%%%%%%%% <              # RXOCOD
+#                                                                              #
+# Flag for updated stations (blank=unchanged)  > %%%% <                        # FLGUPDT
+# Flag for new stations                        > %%%% <                        # FLGNEW
+#                                                                              #
+# Output coordinate file (blank=input file)    > %%%%%%%%%%%% <                # CRDOUT
+#                                                                              #
+# OUTPUT FILES                                                                 #
+#                                                                              #
+#   Program output          > % < use NZGDBCRD.Lnn          or    > %%%%%%%% < # SYSODEF SYSOUT
+#   Error messages          > % < merged to program output  or    > %%%%%%%% < # ERRMRG SYSERR
+#                                                                              #
+# END_PANEL ####################################################################
