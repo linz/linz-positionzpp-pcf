@@ -43,7 +43,8 @@ PID SCRIPT   OPT_DIR  CAMPAIGN CPU      F WAIT FOR....
 # a station information file containing all
 # -------------------------------------------
 080 GETDATA  PNZ1REF           ANY      1 070
-085 CRDMERGE PNZ1REF           ANY      1 080
+082 NZGDBCRD PNZ1REF           ANY      1 080
+085 CRDMERGE PNZ1REF           ANY      1 082
 090 RNX2STA  PNZ1REF           ANY      1 085
 #
 # Create PCV file with only sites in STA file
@@ -91,7 +92,7 @@ PID SCRIPT   OPT_DIR  CAMPAIGN CPU      F WAIT FOR....
 511 ADDNEQ2  PNZ1MIN           ANY      1 501
 512 HELMR1   PNZ1MIN           ANY      1 511
 513 ADDNEQ2  PNZ1FIN           ANY      1 512
-600 PZ1SUMRY PNZ1GEN           ANY      1 513
+600 PNZSUMRY PNZ1GEN           ANY      1 513
 999 PNZSTART PNZ1GEN           ANY      1 600
 PID USER         PASSWORD PARAM1   PARAM2   PARAM3   PARAM4   PARAM5   PARAM6   PARAM7   PARAM8   PARAM9
 3** 12********** 8******* 8******* 8******* 8******* 8******* 8******* 8******* 8******* 8******* 8*******
@@ -143,6 +144,7 @@ V_PCVINF PCV information file                     PCV_COD
 V_MYATX  ANTEX file for update (name incl. ext)   I20.ATX
 V_REFATX ANTEX file for update (name incl. ext)   NGS20.ATX
 V_REFINF Reference datum                          IGS20
+V_CRDSYS Coordinate system                        ITRF2020
 V_SATSYS Select the GNSS (ALL, GPS, GPS/GAL)      GPS
 V_GNSSAR GNSS to be used for ambiguity resolution GPS
 V_BL_QIF Maximum baseline length for QIF AR       2000
