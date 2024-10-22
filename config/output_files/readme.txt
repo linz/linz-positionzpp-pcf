@@ -12,15 +12,14 @@ or errors not represented in the GNSS data (such as plumbing errors and
 antenna heighting errors).
 
 Each RINEX file submitted to the PositioNZ-PP service is processed separately.
-The coordinates are calculated in the ITRF2008 reference frame at the epoch of
-observation.  The final coordinates are converted to NZGD2000 coordinates at 
-nominal epoch 2000.0.
+The coordinates are calculated in the ITRF2020 reference frame at the epoch of
+observation.  The final coordinates are converted to NZGD2000.
 
 For each file the GPS processing includes the following steps:
   * Approximate point position solution to determine the station location
-  * Selection of three PositioNZ reference stations to process with the 
+  * Selection of four PositioNZ reference stations to process with the 
     user station
-  * Calculation of the reference station ITRF2008 epoch coordinates
+  * Calculation of the reference station ITRF2020 epoch coordinates
   * Detecting cycle slips and gross errors
   * Resolving ambiguities
   * Calculation of a minimum constraints solution
@@ -64,7 +63,7 @@ Final coordinates
     stations. These are presented in two blocks:  
 
     "Epoch coordinates" are coordinates of the mark at the observation epoch.  
-    These are presented in terms of the ITRF2008 and ITRF96 reference frames 
+    These are presented in terms of the ITRF2020 and ITRF96 reference frames 
     (note that NZGD2000 is aligned with ITRF96).  
 
     "NZGD2000 coordinates" are the coordinates at nominal epoch 2000. These 
@@ -121,9 +120,9 @@ submitted.  It contains the following columns:
 mark           The user supplied name for the mark 
 datafile       The name of the RINEX file
 date           The UTC date and time of the start of the observation session
-itrf2008_X     The ITRF2008 X,Y,Z epoch coordinate (metres)
-itrf2008_Y
-itrf2008_Z
+itrf2020_X     The ITRF2020 X,Y,Z epoch coordinate (metres)
+itrf2020_Y
+itrf2020_Z
 err_e          The apriori error in the east, north, and up direction (metres)
 err_n
 err_u
