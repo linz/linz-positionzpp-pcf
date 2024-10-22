@@ -38,6 +38,7 @@ MSG_TITLE 1  "Title line"
 
 CRDIN 1  "APRIORI"
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1; emptyallowed = true
+  # APR$S+0  
 
 DESCR_CRDIN 1  "Coordinate file"
 
