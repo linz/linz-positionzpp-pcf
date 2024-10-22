@@ -144,6 +144,7 @@ V_PCVINF PCV information file                     PCV_COD
 V_MYATX  ANTEX file for update (name incl. ext)   I20.ATX
 V_REFATX ANTEX file for update (name incl. ext)   NGS20.ATX
 V_REFINF Reference datum                          IGS20
+V_CRDSYS Coordinate system                        ITRF2020
 V_SATSYS Select the GNSS (ALL, GPS, GPS/GAL)      GPS
 V_GNSSAR GNSS to be used for ambiguity resolution GPS
 V_BL_QIF Maximum baseline length for QIF AR       2000
