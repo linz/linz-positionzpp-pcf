@@ -135,8 +135,9 @@ V_I      ION ESTIMATION                           ION
 V_USRMRK User station code                        VTES
 V_SAMPL  Sampling rate of solutions               30
 V_ORBTYP Select the orbit quality required        FINAL
-V_DCBTYP Bernese phase/code bias version          FINAL
-V_IONTYP Bernese Ionospheric model version        FINAL
+# The next two have been replaced with ORBTYP in PNZ1ORB/GETDAT.INP
+#V_DCBTYP Bernese phase/code bias version          FINAL
+#V_IONTYP Bernese Ionospheric model version        FINAL
 V_GDDNLD GETDATA download now                     1
 V_GDQUEU GETDATA queue data request               0
 V_GDQUEU GETDATA queue data request               0
