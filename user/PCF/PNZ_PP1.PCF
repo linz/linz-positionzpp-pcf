@@ -32,7 +32,8 @@ PID SCRIPT   OPT_DIR  CAMPAIGN CPU      F WAIT FOR....
 # estimating clocks
 # -------------------------------------------
 050 RNX2STA  PNZ1REF           ANY      1 040
-055 PNZATX   PNZ1REF           ANY      1 050
+054 NGS14TRM PNZ1REF           ANY      1 050
+055 PNZATX   PNZ1REF           ANY      1 054
 056 RNXSMT   PNZ1REF           ANY      1 055
 060 RXOBV3   PNZ1REF           ANY      1 056
 070 CODSPP   PNZ1REF           ANY      1 060
@@ -47,6 +48,8 @@ PID SCRIPT   OPT_DIR  CAMPAIGN CPU      F WAIT FOR....
 090 RNX2STA  PNZ1REF           ANY      1 085
 #
 # Create PCV file with only sites in STA file
+# Using both ATX file for completeness, both
+# have different antennas and update cadence
 # Get ORB & EOP products, VMF, ION, DCB data
 # Rename all files to be the same as the ref
 # -------------------------------------------
@@ -140,8 +143,8 @@ V_GDDNLD GETDATA download now                     1
 V_GDQUEU GETDATA queue data request               0
 V_GDQUEU GETDATA queue data request               0
 V_PCVINF PCV information file                     PCV_COD
-V_MYATX  ANTEX file for update (name incl. ext)   I20.ATX
-V_REFATX ANTEX file for update (name incl. ext)   NGS20.ATX
+V_MYATX  ANTEX file for update (name incl. ext)   NGS20.ATX
+V_REFATX ANTEX file for update (name incl. ext)   I20.ATX
 V_REFINF Reference datum                          IGS20
 V_SATSYS Select the GNSS (ALL, GPS, GPS/GAL)      GPS
 V_GNSSAR GNSS to be used for ambiguity resolution GPS
