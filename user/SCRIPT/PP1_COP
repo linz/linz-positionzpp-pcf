@@ -29,7 +29,7 @@ sub run{
 # Get variables
 # -------------
   my (
-      $cleanDirs,$campDir, $campaign,
+      $cleanDirs,$campDir, $campaign, $gpsDir,
       $wwwwd,$wwww,$yymm,$yyssss,$ssss,$yyyy,
       $refDir,   $crdInf,   $refInf, $dnldInf, $blqInf, $atlInf, $crxInf,
       $refFix,   $hoiFil,   $gnss,
@@ -42,7 +42,7 @@ sub run{
       $extClk,  $extDcb,  $extIon,  $dirSnx,  $extSnx,  $dirPsd,  $extPsd,
       $myatx,   $refatx,) =
   $bpe->getKeys (
-      'V_CLEAN','P','CAMPAIGN',
+      'V_CLEAN','P','CAMPAIGN', 'X',
       '$WD+0','$W+0','$M+0','$YSS+0','$S+0','$Y+0',
       'V_REFDIR','V_CRDINF','V_REFINF', 'V_OBSSEL', 'V_BLQINF','V_ATLINF','V_CRXINF',
       'V_REFFIX','V_HOIFIL','V_SATSYS',
@@ -75,7 +75,7 @@ sub run{
 
 # Copy Antex files for conversion
 # -------------------------------
-  my $dirGen = "/opt/bernese52/GPS/GEN/";
+  my $dirGen = "${gpsDir}/GEN/";
   my $file1 = "${dirGen}$myatx";
   my $file2 = "${dirOut}$myatx";
   copy( ${file1}, ${file2} );
