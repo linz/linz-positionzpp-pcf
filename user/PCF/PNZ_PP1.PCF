@@ -32,7 +32,7 @@ PID SCRIPT   OPT_DIR  CAMPAIGN CPU      F WAIT FOR....
 # estimating clocks
 # -------------------------------------------
 050 RNX2STA  PNZ1REF           ANY      1 040
-054 NGS14TRM PNZ1REF           ANY      1 050
+054 ANTEXTRM PNZ1REF           ANY      1 050
 055 PNZATX   PNZ1REF           ANY      1 054
 056 RNXSMT   PNZ1REF           ANY      1 055
 060 RXOBV3   PNZ1REF           ANY      1 056
@@ -54,8 +54,7 @@ PID SCRIPT   OPT_DIR  CAMPAIGN CPU      F WAIT FOR....
 # Get ORB & EOP products, VMF, ION, DCB data
 # Rename all files to be the same as the ref
 # -------------------------------------------
-094 NGS14TRM PNZ1REF           ANY      1 090
-095 PNZATX   PNZ1REF           ANY      1 094
+095 PNZATX   PNZ1REF           ANY      1 090
 096 PNZATX   PNZ1GEN           ANY      1 095
 #
 # Preprocess, convert, and synchronize observation data

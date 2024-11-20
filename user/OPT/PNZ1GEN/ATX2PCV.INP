@@ -223,7 +223,7 @@ MSG_ONLYELE 1  "Only elevation dependent patterns required"
 
 ! CONSIDER GPS VALUES ONLY
 ! ------------------------
-ONLYGPS 1  "0"
+ONLYGPS 1  "1"
   ## widget = checkbox
 
 MSG_ONLYGPS 1  "Consider GPS values only"
