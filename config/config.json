@@ -23,7 +23,7 @@
         }
     ],
     "ReferenceDataFiles": {
-        "AntennaFile": "PCV_COD.I20",
+        "AntennaFile": "NGS20.ATX",
         "ReceiverFile": "RECEIVER.",
         "ExtraReceiverConfigFile": "config/RECEIVER.MISSING",
         "CombinedReceiverFile": "RECEIVER.ALL"
