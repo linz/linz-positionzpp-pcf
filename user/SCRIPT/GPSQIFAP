@@ -7,7 +7,7 @@ package GPSQIFAP;
 # Purpose :  Prepare parallel QIF ambiguity resolution process for a set of 
 #            baselines selected by BASLST
 #
-# PARAMs  :  PARAM1 - temporary file for parallel processing
+# PARAMs  :  PARAM1 temporary file for parallel processing
 #
 # Author  :  M. Meindl
 # Created :  20-Oct-2003

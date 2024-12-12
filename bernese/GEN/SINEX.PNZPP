@@ -33,10 +33,10 @@ HEADER INFORMATION TO BE INCLUDED:
 *PARAM_TYPE________ INFO________________________________________________________
  OCEAN TIDE LOADING Applied - FES2004
  ATM TIDE LOADING   Applied - global grid based on Ray and Ponte (2003)
- REFERENCE FRAME    IGB08
- EOP PRODUCTS       IGS Final (or Rapid) products depending on selection 
- ORBIT PRODUCTS     IGS Final (or Rapid) products depending on selection
- A PRIORI TROPOS    Global Mapping Function (GMF)  
+ REFERENCE FRAME    IGS20
+ EOP PRODUCTS       CODE Final (or Rapid) products depending on selection 
+ ORBIT PRODUCTS     CODE Final (or Rapid) products depending on selection
+ A PRIORI TROPOS    Vienna Mapping Function (VMF)  
 -FILE/COMMENT
 
 +INPUT/ACKNOWLEDGMENTS

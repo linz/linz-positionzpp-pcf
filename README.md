@@ -2,8 +2,8 @@
 
 This contains the Bernese PCF and configuration scripts for running a PositioNZ-PP job.
 
-When PositioNZ-PP processes a job it uses this repository for configuration.
-The protected branch "pnzpp-prod" is used for processing in the production environment, and the branch
+When PositioNZ-PP processes a job it clones this repository using a specific branch/tag.
+By default the tag "pnzpp-prod" is used for processing in the production environment, and
 "pnzpp-nonprod" for processing in the nonprod environment.
 
 This contains the following directories:
@@ -11,6 +11,7 @@ This contains the following directories:
 * config: contains the configuration information used by the processing script in config.json.  Also may contain a template for files that will be installed into the campaign directory before the processing is run in config/campaign_template
 * user: contains the Bernese USER directory files defining the processing strategy
 * bernese: contains files that will be installed into the Bernese system GPS directory before the processing is run.
+* datapool: contains files that will be installed into the Bernese datapool before the processing is run.
 
 The structure of the configuration file (config/config.json) is as follows:
 
@@ -73,9 +74,4 @@ ConfigOutputFiles are files sourced relative to this configuration file.
 
 CampaignOutputFiles are copied for each Bernese campaign run by the job and are sourced relative to the Bernese campaign directory.
 
-ReferenceDataFiles are used when the Bernese reference data (mainly GPS/GEN contents) are updated by the daily sync-config task.  This includes the option of adding extra receivers to the Bernese receivers file using a file of receivers in this configuration.  The AntennaFile and CombinedReceiverFile (or ReceiverFile if it is not defined) are used to compile the list of valid antennae and receivers used by the front end GUI.  The AntennaFile value may be a list of files used to compile the full set of antennae, eg 
-
-```json
-"AntennaFile": ["I14.ATX","NGS14.ATX"]
-```
-
+ReferenceDataFiles are used when the Bernese reference data (mainly GPS/GEN contents) are updated by the daily sync-config task.  This includes the option of adding extra receivers to the Bernese receivers file using a file of receivers in this configuration.  The AntennaFile and CombinedReceiverFile (or ReceiverFile if it is not defined) are used to compile the list of valid antennae and receivers used by the front end GUI.

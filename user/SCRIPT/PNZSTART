@@ -62,15 +62,6 @@ use lib $ENV{BPE};
 use bpe_util qw(prtMess prtErr prtGoto);
 use LINZ::GNSS::Time qw/seconds_datetime/;
 
-# Quick fix to create standard format UTC date time string...
-
-sub format_time
-{
-    my ($seconds)=@_;
-    my $timestr=seconds_datetime($seconds);
-    $timestr=$1."T".$2."Z" if $timestr =~ /^(\S{10})\s(\S{8})$/;
-    return $timestr;
-}
 
 sub run 
 {
@@ -91,7 +82,7 @@ sub run
     
     my $statusfile=$bpe->{PARAM8} || 'STATUS';
     my $statuspath=$dirout.$statusfile.$lockext;
-    my $runtime=format_time(time());
+    my $runtime=seconds_datetime(localtime());
 
     foreach my $i (2,3,4)
     {
@@ -161,7 +152,7 @@ sub run
         {
             if( $lockfile )
             {
-                my $waittime=format_time((stat($lockfile))[9]);
+                my $waittime=seconds_datetime((stat($lockfile))[9]);
                 print $stf "WAIT $waittime\n";
                 if( open(my $jf,$lockfile))
                 {

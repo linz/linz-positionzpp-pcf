@@ -1,0 +1,104 @@
+package NGS14TRM;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  NGS14TRM
+#
+# Purpose :  Remove satellite calibrations section from NGS14.ATX file
+#
+# PARAMs  :
+#
+# Author  :  D. HANSEN 
+# Created :  16-JUL-2018
+#
+# Changes : 
+#
+# ============================================================================
+use strict;
+
+use File::Basename;
+use File::Copy;
+
+use lib $ENV{BPE};
+use bpe_util qw(appFile timprt);
+
+sub run {
+  my $bpe = shift;
+
+# Get variables
+# -------------
+  my ($myatx, $dirOut,) =
+    $bpe->getKeys('V_REFATX', 'DIR_OUT', );
+
+# Get ATX file to trim down 
+# -------------------------
+
+my $newFil = "NEW.ATX";
+
+open(NGS, "<", "${dirOut}${myatx}" ) or die "Cannot open ${myatx}: $!\n";
+open(OUT, ">", "${dirOut}${newFil}" ) or die "Cannot open ${newFil}: $!\n";
+
+# Read in the ATX file 
+my $flag = 0; 
+my @tmp;
+my @header;
+my @block;
+my @total;
+
+while ( defined ( my $line = <NGS>) ) {
+  chomp($line);
+
+  # Get header from file 
+  if ( $line =~ m/ANTEX VERSION/ || $line =~ m/PCV TYPE/ || $line =~ m/COMMENT/ ) { 
+    push( @header, $line );
+  } 
+  elsif ( $line =~ m/END OF HEADER/ ) {
+    push( @header, $line );
+    push( @total, @header ); 
+  }
+
+  # Get ground antenna calibrations
+  if ( $line =~ m/START OF ANTENNA/ ) {
+    @block = ();
+    push( @block, $line );
+  }
+
+  # Skipping over satellite calibrations 
+  if ( $line =~ m/TYPE \/ SERIAL NO/ ) { 
+    if ( $line =~ m/^BLOCK/ || 
+         $line =~ m/^GLONASS/ || 
+         $line =~ m/^GALILEO/ || 
+         $line =~ m/^BEIDOU/ ||
+         $line =~ m/^QZSS/ ||
+         $line =~ m/^IRNSS/ 
+       ) {
+      $flag = 1;
+    }
+  }
+
+  # Storing the ground antenna in the printing array
+  if ( $line =~ m/END OF ANTENNA/ && $flag == 0 ) { 
+    push( @block, $line );
+    # Remove a single repeat of the 'START OF ANTENNA' line at start of file
+    if ( $block[0] =~ m/START OF ANTENNA/ && $block[1] =~ m/START OF ANTENNA/ ) {
+      my $extra = shift @block;
+    }
+    push( @tmp, @block );
+  }
+  # not storing the satellite calibrations
+  elsif ( $line =~ m/END OF ANTENNA/ && $flag == 1 ){ 
+    $flag = 0; 
+    next;
+  }
+  if    ( $flag == 1 ) { next; }
+  elsif ( $flag == 0 ) { push( @block, $line ); }
+}
+close NGS;
+
+push( @total , @tmp );
+
+foreach ( @total ) { print OUT "$_\n"; }
+close OUT;
+
+move( "${dirOut}${newFil}", "${dirOut}${myatx}" ) or die "Cannot move file: $!\n";
+}

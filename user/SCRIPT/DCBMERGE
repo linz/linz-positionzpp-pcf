@@ -1,0 +1,61 @@
+package CLUMERGE;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  CLUMERGE
+#
+# Purpose :  Append new sites to the CLU file
+#
+# PARAMs  :
+#
+# Author  :  D. HANSEN 
+# Created :  12-JAN-2016
+#
+# Changes : 
+#
+# ============================================================================
+use strict;
+
+use File::Basename;
+use File::Copy;
+use lib $ENV{BPE};
+use bpe_util qw(appFile timprt);
+
+sub run {
+  my $bpe = shift;
+
+# Get variables
+# -------------
+  my ( $yymm, 
+      $dirOrb, $extDcb, ) =
+    $bpe->getKeys('$M+0', 
+      'DIR_DCB', 'EXT_DCB', );
+
+# Get the two files to be merged
+# ------------------------------
+  my $p1c1Fil = "${dirOrb}P1C1$yymm.${extDcb}";
+  my $p1p2Fil = "${dirOrb}P1P2$yymm.${extDcb}";
+  my $newFil  = "${dirOrb}TEMP$yymm.${extDcb}";
+
+  open( FIL1, "<", ${p1c1Fil} ) or die "Cannot open ${p1c1Fil}: $!\n";
+  open( FIL2, "<", ${p1p2Fil} ) or die "Cannot open ${p1p2Fil}: $!\n";
+  open( TEMP, ">", ${newFil} ) or die "Cannot open ${newFil}: $!\n";
+
+# Concatenate both files to a temp file 
+# -------------------------------------
+  while ( my $line = <FIL1> ) {
+    print TEMP $line;
+  }
+  while ( my $line = <FIL2> ) {
+    print TEMP $line;
+  }
+  close FIL1;
+  close FIL2;
+  close TEMP;
+
+# Move file to original P1C1 filename
+# -----------------------------------
+
+  copy( $newFil, $p1c1Fil ) or die "Cannot copy file to old filename";
+  unlink ( $p1p2Fil, $newFil ) or warn "Cannot delete files";
+}
