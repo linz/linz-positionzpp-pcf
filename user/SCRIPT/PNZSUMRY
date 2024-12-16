@@ -207,6 +207,7 @@ sub GetHelmert
         {
             next if $line !~ /^\s*\|\s*\d+\s*\|\s*([\w\s]+?)\s*\|\s*(\w)\s*\w\s*\|([\-\s\d\.]+)\|/;
             my ($name,$flag,$crds)=($1,$2,$3);
+            $name = $1 if $name =~ /^(\w{4})00NZL$/;
             next if ! exists $refstns->{$name};
             my $refstn=$refstns->{$name};
             my ($n,$e,$u)=split(' ',$crds);
