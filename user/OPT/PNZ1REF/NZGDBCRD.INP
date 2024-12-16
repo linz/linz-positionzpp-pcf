@@ -85,13 +85,13 @@ FLGNEW 1 ""
 
 DESCR_FLGNEW 1  "Flag given to new stations"
 
-REFINF   1 "IGb08"
+REFINF   0 
    ## widget = lineedit; emptyallowed = true
    # $(REFINF)
 
 DESCR_REFINF 1 "Reference frame for output coordinate file"
 
-CRDSYS   1 "ITRF2008"
+CRDSYS   0
   ## widget = combobox; editable = false
   ## cards = ITRF2000 ITRF2005 ITRF2008 ITRF2014 ITRF2020
   # $(CRDSYS)
