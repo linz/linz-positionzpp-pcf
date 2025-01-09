@@ -161,7 +161,7 @@ MSG_TITLE 1  "Title line"
 
 ! Maximum number of records in a RINEX file
 ! -----------------------------------------
-MAXREC 1  "3000"
+MAXREC 1  "6000"
   ## widget = spinbox; range = 3000 120000 1000; check_type = integer
 
 MSG_MAXREC 1  "Maximum number of records in a RINEX file"
