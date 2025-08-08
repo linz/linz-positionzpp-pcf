@@ -1,0 +1,112 @@
+package GNSAMB_P;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  GNSAMB_P
+#
+# Purpose :  Execute GPSEST for WL/NL ambiguity resolution
+#
+# PARAMs  :  PARAM1 - 4-character baseline name
+#
+# Author  :  R. Dach
+# Created :  07-Jun-2022
+#
+# Changes :  07-Jun-2022 RD: Created for version 5.4
+#
+# ============================================================================
+use strict;
+
+use lib $ENV{BPE};
+use bpe_util qw(prtMess setGNSS setUserVar);
+
+sub run {
+  my $bpe = shift;
+
+# Get variables
+# -------------
+  my ($yyyyssss,$ssss,
+      $param1, $satsysAR, 
+      $dirCsh,
+      $extCsh) =
+    $bpe->getKeys(
+      '$YYYSS+0','$S+0',
+      'PARAM1','V_GNSSAR',
+      'DIR_CSH',
+      'EXT_CSH');
+
+# Set filename variable
+# ---------------------
+  my $cluster = "${yyyyssss}_${param1}";
+  setUserVar($bpe,"CLUSTER",$cluster,"FFFF",$param1);
+
+  prtMess($bpe,"Ambiguity resolution MELWUEB: $cluster");
+
+# Set the GNSS to be used
+# -----------------------
+  $satsysAR =~ s/R//;  # Remove GLONASS
+  setGNSS($bpe,"$ENV{U}/PAN/GPSEST.INP","USE_",$satsysAR);
+  setGNSS($bpe,"$ENV{U}/PAN/GPSEST.INP","USEAR_",$satsysAR);
+
+# Compute the observation file name
+# ---------------------------------
+  my $obsfil = "$param1$ssss";
+  prtMess($bpe,"PROCESSING FILE $obsfil");
+
+# Check whether CSH file available
+# --------------------------------
+  my $cshFil = "${dirCsh}${obsfil}.${extCsh}";
+  if (-s $cshFil) {
+
+# - Code data screening
+    $bpe->putKey("$ENV{U}/PAN/GPSEST.INP","TITLE",'Code data screening wrt $(FFFF)_$S+0');
+    $bpe->putKey("$ENV{U}/PAN/GPSEST.INP","PSFILES","");
+    $bpe->putKey("$ENV{U}/PAN/GPSEST.INP","CSFILES",$obsfil);
+    $bpe->putKey("$ENV{U}/PAN/GPSEST.INP","SYSOUT",'EDC_$(CLUSTER)');
+    $bpe->putKey("$ENV{U}/PAN/GPSEST.INP","RESIDRS",'EDC_$(CLUSTER)');
+    $bpe->putKey("$ENV{U}/PAN/GPSEST.INP","FREQUENCY","L3");
+    $bpe->putKey("$ENV{U}/PAN/GPSEST.INP","AMBSTRAT","NONE");
+    $bpe->putKey("$ENV{U}/PAN/GPSEST.INP","FIXSTA","ALL");
+
+    my $PGMNAM = "GPSEST";
+    $bpe->RUN_PGMS($PGMNAM);
+
+# - Residual data screening
+    $PGMNAM = "RESRMS";
+    $bpe->RUN_PGMS($PGMNAM);
+
+# - Remove bad observations
+    $PGMNAM = "SATMRK";
+    $bpe->RUN_PGMS($PGMNAM);
+
+# - First GPSEST for WL ambiguity resolution
+    $bpe->putKey("$ENV{U}/PAN/GPSEST.INP","TITLE",'WL AR wrt $(FFFF)_$S+0');
+    $bpe->putKey("$ENV{U}/PAN/GPSEST.INP","PSFILES",$obsfil);
+    $bpe->putKey("$ENV{U}/PAN/GPSEST.INP","RESIDRS","");
+    $bpe->putKey("$ENV{U}/PAN/GPSEST.INP","SYSOUT",'WLI_$(CLUSTER)');
+    $bpe->putKey("$ENV{U}/PAN/GPSEST.INP","FREQUENCY","MELWUEBB");
+    $bpe->putKey("$ENV{U}/PAN/GPSEST.INP","AMBSTRAT","SIGMA");
+    $bpe->putKey("$ENV{U}/PAN/GPSEST.INP","AMBSAVE","1");
+    $bpe->putKey("$ENV{U}/PAN/GPSEST.INP","APRWIDE","1");
+
+    $PGMNAM = "GPSEST";
+    $bpe->RUN_PGMS($PGMNAM);
+
+# - Second GPSEST for NL ambiguity resolution
+    $bpe->putKey("$ENV{U}/PAN/GPSEST.INP","TITLE",'NL AR wrt $(FFFF)_$S+0');
+    $bpe->putKey("$ENV{U}/PAN/GPSEST.INP","CSFILES",'');
+    $bpe->putKey("$ENV{U}/PAN/GPSEST.INP","DCBINP",'');
+    $bpe->putKey("$ENV{U}/PAN/GPSEST.INP","SYSOUT",'NLI_$(CLUSTER)');
+    $bpe->putKey("$ENV{U}/PAN/GPSEST.INP","FREQUENCY","L3");
+    $bpe->putKey("$ENV{U}/PAN/GPSEST.INP","APRL1L2","1");
+    $bpe->putKey("$ENV{U}/PAN/GPSEST.INP","FIXSTA","FIRST");
+
+    $PGMNAM = "GPSEST";
+    $bpe->RUN_PGMS($PGMNAM);
+
+  } else {
+
+    prtMess($bpe,"$cshFil not found");
+
+  }
+
+}

@@ -1,0 +1,22 @@
+package DUMMY;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  DUMMY
+#
+# Purpose :  A BPE script to do nothing
+#            Can e used to indicate the end of a section in the BPE or
+#            even as the final script of a BPE
+#
+# Author  :  R. Dach
+# Created :  07-Jun-2022
+#
+# Changes :  07-Jun-2022 RD: Created for version 5.4
+#
+# ============================================================================
+use strict;
+
+sub run {
+  my $bpe = shift;
+
+}

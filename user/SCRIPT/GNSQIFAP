@@ -1,0 +1,72 @@
+package GNSQIFAP;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  GNSQIFAP
+#
+# Purpose :  Prepare parallel QIF ambiguity resolution process for a set of
+#            baselines selected by BASLST
+#
+# Remark  :  The maximum length of a baseline to be selected by BASLST is
+#            taken from variable V_BL_QIF
+#
+# Author  :  R. Dach
+# Created :  07-Jun-2022
+#
+# Changes :  07-Jun-2022 RD: Created for version 5.4
+#
+# ============================================================================
+use strict;
+
+use lib $ENV{BPE};
+use bpe_util qw(initPar_Bl cleanFiles);
+
+sub run {
+  my $bpe = shift;
+
+# Get variables
+# -------------
+  my ($yyyyssss, $ssss,
+      $blMax, $blMin,
+      $dirBsl,
+      $extBsl) =
+  $bpe->getKeys
+     ('$YYYSS+0', '$S+0',
+      'V_BL_QIF','V_BL_L12',
+      'DIR_BSL',
+      'EXT_BSL');
+
+# Delete old files (OUT, SEL)
+# ---------------------------
+  my $basFil = "${dirBsl}QIF_${yyyyssss}.${extBsl}";
+  unlink ($basFil);
+
+  cleanFiles($bpe,"QIF",["OUT"], "");
+
+# Set maximum baseline length if defined
+# --------------------------------------
+  $bpe->putKey("$ENV{U}/PAN/BASLST.INP","MAXLEN",$blMax) unless $blMax eq "";
+  if ( $blMin ne "" ) {
+    $blMin = sprintf "%d",int(0.9*$blMin);
+    $bpe->putKey("$ENV{U}/PAN/BASLST.INP","MINLEN",$blMin);
+  }
+  $bpe->putKey("$ENV{U}/PAN/BASLST.INP","SELBSL",$basFil);
+
+# Run program
+# -----------
+  my $PGMNAM = "BASLST";
+  $bpe->RUN_PGMS($PGMNAM);
+
+# Get baselines to be processed
+# -----------------------------
+  my @basLin;
+  open (BAS,$basFil);
+  push (@basLin,<BAS>);
+  close BAS;
+  chomp(@basLin);
+
+# Initialize parallel run
+# -----------------------
+  initPar_Bl($bpe,@basLin);
+
+}

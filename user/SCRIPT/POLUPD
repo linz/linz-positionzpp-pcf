@@ -4,32 +4,41 @@ package POLUPD;
 #
 # Name    :  POLUPD
 #
-# Purpose :  Execute POLUPD
+# Purpose :  Execute POLUPD for daily or hourly processing
 #
-# Remark  :  USERATE is automatically adjusted according to the existence
-#            of midnight epochs in the IERS pole file or not
+# Remark  :  - Consider range of sessions for hourly processing
+#            - USERATE is automatically adjusted according to the existence
+#              of midnight epochs in the IERS pole file or not
 #
-# PARAMs  :
+# Author  :  R. Dach
+# Created :  07-Jun-2022
 #
-# Author  :  M. Meindl
-# Created :  23-Jul-2003
-#
-# Changes :  11-Aug-2011 RD: Updated for version 5.2
+# Changes :  07-Jun-2022 RD: Created for version 5.4
 #
 # ============================================================================
 use strict;
 
+use lib $ENV{BPE};
+use bpe_util qw(setHourly);
+
 sub run {
   my $bpe = shift;
+
+# Get variables
+# -------------
+  my ($orb,$ssss,$hourly) = $bpe->getKeys('V_ORB','$S+0','V_HOURLY');
+
+# Hourly processing
+# -----------------
+  setHourly($bpe);
 
 # Run program
 # -----------
   my $PGMNAM = "POLUPD";
   $bpe->RUN_PGMS($PGMNAM);
 
-
-# Check whether the use of the ERP rate must switched off
-# -------------------------------------------------------
+# Check whether the ERP must switched off
+# ---------------------------------------
   my $iepFil = $bpe->getKey("$ENV{U}/INP/POLUPD.INP","IEPFIL");
   my $isRate = $bpe->getKey("$ENV{U}/INP/POLUPD.INP","USERATE");
   my $doRate = 1;
@@ -48,11 +57,13 @@ sub run {
 
 # Repeat the program if necessary
 # -------------------------------
+  if ( $orb eq "XYZ" ) { $doRate = 1 }  # if products from "XYZ" are used
+                                        # apply the polar rates.
+
   if ( $doRate != $isRate ) {
     $bpe->putKey("$ENV{U}/PAN/POLUPD.INP","USERATE","$doRate");
 
     my $PGMNAM = "POLUPD";
     $bpe->RUN_PGMS($PGMNAM);
   }
-
 }

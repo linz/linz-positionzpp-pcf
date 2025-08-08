@@ -1,10 +1,10 @@
 
 ! Some keywords for automatic output
 ! --------------------------------------------------------------------
-CAMPAIGN 0
+CAMPAIGN 1  "./DUMMY"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 0
+SESSION_TABLE 1  "${PAN}/SESSIONS.SES"
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
@@ -38,24 +38,24 @@ MSG_SHOWGEN 1  "Show all general files"
 ! General constants
 ! -----------------
 CONST 0
-  ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
-  # CONST.
+  ## widget = selwin; path = PTH_CONST; ext = EXT_CONST; maxfiles = 1
+  # CONST
 
 DESCR_CONST 1  "General constants"
 
 ! Geodetic datum
 ! --------------
 DATUM 0
-  ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
-  # DATUM.
+  ## widget = selwin; path = PTH_DATUM; ext = EXT_DATUM; maxfiles = 1
+  # DATUM
 
 DESCR_DATUM 1  "Geodetic datum"
 
 ! Satellite information
 ! ---------------------
 SATELL 0
-  ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
-  # SATELLIT.$(PCV)
+  ## widget = selwin; path = PTH_SATELL; ext = EXT_SATELL; maxfiles = 1
+  # $(SATINF)_$(PCV)
 
 DESCR_SATELL 1  "Satellite information"
 
@@ -63,7 +63,7 @@ DESCR_SATELL 1  "Satellite information"
 ! --------------------------
 ABBREV 0
   ## widget = selwin; path = DIR_ABB; ext = EXT_ABB; maxfiles = 1
-  # ABBREV
+  # $(CRDINF)
 
 DESCR_ABBREV 1  "Abbreviation table"
 
@@ -73,7 +73,7 @@ COORD 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
   ## activeif = STRATEGY == DEFINED AND REPLACE == 1 OR STRATEGY == OBS-MAX OR STRATEGY == SHORTEST OR STRATEGY == STAR
   ## emptyallowed = false
-  # APR$S+0
+  # $(APR)_$YYYSS+0
 
 DESCR_COORD 1  "Station coordinates"
 
@@ -83,7 +83,6 @@ ECCENT 0
   ## widget = selwin; path = DIR_ECC; ext = EXT_ECC; maxfiles = 1
   ## activeif = STRATEGY == DEFINED AND REPLACE == 1 OR STRATEGY == OBS-MAX OR STRATEGY == SHORTEST OR STRATEGY == STAR
   ## emptyallowed = true
-  # 
 
 DESCR_ECCENT 1  "Site eccentricities"
 
@@ -93,7 +92,6 @@ BASDEF 0
   ## widget = selwin; path = DIR_BSL; ext = EXT_BSL; maxfiles = 1
   ## activeif = STRATEGY == OBS-MAX OR STRATEGY == SHORTEST OR STRATEGY == DEFINED
   ## emptyallowed = true
-  # 
 
 DESCR_BASDEF 1  "Predefined baselines"
 
@@ -102,7 +100,7 @@ DESCR_BASDEF 1  "Predefined baselines"
 CLUINP 0
   ## widget = selwin; path = DIR_CLU; ext = EXT_CLU; maxfiles = 1
   ## emptyallowed = true
-  # 
+  # $(CRDINF)
 
 DESCR_CLUINP 1  "Cluster definition"
 
@@ -114,7 +112,7 @@ CODEREF 0
   ## pointer = CODEZERO
   # 
 
-CODEREF_PTH_COL_2 0
+CODEREF_PTH_COL_2 1  "./DUMMY/OBS/"
   ## widget = initmenu; pointer = DIR_CZO
 
 CODEREF_EXT_COL_2 1  "CZO"
@@ -127,7 +125,7 @@ CODEZERO 0
   ## activeif = MEATYP == CODE AND STRATEGY / MANUAL
   # ????$S+0
 
-CODEZERO_PTH_COL_2 0
+CODEZERO_PTH_COL_2 1  "./DUMMY/OBS/"
   ## widget = initmenu; pointer = DIR_CZO
 
 CODEZERO_EXT_COL_2 1  "CZO"
@@ -140,7 +138,7 @@ CODEZERO1 0
   ## activeif = MEATYP == CODE AND STRATEGY == MANUAL
   # 
 
-CODEZERO1_PTH_COL_2 0
+CODEZERO1_PTH_COL_2 1  "./DUMMY/OBS/"
   ## widget = initmenu; pointer = DIR_CZO
 
 CODEZERO1_EXT_COL_2 1  "CZO"
@@ -153,7 +151,7 @@ CODEZERO2 0
   ## activeif = MEATYP == CODE AND STRATEGY == MANUAL
   # 
 
-CODEZERO2_PTH_COL_2 0
+CODEZERO2_PTH_COL_2 1  "./DUMMY/OBS/"
   ## widget = initmenu; pointer = DIR_CZO
 
 CODEZERO2_EXT_COL_2 1  "CZO"
@@ -167,9 +165,9 @@ PHASEREF 0
   ## widget = selwin; path = DIR_PZH; ext = EXT_PZH; maxfiles = 999
   ## emptyallowed = true; activeif = MEATYP == PHASE AND STRATEGY == STAR
   ## pointer = PHASEZERO
-  # $(USRMRK)$S+0
+  # 
 
-PHASEREF_PTH_COL_2 0
+PHASEREF_PTH_COL_2 1  "./DUMMY/OBS/"
   ## widget = initmenu; pointer = DIR_PZO
 
 PHASEREF_EXT_COL_2 1  "PZO"
@@ -182,7 +180,7 @@ PHASEZERO 0
   ## activeif = MEATYP == PHASE AND STRATEGY /= MANUAL
   # ????$S+0
 
-PHASEZERO_PTH_COL_2 0
+PHASEZERO_PTH_COL_2 1  "./DUMMY/OBS/"
   ## widget = initmenu; pointer = DIR_PZO
 
 PHASEZERO_EXT_COL_2 1  "PZO"
@@ -195,7 +193,7 @@ PHASEZERO1 0
   ## activeif = MEATYP == PHASE AND STRATEGY == MANUAL
   # 
 
-PHASEZERO1_PTH_COL_2 0
+PHASEZERO1_PTH_COL_2 1  "./DUMMY/OBS/"
   ## widget = initmenu; pointer = DIR_PZO
 
 PHASEZERO1_EXT_COL_2 1  "PZO"
@@ -208,7 +206,7 @@ PHASEZERO2 0
   ## activeif = MEATYP == PHASE AND STRATEGY == MANUAL
   # 
 
-PHASEZERO2_PTH_COL_2 0
+PHASEZERO2_PTH_COL_2 1  "./DUMMY/OBS/"
   ## widget = initmenu; pointer = DIR_PZO
 
 PHASEZERO2_EXT_COL_2 1  "PZO"
@@ -221,26 +219,42 @@ MSG_PHASEZERO2 1  "Phase: Second phase zero-difference input file"
 EXT_CSH 1  "CSH"
   ## widget = initmenu; pointer = EXT_CSH
 
-DIR_CSH 0
+MSG_EXT_CSH 1  "Extension for code baseline file, header"
+
+DIR_CSH 1  "./DUMMY/OBS/"
   ## widget = initmenu; pointer = DIR_CSH
+
+MSG_DIR_CSH 1  "Directory for code baseline file, header"
 
 EXT_CSO 1  "CSO"
   ## widget = initmenu; pointer = EXT_CSO
 
-DIR_CSO 0
+MSG_EXT_CSO 1  "Extension for code baseline file, observations"
+
+DIR_CSO 1  "./DUMMY/OBS/"
   ## widget = initmenu; pointer = DIR_CSO
+
+MSG_DIR_CSO 1  "Directory for code baseline file, observations"
 
 EXT_PSH 1  "PSH"
   ## widget = initmenu; pointer = EXT_PSH
 
-DIR_PSH 0
+MSG_EXT_PSH 1  "Extension for phase baseline file, header"
+
+DIR_PSH 1  "./DUMMY/OBS/"
   ## widget = initmenu; pointer = DIR_PSH
+
+MSG_DIR_PSH 1  "Directory for phase baseline file, header"
 
 EXT_PSO 1  "PSO"
   ## widget = initmenu; pointer = EXT_PSO
 
-DIR_PSO 0
+MSG_EXT_PSO 1  "Extension for phase baseline file, observations"
+
+DIR_PSO 1  "./DUMMY/OBS/"
   ## widget = initmenu; pointer = DIR_PSO
+
+MSG_DIR_PSO 1  "Directory for phase baseline file, observations"
 
 ! --------------------------------------------------------------------
 ! OUTPUTFILES                                                        |
@@ -252,7 +266,7 @@ PHASESNG 0
   ## activeif = STRATEGY == MANUAL and MEATYP == PHASE
   # 
 
-PHASESNG_PTH_COL_2 0
+PHASESNG_PTH_COL_2 1  "./DUMMY/OBS/"
   ## widget = initmenu; pointer = DIR_PSO
 
 PHASESNG_EXT_COL_2 1  "PSO"
@@ -267,7 +281,7 @@ CODESNG 0
   ## activeif = STRATEGY == MANUAL and MEATYP == CODE
   # 
 
-CODESNG_PTH_COL_2 0
+CODESNG_PTH_COL_2 1  "./DUMMY/OBS/"
   ## widget = initmenu; pointer = DIR_CSO
 
 CODESNG_EXT_COL_2 1  "CSO"
@@ -279,7 +293,7 @@ DESCR_CODESNG 1  "Single-diff. output file (C)"
 ! --------------------
 BASPRT 0
   ## widget = lineedit; path = DIR_BSL; ext = EXT_BSL
-  # BASELINE
+  # BSL_$YYYSS+0
 
 MSG_BASPRT 1  "Listing of formed baselines"
 
@@ -288,13 +302,13 @@ MSG_BASPRT 1  "Listing of formed baselines"
 CLUOUT 0
   ## widget = lineedit; path = DIR_CLB; ext = EXT_CLB
   ## activeif = CLUINP /= _
-  # 
+  # $YYYSS+0
 
 MSG_CLUOUT 1  "Cluster/baseline assignment"
 
 ! Program output file
 ! -------------------
-SYSODEF 1  "1"
+SYSODEF 1  "0"
   ## widget = checkbox
 
 MSG_SYSODEF 1  "Program output"
@@ -302,7 +316,7 @@ MSG_SYSODEF 1  "Program output"
 SYSOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF == 0; emptyallowed = false
-  # SNGDIF
+  # BSL_$YYYSS+0
 
 DESCR_SYSOUT 1  "Program output"
 
@@ -318,14 +332,33 @@ SYSERR 0
   ## activeif = ERRMRG == 0; emptyallowed = false
   # ERROR
 
-DESCR_SYSERR 1  "Error messages"
+DESCR_SYSERR 1  "Error message"
+
+! Subroutine/function debug output
+! --------------------------------
+DEBUG_STKLOG 0
+  ## widget = lineedit; path = PTH_DBG; ext = EXT_DBG; maxfiles = 1
+  ## emptyallowed = true
+
+DESCR_DEBUG_STKLOG 1  "Debug stack log output"
+
+DEBUG_SUMMARY 0
+  ## widget = lineedit; path = PTH_DBG; ext = EXT_DBG; maxfiles = 1
+  ## emptyallowed = true
+
+DESCR_DEBUG_SUMMARY 1  "Debug summary output"
+
+DEBUG_INTERVAL 1  "00 01 00"
+  ## widget = lineedit; check_type = time
+
+MSG_DEBUG_INTERVAL 1  "Interval for intermediate debug summary"
 
 ! --------------------------------------------------------------------
 ! OPTIONS                                                            |
 ! --------------------------------------------------------------------
 ! Strategy
 ! --------
-STRATEGY 1  "STAR"
+STRATEGY 1  "OBS-MAX"
   ## widget = combobox; editable = false
   ## cards = OBS-MAX SHORTEST STAR DEFINED MANUAL
 
@@ -348,22 +381,53 @@ MSG_MEATYP 1  "Measurement type"
 
 ! Title
 ! -----
-TITLE 1  "Create simple star baseline centred on user station"
+TITLE 0
   ## widget = lineedit
+  # RNX2SNX_$YYYSS+0: Create baselines from phase data
 
 MSG_TITLE 1  "Title line"
 
 ! Satellite System
 ! ----------------
-SATSYS 1  "$(SATSYS)"
-  ## widget = combobox; editable = false; activeif STRATEGY / MANUAL
-  ## cards = ANY GPS GLONASS GALILEO GPS&GLO GPS&GAL GLO&GAL
+! GPS
+USE_G 1  "1"
+  ## widget = checkbox; activeif = STRATEGY / MANUAL
 
-MSG_SATSYS 1  "Stations must contain observ. from a GNSS"
+MSG_USE_G 1  "Stations must contain observ. from GPS"
+
+! GLONASS
+USE_R 1  "0"
+  ## widget = checkbox; activeif = STRATEGY / MANUAL
+
+MSG_USE_R 1  "Stations must contain observ. from GLONASS"
+
+! Galileo
+USE_E 1  "0"
+  ## widget = checkbox; activeif = STRATEGY / MANUAL
+
+MSG_USE_E 1  "Stations must contain observ. from Galileo"
+
+! SBAS
+USE_S 1  "0"
+  ## widget = checkbox; activeif = STRATEGY / MANUAL
+
+MSG_USE_S 1  "Stations must contain observ. from SBAS"
+
+! BeiDou
+USE_C 1  "0"
+  ## widget = checkbox; activeif = STRATEGY / MANUAL
+
+MSG_USE_C 1  "Stations must contain observ. from BeiDou"
+
+! QZSS
+USE_J 1  "0"
+  ## widget = checkbox; activeif = STRATEGY / MANUAL
+
+MSG_USE_J 1  "Stations must contain observ. from QZSS"
 
 ! Interval of simultaneous obs.
 ! ----------------------------
-SIMDT 1  "0.1"
+SIMDT 1  "1.0"
   ## widget = lineedit
 
 MSG_SIMDT 1  "Tolerance to identify observations of one epoch"
@@ -375,20 +439,20 @@ AMBMRG 1  "0"
 
 MSG_AMBMRG 1  "Merge ambiguities from input files"
 
-! New ambigutity after a gap
+! New ambiguity after a gap
 ! ---------------------------
 AMBDT 1  "20"
   ## widget = lineedit; check_type = integer; check_min = 0
   ## activeif = AMBMRG = 0
 
-MSG_AMBDT 1  "Set new ambiguity after a gap in the observations larger than"
+MSG_AMBDT 1  "After a gap in the observations larger than"
 
 ! Set new ambiguity if CS
 ! -----------------------
 AMBSLP 1  "0"
   ## widget = checkbox; activeif = AMBMRG = 0
 
-MSG_AMBSLP 1  "If cycle slip flag set in input file(s)"
+MSG_AMBSLP 1  "If cycle slip flag set in one of the input files"
 
 ! Maximum baseline length
 ! -----------------------
@@ -451,7 +515,7 @@ MSG_CRTBAS 1  "Maximum number of additional baselines"
 ! Bonus depending on baseline length
 ! ----------------------------------
 BONMAX 1  "10"
-  ## widget = lineedit; check_min = 0; checktype = real
+  ## widget = lineedit; check_min = 0
 
 MSG_BONMAX 1  "Bonus depending on baseline length"
 
@@ -489,16 +553,19 @@ MSG_BONLEN3 1  "Maximum baseline length 3"
 # GENERAL OPTIONS                                                              #
 #   Measurement type                    > %%%%%%%%% <                          # MEATYP
 #   Processing strategy                 > %%%%%%%%% <                          # STRATEGY
-#   Stations must contain observ. from  > %%%%%%%%% <                          # SATSYS
+#                                                                              #
+#   Stations must contain observations from selected GNSS:                     #
+#          > % < GPS            > % < GLONASS        > % < Galileo             # USE_G USE_R USE_E
+#          > % < SBAS           > % < BeiDou         > % < QZSS                # USE_S USE_C USE_J
 #                                                                              #
 # AUTOMATED BASELINE CREATION                                                  #
-#   Zero-difference observation files   > %%%%%%%% <       > %%%%%%%% <        # PHASEZERO CODEZERO
-#   Reference station for STAR strategy > %%%%%%%% <       > %%%%%%%% <        # PHASEREF  CODEREF
+#   Zero-difference observation files   > %%%%%%%%%%%% <    > %%%%%%%%%%%% <   # PHASEZERO CODEZERO
+#   Reference station for STAR strategy > %%%%%%%%%%%% <    > %%%%%%%%%%%% <   # PHASEREF  CODEREF
 #                                                                              #
 # MANUAL BASELINE CREATION                                                     #
-#   First@ zero-difference input file   > %%%%%%%% <       > %%%%%%%% <        # PHASEZERO1 CODEZERO1
-#   Second zero-difference input file   > %%%%%%%% <       > %%%%%%%% <        # PHASEZERO2 CODEZERO2
-#   Single-difference output file       > %%%%%%%% <       > %%%%%%%% <        # PHASESNG   CODESNG
+#   First@ zero-difference input file   > %%%%%%%%%%%% <    > %%%%%%%%%%%% <   # PHASEZERO1 CODEZERO1
+#   Second zero-difference input file   > %%%%%%%%%%%% <    > %%%%%%%%%%%% <   # PHASEZERO2 CODEZERO2
+#   Single-difference output file       > %%%%%%%%%%%% <    > %%%%%%%%%%%% <   # PHASESNG   CODESNG
 #                                                                              #
 # END_PANEL ####################################################################
 
@@ -524,18 +591,18 @@ MSG_BONLEN3 1  "Maximum baseline length 3"
 # SNGDIF 2: Filenames                                                          #
 #                                                                              #
 # INPUT FILES                                                                  #
-#   Station coordinates          > %%%%%%%% <                                  # COORD
-#   Site eccentricities          > %%%%%%%% <                                  # ECCENT
-#   Predefined baselines         > %%%%%%%% <                                  # BASDEF
-#   Cluster definition           > %%%%%%%% <                                  # CLUINP
+#   Station coordinates          > %%%%%%%%%%%% <                              # COORD
+#   Site eccentricities          > %%%%%%%%%%%% <                              # ECCENT
+#   Predefined baselines         > %%%%%%%%%%%% <                              # BASDEF
+#   Cluster definition           > %%%%%%%%%%%% <                              # CLUINP
 #                                                                              #
 # RESULT FILES                                                                 #
-#   Listing of formed baselines  > %%%%%%%% <                                  # BASPRT
+#   Listing of formed baselines  > %%%%%%%%%%%% <                              # BASPRT
 #   Cluster/baseline assignment  > %%%%%% <      (2 digits will be appended)   # CLUOUT
 #                                                                              #
 # GENERAL OUTPUT FILES                                                         #
-#   Program output          > % < use SNGDIF.Lnn            or    > %%%%%%%% < # SYSODEF SYSOUT
-#   Error messages          > % < merged to program output  or    > %%%%%%%% < # ERRMRG SYSERR
+#   Program output         > % < use SNGDIF.Lnn           or  > %%%%%%%%%%%% < # SYSODEF SYSOUT
+#   Error messages         > % < merged to program output or  > %%%%%%%%%%%% < # ERRMRG SYSERR
 #                                                                              #
 # END_PANEL ####################################################################
 

@@ -1,26 +1,24 @@
-package RXOBV3;
+package RNXSMT;
 @ISA = ("RUNBPE");
-# ----------------------------------------------------------------------------
+# ============================================================================
 #
 # Name    :  RNXSMT
 #
 # Purpose :  Execute RNXSMT
 #
-# PARAMs  :
+# Author  :  R. Dach
+# Created :  07-Jun-2022
 #
-# Author  :  A. Villiger
-# Created :  14-Dec-2015
+# Changes :  07-Jun-2022 RD: Created for version 5.4
 #
-# Changes :
-#
-# ----------------------------------------------------------------------------
+# ============================================================================
 use strict;
 
-sub run{
+sub run {
   my $bpe = shift;
 
-# Execute Program
-# ---------------
+# Run program
+# -----------
   my $PGMNAM = "RNXSMT";
   $bpe->RUN_PGMS($PGMNAM);
 

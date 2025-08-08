@@ -10,11 +10,11 @@ package GPSEDTAP;
 # PARAMs  :  PARAM2 - output file identifier (default: V_C)
 #            PARAM3 - empty: stop if no PZH files are found
 #
-# Author  :  M. Meindl
-# Created :  20-Oct-2003
+# Author  :  R. Dach
+# Created :  07-Jun-2022
 #
-# Changes :  31-Jan-2005 MM: New initPar call (w/o tmpFil)
-#            11-Aug-2011 RD: Updated for version 5.2
+# Changes :  07-Jun-2022 RD: Created for version 5.4
+#            12-Jun-2023 RD: make sure that all files get deleted (disregarding PARAM2)
 #
 # ============================================================================
 use strict;
@@ -22,49 +22,48 @@ use strict;
 use File::Basename;
 
 use lib $ENV{BPE};
-use bpe_util qw(initPar_Bl initPar_Cl prtErr);
+use bpe_util qw(initPar_Bl initPar_Cl prtErr cleanFiles);
 
 sub run {
   my $bpe = shift;
 
 # Get variables
 # -------------
-  my ($ssss,
+  my ($yyyyssss, $ssss,
       $clu, $clu2, $dirBpe, $c,
       $param2, $param3,
-      $dirPsh,   $dirOut,   $dirRes,   $dirEdt,   $dirNeq,   $dirSum,
-      $extPsh,   $extOut,   $extRes,   $extEdt,   $extNeq,   $extSum) =
+      $dirPsh,
+      $extPsh) =
   $bpe->getKeys
-     ('$S+0',
+     ('$YYYSS+0','$S+0',
       'V_CLU', 'V_CLUEDT', 'DIR_BPEPRT', 'V_C',
       'PARAM2', 'PARAM3',
-      'DIR_PSH', 'DIR_OUT', 'DIR_RES', 'DIR_EDT', 'DIR_NEQ', 'DIR_SUM',
-      'EXT_PSH', 'EXT_OUT', 'EXT_RES', 'EXT_EDT', 'EXT_NEQ', 'EXT_SUM');
+      'DIR_PSH',
+      'EXT_PSH');
 
 
 # Delete old files (OUT, RES, NEQ, EDT)
 # -------------------------------------
   $clu = $clu2 if $clu2 ne "";
-  my $cluster = $clu ne "" ? "${ssss}???" : "${ssss}????";
 
-  my $edt = "EDT";
-  if ( $param2 ne "" ) {
-    $edt = defined $$bpe{$param2} ? $$bpe{$param2} : $param2;
-  }
-  unlink glob("${dirSum}WRN${cluster}.${extSum}");
-  unlink glob("${dirOut}ED[FL]${cluster}.${extOut}");
-  unlink glob("${dirRes}ED[FL]${cluster}.${extRes}");
-  unlink glob("${dirEdt}EDT${cluster}.${extEdt}");
-  unlink glob("${dirNeq}${edt}${cluster}.${extNeq}");
+# no $param2 is allowed here to delete the specific IDs from the list
+  $$bpe{'PARAM2'} = '';
+
+  cleanFiles($bpe,"EDF",  ["OUT","RES"], $clu);
+  cleanFiles($bpe,"EDL",  ["OUT","RES"], $clu);
+  cleanFiles($bpe,"RES",  ["OUT","EDT"], $clu);
+  cleanFiles($bpe,"MRK",  ["OUT"], $clu);
+  cleanFiles($bpe,$$bpe{$param2},["NEQ"], $clu);
+  cleanFiles($bpe,"WRN",  ["SUM"], $clu);
 
 # Initialize parallel run
 # -----------------------
-  my $bpeFil = "${dirBpe}EDT${ssss}";
+  my $bpeFil = "${dirBpe}EDT_${yyyyssss}_";
 
   my @obsFil = glob("${dirPsh}????${ssss}.${extPsh}");
 
   if ($clu ne "") {
-    initPar_Cl($bpe,$bpeFil,@obsFil,0,$clu,0);
+    initPar_Cl($bpe,$bpeFil,@obsFil,0,$clu,0, ($clu));
   } else {
     @obsFil = map { substr(basename($_),0,4) } @obsFil;
     initPar_Bl($bpe,@obsFil);

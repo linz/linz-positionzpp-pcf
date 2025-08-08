@@ -1,0 +1,56 @@
+package HELMCHK;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  HELMCHK
+#
+# Purpose :  Execute HELMR1 to verify the datum definition
+#
+# PARAMs  :  PARAM2 - goto PID for new datum definition
+#
+# Author  :  R. Dach
+# Created :  07-Jun-2022
+#
+# Changes :  07-Jun-2022 RD: Created for version 5.4
+#
+# ============================================================================
+use strict;
+
+use File::Copy;
+
+use lib "$ENV{BPE}";
+use bpe_util qw (prtMess prtGoto);
+
+sub run {
+  my $bpe = shift;
+
+
+# Get variables
+# -------------
+  my ($startCount,$param2) =
+  $bpe->getKeys
+     ('STARTCOUNT','PARAM2');
+
+
+# Outlier rejection only in the first iteration
+# ---------------------------------------------
+  if ($startCount > 1) {
+    prtMess($bpe,"Outlier rejection disabled");
+    $bpe->putKey("$ENV{U}/PAN/HELMR1.INP","REJECT","0");
+  }
+
+# Run program
+# -----------
+  my $PGMNAM = "HELMR1";
+  $bpe->RUN_PGMS($PGMNAM);
+
+
+# Copy the result from the outlier rejection, jump back (if needed)
+# -----------------------------------------------------------------
+  if ($startCount == 1) {
+    my $listFil = $bpe->getKey("$ENV{U}/INP/HELMR1.INP","LISTFIL");
+    if ( -e $listFil ) {
+      prtGoto($bpe,$param2);
+    }
+  }
+}

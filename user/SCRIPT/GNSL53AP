@@ -10,42 +10,39 @@ package GNSL53AP;
 # Remark  :  The maximum length of a baseline to be selected by BASLST is
 #            taken from variable V_BL_L53
 #
-# PARAMs  :
+# Author  :  R. Dach
+# Created :  07-Jun-2022
 #
-# Author  :  S. Schaer
-# Created :  30-Mar-2005
-#
-# Changes :  11-Aug-2011 RD: Updated for version 5.2
-#            15-Jul-2013 RD: Do not include baselines shorter than V_BL_12
+# Changes :  07-Jun-2022 RD: Created for version 5.4
 #
 # ============================================================================
 use strict;
 
 use lib $ENV{BPE};
-use bpe_util qw(initPar_Bl);
+use bpe_util qw(initPar_Bl cleanFiles);
 
 sub run {
   my $bpe = shift;
 
 # Get variables
 # -------------
-  my ($yyssss, $ssss,
+  my ($yyyyssss, 
       $blMax, $blMin,
-      $dirBsl, $dirOut,
-      $extBsl, $extOut) =
+      $dirBsl,
+      $extBsl,) =
   $bpe->getKeys
-     ('$YSS+0', '$S+0',
+     ('$YYYSS+0', 
       'V_BL_L53','V_BL_L12',
-      'DIR_BSL', 'DIR_OUT',
-      'EXT_BSL', 'EXT_OUT');
+      'DIR_BSL',
+      'EXT_BSL');
 
 # Delete old files (OUT, SEL)
 # ---------------------------
-  my $basFil = "${dirBsl}L53${yyssss}.${extBsl}";
+  my $basFil = "${dirBsl}L53_${yyyyssss}.${extBsl}";
   unlink ($basFil);
 
-  unlink glob("${dirOut}????${ssss}_5.${extOut}");
-  unlink glob("${dirOut}????${ssss}_3.${extOut}");
+  cleanFiles($bpe,"WL5",["OUT"], "");
+  cleanFiles($bpe,"NL3",["OUT"], "");
 
 # Set maximum baseline length if defined
 # --------------------------------------

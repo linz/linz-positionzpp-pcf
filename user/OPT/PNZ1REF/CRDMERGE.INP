@@ -6,10 +6,10 @@ ENVIRONMENT 0
 
 ! SOME KEYWORDS FOR AUTOMATIC OUTPUT
 ! ----------------------------------
-CAMPAIGN 0
+CAMPAIGN 1  "./DUMMY"
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 0
+SESSION_TABLE 1  "${PAN}/SESSIONS.SES"
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
@@ -44,14 +44,14 @@ MSG_RADIO_2 1  "Velocities"
 ! ----------------
 CRDMTR 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
-  ## emptyallowed = true
-  # APR$S+0
+  ## emptyallowed = true; activeif = RADIO_1 == 1
+  # REF_$YYYSS+0
 
 DESCR_CRDMTR 1  "Coordinates master file"
 
 CRDMRG 0
-  ## widget = selwin; path = DIR_CRD; ext = EXT_CRD
-  # APR$S+0
+  ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; activeif = RADIO_1 == 1
+  # $(APR)_$YYYSS+0
 
 MSG_CRDMRG 1  "Merge files"
 
@@ -61,13 +61,13 @@ CRDMRG_TXT_COL_1 1  "Coordinate file(s)"
 ! --------------
 VELMTR 0
   ## widget = selwin; path = DIR_VEL; ext = EXT_VEL; maxfiles = 1
-  ## emptyallowed = true
+  ## emptyallowed = true; activeif = RADIO_2 == 1
   # 
 
 DESCR_VELMTR 1  "Velocities master file"
 
 VELMRG 0
-  ## widget = selwin; path = DIR_VEL; ext = EXT_VEL
+  ## widget = selwin; path = DIR_VEL; ext = EXT_VEL; activeif = RADIO_2 == 1
   # 
 
 MSG_VELMRG 1  "Merge files"
@@ -81,7 +81,8 @@ VELMRG_TXT_COL_1 1  "Velocity file(s)"
 ! ---------------
 CRDRES 0
   ## widget = lineedit; path = DIR_CRD; ext = EXT_CRD; emptyallowed = false
-  # ITRF$S+0
+  ## activeif = RADIO_1 == 1
+  # $(APR)_$YYYSS+0
 
 DESCR_CRDRES 1  "Coordinates"
 
@@ -89,6 +90,7 @@ DESCR_CRDRES 1  "Coordinates"
 ! -------------
 VELRES 0
   ## widget = lineedit; path = DIR_VEL; ext = EXT_VEL; emptyallowed = false
+  ## activeif = RADIO_2 == 1
   # 
 
 DESCR_VELRES 1  "Velocities"
@@ -97,13 +99,13 @@ DESCR_VELRES 1  "Velocities"
 ! ----------------------
 FIXRES 0
   ## widget = lineedit; path = DIR_FIX; ext = EXT_FIX; emptyallowed = true
-  # 
+  # REF_$YYYSS+0
 
 DESCR_FIXRES 1  "Station selection file"
 
 ! Program Output File
 ! -------------------
-SYSODEF 1  "1"
+SYSODEF 1  "0"
   ## widget = checkbox
 
 MSG_SYSODEF 1  "Program output"
@@ -111,7 +113,7 @@ MSG_SYSODEF 1  "Program output"
 SYSOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF = 0; emptyallowed = false
-  # CRDMERGE
+  # MRG_$YYYSS+0
 
 DESCR_SYSOUT 1  "Program output"
 
@@ -129,21 +131,40 @@ SYSERR 0
 
 DESCR_SYSERR 1  "Error message"
 
+! Subroutine/function debug output
+! --------------------------------
+DEBUG_STKLOG 0
+  ## widget = lineedit; path = PTH_DBG; ext = EXT_DBG; maxfiles = 1
+  ## emptyallowed = true
+
+DESCR_DEBUG_STKLOG 1  "Debug stack log output"
+
+DEBUG_SUMMARY 0
+  ## widget = lineedit; path = PTH_DBG; ext = EXT_DBG; maxfiles = 1
+  ## emptyallowed = true
+
+DESCR_DEBUG_SUMMARY 1  "Debug summary output"
+
+DEBUG_INTERVAL 1  "00 01 00"
+  ## widget = lineedit; check_type = time
+
+MSG_DEBUG_INTERVAL 1  "Interval for intermediate debug summary"
+
 ! -------------------------------------------------------------------------
 ! Options
 ! -------------------------------------------------------------------------
 ! Title line
 ! ----------
-TITLE 1  "Copy apriori coordinates to ITRF to save ref station coords"
+TITLE 0
   ## widget = lineedit; check_strlen = 65
+  # RNX2SNX_$YYYSS+0: Merge a priori into reference frame coordinates
 
 MSG_TITLE 1  "Title line"
 
 ! New geodetic datum
 ! ------------------
-NEWDAT 1  "IGS14"
+NEWDAT 0
   ## widget = lineedit; check_strlen = 16
-  # 
 
 MSG_NEWDAT 1  "New local geodetic datum"
 
@@ -151,7 +172,6 @@ MSG_NEWDAT 1  "New local geodetic datum"
 ! --------------------
 NEWEPO 0
   ## widget = lineedit; activeif = RADIO_1 = 1; check_strlen = 10
-  # 
 
 MSG_NEWEPO 1  "New coordinate epoch"
 
@@ -159,32 +179,35 @@ MSG_NEWEPO 1  "New coordinate epoch"
 ! -------------------
 NEWTIM 0
   ## widget = lineedit; activeif = RADIO_1 = 1; check_strlen= 8
-  # 
 
 MSG_NEWTIM 1  "New coordinate time"
 
 ! Flag priority
 ! -------------
-FLGPRI 1  "R C U T P M A W N I"
+FLGPRI 0
   ## widget = lineedit
 
 MSG_FLGPRI 1  "Flag priority ascending"
 
 ! Flag replacement
 ! ----------------
-FLGMRG 1  "1"
+FLGMRG 1  "0"
   ## widget = checkbox
 
 MSG_FLGMRG 1  "Only in merge files"
 
-FLGREP 1  "" ""
+FLGREP 4
+  "P" "PPP"
+  "A" "PPP"
+  "W" "PPP"
+  "I" "$(REFINF)"
   ## widget = uniline; numlines = 6
 
 MSG_FLGREP 1  "Replace flags"
 
 ! Same values for same DOMES numbers
 ! ----------------------------------
-DOMES 1  "0"
+DOMES 1  "1"
   ## widget = checkbox
 
 MSG_DOMES 1  "Synchronize stations with same DOMES number"
@@ -209,17 +232,17 @@ MSG_SHOWGEN 1  "Show all general files"
 #   Show all general files  > % <                                              # SHOWGEN
 #                                                                              #
 # INPUT FILES                                                                  #
-# > % < Coordinates master file > %%%%%%%% <      Merge files > %%%%%%%% <     # RADIO_1 CRDMTR CRDMRG
-# > % < Velocities@ master file > %%%%%%%% <      Merge files > %%%%%%%% <     # RADIO_2 VELMTR VELMRG
+# > % < Coordinates master file > %%%%%%%%%%%% <   Merge files > %%%%%%%%%%%% <# RADIO_1 CRDMTR CRDMRG
+# > % < Velocities@ master file > %%%%%%%%%%%% <   Merge files > %%%%%%%%%%%% <# RADIO_2 VELMTR VELMRG
 #                                                                              #
 # RESULT FILES                                                                 #
-#   Coordinates                 > %%%%%%%% <                                   # CRDRES
-#   Velocities                  > %%%%%%%% <                                   # VELRES
-#   Station selection file      > %%%%%%%% <                                   # FIXRES
+#   Coordinates                 > %%%%%%%%%%%% <                               # CRDRES
+#   Velocities                  > %%%%%%%%%%%% <                               # VELRES
+#   Station selection file      > %%%%%%%%%%%% <                               # FIXRES
 #                                                                              #
 # GENERAL OUTPUT FILES                                                         #
-#   Program output          > % < use CRDMERGE.Lnn          or    > %%%%%%%% < # SYSODEF SYSOUT
-#   Error messages          > % < merged to program output  or    > %%%%%%%% < # ERRMRG SYSERR
+#   Program output      > % < use CRDMERGE.Lnn          or    > %%%%%%%%%%%% < # SYSODEF SYSOUT
+#   Error messages      > % < merged to program output  or    > %%%%%%%%%%%% < # ERRMRG SYSERR
 #                                                                              #
 # END_PANEL ####################################################################
 

@@ -14,12 +14,10 @@ package MPRXTR;
 #            PARAM2: PID of the SNGDIF script of the BPE
 #            PARAM3: PID of the protocol script of the BPE
 #
-# Author  :  M. Meindl
-# Created :  20-Oct-2003
+# Author  :  R. Dach
+# Created :  07-Jun-2022
 #
-# Changes :  11-Aug-2011 RD: Updated for version 5.2
-#            14-Jun-2013 RD: Call for "deleteFiles" corrected
-#            20-Dec-2013 RD/SS: Improve deletion features
+# Changes :  07-Jun-2022 RD: Created for version 5.4
 #
 # ============================================================================
 use strict;
@@ -32,12 +30,12 @@ sub run {
 
 # Get variables
 # -------------
-  my ($yyssss, $ssss,
+  my ($ssss,
       $param1, $param2, $param3,
       $dirPzh, $dirPsh, 
       $extPzh, $extPsh) = 
   $bpe->getKeys(
-      '$YSS+0','$S+0',
+      '$S+0',
       'PARAM1','PARAM2','PARAM3',
       'DIR_PZH','DIR_PSH',
       'EXT_PZH','EXT_PSH');

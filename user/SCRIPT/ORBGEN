@@ -1,0 +1,83 @@
+package ORBGEN;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  ORBGEN
+#
+# Purpose :  Execute ORBGEN for daily or hourly processing
+#
+# Remark  :  Consider range of sessions for hourly processing
+#
+# Author  :  R. Dach
+# Created :  07-Jun-2022
+#
+# Changes :  07-Jun-2022 RD: Created for version 5.4
+#
+# ============================================================================
+use strict;
+
+use lib $ENV{BPE};
+use bpe_util qw(prtMess isHourly setHourly setGNSS);
+
+sub run {
+  my $bpe = shift;
+
+# Get variables
+# -------------
+  my ($ssss,$hourly,$satsys,$stoch) = 
+  $bpe->getKeys
+  ('$S+0','V_HOURLY','V_SATSYS','V_STOCH_NUMBER');
+
+# Hourly processing
+# -----------------
+  setHourly($bpe);
+
+# Switch off the pulses if too few hours are processed
+# ----------------------------------------------------
+  if (isHourly($ssss)) {
+    my $stc = $bpe->getKey("$ENV{U}/PAN/ORBGEN.INP","STOCH_NUMBER");
+    if ( $stc eq "ALL" || $stc eq "MANUAL" ) {
+      my @hms = split(" ",$bpe->getKey("$ENV{U}/PAN/ORBGEN.INP","STOCH_INTER"));
+      my $hlp = $hms[0] + $hms[1]/60 + $hms[2]/3600;
+      if ( $hourly < ($hms[0] + $hms[1]/60 + $hms[2]/3600) * 1.9 ) {
+        $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","STOCH_NUMBER","NONE");
+        prtMess($bpe,"Stochastic pulses switched off");
+      }
+    }
+  } else {
+    if ( "$stoch" ne "" ) {
+      my $stc = $bpe->getKey("$ENV{U}/PAN/ORBGEN.INP","STOCH_NUMBER");
+      if ( $stc ne "No_setup" && substr($stc,0,1) ne '$' ) {
+        $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","STOCH_NUMBER",'$(STOCH_NUMBER)');
+      }
+    }
+  }
+
+# Set the GNSS to be used
+# -----------------------
+  if (! ($satsys =~ /G/) ) { $satsys = 'G'.$satsys; } 
+  setGNSS($bpe,"$ENV{U}/PAN/ORBGEN.INP","USE_",$satsys);
+
+# Adjust the settings on integration interval if V_STOCH_NUMBER is set
+# --------------------------------------------------------------------
+  my $leninter = $bpe->getKey("$ENV{U}/PAN/ORBGEN.INP","LENINTER");
+  my $varlnint = $bpe->getKey("$ENV{U}/PAN/ORBGEN.INP","VARLNINT");
+  if ( "$stoch" eq "Spacing" && 
+       "$leninter" eq "00 05 00" && "$varlnint" eq "01 00 00" ) {
+    $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","LENINTER","01 00 00");
+    $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","VARLNINT","06 00 00");
+    prtMess($bpe,"Keywords LENINTER and VARNLINT adjusted for STOCHASTIC PULSES as \"$stoch\"");
+  }
+  if ( "$stoch" eq "Orbit_midnight" && 
+       "$leninter" eq "01 00 00" && "$varlnint" eq "06 00 00") {
+    $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","LENINTER","00 05 00");
+    $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","VARLNINT","01 00 00");
+    prtMess($bpe,"Keywords LENINTER and VARNLINT adjusted for STOCHASTIC PULSES as \"$stoch\"");
+  }
+
+# Run program
+# -----------
+  my $PGMNAM = "ORBGEN";
+  $bpe->RUN_PGMS($PGMNAM);
+
+}

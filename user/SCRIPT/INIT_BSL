@@ -1,0 +1,41 @@
+package INIT_BSL;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  INIT_BSL
+#
+# Purpose :  Remove all existing single-difference files of the session.
+#            (Preparation of SNGDIF)
+#
+# Author  :  R. Dach
+# Created :  07-Jun-2022
+#
+# Changes :  07-Jun-2022 RD: Created for version 5.4
+#
+# ============================================================================
+use strict;
+
+sub run {
+  my $bpe = shift;
+
+# Get variables
+# -------------
+  my ($yyssss, $ssss    ,
+      $dirClb  , $dirCsh  , $dirCso  , $dirPsh  , $dirPso  ,
+      $extClb  , $extCsh  , $extCso  , $extPsh  , $extPso  ) =
+  $bpe->getKeys
+     ('$YSS+0', '$S+0'   ,
+      'DIR_CLB', 'DIR_CSH', 'DIR_CSO', 'DIR_PSH', 'DIR_PSO',
+      'EXT_CLB', 'EXT_CSH', 'EXT_CSO', 'EXT_PSH', 'EXT_PSO');
+
+
+# Delete old single-difference files of the session
+# -------------------------------------------------
+  unlink ( glob ( "${dirClb}${yyssss}??.${extClb}" ));
+
+  unlink ( glob ( "${dirPsh}????${ssss}.${extPsh}" ));
+  unlink ( glob ( "${dirPso}????${ssss}.${extPso}" ));
+  unlink ( glob ( "${dirCsh}????${ssss}.${extCsh}" ));
+  unlink ( glob ( "${dirCso}????${ssss}.${extCso}" ));
+
+}

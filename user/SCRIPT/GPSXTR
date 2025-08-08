@@ -1,0 +1,25 @@
+package GPSXTR;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  GPSXTR
+#
+# Purpose :  Execute GPSXTR
+#
+# Author  :  R. Dach
+# Created :  07-Jun-2022
+#
+# Changes :  07-Jun-2022 RD: Created for version 5.4
+#
+# ============================================================================
+use strict;
+
+sub run {
+  my $bpe = shift;
+
+# Run program
+# -----------
+  my $PGMNAM = "GPSXTR";
+  $bpe->RUN_PGMS($PGMNAM);
+
+}

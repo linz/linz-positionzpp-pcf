@@ -1,0 +1,192 @@
+package RXOBV3;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  RXOBV3
+#
+# Purpose :  Execute RXOBV3
+#
+# Author  :  R. Dach
+# Created :  07-Jun-2022
+#
+# Changes :  07-Jun-2022 RD: Created for version 5.4
+#
+# ============================================================================
+use strict;
+
+use File::Basename;
+
+use lib $ENV{BPE};
+use bpe_util qw(setGNSS getWarn);
+
+sub run {
+  my $bpe = shift;
+
+# Get variables
+# -------------
+  my ( $yyyyssss, $ssss, $satsys, $pcv, $pcvinf,
+       $param3, $clu,    $dirBpe, $dirPhaecc,
+       $dirRxo, $dirSmt,
+       $extRxo, $extSmt,
+       $dirCzh, $dirPzh, $dirCzo, $dirPzo,
+       $extCzh, $extPzh, $extCzo, $extPzo, $dirOut ) =
+  $bpe->getKeys
+     ( '$YYYSS+0', '$S+0', 'V_SATSYS', 'V_PCV', 'V_PCVINF',
+       'PARAM3', 'V_CLU', 'DIR_BPEPRT', 'PTH_PHASECC',
+       'DIR_RXO', 'DIR_SMT',
+       'EXT_RBO', 'EXT_SMT',
+       'DIR_CZH', 'DIR_PZH', 'DIR_CZO', 'DIR_PZO',
+       'EXT_CZH', 'EXT_PZH', 'EXT_CZO', 'EXT_PZO', 'DIR_OUT' );      
+
+# Delete old files (CZH, PZH, CZO, PZO)
+# -------------------------------------
+  unlink glob("${dirCzh}????${ssss}.${extCzh}");
+  unlink glob("${dirPzh}????${ssss}.${extPzh}");
+  unlink glob("${dirCzo}????${ssss}.${extCzo}");
+  unlink glob("${dirPzo}????${ssss}.${extPzo}");
+
+# Check whether original or smoothed RINEX files are imported
+# -----------------------------------------------------------
+  my $smtRnx = $bpe->getKey("$ENV{U}/PAN/RXOBV3.INP","RADIO_S");
+
+  my @rxoFil = $smtRnx ? glob("${dirSmt}*${yyyyssss}.${extSmt}") :
+                         glob("${dirRxo}*${yyyyssss}.${extRxo}");
+  my $satsys_org = $satsys;
+  # Hash to store unique antenna types
+  my %antenna_types; 
+  foreach my $file (@rxoFil) {
+    open(my $fh, '<', $file) or do {
+      warn "Cannot open file '$file': $!\n";
+      next;
+    };
+        
+    # Search for lines containing "ANT # / TYPE"
+    while (my $line = <$fh>) {
+      chomp $line;
+      if ($line =~ /ANT # \/ TYPE/) {
+        my $antenna_type = substr($line, 20, 20);
+        # Remove trailing whitespace
+        $antenna_type =~ s/\s+$//;
+        # Add to hash if not empty
+        $antenna_types{$antenna_type} = 1 if $antenna_type;            
+      }
+    }
+    close($fh);
+  }
+
+  @rxoFil = map { substr(basename($_),0,9) } @rxoFil;         
+
+  # Parse ANTENNA_I20.PCV file to determine what calibrations are available
+  # for each antenna and store in the antenna_types hash
+  open(PCV, "<", "${dirPhaecc}${pcvinf}_${pcv}.PCV" ) or die "Cannot open ${pcvinf}_${pcv}.PCV: $!\n";
+  my $flag = 0; 
+  my @block;
+  my $current_antenna = "";
+
+  while ( defined ( my $line = <PCV>) ) {
+      chomp($line);
+
+      # We are looking for the headerline of each antenna 
+      if ( $line =~ m/^ANTENNA\/RADOME TYPE  NUMBER SYS FRQ/ ) {
+        @block = ();
+        $current_antenna = "";
+        $flag = 1;
+        next;
+      }
+
+      if ( $flag == 1 && $line =~ m/^\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* \*\*\*\*\*\* \*   \*\*\*/) { $flag = 2; next; }
+
+      if ( $flag ==2 ) {
+        my @antenna_list = keys %antenna_types;
+        foreach my $antenna ( @antenna_list) {
+          my $line_ant = substr($line,0,20);
+          if ( ${line_ant} eq ${antenna}) {
+            $flag = 3;
+            $current_antenna = $antenna;
+          } 
+        }
+        if ( $flag != 3 ) { $flag = 0; next;}
+      }
+      # Flag is 3 if the current line is an antenna on our list
+      if ($flag == 3) {
+        # Capture the full antenna header block
+        push(@block, $line);
+      }
+      if ( $flag == 3 && $line =~ m/      NORTH MM  EAST MM   UP MM   FACTOR/ ) { $flag = 4; }
+      if ( $flag == 4 ) {
+        # We have the full block entry for one of our antennas
+        # Harvest the 29th character of the lines (indexed to 28)
+        my $systems = "";
+        foreach ( @block ) {
+          # ignoring the last line of the block as it is whitespace
+          next if /^\s*$/; 
+          my $char = substr($_,28,1);
+          $systems = $systems.$char if $char ne "";
+        }
+
+        # This section checks the available constellation calibrations for each antenna
+        # and compares this with what is requested through the V_SATSYS PCF variable 
+        # We then print out the union of those two.
+        # Note: Output string could range from one digit to 5 (G only to GRECJ)   
+
+        # Check what constellations are requested versus what we have available
+        my $available_systems = '';
+        for my $char (split //, $systems) {
+          if (index($satsys_org, $char) >= 0) {
+            # Only add if not already present (avoid duplicates)
+            $available_systems .= $char unless index($available_systems, $char) >= 0;
+          }
+        }
+
+        # Use only the available systems
+        $systems = $available_systems;
+        $antenna_types{$current_antenna} = $systems;
+
+        # Reset the flags for the next block
+        $flag = 0;
+        $current_antenna = "";
+
+      }
+  }
+  close PCV;
+
+  # Preset selection of GNSS
+  # ------------------------
+  #if (! ($satsys =~ /G/) ) { $satsys = 'G'.$satsys; }
+  # This process is to deal with if the site being processed
+  # collects data for a system (ie. E Galileo) but doesn't have
+  # an antenna calibration for those observations then don't translate those 
+  # observations into the BERNESE files 
+  foreach my $file (@rxoFil) {
+    $current_antenna = "";
+    my $filename = "${dirRxo}${file}_$yyyyssss.SMT";
+    open(my $fh, '<', $filename) or die "Cannot open file '$filename': $!\n";
+    
+    # Search for the pattern
+    while (my $line = <$fh>) {
+      chomp $line;
+      if ($line =~ /ANT # \/ TYPE/ ) { 
+        $current_antenna = substr($line,20,20);
+        $satsys = $antenna_types{$current_antenna};
+        print "$current_antenna is set to $satsys\n";
+        close($fh);
+      }  
+    }
+
+    # Set GNSS selection for program run
+    # -----------------
+    setGNSS($bpe,"$ENV{U}/PAN/RXOBV3.INP","USE_",$satsys);
+    $bpe->putKey("$ENV{U}/PAN/RXOBV3.INP","RXOFILE_BSW","${file}_$yyyyssss");
+    $bpe->putKey("$ENV{U}/PAN/RXOBV3.INP","SMTFILE","${file}_$yyyyssss");
+
+    # Run program
+    # -----------
+    my $PGMNAM = "RXOBV3";
+    $bpe->RUN_PGMS($PGMNAM);
+  }
+  
+# Extract warning/error messages from protocol file
+# -------------------------------------------------
+  getWarn($bpe,"${dirOut}RNX_${yyyyssss}.ERR");
+
+}
