@@ -1,0 +1,312 @@
+
+! Some title information
+! ----------------------
+CAMPAIGN 0
+  ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
+
+SESSION_TABLE 0
+  ## widget = initmenu; pointer = SESSION_TABLE
+
+DESCR_SESSION_TABLE 1  "Session table"
+
+YR4_INFO 0
+  ## widget = comment
+  # $Y+0
+
+SES_INFO 0
+  ## widget = comment
+  # $S+0
+
+USR_INFO 1  "${USER}"
+  ## widget = comment
+
+! Environment Variables
+! ---------------------
+ENVIRONMENT 0
+  ## widget = initmenu; pointer = ENVIR_LIST
+
+! Show general files
+! ------------------
+SHOWGEN 1  "1"
+  ## widget = checkbox
+
+MSG_SHOWGEN 1  "Show all general files"
+
+! List of RINEX Input Files
+! -------------------------
+RADIO_O 1  "1"
+  ## widget = radiobutton; group = RXOSMT
+  ## radiokeys = RXOFILE_BSW RXOFILE_SHORT RXOFILE_LONG RXOFILE
+
+MSG_RADIO_O 1  "Select original RINEX observation files"
+
+RXOFILE_BSW 0
+  ## widget = selwin; path = DIR_RBO; ext = EXT_RBO; emptyallowed = true
+  ## maxfiles = 999; activeif = RADIO_O = 1
+  # *
+
+RXOFILE_BSW_TXT_COL_1 1  "RINEX observation files"
+
+MSG_RXOFILE_BSW 1  "RINEX files, Bernese internal naming"
+
+RXOFILE_SHORT 0
+  ## widget = selwin; path = DIR_RXO; ext = EXT_RXO; emptyallowed = true
+  ## maxfiles = 999; activeif = RADIO_O = 1
+  # *
+
+RXOFILE_SHORT_TXT_COL_1 1  "RINEX observation files"
+
+MSG_RXOFILE_SHORT 1  "RINEX files, RINEX2-style naming"
+
+RXOFILE_LONG 0
+  ## widget = selwin; path = DIR_RXO; ext = EXT_RNX; emptyallowed = true
+  ## maxfiles = 999; activeif = RADIO_O = 1
+  # *
+
+RXOFILE_LONG_TXT_COL_1 1  "RINEX observation files"
+
+MSG_RXOFILE_LONG 1  "RINEX files, RINEX3-style naming"
+
+RXOFILE 0
+  ## widget = selwin; path = DIR_RXO; emptyallowed = true; maxfiles = 999
+  ## activeif = RADIO_O = 1
+  # 
+
+RXOFILE_TXT_COL_1 1  "RINEX observation files"
+
+MSG_RXOFILE 1  "RINEX files, any naming convention"
+
+! List of Smoothed RINEX Input Files
+! ----------------------------------
+RADIO_S 1  "0"
+  ## widget = radiobutton; group = RXOSMT; radiokeys = SMTFILE
+
+MSG_RADIO_S 1  "Select Smoothed RINEX obs. files"
+
+SMTFILE 0
+  ## widget = selwin; path = DIR_SMT; ext = EXT_SMT; maxfiles = 999
+  ## activeif = RADIO_S = 1
+  # *_$YYYSS+0
+
+SMTFILE_TXT_COL_1 1  "Smoothed RINEX observation files"
+
+MSG_SMTFILE 1  "Smoothed RINEX observation files"
+
+! STAINFO with information requested in the RINEX files
+! -----------------------------------------------------
+RNXINFO 0
+  ## widget = lineedit; path = DIR_STA; ext = EXT_STA
+  # $(STAINF)
+
+DESCR_RNXINFO 1  "Station info. from RINEX files"
+
+! Program Output File
+! -------------------
+SYSODEF 1  "1"
+  ## widget = checkbox
+
+MSG_SYSODEF 1  "Program output"
+
+SYSOUT 0
+  ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
+  ## activeif = SYSODEF == 0
+  # RNX2STA
+
+DESCR_SYSOUT 1  "Program output"
+
+NOMSGDATE 0
+
+MSG_NOMSGDATE 1  "Suppress writing of message timestamp"
+
+! Error Message File
+! ------------------
+ERRMRG 1  "0"
+  ## widget = checkbox
+
+MSG_ERRMRG 1  "Error message"
+
+SYSERR 0
+  ## widget = lineedit; path = PTH_ERR; ext = EXT_ERR
+  ## activeif = ERRMRG == 0
+  # ERROR
+
+DESCR_SYSERR 1  "Error message"
+
+! Subroutine/function debug output
+! --------------------------------
+DEBUG_STKLOG 0
+  ## widget = lineedit; path = PTH_DBG; ext = EXT_DBG; maxfiles = 1
+  ## emptyallowed = true
+
+DESCR_DEBUG_STKLOG 1  "Debug stack log output"
+
+DEBUG_SUMMARY 0
+  ## widget = lineedit; path = PTH_DBG; ext = EXT_DBG; maxfiles = 1
+  ## emptyallowed = true
+
+DESCR_DEBUG_SUMMARY 1  "Debug summary output"
+
+DEBUG_INTERVAL 1  "00 01 00"
+  ## widget = lineedit; check_type = time
+
+MSG_DEBUG_INTERVAL 1  "Interval for intermediate debug summary"
+
+! Title line
+! ----------
+TITLE 1  "Create Station information file content from RINEX header"
+  ## widget = lineedit
+
+MSG_TITLE 1  "Title line"
+
+! Flags in station info file
+! --------------------------
+FLG1 1  "001"
+  ## widget = lineedit; check_strlen = 3
+
+MSG_FLG1 1  "Flag for TYPE 001: Renaming of stations"
+
+FLG2 1  "001"
+  ## widget = lineedit; check_strlen = 3
+
+MSG_FLG2 1  "Flag for TYPE 002: Station information"
+
+! Consider radome code
+! --------------------
+RADOME 1  "1"
+  ## widget = checkbox
+
+MSG_RADOME 1  "Consider radome code"
+
+! Add marker number
+! -----------------
+MRKNUM 1  "0"
+  ## widget = checkbox
+
+MSG_MRKNUM 1  "Add marker number to station name"
+
+! Convert serial numbers
+! ----------------------
+RECSER 1  "0"
+  ## widget = checkbox
+
+MSG_RECSER 1  "Convert receiver serial number"
+
+ANTSER 1  "0"
+  ## widget = checkbox
+
+MSG_ANTSER 1  "Convert antenna serial number"
+
+! RINEX options
+! -------------
+RDRXHDUC 1  "1"
+  ## widget = checkbox
+
+MSG_RDRXHDUC 1  "Change header strings to upper case on read"
+
+ERRFROMRXHDR 1  "0"
+  ## widget = checkbox
+
+MSG_ERRFROMRXHDR 1  "Write errs/warns from input RNX hdr comments"
+
+! Actions in case of inconsistencies in RINEX headers
+! ---------------------------------------------------
+AOF_ANT_MRK_NAM 1  "WARNING"
+  ## widget = combobox; editable = false; cards = NONE WARNING SKIP ERROR
+
+MSG_AOF_ANT_MRK_NAM 1  "Antenna marker name doesn't match file name"
+
+AOM_GLO_FRQ_NBR 1  "WARNING"
+  ## widget = combobox; editable = false; cards = NONE WARNING SKIP ERROR
+
+MSG_AOM_GLO_FRQ_NBR 1  "Missing mand. record: GLONASS SLOT / FRQ #"
+
+AOM_GLO_PHS_BIS 1  "WARNING"
+  ## widget = combobox; editable = false; cards = NONE WARNING SKIP ERROR
+
+MSG_AOM_GLO_PHS_BIS 1  "Missing mand. record: GLONASS COD/PHS/BIS"
+
+AOM_SYS_PHS 1  "WARNING"
+  ## widget = combobox; editable = false; cards = NONE WARNING SKIP ERROR
+
+MSG_AOM_SYS_PHS 1  "Missing mand. record: SYS / PHASE SHIFT"
+
+AOM_GENERAL 1  "WARNING"
+  ## widget = combobox; editable = false; cards = NONE WARNING SKIP ERROR
+
+MSG_AOM_GENERAL 1  "Other missing mandatory records"
+
+
+# BEGIN_PANEL NO_CONDITION #####################################################
+# EXTRACT STATION INFORMATION FROM RINEX HEADERS - RNX2STA 1: Filenames        #
+#                                                                              #
+# GENERAL FILES                                                                #
+#   Show all general files  > % <                                              # SHOWGEN
+#                                                                              #
+# INPUT FILES                                                                  #
+#   > % < Original RINEX observation files                                     # RADIO_O
+#         Bernese internal naming  > %%%%%%%%%%%%%%%%%% <                      # RXOFILE_BSW
+#         RINEX3-style naming      > %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <      # RXOFILE_LONG
+#         RINEX2-style naming      > %%%%%%%% <                                # RXOFILE_SHORT
+#         Any naming convention    > %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <      # RXOFILE
+#                                                                              #
+#   > % < Smoothed RINEX observation files                                     # RADIO_S
+#                                  > %%%%%%%%%%%%%%%%%% <                      # SMTFILE
+#                                                                              #
+# RESULT FILES                                                                 #
+#   Station information from RINEX files         > %%%%%%%%%%%% <              # RNXINFO
+#                                                                              #
+# GENERAL OUTPUT FILES                                                         #
+#   Program output        > % < use RNX2STA.Lnn           or  > %%%%%%%%%%%% < # SYSODEF SYSOUT
+#   Error messages        > % < merged to program output  or  > %%%%%%%%%%%% < # ERRMRG SYSERR
+#                                                                              #
+# END_PANEL ####################################################################
+
+
+# BEGIN_PANEL SHOWGEN = 1 ######################################################
+# RNX2STA 1.1: General Files                                                   #
+#                                                                              #
+# MENU SETTINGS                                                                #
+#   Selected campaign       > %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <   # CAMPAIGN
+#   Selected session          year> %%%% <  session> %%%% <                    # YR4_INFO SES_INFO
+#   Session table           > %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <   # SESSION_TABLE
+#                                                                              #
+# END_PANEL ####################################################################
+
+
+# BEGIN_PANEL NO_CONDITION #####################################################
+# RNX2STA 2: Options                                                           #
+#                                                                              #
+# TITLE > %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% < # TITLE
+#                                                                              #
+# RINEX OPTIONS                                                                #
+#   Change hdr strings to upper case on read   > % <                           # RDRXHDUC
+#   Output errors from input headers           > % <                           # ERRFROMRXHDR
+#                                                                              #
+# OPTIONS FOR STATION INFORMATION FILE                                         #
+#   Flag for TYPE 001: Renaming of stations    > %%% <                         # FLG1
+#   Flag for TYPE 002: Station information     > %%% <                         # FLG2
+#   Consider radome code                       > % <                           # RADOME
+#   Add marker number to station name          > % <                           # MRKNUM
+#   Convert receiver serial number to REC #    > % <                           # RECSER
+#   Convert antenna serial number to ANT #     > % <                           # ANTSER
+#                                                                              #
+# END_PANEL ####################################################################
+
+
+# BEGIN_PANEL NO_CONDITION #####################################################
+# RNX2STA 3: Check Content of RINEX Header                                     #
+#                                                                              #
+# Action if marker name doesn't match file name  > %%%%%%%%% <                 # AOF_ANT_MRK_NAM
+#                                                                              #
+# ACTIONS IN CASE OF MISSING MANDATORY HEADER RECORDS                          #
+#   Missing record: GLONASS SLOT / FRQ # > %%%%%%%%% <  (RINEX vers ge 3.01)   # AOM_GLO_FRQ_NBR
+#   Missing record: GLONASS COD/PHS/BIS  > %%%%%%%%% <  (RINEX vers ge 3.02)   # AOM_GLO_PHS_BIS
+#   Missing record: SYS / PHASE SHIFT    > %%%%%%%%% <  (RINEX vers ge 2.12)   # AOM_SYS_PHS
+#   Other missing mandatory records      > %%%%%%%%% <                         # AOM_GENERAL
+#                                                                              #
+#     NONE@@@@: Just continue                                                  #
+#     WARNING@: Write warning and continue                                     #
+#     SKIP@@@@: Skip file and continue with next file                          #
+#     ERROR@@@: Write error message and stop processing                        #
+#                                                                              #
+# END_PANEL ####################################################################

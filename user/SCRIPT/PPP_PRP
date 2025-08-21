@@ -1,0 +1,51 @@
+package PPP_PRP;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  PPP_PRP
+#
+# Purpose :  Switch for pre-processing the phase measurements
+#            V_HRCLK = YES: use MAUPRP else RNXSMT
+#
+# PARAMs  :  PARAM1=MEXTJOB
+#            PARAM2=Next PID for RNXSMT (no high-rate clocks available)
+#            PARAM3=Next PID for MAUPRP (high-rate clocks are available)
+#
+# Author  :  R. Dach
+# Created :  07-Jun-2022
+#
+# Changes :  07-Jun-2022 RD: Created for version 5.4
+#
+# ============================================================================
+use strict;
+
+use lib $ENV{BPE};
+use bpe_util qw(prtGoto);
+
+
+sub run {
+  my $bpe = shift;
+
+# Get veriables
+# -------------
+  my ($yyyyssss,
+      $hrclk, $param2, $param3,
+      $dirOut
+      ) =
+    $bpe->getKeys(
+      '$YYYSS+0',
+      'V_HRCLK','PARAM2','PARAM3',
+      'DIR_OUT');
+
+  my $xtrsum = "${dirOut}RES_${yyyyssss}.PRC";
+  unlink $xtrsum;
+
+# Switch for MAUPRP or RNXSMT
+# ---------------------------
+  if ( $hrclk ne "" && (uc substr($hrclk,0,1) eq "Y" || uc $hrclk eq "MAUPRP" )) {
+    prtGoto($bpe,$param3)
+  } else {
+    prtGoto($bpe,$param2)
+  }
+
+}

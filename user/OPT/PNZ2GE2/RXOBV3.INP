@@ -217,7 +217,7 @@ MSG_SAVPHS 1  "types to save: Phase"
 COORD 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
   ## emptyallowed = true
-  # 
+  # $(APR)_$YYYSS+0
 
 MSG_COORD 1  "Update coordinates"
 
@@ -305,7 +305,7 @@ DELETE_FILES 3
 ! -----
 TITLE 0
   ## widget = lineedit
-  # RNX2SNX_$YYYSS+0
+  # PPP_$YYYSS+0
 
 MSG_TITLE 1  "Title line"
 
@@ -324,25 +324,25 @@ USE_R 1  "1"
 MSG_USE_R 1  "Use GLONASS"
 
 ! Galileo
-USE_E 1  "0"
+USE_E 1  "1"
   ## widget = checkbox
 
 MSG_USE_E 1  "Use Galileo"
 
 ! SBAS
-USE_S 1  "0"
+USE_S 1  "1"
   ## widget = checkbox
 
 MSG_USE_S 1  "Use SBAS"
 
 ! BeiDou
-USE_C 1  "0"
+USE_C 1  "1"
   ## widget = checkbox
 
 MSG_USE_C 1  "Use BeiDou"
 
 ! QZSS
-USE_J 1  "0"
+USE_J 1  "1"
   ## widget = checkbox
 
 MSG_USE_J 1  "Use QZSS"
@@ -392,7 +392,7 @@ MSG_SAMPLTOL 1  "Sampling tolerance (sec)"
 
 ! Use Obs. Window
 ! ---------------
-USEWIN 1  "0"
+USEWIN 1  "1"
   ## widget = checkbox
 
 MSG_USEWIN 1  "Use observation window"
@@ -744,7 +744,7 @@ MSG_FLG005 1  "Type 005: Marker type"
 
 ! Information requested in the RINEX files: check STANAM
 ! ------------------------------------------------------
-TSTANAM 1  "WARNING"
+TSTANAM 1  "ERROR"
   ## widget = combobox; editable = false
   ## cards = NO_CHECK WARNING SKIP ERROR
 
@@ -853,18 +853,9 @@ ANTVER 1  "ERROR"
 
 MSG_ANTVER 1  "Check antenna correction file for antenna type"
 
-ANTMETH_LIST 0
+ANTMETH_LIST 1  "NONE"
   ## widget = selwin; menuaux = MENUAUX; action = ANTMETHOD
   ## menuauxkeys = PHASECC SATELL ANTMETH
-  # NONE
-  # ADOPTED from NONE
-  # ADOPTED from GPS
-  # ADOPTED from group
-  # COPIED
-  # CONVERTED
-  # FIELD
-  # CHAMBER
-  # ROBOT
 
 ANTMETH 1  "NONE"
   ## widget = selwin; pointer = ANTMETH_LIST; activeif = PHASECC / _
@@ -1110,41 +1101,41 @@ MSG_PHSCORRAPPL 1  "Rule for applying phase shift corrections"
 
 ! Actions in case of inconsistencies in RINEX headers
 ! ---------------------------------------------------
-AOF_ANT_MRK_NAM 1  "WARNING"
+AOF_ANT_MRK_NAM 1  "NONE"
   ## widget = combobox; editable = false; cards = NONE WARNING SKIP ERROR
 
 MSG_AOF_ANT_MRK_NAM 1  "Antenna marker name doesn't match file name"
 
-AOM_GLO_FRQ_NBR 1  "WARNING"
+AOM_GLO_FRQ_NBR 1  "NONE"
   ## widget = combobox; editable = false; cards = NONE WARNING SKIP ERROR
 
 MSG_AOM_GLO_FRQ_NBR 1  "Missing mand. record: GLONASS SLOT / FRQ #"
 
-AOM_GLO_PHS_BIS 1  "WARNING"
+AOM_GLO_PHS_BIS 1  "NONE"
   ## widget = combobox; editable = false; cards = NONE WARNING SKIP ERROR
 
 MSG_AOM_GLO_PHS_BIS 1  "Missing mand. record: GLONASS COD/PHS/BIS"
 
-AOM_SYS_PHS 1  "WARNING"
+AOM_SYS_PHS 1  "NONE"
   ## widget = combobox; editable = false; cards = NONE WARNING SKIP ERROR
 
 MSG_AOM_SYS_PHS 1  "Missing mand. record: SYS / PHASE SHIFT"
 
-AOM_GENERAL 1  "WARNING"
+AOM_GENERAL 1  "NONE"
   ## widget = combobox; editable = false; cards = NONE WARNING SKIP ERROR
 
 MSG_AOM_GENERAL 1  "Other missing mandatory records"
 
 ! Action in case of incons. hdr. modifications
 ! --------------------------------------------
-AOI_HDRMOD 1  "WARNING"
+AOI_HDRMOD 1  "NONE"
   ## widget = combobox; editable = false; cards = NONE WARNING SKIP ERROR
 
 MSG_AOI_HDRMOD 1  "Action in case of incons. hdr. modifications"
 
 ! What to do in case of event flag
 ! --------------------------------
-EPOFLAG 1  "SKIP"
+EPOFLAG 1  "NONE"
   ## widget = combobox; editable = false; cards = NONE WARNING SKIP ERROR
 
 MSG_EPOFLAG 1  "What to do in case of event flag"

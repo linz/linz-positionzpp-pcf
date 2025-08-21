@@ -1,15 +1,17 @@
-package RNX2STA;
+package GNSSCRD;
 @ISA = ("RUNBPE");
 # ============================================================================
 #
-# Name    :  RNX2STA
+# Name    :  GNSSCRD
 #
-# Purpose :  Execute RNX2STA
+# Purpose :  Execute GNSSCRD
 #
-# Author  :  R. Dach
-# Created :  07-Jun-2022
+# PARAMs  :
 #
-# Changes :  07-Jun-2022 RD: Created for version 5.4
+# Author  :  Chris Crook
+# Created :  20 March 2014
+#
+# Changes :
 #
 # ============================================================================
 use strict;
@@ -19,7 +21,7 @@ sub run {
 
 # Run program
 # -----------
-  my $PGMNAM = "RNX2STA";
+  my $PGMNAM = "GNSSCRD";
   $bpe->RUN_PGMS($PGMNAM);
 
 }

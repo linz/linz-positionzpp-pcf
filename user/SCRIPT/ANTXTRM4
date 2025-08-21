@@ -1,0 +1,187 @@
+package ANTEXTRM;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  ANTEXTRM
+#
+# Purpose :  Remove satellite calibrations section from NGS14.ATX file
+#            and only include ground antennas found in RXO files
+#
+# PARAMs  :
+#
+# Author  :  D. HANSEN 
+# Created :  16-JUL-2018
+#
+# Changes : 
+#           Modified to filter antennas based on RXO file contents
+#
+# ============================================================================
+use strict;
+
+use File::Basename;
+use File::Copy;
+
+
+use lib $ENV{BPE};
+use bpe_util qw(appFile timprt prtMess);
+
+
+sub run {
+  my $bpe = shift;
+
+# Get variables
+# -------------
+  my ( $yyyyssss, $myAtx, $dirOut, $dirRxo, $extRxo, $dirPhaecc) =
+    $bpe->getKeys( '$YYYSS+0','V_MYATX','DIR_OUT', 'DIR_RXO', 'EXT_RBO', 'PTH_PHASECC' );
+
+  # If $myAtx not defined skip this step
+  if ( $myAtx eq "" || ! -e "${dirPhaecc}/${myAtx}_org" ) {
+    prtMess($bpe,"No ANTEX file for update");
+  } else {
+    prtMess($bpe,"Use file ${myAtx}_org for update");
+  
+    # Copy the original ANTEX file from the first conversion step to the 
+    # Original ${myAtx} file name and re-run the trim with all site antennas
+    # included in the file.
+    my $myAtxOrg = "${dirPhaecc}/${myAtx}_org";
+    my $myAtxPth = "${dirPhaecc}/${myAtx}";
+    copy(${myAtxOrg},${myAtxPth})or die "Cannot copy ${myAtxOrg}: $!\n";
+
+
+    # Get list of antenna types needed from RXO files
+    # Get all .RXO files in the directory
+    my @rxo_files = glob("${dirRxo}*${yyyyssss}.${extRxo}");
+    
+    # Hash to store unique antenna types
+    my %antenna_types;
+    
+    # Process each .RXO file
+    foreach my $file (@rxo_files) {
+            
+        # Open file for reading
+        open(my $fh, '<', $file) or do {
+            warn "Cannot open file '$file': $!\n";
+            next;
+        };
+        
+        # Search for lines containing "ANT # / TYPE"
+        while (my $line = <$fh>) {
+            chomp $line;
+            if ($line =~ /ANT # \/ TYPE/) {
+              #print "$line\n";
+                # Extract characters 44-63 (Perl uses 0-based indexing)
+                # So we need characters 43-62 in Perl
+               
+                my $antenna_type = substr($line, 20, 20);
+                # Remove trailing whitespace
+                $antenna_type =~ s/\s+$//;
+                # Add to hash if not empty
+                $antenna_types{$antenna_type} = 1 if $antenna_type;            
+            }
+        }
+        close($fh);
+    }
+    
+  
+    # Print found antenna types for debugging
+    my @antenna_list = sort keys %antenna_types;
+    print "Found antenna types in RXO files:\n";
+    foreach my $ant (@antenna_list) {
+      print "  $ant\n";
+    }
+    print "Total: " . scalar(@antenna_list) . " antenna types\n\n";
+
+  
+
+    # Get ATX file to trim down 
+    # -------------------------
+
+    my $newFil = "NEW.ATX";
+
+    open(NGS, "<", "${dirPhaecc}${myAtx}" ) or die "Cannot open ${myAtx}: $!\n";
+    open(OUT, ">", "${dirPhaecc}${newFil}" ) or die "Cannot open ${newFil}: $!\n";
+
+    # Read in the ATX file 
+    my $flag = 0; 
+    my $skip_antenna = 0;  # Flag to skip antennas not in our list
+    my @tmp;
+    my @header;
+    my @block;
+    my @total;
+    my $current_antenna = "";
+
+    while ( defined ( my $line = <NGS>) ) {
+      chomp($line);
+
+      # Get header from file 
+      if ( $line =~ m/ANTEX VERSION/ || $line =~ m/PCV TYPE/ || $line =~ m/COMMENT/ ) { 
+        push( @header, $line );
+      } 
+      elsif ( $line =~ m/END OF HEADER/ ) {
+        push( @header, $line );
+        push( @total, @header ); 
+      }
+
+      # Get ground antenna calibrations
+      if ( $line =~ m/START OF ANTENNA/ ) {
+        @block = ();
+        push( @block, $line );
+        $skip_antenna = 0;  # Reset skip flag
+        $current_antenna = "";
+      }
+
+      # Skipping over satellite calibrations 
+      if ( $line =~ m/TYPE \/ SERIAL NO/ ) { 
+        if ( $line =~ m/^BLOCK/ || 
+             $line =~ m/^GLONASS/ || 
+             $line =~ m/^GALILEO/ || 
+             $line =~ m/^BEIDOU/ ||
+             $line =~ m/^QZSS/ ||
+             $line =~ m/^IRNSS/ 
+           ) {
+          $flag = 1;
+        } else {
+          # This is a ground antenna, check if it's in our needed list
+          # Extract antenna type from the line (first 20 characters)
+          $current_antenna = substr($line, 0, 20);
+          $current_antenna =~ s/\s+$//;  # Remove trailing whitespace
+          
+          # Check if this antenna is in our needed list
+          if (!exists $antenna_types{$current_antenna}) {
+            $skip_antenna = 1;
+            #print "Skipping antenna: $current_antenna (not found in RXO files)\n";
+          } else {
+            print "Including antenna: $current_antenna\n";
+          }
+        }
+      }
+
+      # Storing the ground antenna in the printing array
+      if ( $line =~ m/END OF ANTENNA/ && $flag == 0 && $skip_antenna == 0 ) { 
+        push( @block, $line );
+        # Remove a single repeat of the 'START OF ANTENNA' line at start of file
+        if ( $block[0] =~ m/START OF ANTENNA/ && $block[1] =~ m/START OF ANTENNA/ ) {
+          my $extra = shift @block;
+        }
+        push( @tmp, @block );
+      }
+      # not storing the satellite calibrations or unwanted antennas
+      elsif ( $line =~ m/END OF ANTENNA/ && ($flag == 1 || $skip_antenna == 1) ){ 
+        $flag = 0; 
+        $skip_antenna = 0;
+        next;
+      }
+      if    ( $flag == 1 || $skip_antenna == 1 ) { next; }
+      elsif ( $flag == 0 && $skip_antenna == 0 ) { push( @block, $line ); }
+    }
+    close NGS;
+
+    push( @total , @tmp );
+
+    foreach ( @total ) { print OUT "$_\n"; }
+    close OUT;
+
+    copy( "${dirPhaecc}${newFil}", "${dirPhaecc}${myAtx}" ) or die "Cannot move file: $!\n";
+  
+  }
+}

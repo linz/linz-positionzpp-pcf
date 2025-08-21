@@ -60,14 +60,14 @@ DESCR_OBSSEL 1  "Observation selection"
 
 ! Print RINEX observation statistics and selection results
 ! --------------------------------------------------------
-PRTOSTAT 1  "1"
+PRTOSTAT 1  "0"
   ## widget = checkbox; activeif = OBSSEL / _
 
 MSG_PRTOSTAT 1  "Print observation statistics"
 
 ! Print extended OBSSEL warnings (debugging)
 ! ------------------------------------------
-EXTOUT 1  "1"
+EXTOUT 1  "0"
   ## widget = checkbox; activeif = OBSSEL / _
 
 MSG_EXTOUT 1  "Print extended OBSSEL warnings"
@@ -101,7 +101,7 @@ MSG_RNXFIL_BSW 1  "RINEX files, Bernese internal naming"
 RNXFIL_SHORT 0
   ## widget = selwin; path = DIR_RXO; ext = EXT_RXO; emptyallowed = true
   ## maxfiles = 999
-  # 
+  # *
 
 RNXFIL_SHORT_TXT_COL_1 1  "RINEX input files"
 
@@ -116,7 +116,7 @@ MSG_RNXFIL_SHORT 1  "RINEX files, RINEX2-style naming"
 RNXFIL_LONG 0
   ## widget = selwin; path = DIR_RXO; ext = EXT_RNX; emptyallowed = true
   ## maxfiles = 999
-  # 
+  # *
 
 RNXFIL_LONG_TXT_COL_1 1  "RINEX input files"
 
@@ -207,7 +207,7 @@ MSG_DEBUG_INTERVAL 1  "Interval for intermediate debug summary"
 ! -----
 TITLE 0
   ## widget = lineedit
-  # RNX2SNX_$YYYSS+0_$(CCC): Preprocess RINEX files
+  # PPP_$YYYSS+0_$(FFFF): Preprocess RINEX files
 
 MSG_TITLE 1  "Title line"
 

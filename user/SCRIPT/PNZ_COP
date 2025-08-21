@@ -1,8 +1,8 @@
-package R2S_COP;
+package PNZ_COP;
 @ISA = ("RUNBPE");
 # ============================================================================
 #
-# Name    :  R2S_COP
+# Name    :  PNZ_COP
 #
 # Purpose :  Copy required files for RNX2SNX.PCF
 #
@@ -76,9 +76,9 @@ sub run{
 
   # Station related input files:
   # Reference frame stations:
-  push @filLst,"${dirCrd}${refInf}_R.${extCrd} 1";
-  push @filLst,"${dirVel}${refInf}_R.${extVel} 1";
-  push @filLst,"${dirPsd}${psdInf}.${extPsd} 1" if (${psdInf} ne "");
+  #push @filLst,"${dirCrd}${refInf}_R.${extCrd} 1";
+  #push @filLst,"${dirVel}${refInf}_R.${extVel} 1";
+  #push @filLst,"${dirPsd}${psdInf}.${extPsd} 1" if (${psdInf} ne "");
   # included through the strategy setup
   #push @filLst,"${dirCrd}${crdInf}.${extCrd} 1";
   #push @filLst,"${dirVel}${crdInf}.${extVel} 1";
@@ -93,7 +93,7 @@ sub run{
 
 # Copy Reference Files
 # --------------------
-  copyRef($refDir,@filLst);
+  #copyRef($refDir,@filLst);
 
 # Copy Skeleton files
 # -------------------
@@ -193,15 +193,15 @@ sub run{
 
 # Copy/concatenate the bias files
 # -------------------------------
-  if ( -e $biaLst[0] ) { # OSB file with GNSS satellite biases available
-    $osbFil = "${dirOsb}${osbFil}.${extOsb}";
+#  if ( -e $biaLst[0] ) { # OSB file with GNSS satellite biases available
+#    $osbFil = "${dirOsb}${osbFil}.${extOsb}";
 
-    copy( $biaLst[0], "${osbFil}_tmp");
-    for (my $ii = 1; $ii <= $#biaLst; $ii++ ) {
-      mergeFile($biaLst[$ii-1],$biaLst[$ii],"${osbFil}_tmp","11");
-    }
-    unlink @biaLst;
-    move("${osbFil}_tmp", "$osbFil");
-  }
+#    copy( $biaLst[0], "${osbFil}_tmp");
+#    for (my $ii = 1; $ii <= $#biaLst; $ii++ ) {
+#      mergeFile($biaLst[$ii-1],$biaLst[$ii],"${osbFil}_tmp","11");
+#    }
+#    unlink @biaLst;
+#    move("${osbFil}_tmp", "$osbFil");
+#  }
 
 }

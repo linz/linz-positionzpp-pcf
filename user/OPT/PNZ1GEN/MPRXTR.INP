@@ -57,8 +57,8 @@ SHOWGEN 1  "1"
 MSG_SHOWGEN 1  "Show all general files"
 
 CONST 0
-  ## widget = selwin; path = PTH_GEN; ext = NO_EXT; maxfiles = 1
-  # CONST.
+  ## widget = selwin; path = PTH_CONST; ext = EXT_CONST; maxfiles = 1
+  # CONST
 
 DESCR_CONST 1  "General constants"
 
@@ -66,7 +66,7 @@ DESCR_CONST 1  "General constants"
 ! --------------------------
 ABBREV 0
   ## widget = selwin; path = DIR_ABB; ext = EXT_ABB; maxfiles = 1
-  # ABBREV
+  # $(STAINF)
 
 DESCR_ABBREV 1  "Abbreviation table"
 
@@ -84,7 +84,8 @@ MSG_RADIO_2 1  "Input files"
 
 JOBOUT 0
   ## widget = selwin; path = DIR_OUT; ext = NO_EXT; emptyallowed = true
-  # 
+  ## activeif = RADIO_1 == 1
+  # MAUPRP.L??
 
 MSG_JOBOUT 1  "Input files"
 
@@ -92,7 +93,8 @@ JOBOUT_TXT_COL_1 1  "Input files"
 
 OUTPUT 0
   ## widget = selwin; path = DIR_OUT; ext = EXT_OUT; emptyallowed = true
-  # MPR???$S+0
+  ## activeif = RADIO_2 == 1
+  # MPR_$YYYSS+0_???
 
 MSG_OUTPUT 1  "Input files"
 
@@ -102,15 +104,23 @@ OUTPUT_TXT_COL_1 1  "Input files"
 ! --------------
 SUMMARY 0
   ## widget = lineedit; path = DIR_SUM; ext = EXT_SUM; emptyallowed = false
-  # MPR$S+0
+  # MPR_$YYYSS+0
 
-DESCR_SUMMARY 1  "MAUPRP summary file"
+DESCR_SUMMARY 1  "MAUPRP station summary file"
+
+! MAUPRP SAT summary
+! ------------------
+SUM_SAT 0
+  ## widget = lineedit; path = DIR_SUM; ext = EXT_SUM; emptyallowed = true
+  # MPS_$YYYSS+0
+
+DESCR_SUM_SAT 1  "MAUPRP satellite summary file"
 
 ! File deletion list
 ! ------------------
 DELFIL 0
   ## widget = lineedit; path = DIR_DEL; ext = EXT_DEL; emptyallowed = true
-  # 
+  # MPR_$YYYSS+0
 
 DESCR_DELFIL 1  "File deletion list"
 
@@ -132,7 +142,7 @@ MSG_SYSODEF 1  "Program output"
 SYSOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF == 0; emptyallowed = false
-  # MPRXTR$S+0
+  # MPRXTR
 
 DESCR_SYSOUT 1  "Program output"
 
@@ -150,6 +160,25 @@ SYSERR 0
 
 DESCR_SYSERR 1  "Error message"
 
+! Subroutine/function debug output
+! --------------------------------
+DEBUG_STKLOG 0
+  ## widget = lineedit; path = PTH_DBG; ext = EXT_DBG; maxfiles = 1
+  ## emptyallowed = true
+
+DESCR_DEBUG_STKLOG 1  "Debug stack log output"
+
+DEBUG_SUMMARY 0
+  ## widget = lineedit; path = PTH_DBG; ext = EXT_DBG; maxfiles = 1
+  ## emptyallowed = true
+
+DESCR_DEBUG_SUMMARY 1  "Debug summary output"
+
+DEBUG_INTERVAL 1  "00 01 00"
+  ## widget = lineedit; check_type = time
+
+MSG_DEBUG_INTERVAL 1  "Interval for intermediate debug summary"
+
 ! Include in deletion file
 ! ------------------------
 ISNGDF 1  "BOTH"
@@ -162,7 +191,7 @@ MSG_ISNGDF 1  "Include in deletion file"
 ! -----
 TITLE 0
   ## widget = lineedit
-  # PNZ-PP TRIPLE DIFFERENCE SUMMARY $S+0
+  # RNX2SNX_$YYYSS+0: Extraction from phase data screening
 
 MSG_TITLE 1  "Title line"
 
@@ -175,7 +204,7 @@ MSG_TITLE 1  "Title line"
 #                                                                              #
 # INPUT FILES                                                                  #
 #   > % <                         > %%%%%%%%%%%% <                             # RADIO_1 JOBOUT
-#   > % <                         > %%%%%%%% <                                 # RADIO_2 OUTPUT
+#   > % <                         > %%%%%%%%%%%% <                             # RADIO_2 OUTPUT
 #                                                                              #
 # END_PANEL ####################################################################
 
@@ -199,13 +228,14 @@ MSG_TITLE 1  "Title line"
 # MPRXTR 2: Output Files                                                       #
 #                                                                              #
 # OUTPUT FILES                                                                 #
-#   MAUPRP summary file        > %%%%%%%% <                                    # SUMMARY
-#   File deletion list         > %%%%%%%% <       (blank, if not to be saved)  # DELFIL
-#   New baseline definition    > %%%%%%%% <       (blank, if not to be saved)  # BSLFIL
+#   MAUPRP station@@ summary file   > %%%%%%%%%%%% <                           # SUMMARY
+#   MAUPRP satellite summary file   > %%%%%%%%%%%% <  (blank: not to be saved) # SUM_SAT
+#   File deletion list              > %%%%%%%%%%%% <  (blank: not to be saved) # DELFIL
+#   New baseline definition         > %%%%%%%%%%%% <  (blank: not to be saved) # BSLFIL
 #                                                                              #
 # GENERAL OUTPUT FILES                                                         #
-#   Program output             > % < use MPRXTR.Lnn           or  > %%%%%%%% < # SYSODEF SYSOUT
-#   Error messages             > % < merged to program output or  > %%%%%%%% < # ERRMRG SYSERR
+#   Program output         > % < use MPRXTR.Lnn           or  > %%%%%%%%%%%% < # SYSODEF SYSOUT
+#   Error messages         > % < merged to program output or  > %%%%%%%%%%%% < # ERRMRG SYSERR
 #                                                                              #
 # TITLE  > %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <  # TITLE
 #                                                                              #

@@ -1,10 +1,10 @@
 
 ! Some keywords for automatic output
 ! --------------------------------------------------------------------
-CAMPAIGN 1  "./DUMMY"
+CAMPAIGN 0
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 1  "${PAN}/SESSIONS.SES"
+SESSION_TABLE 0
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
@@ -63,7 +63,7 @@ DESCR_SATELL 1  "Satellite information"
 ! --------------------------
 ABBREV 0
   ## widget = selwin; path = DIR_ABB; ext = EXT_ABB; maxfiles = 1
-  # $(CRDINF)
+  # $(STAINF)
 
 DESCR_ABBREV 1  "Abbreviation table"
 
@@ -83,6 +83,7 @@ ECCENT 0
   ## widget = selwin; path = DIR_ECC; ext = EXT_ECC; maxfiles = 1
   ## activeif = STRATEGY == DEFINED AND REPLACE == 1 OR STRATEGY == OBS-MAX OR STRATEGY == SHORTEST OR STRATEGY == STAR
   ## emptyallowed = true
+  # 
 
 DESCR_ECCENT 1  "Site eccentricities"
 
@@ -92,6 +93,7 @@ BASDEF 0
   ## widget = selwin; path = DIR_BSL; ext = EXT_BSL; maxfiles = 1
   ## activeif = STRATEGY == OBS-MAX OR STRATEGY == SHORTEST OR STRATEGY == DEFINED
   ## emptyallowed = true
+  # 
 
 DESCR_BASDEF 1  "Predefined baselines"
 
@@ -100,7 +102,7 @@ DESCR_BASDEF 1  "Predefined baselines"
 CLUINP 0
   ## widget = selwin; path = DIR_CLU; ext = EXT_CLU; maxfiles = 1
   ## emptyallowed = true
-  # $(CRDINF)
+  # 
 
 DESCR_CLUINP 1  "Cluster definition"
 
@@ -112,7 +114,7 @@ CODEREF 0
   ## pointer = CODEZERO
   # 
 
-CODEREF_PTH_COL_2 1  "./DUMMY/OBS/"
+CODEREF_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_CZO
 
 CODEREF_EXT_COL_2 1  "CZO"
@@ -125,7 +127,7 @@ CODEZERO 0
   ## activeif = MEATYP == CODE AND STRATEGY / MANUAL
   # ????$S+0
 
-CODEZERO_PTH_COL_2 1  "./DUMMY/OBS/"
+CODEZERO_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_CZO
 
 CODEZERO_EXT_COL_2 1  "CZO"
@@ -138,7 +140,7 @@ CODEZERO1 0
   ## activeif = MEATYP == CODE AND STRATEGY == MANUAL
   # 
 
-CODEZERO1_PTH_COL_2 1  "./DUMMY/OBS/"
+CODEZERO1_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_CZO
 
 CODEZERO1_EXT_COL_2 1  "CZO"
@@ -151,7 +153,7 @@ CODEZERO2 0
   ## activeif = MEATYP == CODE AND STRATEGY == MANUAL
   # 
 
-CODEZERO2_PTH_COL_2 1  "./DUMMY/OBS/"
+CODEZERO2_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_CZO
 
 CODEZERO2_EXT_COL_2 1  "CZO"
@@ -165,9 +167,9 @@ PHASEREF 0
   ## widget = selwin; path = DIR_PZH; ext = EXT_PZH; maxfiles = 999
   ## emptyallowed = true; activeif = MEATYP == PHASE AND STRATEGY == STAR
   ## pointer = PHASEZERO
-  # 
+  # $(USRMRK)$S+0
 
-PHASEREF_PTH_COL_2 1  "./DUMMY/OBS/"
+PHASEREF_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_PZO
 
 PHASEREF_EXT_COL_2 1  "PZO"
@@ -180,7 +182,7 @@ PHASEZERO 0
   ## activeif = MEATYP == PHASE AND STRATEGY /= MANUAL
   # ????$S+0
 
-PHASEZERO_PTH_COL_2 1  "./DUMMY/OBS/"
+PHASEZERO_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_PZO
 
 PHASEZERO_EXT_COL_2 1  "PZO"
@@ -193,7 +195,7 @@ PHASEZERO1 0
   ## activeif = MEATYP == PHASE AND STRATEGY == MANUAL
   # 
 
-PHASEZERO1_PTH_COL_2 1  "./DUMMY/OBS/"
+PHASEZERO1_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_PZO
 
 PHASEZERO1_EXT_COL_2 1  "PZO"
@@ -206,7 +208,7 @@ PHASEZERO2 0
   ## activeif = MEATYP == PHASE AND STRATEGY == MANUAL
   # 
 
-PHASEZERO2_PTH_COL_2 1  "./DUMMY/OBS/"
+PHASEZERO2_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_PZO
 
 PHASEZERO2_EXT_COL_2 1  "PZO"
@@ -221,7 +223,7 @@ EXT_CSH 1  "CSH"
 
 MSG_EXT_CSH 1  "Extension for code baseline file, header"
 
-DIR_CSH 1  "./DUMMY/OBS/"
+DIR_CSH 0
   ## widget = initmenu; pointer = DIR_CSH
 
 MSG_DIR_CSH 1  "Directory for code baseline file, header"
@@ -231,7 +233,7 @@ EXT_CSO 1  "CSO"
 
 MSG_EXT_CSO 1  "Extension for code baseline file, observations"
 
-DIR_CSO 1  "./DUMMY/OBS/"
+DIR_CSO 0
   ## widget = initmenu; pointer = DIR_CSO
 
 MSG_DIR_CSO 1  "Directory for code baseline file, observations"
@@ -241,7 +243,7 @@ EXT_PSH 1  "PSH"
 
 MSG_EXT_PSH 1  "Extension for phase baseline file, header"
 
-DIR_PSH 1  "./DUMMY/OBS/"
+DIR_PSH 0
   ## widget = initmenu; pointer = DIR_PSH
 
 MSG_DIR_PSH 1  "Directory for phase baseline file, header"
@@ -251,7 +253,7 @@ EXT_PSO 1  "PSO"
 
 MSG_EXT_PSO 1  "Extension for phase baseline file, observations"
 
-DIR_PSO 1  "./DUMMY/OBS/"
+DIR_PSO 0
   ## widget = initmenu; pointer = DIR_PSO
 
 MSG_DIR_PSO 1  "Directory for phase baseline file, observations"
@@ -266,7 +268,7 @@ PHASESNG 0
   ## activeif = STRATEGY == MANUAL and MEATYP == PHASE
   # 
 
-PHASESNG_PTH_COL_2 1  "./DUMMY/OBS/"
+PHASESNG_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_PSO
 
 PHASESNG_EXT_COL_2 1  "PSO"
@@ -281,7 +283,7 @@ CODESNG 0
   ## activeif = STRATEGY == MANUAL and MEATYP == CODE
   # 
 
-CODESNG_PTH_COL_2 1  "./DUMMY/OBS/"
+CODESNG_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_CSO
 
 CODESNG_EXT_COL_2 1  "CSO"
@@ -358,7 +360,7 @@ MSG_DEBUG_INTERVAL 1  "Interval for intermediate debug summary"
 ! --------------------------------------------------------------------
 ! Strategy
 ! --------
-STRATEGY 1  "OBS-MAX"
+STRATEGY 1  "STAR"
   ## widget = combobox; editable = false
   ## cards = OBS-MAX SHORTEST STAR DEFINED MANUAL
 
@@ -381,9 +383,8 @@ MSG_MEATYP 1  "Measurement type"
 
 ! Title
 ! -----
-TITLE 0
+TITLE 1  "Create simple star baseline centred on user station"
   ## widget = lineedit
-  # RNX2SNX_$YYYSS+0: Create baselines from phase data
 
 MSG_TITLE 1  "Title line"
 
@@ -396,13 +397,13 @@ USE_G 1  "1"
 MSG_USE_G 1  "Stations must contain observ. from GPS"
 
 ! GLONASS
-USE_R 1  "0"
+USE_R 1  "1"
   ## widget = checkbox; activeif = STRATEGY / MANUAL
 
 MSG_USE_R 1  "Stations must contain observ. from GLONASS"
 
 ! Galileo
-USE_E 1  "0"
+USE_E 1  "1"
   ## widget = checkbox; activeif = STRATEGY / MANUAL
 
 MSG_USE_E 1  "Stations must contain observ. from Galileo"

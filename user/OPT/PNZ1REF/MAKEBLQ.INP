@@ -33,20 +33,20 @@ TITLE 1  "Test"
 MSG_TITLE 1  "Title line"
 
 BLQSRC 0
-  ## widget = selwin; path = PTH_DTPOOL; ext = EXT_BLQ; maxfiles = 1
-  # FES2004_SRC
+  ## widget = selwin; path = PTH_PHASECC; ext = EXT_BLQ; maxfiles = 1
+  # FES2014b_SRC
 
 DESCR_BLQSRC 1  "Base datapool BLQ file used for header and precalculated stations"
 
 BLQGRD 0
-  ## widget = selwin; path = PTH_DTPOOL; ext = EXT_BLQ; emptyallowed = false
-  # FES2004_NZGRID
+  ## widget = selwin; path = PTH_PHASECC; ext = EXT_BLQ; emptyallowed = false
+  # FES2014b_GRID
 
 DESCR_BLQGRD 1  "Datapool BLQ grid file used to calculate missing stations"
 
 BLQTRGT 0
   ## widget = lineedit; path = DIR_STA; ext = EXT_BLQ; emptyallowed = false
-  # STATION
+  # $(STAINF)
 
 DESCR_BLQTRGT 1  "BLQ file to create for the campaign"
 
@@ -55,7 +55,7 @@ DESCR_BLQTRGT 1  "BLQ file to create for the campaign"
 CRDFILE 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
   ## emptyallowed = false
-  # APR$S+0
+  # $(APR)_$YYYSS+0
 
 DESCR_CRDFILE 1  "Coordinate file at which ocean loading values are required"
 

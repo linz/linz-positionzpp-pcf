@@ -1,0 +1,42 @@
+package CCRNXC;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  CCRNXC
+#
+# Purpose :  Execute CCRNXC for daily or hourly processing
+#
+# Remark  :  Consider range of sessions for hourly processing
+#
+# Author  :  R. Dach
+# Created :  07-Jun-2022
+#
+# Changes :  07-Jun-2022 RD: Created for version 5.4
+#
+# ============================================================================
+use strict;
+
+use lib $ENV{BPE};
+use bpe_util qw(isHourly setHourly);
+
+sub run {
+  my $bpe = shift;
+
+# Get variables
+# -------------
+  my ($ssss) = $bpe->getKeys('$S+0');
+
+# Hourly processing
+# -----------------
+  setHourly($bpe);
+  if (isHourly($ssss)) {
+    $bpe->putKey("$ENV{U}/PAN/CCRNXC.INP","RADIO_N",1);
+    $bpe->putKey("$ENV{U}/PAN/CCRNXC.INP","RADIO_F",0);
+  }
+
+# Run program
+# -----------
+  my $PGMNAM = "CCRNXC";
+  $bpe->RUN_PGMS($PGMNAM);
+
+}

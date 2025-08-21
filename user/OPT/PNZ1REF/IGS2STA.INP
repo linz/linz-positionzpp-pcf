@@ -74,7 +74,7 @@ CRDTOL_DESCR 1  "Coordinate check tolerance when comparing IGS log with coord fi
 CRDIN 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
   ## emptyallowed = true
-  # $(DNLD)
+  # $(APR)_$YYYSS+0
 
 DESCR_CRDIN 1  "Coordinate file"
 

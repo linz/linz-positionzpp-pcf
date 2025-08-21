@@ -271,7 +271,7 @@ DESCR_STAWGT 1  "Observation sigma factors"
 ! ---------------------
 COORDRS 0
   ## widget = lineedit; path = DIR_CRD; ext = EXT_CRD
-  # SPP_$(CLUSTER)
+  # SPP_$YYYSS+0
 
 DESCR_COORDRS 1  "Coordinate results"
 
@@ -363,7 +363,7 @@ MSG_SYSODEF 1  "Program output"
 SYSOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF == 0; emptyallowed = false
-  # SPP_$(CLUSTER)
+  # SPP_$YYYSS+0
 
 DESCR_SYSOUT 1  "Program output"
 
@@ -404,7 +404,7 @@ MSG_DEBUG_INTERVAL 1  "Interval for intermediate debug summary"
 ! -----
 TITLE 0
   ## widget = lineedit
-  # RNX2SNX_$YYYSS+0_$(CCC): Receiver clock synchronization
+  # PPP_$YYYSS+0_$(FFFF): Receiver clock synchronization
 
 MSG_TITLE 1  "Title line"
 
@@ -417,7 +417,7 @@ USE_G 1  "1"
 MSG_USE_G 1  "Use GPS"
 
 ! GLONASS
-USE_R 1  "1"
+USE_R 1  "0"
   ## widget = checkbox
 
 MSG_USE_R 1  "Use GLONASS"
@@ -638,7 +638,7 @@ MSG_KINSIG 1  "Max. RMS of kin. solution"
 
 ! Mark outliers in obs. file ?
 ! ----------------------------
-OUTLSAVE 1  "NO"
+OUTLSAVE 1  "CODE"
   ## widget = combobox; editable = false; cards = NO CODE PHASE BOTH
   ## activeif = OUTDET = 1
 

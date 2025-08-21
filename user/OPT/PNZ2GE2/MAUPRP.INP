@@ -6,10 +6,10 @@ ENVIRONMENT 0
 
 ! Information for the title
 ! -------------------------
-CAMPAIGN 1  "./DUMMY"
+CAMPAIGN 0
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 1  "${PAN}/SESSIONS.SES"
+SESSION_TABLE 0
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
@@ -104,7 +104,7 @@ MSG_USE_ANTAZI 1  "Consider antenna azimuth rotations"
 
 ! Zero-Difference Header File(s)
 ! --------------------------------
-RADIO_Z 1  "0"
+RADIO_Z 1  "1"
   ## widget = radiobutton; group = OBSFILES; radiokeys = PZFILES
 
 MSG_RADIO_Z 1  "Zero-difference observation files"
@@ -120,7 +120,7 @@ MSG_PZFILES 1  "Zero-difference observation files"
 
 ! Extensions of the Zero-Difference Obs. Files
 ! ----------------------------------------------
-PZFILES_PTH_COL_2 1  "./DUMMY/OBS/"
+PZFILES_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_PZO
 
 PZFILES_EXT_COL_2 1  "PZO"
@@ -130,7 +130,7 @@ PZFILES_TXT_COL_2 1  "Zero-difference obs file"
 
 ! Single-Difference Header File(s)
 ! --------------------------------
-RADIO_S 1  "1"
+RADIO_S 1  "0"
   ## widget = radiobutton; group = OBSFILES; radiokeys = OBSFIL
 
 MSG_RADIO_S 1  "Single-difference observation files"
@@ -146,7 +146,7 @@ MSG_OBSFIL 1  "Single-difference observation files"
 
 ! Extensions of the Single-Difference Obs. Files
 ! ----------------------------------------------
-OBSFIL_PTH_COL_2 1  "./DUMMY/OBS/"
+OBSFIL_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_PSO
 
 OBSFIL_EXT_COL_2 1  "PSO"
@@ -175,6 +175,7 @@ DESCR_STDORB 1  "Standard orbits"
 METFIL 0
   ## widget = selwin; path = DIR_MET; ext = EXT_MET; maxfiles = 999
   ## emptyallowed = true
+  # 
 
 MSG_METFIL 1  "Meteo data files"
 
@@ -182,6 +183,7 @@ MSG_METFIL 1  "Meteo data files"
 ! -------------
 VMF_FILES 0
   ## widget = selwin; path = DIR_GRD; ext = EXT_GRD; emptyallowed = true
+  # 
 
 MSG_VMF_FILES 1  "VMF grid file"
 
@@ -198,6 +200,7 @@ MSG_TROPOS 1  "Troposphere"
 TROPEST 0
   ## widget = selwin; path = DIR_TRP; ext = EXT_TRP; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_TROPEST 1  "Estimated troposphere"
 
@@ -206,6 +209,7 @@ DESCR_TROPEST 1  "Estimated troposphere"
 IONOS 0
   ## widget = selwin; path = DIR_ION; ext = EXT_ION; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_IONOS 1  "Ionosphere models"
 
@@ -214,6 +218,7 @@ DESCR_IONOS 1  "Ionosphere models"
 ECCENT 0
   ## widget = selwin; path = DIR_ECC; ext = EXT_ECC; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_ECCENT 1  "Site eccentricities"
 
@@ -222,6 +227,7 @@ DESCR_ECCENT 1  "Site eccentricities"
 KININP 0
   ## widget = selwin; path = DIR_KIN; ext = EXT_KIN; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_KININP 1  "Input kinematic coordinates"
 
@@ -230,7 +236,7 @@ DESCR_KININP 1  "Input kinematic coordinates"
 SATCLK 0
   ## widget = selwin; path = DIR_CLK; ext = EXT_CLK; maxfiles = 1
   ## activeif = RADIO_Z = 1; emptyallowed = true
-  # 
+  # $(ORB)_$YYYSS+0
 
 DESCR_SATCLK 1  "Satellite clock corrections"
 
@@ -239,7 +245,6 @@ DESCR_SATCLK 1  "Satellite clock corrections"
 DCBINP 0
   ## widget = selwin; path = DIR_OSB; ext = EXT_OSB; maxfiles = 1
   ## activeif = RADIO_Z = 1; emptyallowed = true
-  # 
 
 MSG_DCBINP 1  "Satellite phase biases"
 
@@ -304,6 +309,7 @@ DESCR_OBSSEL 1  "Observation selection"
 ! ---------------------
 COORDRS 0
   ## widget = lineedit; path = DIR_CRD; ext = EXT_CRD
+  # 
 
 DESCR_COORDRS 1  "Coordinate results"
 
@@ -311,6 +317,7 @@ DESCR_COORDRS 1  "Coordinate results"
 ! ---------
 RESIDRS 0
   ## widget = lineedit; path = DIR_RES; ext = EXT_RES
+  # 
 
 DESCR_RESIDRS 1  "Residual file"
 
@@ -342,7 +349,7 @@ MSG_SYSODEF 1  "Program output"
 SYSOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF == 0; emptyallowed = false
-  # MPR_$(CLUSTER)
+  # MPR_$YYYSS+0
 
 DESCR_SYSOUT 1  "Program output"
 
@@ -383,7 +390,7 @@ MSG_DEBUG_INTERVAL 1  "Interval for intermediate debug summary"
 ! -------------
 TITLE 0
   ## widget = lineedit
-  # RNX2SNX_$YYYSS+0_$(CCC): Phase data screening
+  # PPP_$YYYSS+0_$(FFFF): Phase data screening
 
 MSG_TITLE 1  "Title line"
 
@@ -422,6 +429,7 @@ MSG_MINLEN 1  "Max. baseline length for BOTH (else COMBINED)"
 ! -----------------------
 SECIPL 0
   ## widget = lineedit; activeif = RADIO_Z = 1
+  # 
 
 MSG_SECIPL 1  "Interpolation interval for clocks"
 
@@ -518,7 +526,7 @@ MSG_KINSTA 1  "Kinematic coordinate estimation"
 
 ! A Priori Weights
 ! ----------------
-APRCWGT 1  "1"
+APRCWGT 1  "0"
   ## widget = checkbox
 
 MSG_APRCWGT 1  "A priori coordinate/baseline vector sigmas"
@@ -654,6 +662,7 @@ MSG_CLKOPT4 1  "Set ambiguities for all satellites"
 STAFIX 0
   ## widget = selwin; maxfiles = 1; pointer = STALST
   ## activeif = RADIO_S = 1 AND COORDRS / _
+  # 
 
 MSG_STAFIX 1  "Define the fixed station"
 
@@ -670,14 +679,14 @@ MSG_IPRNT2 1  "Extent of program output"
 
 ! Sigma of L1 Observation
 ! -----------------------
-SIGL12_1 1  "0.0020"
+SIGL12_1 1  "0.0050"
   ## widget = lineedit; activeif = NFRCHK == COMBINED OR NFRCHK == AUTO
 
 MSG_SIGL12_1 1  "Sigma for L1 observations"
 
 ! Sigma of L2 Observation
 ! -----------------------
-SIGL12_2 1  "0.0020"
+SIGL12_2 1  "0.0050"
   ## widget = lineedit; activeif = NFRCHK == COMBINED OR NFRCHK == AUTO
 
 MSG_SIGL12_2 1  "Sigma for L2 observations"
@@ -730,7 +739,7 @@ MSG_SWIDTH2 1  "Search width to find L5 cycle slip correction"
 
 ! Enable Solution of Cycle Slips
 ! ------------------------------
-CYCDET 1  "0"
+CYCDET 1  "1"
   ## widget = checkbox
 
 MSG_CYCDET 1  "Do not accept cycle slip corrections"

@@ -37,7 +37,7 @@ DESCR_DATUM 1  "Geodetic datum"
 ! -----------------------------
 COORD 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
-  # $(DNLD)
+  # $(APR)_$YYYSS+0
 
 DESCR_COORD 1  "Input coordinate file"
 
@@ -59,7 +59,7 @@ MSG_CMCYN 1  "Grid reference"
 ! --------------------------------
 S1_S2_OUT 0
   ## widget = lineedit; path = DIR_ATL; ext = EXT_ATL; emptyallowed = false
-  # $(ATLINF)
+  # $(STAINF)
 
 DESCR_S1_S2_OUT 1  "S1/S2 loading coefficients (out)"
 
