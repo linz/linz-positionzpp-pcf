@@ -319,7 +319,7 @@ CRDFILE 0
 
 MSG_CRDFILE 1  "Name of station file containing a list of stations to load/updated"
 
-MAXMSSTN 1  "310"
+MAXMSSTN 1  "210"
   ## widget = spinbox; range = -210 210 1
   ## activeif = DNLDRS_F = 1 OR DNLDRS_C = 1
 
@@ -344,9 +344,8 @@ REFCRD 0
 
 MSG_REFCRD 1  "Name of station file containing potential reference stations"
 
-REFFLAG 0
+REFFLAG 1  "U"
   ## widget = lineedit; activeif = DNLDRS_A = 1
-  # 
 
 MSG_REFFLAG 1  "If specified only stations with this flag will be candidates"
 

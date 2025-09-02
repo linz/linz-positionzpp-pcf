@@ -90,7 +90,7 @@ DESCR_METHOD 1  "Coordinate calculation method"
 ! --------------------
 CRDOUT 0
   ## widget = lineedit; path = DIR_CRD; ext = EXT_CRD
-  # TST_$YYYSS+0
+  # $(APR)_$YYYSS+0
 
 DESCR_CRDOUT 1  "Output coordinate file"
 

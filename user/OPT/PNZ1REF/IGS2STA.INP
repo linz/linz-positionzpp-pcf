@@ -54,12 +54,12 @@ NAMEN 1  "0"
 
 NAMEN_DESCR 1  "Use name from IGS site log"
 
-NAMEC 1  "0"
+NAMEC 1  "1"
   ## widget = radiobutton; group = NAMETYPE
 
 NAMEC_DESCR 1  "Use code from IGS site log as name"
 
-NAMECD 1  "1"
+NAMECD 1  "0"
   ## widget = radiobutton; group = NAMETYPE
 
 NAMECD_DESCR 1  "Use code + DOMES id from IGS site log as name"
