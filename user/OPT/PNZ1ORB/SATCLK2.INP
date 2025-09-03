@@ -6,10 +6,10 @@ ENVIRONMENT 0
 
 ! Some Keywords for Automatic Output
 ! ----------------------------------
-CAMPAIGN 1  "./DUMMY"
+CAMPAIGN 0
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 1  "${PAN}/SESSIONS.SES"
+SESSION_TABLE 0
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
@@ -66,12 +66,12 @@ MSG_RM_BAD 1  "Remove bad satellites"
 
 ! Epoch Window
 ! ------------
-RADIO_0 1  "0"
+RADIO_0 1  "1"
   ## widget = radiobutton; group = DUMMY
 
 MSG_RADIO_0 1  "Take all clock records"
 
-RADIO_1 1  "1"
+RADIO_1 1  "0"
   ## widget = radiobutton; group = DUMMY
   ## radiokeys = SESSION_YEAR SESSION_STRG
 
