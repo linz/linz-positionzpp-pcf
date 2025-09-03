@@ -217,7 +217,7 @@ DESCR_DATUM 1  "Geodetic datum"
 PHASECC 0
   ## widget = selwin; path = PTH_PHASECC; ext = EXT_PHASECC; maxfiles = 1
   ## emptyallowed = true
-  # $(PCVINF)_$(PCV)
+  # PHAS_COD
 
 DESCR_PHASECC 1  "Antenna corrections"
 
@@ -306,7 +306,7 @@ MSG_SYSODEF 1  "Program output"
 SYSOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF == 0; emptyallowed = false
-  # MIN_$YYYSS+0
+  # $(FIN)_$YYYSS+0
 
 DESCR_SYSOUT 1  "Program output"
 
@@ -376,7 +376,7 @@ MSG_SNXCONT 1  "Content of SINEX"
 
 SINEXRS 0
   ## widget = lineedit; path = DIR_SNX; ext = EXT_SNX
-  # MIN_$YYYSS+0
+  # $(FIN)_$YYYSS+0
 
 DESCR_SINEXRS 1  "SINEX"
 
@@ -384,7 +384,7 @@ DESCR_SINEXRS 1  "SINEX"
 ! -------------------
 COORDRS 0
   ## widget = lineedit; path = DIR_CRD; ext = EXT_CRD
-  # MIN_$YYYSS+0
+  # $(FIN)_$YYYSS+0
 
 DESCR_COORDRS 1  "Station coordinate results"
 
@@ -564,7 +564,7 @@ DESCR_PARAMRS 1  "Parameter estimate results"
 ! -----
 TITLE 0
   ## widget = lineedit
-  # PNZ-PP_$YYYSS+0: Minimum constrained coordinate results
+  # PNZ-PP_$YYYSS+0: NEQ reduction and SINEX generation
 
 MSG_TITLE 1  "Title line"
 
@@ -859,7 +859,7 @@ FREESTA 1  "FROM_FILE"
 
 MSG_FREESTA 1  "Minimum constraint solution"
 
-SIGSTA 1  "MANUAL"
+SIGSTA 1  "FROM_FILE"
   ## widget = combobox; editable = false; activeif = RADIO2_2 == 1
   ## cards = FIRST LAST ALL MANUAL FROM_FILE WITH_FLAG
 
@@ -895,19 +895,19 @@ MSG_C_SCL 1  "Scale"
 
 ! A priori sigmas
 ! ---------------
-C_SIGMAN 1  "0.001"
+C_SIGMAN 1  "0.00001"
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = SIGSTA /= FROM_FILE AND RADIO2_2 = 1
 
 MSG_C_SIGMAN 1  "North"
 
-C_SIGMAE 1  "0.001"
+C_SIGMAE 1  "0.00001"
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = SIGSTA /= FROM_FILE AND RADIO2_2 = 1
 
 MSG_C_SIGMAE 1  "East"
 
-C_SIGMAU 1  "0.001"
+C_SIGMAU 1  "0.00001"
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = SIGSTA /= FROM_FILE AND RADIO2_2 = 1
 
@@ -932,8 +932,9 @@ FREESTA_F 0
 
 MSG_FREESTA_F 1  "List of stations from file"
 
-FREESTA_G 1  "I"
+FREESTA_G 0
   ## widget = lineedit; activeif = FREESTA == WITH_FLAG AND RADIO2_3 == 1
+  # 
 
 MSG_FREESTA_G 1  "Stations with specific flags in CRD file"
 
@@ -1058,13 +1059,13 @@ RADIO3_4 1  "0"
 
 MSG_RADIO3_4 1  "Free network solution"
 
-RADIO3_3 1  "1"
+RADIO3_3 1  "0"
   ## widget = radiobutton; group = DUMMY
   ## radiokeys = FREEVEL V_TRA V_ROT V_SCL
 
 MSG_RADIO3_3 1  "Minimum constraint solution"
 
-RADIO3_2 1  "0"
+RADIO3_2 1  "1"
   ## widget = radiobutton; group = DUMMY; radiokeys = SIGVEL
 
 MSG_RADIO3_2 1  "Velocities constrained"
@@ -1074,19 +1075,19 @@ RADIO3_1 1  "0"
 
 MSG_RADIO3_1 1  "Velocities fixed"
 
-FREEVEL 1  "FROM_FILE"
+FREEVEL 1  "MANUAL"
   ## widget = combobox; editable = false; activeif = RADIO3_3 == 1
   ## cards = ALL MANUAL FROM_FILE WITH_FLAG
 
 MSG_FREEVEL 1  "Minimum constraint solution"
 
-SIGVEL 1  "FROM_FILE"
+SIGVEL 1  "MANUAL"
   ## widget = combobox; editable = false; activeif = RADIO3_2 == 1
   ## cards = FIRST LAST ALL MANUAL FROM_FILE WITH_FLAG
 
 MSG_SIGVEL 1  "Velocities constrained"
 
-FIXVEL 1  "NONE"
+FIXVEL 1  "MANUAL"
   ## widget = combobox; editable = false; activeif = RADIO3_1 == 1
   ## cards = FIRST LAST ALL MANUAL FROM_FILE WITH_FLAG
 
@@ -1094,36 +1095,36 @@ MSG_FIXVEL 1  "Velocities fixed"
 
 ! Minimum constraint conditions
 ! -----------------------------
-V_TRA 1  "0.0001"
+V_TRA 1  "YES"
   ## widget = combobox; cards = YES NO; activeif = RADIO3_3 == 1
 
 MSG_V_TRA 1  "Translation"
 
-V_ROT 1  "0.00001"
+V_ROT 1  "NO"
   ## widget = combobox; cards = YES NO; activeif = RADIO3_3 == 1
 
 MSG_V_ROT 1  "Rotation"
 
-V_SCL 0
+V_SCL 1  "NO"
   ## widget = combobox; cards = YES NO; activeif = RADIO3_3 == 1
 
 MSG_V_SCL 1  "Scale"
 
 ! A priori sigmas
 ! ---------------
-V_SIGMAN 1  "0.005"
+V_SIGMAN 1  "0.0001"
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = SIGVEL /= FROM_FILE AND RADIO3_2 = 1
 
 MSG_V_SIGMAN 1  "North"
 
-V_SIGMAE 1  "0.005"
+V_SIGMAE 1  "0.0001"
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = SIGVEL /= FROM_FILE AND RADIO3_2 = 1
 
 MSG_V_SIGMAE 1  "East"
 
-V_SIGMAU 1  "0.005"
+V_SIGMAU 1  "0.0001"
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = SIGVEL /= FROM_FILE AND RADIO3_2 = 1
 
@@ -1148,6 +1149,7 @@ MSG_FREEVEL_L 1  "Manual selection"
 FREEVEL_F 0
   ## widget = selwin; activeif = FREEVEL == FROM_FILE AND RADIO3_3 == 1
   ## path = DIR_FIX; ext = EXT_FIX; maxfiles = 1; emptyallowed = true
+  # 
 
 MSG_FREEVEL_F 1  "List of stations from file"
 
@@ -2390,14 +2392,14 @@ TRPOFF 0
 
 MSG_TRPOFF 1  "Offset"
 
-TRPRES 1  "01 00 00"
+TRPRES 0
   ## widget = lineedit; activeif = TROPSNX / _
 
 MSG_TRPRES 1  "Time resolution"
 
 ! TROPO-SINEX version
 ! -------------------
-TRPSXV 1  "2.00"
+TRPSXV 1  "0.01"
   ## widget = combobox; editable = false; cards = 0.01 2.00
   ## activeif = TROPSNX / _
 
@@ -2874,37 +2876,37 @@ MSG_ORB_ADVSIGMA 1  "Advanced constraining of orbit parameters"
 
 ! Constraints for stochastic pulses
 ! ---------------------------------
-STC_R 1  "1.0E-06"
+STC_R 0
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = STO_ELIM / _ OR NUMSTC = 1
 
 MSG_STC_R 1  "Radial"
 
-STC_A 1  "1.0E-06"
+STC_A 0
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = STO_ELIM / _ OR NUMSTC = 1
 
 MSG_STC_A 1  "Along track"
 
-STC_O 1  "1.0E-08"
+STC_O 0
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = STO_ELIM / _ OR NUMSTC = 1
 
 MSG_STC_O 1  "Out of plane"
 
-STC_S 1  "1.0D-6"
+STC_S 0
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = STO_ELIM / _ OR NUMSTC = 1
 
 MSG_STC_S 1  "Direction to Sun"
 
-STC_Y 1  "1.0D-5"
+STC_Y 0
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = STO_ELIM / _ OR NUMSTC = 1
 
 MSG_STC_Y 1  "Y-direction in satellite frame"
 
-STC_X 1  "1.0D-9"
+STC_X 0
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = STO_ELIM / _ OR NUMSTC = 1
 
@@ -3077,7 +3079,7 @@ ALOAD10 1  "ONE"
 
 MSG_ALOAD10 1  "Atm. load: constraining to zero/one"
 
-ALOADSIG1 1  "0.00001"
+ALOADSIG1 0
   ## widget = lineedit; check_type = real; check_min = 0.0
   ## activeif = ALOADDEC / inactive
 

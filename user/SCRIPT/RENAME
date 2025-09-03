@@ -1,0 +1,34 @@
+package RENAME;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  RENAME
+#
+# Purpose :  Rename coordinate file from PPP run to APR naming convention
+#
+# Author  :  D. Hansen
+# Created :  03-SEP-2025
+#
+# Changes :  
+#
+# ============================================================================
+use strict;
+
+use File::Copy qw(copy);
+
+sub run {
+  my $bpe = shift;
+
+# Get variables
+# -------------
+  my ($yyyyssss, $ppp, $apr, $dirCrd, $extCrd) = 
+  $bpe->getKeys('$YYYSS+0','V_PPP','V_APR','DIR_CRD','EXT_CRD');
+
+  my $file = glob ("${dirCrd}${ppp}_${yyyyssss}_001.${extCrd}");
+  my $newfile = "${dirCrd}${apr}_${yyyyssss}.${extCrd}";
+
+  if ( -e $file) {
+    copy(${file}, ${newfile}) or die "Cannot copy PPP crd file to APR name\n";
+  }
+
+}

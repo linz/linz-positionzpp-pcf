@@ -1,8 +1,8 @@
 
-CAMPAIGN 1  "./DUMMY"
+CAMPAIGN 0
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 1  "${PAN}/SESSIONS.SES"
+SESSION_TABLE 0
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
@@ -207,7 +207,7 @@ PZFILES 0
 
 MSG_PZFILES 1  "Phase observation files"
 
-PZFILES_PTH_COL_2 1  "./DUMMY/OBS/"
+PZFILES_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_PZO
 
 PZFILES_EXT_COL_2 1  "PZO"
@@ -225,7 +225,7 @@ PSFILES 0
 
 MSG_PSFILES 1  "Phase observation files"
 
-PSFILES_PTH_COL_2 1  "./DUMMY/OBS/"
+PSFILES_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_PSO
 
 PSFILES_EXT_COL_2 1  "PSO"
@@ -243,7 +243,7 @@ CZFILES 0
 
 MSG_CZFILES 1  "Code observation files"
 
-CZFILES_PTH_COL_2 1  "./DUMMY/OBS/"
+CZFILES_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_CZO
 
 CZFILES_EXT_COL_2 1  "CZO"
@@ -261,7 +261,7 @@ CSFILES 0
 
 MSG_CSFILES 1  "Code observation files"
 
-CSFILES_PTH_COL_2 1  "./DUMMY/OBS/"
+CSFILES_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_CSO
 
 CSFILES_EXT_COL_2 1  "CSO"
@@ -279,7 +279,7 @@ RZFILES 0
 
 MSG_RZFILES 1  "Range observation files"
 
-RZFILES_PTH_COL_2 1  "./DUMMY/OBS/"
+RZFILES_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_RZO
 
 RZFILES_EXT_COL_2 1  "RZO"
@@ -5110,7 +5110,7 @@ ANTLSTRI 0
 ! ======================================================================
 ! Define array dimensions
 ! -----------------------
-SHOWMAX 1  "0"
+SHOWMAX 1  "1"
   ## widget = checkbox
 
 MSG_SHOWMAX 1  "Define array dimensions"
@@ -5119,6 +5119,7 @@ MSG_SHOWMAX 1  "Define array dimensions"
 ! ----------------------------------------------------
 MAXLOC 0
   ## widget = lineedit; check_type = integer; check_min = 0
+  # 
 
 MSG_MAXLOC 1  "MAXLOC: Parameters to be processed"
 
@@ -5126,6 +5127,7 @@ MSG_MAXLOC 1  "MAXLOC: Parameters to be processed"
 ! -----------------------------------------------
 MAXFIL 0
   ## widget = lineedit; check_type = integer; check_min = 0
+  # 
 
 MSG_MAXFIL 1  "MAXFIL: Files to be processed"
 
@@ -5133,6 +5135,7 @@ MSG_MAXFIL 1  "MAXFIL: Files to be processed"
 ! -------------------------------------------
 MAXSTA 0
   ## widget = lineedit; check_type = integer; check_min = 0
+  # 
 
 MSG_MAXSTA 1  "MAXSTA: Stations involved"
 
@@ -5140,6 +5143,7 @@ MSG_MAXSTA 1  "MAXSTA: Stations involved"
 ! ---------------------------------------------
 MAXSAT 0
   ## widget = lineedit; check_type = integer; check_min = 0
+  # 
 
 MSG_MAXSAT 1  "MAXSAT: Satellites involved"
 
@@ -5147,12 +5151,13 @@ MSG_MAXSAT 1  "MAXSAT: Satellites involved"
 ! ------------------------------------------------------------
 MAXAMB 0
   ## widget = lineedit; check_type = integer; check_min = 0
+  # 
 
 MSG_MAXAMB 1  "MAXAMB: Ambiguities in an observation file"
 
 ! MAXPAR: Maximum number of parameters simultaneously processed
 ! -------------------------------------------------------------
-MAXPAR 0
+MAXPAR 1  "400"
   ## widget = lineedit; check_type = integer; check_min = 0
 
 MSG_MAXPAR 1  "MAXPAR: Parameters simultaneously processed"
@@ -5161,6 +5166,7 @@ MSG_MAXPAR 1  "MAXPAR: Parameters simultaneously processed"
 ! --------------------------------------------------------
 MAXFLS 0
   ## widget = lineedit; check_type = integer; check_min = 0
+  # 
 
 MSG_MAXFLS 1  "MAXFLS: Files simultaneously processed"
 
@@ -5168,6 +5174,7 @@ MSG_MAXFLS 1  "MAXFLS: Files simultaneously processed"
 ! -------------------------------------------------------------
 MAXSAS 0
   ## widget = lineedit; check_type = integer; check_min = 0
+  # 
 
 MSG_MAXSAS 1  "MAXSAS: Satellites simultaneously processed"
 
@@ -5175,6 +5182,7 @@ MSG_MAXSAS 1  "MAXSAS: Satellites simultaneously processed"
 ! --------------------------------------------------------------
 MAXAMP 0
   ## widget = lineedit; check_type = integer; check_min = 0
+  # 
 
 MSG_MAXAMP 1  "MAXAMP: Ambiguities simultaneously processed"
 
@@ -5182,6 +5190,7 @@ MSG_MAXAMP 1  "MAXAMP: Ambiguities simultaneously processed"
 ! ------------------------------------------------------------------------------
 MAXSNG 0
   ## widget = lineedit; check_type = integer; check_min = 0
+  # 
 
 MSG_MAXSNG 1  "MAXSNG: Elements per line of first design matrix"
 

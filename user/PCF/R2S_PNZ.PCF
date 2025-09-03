@@ -75,7 +75,7 @@ PID  SCRIPT    OPT_DIR   PARAMETERS
 #
 # Preprocess, convert, and synchronize observation data
 # -----------------------------------------------------
-030  RNXGRA    PNZ2GEN   CPU=ANY; WAIT=019;  NEXTJOB= 999
+030  RNXGRA3   PNZ2GEN   CPU=ANY; WAIT=019;  NEXTJOB= 999
 031  PPP_PRP   PNZ2GEN   CPU=ANY; WAIT=030;  NEXTJOB= 032
 #
 # Phase preprocessing with MAUPRP
@@ -96,14 +96,14 @@ PID  SCRIPT    OPT_DIR   PARAMETERS
 050  PPPEDTAP  PNZ2GEN   CPU=ANY; WAIT=049
 051  PPPEDT_P  PNZ2GEN   CPU=ANY; WAIT=050;  PARALLEL=050
 ## need script here to rename the PPP Cluster CRD file to APR
-###052  GPSXTR    PNZ2GEN   CPU=ANY; WAIT=051
+052  RENAME    NO_OPT    CPU=ANY; WAIT=051
 ###053  RES_SUM   PPP_AUX   CPU=ANY; WAIT=051
 #### ===============================================
 # Prepare the pole and orbit information
 # --------------------------------------
 ### May still need to run this step
 055  SATCLK    PNZ1ORB   CPU=ANY; WAIT=051
-059  DUMMY     NO_OPT    CPU=ANY; WAIT=051 055
+059  DUMMY     NO_OPT    CPU=ANY; WAIT=051 052 055
 #
 # Get X of the nearest sites that have a
 # Station coordinate model, merge these
@@ -168,7 +168,7 @@ PID  SCRIPT    OPT_DIR   PARAMETERS
 501  GPSEST    PNZ1FIN   CPU=ANY; WAIT=499
 511  ADDNEQ2   PNZ1FIN   CPU=ANY; WAIT=501
 513  HELMCHK   PNZ1FIN   CPU=ANY; WAIT=511
-521  ADDNEQ2   R2S_RED   CPU=ANY; WAIT=513
+521  ADDNEQ2   PNZ1RED   CPU=ANY; WAIT=513
 600  PNZSUMRY  PNZ1GEN   CPU=ANY; WAIT=521
 999  PNZSTART  PNZ1GEN   CPU=ANY; WAIT=600;  PARAM1=FINISH; PARAM5=GETORB; PARAM6=GETREF; PARAM8=STATUS 
 

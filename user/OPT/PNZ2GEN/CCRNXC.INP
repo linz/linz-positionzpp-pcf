@@ -55,6 +55,7 @@ RCLKINP_EXT_COL_2 1  "CLK"
 COORD 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_COORD 1  "Replace station coordinates"
 
@@ -79,6 +80,7 @@ DESCR_RCLKOUT 1  "Combined clock RINEX file"
 ! ----------------------------------
 SCLKOUT 0
   ## widget = lineedit; path = DIR_CLK; ext = EXT_CLK
+  # 
 
 DESCR_SCLKOUT 1  "Bernese satellite clock file"
 
@@ -86,6 +88,7 @@ DESCR_SCLKOUT 1  "Bernese satellite clock file"
 ! -------------------------------
 LINFITRS 0
   ## widget = lineedit; path = DIR_SIG; ext = EXT_SIG
+  # 
 
 DESCR_LINFITRS 1  "Sigma file with linear fit RMS"
 
@@ -153,7 +156,7 @@ MSG_CMERGE 1  "Clock combination method"
 
 ! Observation Window
 ! ------------------
-USEWIN 1  "1"
+USEWIN 1  "0"
   ## widget = checkbox
 
 MSG_USEWIN 1  "Use time window"
@@ -215,6 +218,7 @@ MSG_ENDTIM 1  "End of time window (hour min. sec.)"
 ! ---------------------------
 DELTAT 0
   ## widget = lineedit; check_type = integer; check_min = 0
+  # 
 
 MSG_DELTAT 1  "Sampling interval for clocks"
 
@@ -249,12 +253,14 @@ MSG_SFILSAT 1  "List from file"
 SLSTSTA 0
   ## widget = selwin; emptyallowed = true; pointer = STALST
   ## activeif = SELSTA = FROM_LIST
+  # 
 
 MSG_SLSTSTA 1  "Manual selection"
 
 SLSTSAT 0
   ## widget = selwin; emptyallowed = true; pointer = SATLST
   ## activeif = SELSAT = FROM_LIST
+  # 
 
 MSG_SLSTSAT 1  "Manual selection"
 
@@ -387,12 +393,14 @@ MSG_SATFIL 1  "Get list from file for satellites"
 STAMAN 0
   ## widget = selwin; activeif = REFCLOCK = MANUAL; emptyallowed = true
   ## pointer = STALST
+  # 
 
 MSG_STAMAN 1  "Manual selection for stations"
 
 SATMAN 0
   ## widget = selwin; activeif = REFCLOCK = MANUAL; emptyallowed = true
   ## pointer = SATLST
+  # 
 
 MSG_SATMAN 1  "Manual selection for satellites"
 
@@ -407,6 +415,7 @@ MSG_NALIGN 1  "Polynomial degree for alignment"
 ! ---------------------------------
 MAXREF 0
   ## widget = lineedit; check_type = integer; check_min = 0
+  # 
 
 MSG_MAXREF 1  "Maximum allowed RMS error for alignment"
 
@@ -604,7 +613,7 @@ MSG_ACNAME 1  "AC name"
 ! --------------------------------------
 COMMENT 0
   ## widget = uniline; check_strlen.1 = 60; numlines = 10
-  # PPP_$YYYSS+0: Clock information compilation
+  # "PPP_$YYYSS+0: Clock information compilation" 
 
 MSG_COMMENT 1  "Comment lines"
 

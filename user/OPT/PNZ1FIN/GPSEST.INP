@@ -293,7 +293,7 @@ RZFILES_TXT_COL_2 1  "OBSERVATION FILE"
 ! --------------------
 COORD 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
-  # $(FLT)_$YYYSS+0
+  # $(APR)_$YYYSS+0
 
 DESCR_COORD 1  "Station coordinates"
 
@@ -342,7 +342,7 @@ MSG_NLBCLK 1  "NL phase biases from CLK"
 ! -------------
 VMF_FILES 0
   ## widget = selwin; path = DIR_GRD; ext = EXT_GRD; emptyallowed = true
-  # 
+  # VMF3_$YYYSS+0
 
 MSG_VMF_FILES 1  "VMF grid file"
 
@@ -551,7 +551,7 @@ MSG_SYSODEF 1  "Program output"
 SYSOUT 0
   ## widget = lineedit; path = DIR_OUT; ext = EXT_OUT
   ## activeif = SYSODEF == 0; emptyallowed = false
-  # $(FIN)_$YYYSS+0
+  # AFS_$YYYSS+0
 
 DESCR_SYSOUT 1  "Program output"
 
@@ -607,7 +607,7 @@ MSG_IGNORE_ERR 1  "Ignore errors within specified subroutines"
 ! ----------------
 NEQUARS 0
   ## widget = lineedit; path = DIR_NEQ; ext = EXT_NEQ
-  # $(FIN)_$YYYSS+0
+  # AFS_$YYYSS+0
 
 DESCR_NEQUARS 1  "Normal equations"
 
@@ -615,7 +615,7 @@ DESCR_NEQUARS 1  "Normal equations"
 ! ------------------
 COORDRS 0
   ## widget = lineedit; path = DIR_CRD; ext = EXT_CRD
-  # 
+  # JHP_$YYYSS+0
 
 DESCR_COORDRS 1  "Station coordinates"
 
@@ -1035,7 +1035,7 @@ MSG_ENDTIM1 1  "End of time window (hour min. sec.)"
 ! ----------------------------------------------------------------------
 ! Tropospheric Model (microwave observations)
 ! -------------------------------------------
-TROPOS 1  "DRY_GPT3"
+TROPOS 1  "DRY_VMF3"
   ## widget = combobox; editable = false
   ## cards = NONE VMF3 DRY_VMF3 VMF1 DRY_VMF1 GPT1 DRY_GPT1 NIELL DRY_NIELL SAASTAMOINEN DRY_SAASTAMOINEN HOPFIELD DRY_HOPFIELD ESSEN-FROOME GPT3 DRY_GPT3 VMF DRY_VMF GMF DRY_GMF
   ## activeif = GEOTEC = GNSS AND FREQUENCY / L4 AND FREQUENCY / MELWUEBB AND FREQUENCY / DTEC AND TROPEST = _
@@ -1652,7 +1652,7 @@ MSG_RADIO8_2 1  "Coordinates constrained"
 
 ! Positioning: Sigma Station(s)
 ! -----------------------------
-SIGSTA 1  "ALL"
+SIGSTA 1  "WITH_FLAG"
   ## widget = combobox; editable = false; activeif = RADIO8_2 = 1
   ## cards = FIRST LAST ALL MANUAL FROM_FILE WITH_FLAG
 
@@ -1662,6 +1662,7 @@ MSG_SIGSTA 1  "Coordinates constrained"
 ! ---------------------------------------------
 STATION4 0
   ## widget = selwin; activeif = SIGSTA == MANUAL; pointer = GRDCENLST
+  # 
 
 MSG_STATION4 1  "Stations to be constrained (Manual selection)"
 
@@ -1676,14 +1677,14 @@ MSG_STAFILE4 1  "List of stations (and sigmas) from file"
 
 ! Flags for Sigma station(s)
 ! --------------------------
-STAFLAG4 1  "#"
+STAFLAG4 1  "I"
   ## widget = lineedit; activeif = SIGSTA = WITH_FLAG
 
 MSG_STAFLAG4 1  "Constrain: Stations with specific flags in CRD file"
 
 ! Positioning: Default Sigma north
 ! --------------------------------
-SIGCRDN 1  "0.1"
+SIGCRDN 1  "0.0001"
   ## widget = lineedit; activeif = SIGSTA / FROM_FILE AND RADIO8_2 = 1
   ## check_type = real; check_min = 0.0
 
@@ -1691,7 +1692,7 @@ MSG_SIGCRDN 1  "Default a priori sigma north"
 
 ! Positioning: Default Sigma east
 ! -------------------------------
-SIGCRDE 1  "0.1"
+SIGCRDE 1  "0.0001"
   ## widget = lineedit; activeif = SIGSTA / FROM_FILE AND RADIO8_2 = 1
   ## check_type = real; check_min = 0.0
 
@@ -1699,7 +1700,7 @@ MSG_SIGCRDE 1  "Default a priori sigma east"
 
 ! Positioning: Default Sigma up
 ! -----------------------------
-SIGCRDU 1  "0.1"
+SIGCRDU 1  "0.0001"
   ## widget = lineedit; activeif = SIGSTA / FROM_FILE AND RADIO8_2 = 1
   ## check_type = real; check_min = 0.0
 
@@ -2526,7 +2527,7 @@ MSG_SPESEL 1  "Tropo: special sigma station selection"
 
 ! Tropo: List of stations with no troposphere
 ! -------------------------------------------
-NTRPSEL 1  "NONE"
+NTRPSEL 1  "FIRST"
   ## widget = combobox; editable = false
   ## cards = NONE FIRST LAST FROM_FILE MANUAL WITH_TROPO
 
@@ -2607,7 +2608,7 @@ MSG_STAFILE6 1  "Tropo: file with stations(s) with no troposphere est."
 
 ! Tropo: Mapping Function
 ! -----------------------
-MAPPNG 1  "WET_GMF3"
+MAPPNG 1  "WET_VMF3"
   ## widget = combobox; editable = false; activeif = TROPEST = _
   ## cards = WET_VMF3 DRY_VMF3 WET_VMF1 DRY_VMF1 WET_GMF1 DRY_GMF1 WET_NIELL DRY_NIELL COSZ HOPFIELD WET_GMF3 DRY_GMF3 WET_VMF DRY_VMF WET_GMF DRY_GMF
 

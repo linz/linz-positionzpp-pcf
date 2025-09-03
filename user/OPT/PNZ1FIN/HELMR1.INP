@@ -100,7 +100,7 @@ MSG_PSDSTA 1  "Handling of stations with PSD corrections"
 
 COORD2 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
-  # $(FIN)_$YYYSS+0
+  # MIN_$YYYSS+0
 
 DESCR_COORD2 1  "Second coordinate file"
 
@@ -188,7 +188,7 @@ DESCR_USESTA 1  "List of reference stations"
 
 ! Other stations
 ! ----------------------------------
-OTHSTA 1  "VERIFIED"
+OTHSTA 1  "NONE"
   ## widget = combobox; editable = false; cards = NONE VERIFIED
 
 MSG_OTHSTA 1  "Other stations"
@@ -324,7 +324,7 @@ DESCR_LISTFIL 1  "List of rejected stations"
 ! ----------------
 TITLE 0
   ## widget = lineedit
-  # RNX2SNX_$YYYSS+0: Verification of fiducial stations
+  # PNZ-PP_$YYYSS+0: Verification of reference stations
 
 MSG_TITLE 1  "Title line"
 

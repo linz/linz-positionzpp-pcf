@@ -4,13 +4,13 @@
 ENVIRONMENT 0
   ## widget = initmenu; pointer = ENVIR_LIST
 
-CAMPAIGN 1  "./DUMMY"
+CAMPAIGN 0
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
 USR_INFO 1  "${USER}"
   ## widget = comment
 
-SESSION_TABLE 1  "${PAN}/SESSIONS.SES"
+SESSION_TABLE 0
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
@@ -131,7 +131,7 @@ FILSEQ 1  "0"
 
 MSG_FILSEQ 1  "Session character"
 
-DEVOUT 1  "./DUMMY/ORB/"
+DEVOUT 0
   ## widget = initmenu; pointer = DIR_PRE
 
 DESCR_DEVOUT 1  "Output path"
@@ -251,7 +251,7 @@ MSG_COMMENT4 1  "Comments line 4"
 ! Time Window
 ! -------------------------------------------------------------------
 ! Use window
-USEWIN 1  "1"
+USEWIN 1  "0"
   ## widget = checkbox
 
 MSG_USEWIN 1  "Use time window"

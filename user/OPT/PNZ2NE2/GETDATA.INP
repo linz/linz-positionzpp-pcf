@@ -91,7 +91,7 @@ MSG_CLKNAM 1  "Name for downloaded clock file(s)"
 ! -------------------------------------------------------------------------
 ! Plus/minus session range in orbits
 ! ------------------
-ORBPLUSM 1  "0"
+ORBPLUSM 1  "1"
   ## widget = checkbox
 
 MSG_ORBPLUSM 1  "Include +/- session range in orbit products"
@@ -185,7 +185,7 @@ MSG_OSBNAM 1  "Name for downloaded OSB files"
 ! -------------------------------------------------------------------------
 ! Plus/minus session range in atmosphere products
 ! ------------------
-ATMPLUSM 1  "0"
+ATMPLUSM 1  "1"
   ## widget = checkbox
 
 MSG_ATMPLUSM 1  "Include +/- session range in atmosphere products"

@@ -4,10 +4,10 @@
 ENVIRONMENT 0
   ## widget = initmenu; pointer = ENVIR_LIST
 
-CAMPAIGN 1  "./DUMMY"
+CAMPAIGN 0
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 1  "${PAN}/SESSIONS.SES"
+SESSION_TABLE 0
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
@@ -53,6 +53,7 @@ DESCR_GPSUTC 1  "GPS-UTC time difference"
 ERPFIL 0
   ## widget = selwin; path = DIR_ERP; ext = EXT_ERP; maxfiles = 999
   ## emptyallowed = true
+  # 
 
 MSG_ERPFIL 1  "Bernese formatted ERP files"
 
@@ -190,7 +191,7 @@ MSG_NUTOFF 1  "Include nutation offsets"
 
 ! Use Window
 ! ----------
-IWIN 1  "1"
+IWIN 1  "0"
   ## widget = checkbox
 
 MSG_IWIN 1  "Use time window"
