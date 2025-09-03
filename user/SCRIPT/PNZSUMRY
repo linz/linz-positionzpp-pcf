@@ -24,12 +24,12 @@ use JSON;
 sub run 
 {
     my $bpe = shift;
-    my ($ssss,$dirout,$dircrd,$dirsnx)=$bpe->getKeys('$S+0','DIR_OUT','DIR_CRD','DIR_SNX');
+    my ($yyyyssss,$dirout,$dircrd,$dirsnx)=$bpe->getKeys('$YYYSS+0','DIR_OUT','DIR_CRD','DIR_SNX');
     my $outname=$dirout;
     prtMess($bpe,"PositionzPP summary script run");
     eval
     {
-        CreateSummary($dirout,$dircrd,$dirsnx,$ssss);
+        CreateSummary($dirout,$dircrd,$dirsnx,$yyyyssss);
     };
     if( $@ )
     {
@@ -40,10 +40,10 @@ sub run
 
 sub CreateSummary
 {
-    my( $dirout, $dircrd, $dirsnx,$ssss ) = @_;
+    my( $dirout, $dircrd, $dirsnx,$yyyyssss ) = @_;
     
     my $summfile="$dirout/SUMMARY.JSON";
-    my $summary=GetSummary($dirout,$dircrd,$dirsnx,$ssss);
+    my $summary=GetSummary($dirout,$dircrd,$dirsnx,$yyyyssss);
     my $js=new JSON;
     if( open(my $sf,">$summfile"))
     {
@@ -55,13 +55,13 @@ sub CreateSummary
 
 sub GetSummary
 {
-    my( $dirout, $dircrd, $dirsnx, $ssss ) = @_;
+    my( $dirout, $dircrd, $dirsnx, $yyyyssss ) = @_;
     my $summary={};
     GetOrbitType($summary,$dirout);
-    GetRef($summary,$dirout,$dircrd,$ssss);
-    GetSinexCoords($summary,$dirsnx,$ssss);
-    GetFinalStats($summary,$dirout,$dircrd,$ssss);
-    GetHelmert($summary,$dirout,$dircrd,$ssss);
+    GetRef($summary,$dirout,$dircrd,$yyyyssss);
+    GetSinexCoords($summary,$dirsnx,$yyyyssss);
+    GetFinalStats($summary,$dirout,$dircrd,$yyyyssss);
+    GetHelmert($summary,$dirout,$dircrd,$yyyyssss);
     GetBaselineWkt($summary);
     return $summary;
 }
@@ -96,7 +96,7 @@ sub GetOrbitType
 
 sub GetRef
 {
-    my ($self,$dirout,$dircd,$ssss) = @_;
+    my ($self,$dirout,$dircd,$yyyyssss) = @_;
     my $rffile="$dirout/GETREF.OUT";
     my $refstns={};
     my $start;
@@ -173,8 +173,8 @@ sub GetRef
 
 sub GetFinalStats
 {
-    my ($self,$dirout,$dircd,$ssss) = @_;
-    my $fsfile="$dirout/AFS$ssss.OUT";
+    my ($self,$dirout,$dircd,$yyyyssss) = @_;
+    my $fsfile="$dirout/AFS_$yyyyssss.OUT";
     my $final={};
     if( open( my $fsf, $fsfile ) )
     {
@@ -190,8 +190,8 @@ sub GetFinalStats
 
 sub GetHelmert
 {
-    my ($self,$dirout,$dircd,$ssss) = @_;
-    my $hmfile="$dirout/HLM$ssss.OUT";
+    my ($self,$dirout,$dircd,$yyyyssss) = @_;
+    my $hmfile="$dirout/HLM_$yyyyssss.OUT";
     my $helmert={};
     my $ncrd=0;
     my $sum=[0.0,0.0,0.0];
@@ -241,8 +241,8 @@ sub _mmError { return sprintf("%.1f",sqrt($_[0])*1000)+0.0; }
 
 sub GetSinexCoords
 {
-    my ($self,$dirsnx,$ssss)=@_;
-    my $snxfile="$dirsnx/FIN$ssss.SNX";
+    my ($self,$dirsnx,$yyyyssss)=@_;
+    my $snxfile="$dirsnx/FIN_$yyyyssss.SNX";
     my $sfdata={};
     eval
     {
