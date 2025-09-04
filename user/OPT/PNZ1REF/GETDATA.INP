@@ -249,7 +249,7 @@ MRGRINEX 1  "1"
 
 MSG_MRGRINEX 1  "Merge multiple RINEX files to make a single RINEX file for each station/session"
 
-FIXRINEX 1  "1"
+FIXRINEX 1  "0"
   ## widget = checkbox
   ## activeif = DNLDRS_F = 1 OR DNLDRS_A = 1 OR DNLDRS_C = 1
 
