@@ -33,13 +33,13 @@ TITLE 1  "Test"
 MSG_TITLE 1  "Title line"
 
 BLQSRC 0
-  ## widget = selwin; path = PTH_PHASECC; ext = EXT_BLQ; maxfiles = 1
+  ## widget = selwin; path = DIR_BLQ; ext = EXT_BLQ; maxfiles = 1
   # FES2014b_SRC
 
 DESCR_BLQSRC 1  "Base datapool BLQ file used for header and precalculated stations"
 
 BLQGRD 0
-  ## widget = selwin; path = PTH_PHASECC; ext = EXT_BLQ; emptyallowed = false
+  ## widget = selwin; path = DIR_BLQ; ext = EXT_BLQ; emptyallowed = false
   # FES2014b_GRID
 
 DESCR_BLQGRD 1  "Datapool BLQ grid file used to calculate missing stations"
