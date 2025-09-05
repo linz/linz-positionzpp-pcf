@@ -56,7 +56,7 @@ PID  SCRIPT    OPT_DIR   PARAMETERS
 #Trim file copies original to new name and reduces
 # to only calibration for submitted file
 005  ANTXTRM3  PNZ1ORB   CPU=ANY; WAIT=003
-006  ATX2PCV   PNZ1ORB   CPU=ANY; WAIT=004
+006  ATX2PCV1  PNZ1ORB   CPU=ANY; WAIT=004
 #
 # Preprocess, convert, and synchronize observation data
 # -----------------------------------------------------
@@ -219,6 +219,7 @@ V_OSBFIL       = IAR_$YYYSS+0;   DESCRIPTION=_OSB-file with GNSS satellite biase
 # Data selection:
 # --------------
 V_OBSSEL       = OBSERV;         DESCRIPTION=Observation selection file
+V_OBSTYP       = BOTH;           DESCRIPTION=Select kind of observations (CODE, PHASE, BOTH)
 # Should we enable 1HZ processing?
 V_SAMPL        = 30;            DESCRIPTION=Data sampling interval (in seconds)
 V_SATSYS       = GRE;            DESCRIPTION=Select the GNSS (max. supported: GRECJ)

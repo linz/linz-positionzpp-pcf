@@ -16,7 +16,7 @@ The coordinates are calculated in the ITRF2020 reference frame at the epoch of
 observation.  The final coordinates are converted to NZGD2000.
 
 For each file the GPS processing includes the following steps:
-  * Approximate point position solution to determine the station location
+  * precise point position solution to determine the station location
   * Selection of four PositioNZ reference stations to process with the 
     user station
   * Calculation of the reference station ITRF2020 epoch coordinates
@@ -25,10 +25,10 @@ For each file the GPS processing includes the following steps:
   * Calculation of a minimum constraints solution
   * Constraining the solution to fit the reference station coordinates
     (generates the final coordinate for the user station)
-  * Conversion to NZGD2000 and New Zealand cooridnate systems using
-    the NZGD2000 deformation model and NZVD2016 geod model.
+  * Conversion to NZGD2000 and New Zealand coordinate systems using
+    the NZGD2000 deformation model and NZVD2016 geoid model.
 
-The processing is carried out using the Bernese 5.2 GNSS processing software.
+The processing is carried out using the Bernese 5.4 GNSS processing software.
 
 Note that some modifications may be made to the submitted RINEX file.  These
 are:
@@ -103,7 +103,7 @@ Processing summary (for minimum constraints solution)
 
 Reference stations
 
-    The minimum constraints solution is fitted to the three PositioNZ 
+    The minimum constraints solution is fitted to the four PositioNZ 
     reference stations using a best fitting translation (XYZ shift).  The 
     residual errors at each station provide the most realistic measure of
     the accuracy of the solution (excluding plumbing and antenna height 
@@ -156,7 +156,7 @@ stations and baselines used in the processing.  Most GIS products can import
 and display KML formatted files.
 
 ================================================================================
-final_xxxx.snx - SINEX file of final coordinate calculation
+final_yyyydddx.snx - SINEX file of final coordinate calculation
 
 There is one final SINEX file for each input file that is successfully
 processed.  The SINEX format is a standard format for representing the 
@@ -167,7 +167,7 @@ tropospheric delay parameters.
 
 
 ================================================================================
-min_xxxx.snx - SINEX file of the minimally constrained solution
+min_yyyydddx.snx - SINEX file of the minimally constrained solution
 
 There is one minimally constrained solution SINEX file for each input file that 
 is successfully processed. This defines the calculated coordinates and their

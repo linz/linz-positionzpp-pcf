@@ -1,0 +1,150 @@
+package ATX2PCV;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  ATX2PCV
+#
+# Purpose :  Execute ATX2PCV
+#            Update the antenna phase center eccentricity (PCV) file if required
+#
+# Author  :  R. Dach
+# Created :  07-Jun-2022
+#
+# Changes :  07-Jun-2022 RD: Created for version 5.4
+#            20-Jun-2022 LP: Remove outdated paths from comments
+#            07-Sep-2022 AV: Update location of old PCV file
+#            05-Sep-2025 DH: Adding a null antenna entry to end of PCV file
+# ============================================================================
+use strict;
+use warnings;
+
+use File::Copy;
+use File::Compare;
+use lib "$ENV{BPE}";
+use bpe_util qw(prtMess);
+
+sub run {
+  my $bpe = shift;
+
+# Get variables
+# -------------
+  my ($myAtx, $pcvInf, $pcv,
+      $dirPhaecc, $extPhaecc, $dirOut) =
+    $bpe->getKeys(
+      'V_MYATX', 'V_PCVINF', 'V_PCV',
+      'PTH_PHASECC', 'EXT_PHASECC', 'DIR_OUT');
+
+# Was an ATX specified?
+# ---------------------
+  if ( $myAtx eq "" || ! -e "${dirPhaecc}/${myAtx}" ) {
+    prtMess($bpe,"No ANTEX file for update");
+  } else {
+    prtMess($bpe,"Use file $myAtx for update");
+    copy("${dirPhaecc}/${myAtx}","${dirOut}");
+
+    # Add NULLANTENNA to ANTENNA_I20.PCV before running the merge program 
+    # this way null will be incorporated alphabetically with appropriate 
+    # formatting 
+    my $pcvOld = "${dirPhaecc}/${pcvInf}_${pcv}.${extPhaecc}";
+    my @new_lines = (
+      "ANTENNA/RADOME TYPE  NUMBER SYS FRQ TYP D(O) D(Z) D(A) M(Z)  SINEX      METHOD               DATE       REMARK\n",
+      "******************** ****** *   *** ***  ***  ***  ***  ***  ********** ******************** ********** ************************************\n",
+      "NULLANTENNA     NONE      0 G     2   1    0    5  360   90  IGS20_2353 FIELD                04-SEP-25  \n",
+      "                            R     2   1    0    5  360   90  IGS20_2353 FIELD                04-SEP-25  \n",
+      "                            E     2   1    0    5  360   90  IGS20_2353 FIELD                04-SEP-25  \n",
+      "                            C     2   1    0    5  360   90  IGS20_2353 FIELD                04-SEP-25  \n",
+      "                            J     2   1    0    5  360   90  IGS20_2353 FIELD                04-SEP-25  \n",
+      "\n",
+      "      NORTH MM  EAST MM   UP MM   FACTOR\n",
+      "      *****.** *****.** *****.**  **********\n",
+      "G01 0     0.00     0.00     0.00   0.100E+01\n",
+      "G02 0     0.00     0.00     0.00   0.100E+01\n",
+      "R01 0     0.00     0.00     0.00   0.100E+01\n",
+      "R02 0     0.00     0.00     0.00   0.100E+01\n",
+      "E01 0     0.00     0.00     0.00   0.100E+01\n",
+      "E05 0     0.00     0.00     0.00   0.100E+01\n",
+      "C02 0     0.00     0.00     0.00   0.100E+01\n",
+      "C06 0     0.00     0.00     0.00   0.100E+01\n",
+      "J01 0     0.00     0.00     0.00   0.100E+01\n",
+      "J02 0     0.00     0.00     0.00   0.100E+01\n",
+      "\n",
+      "G01 0  A\\Z     0      5     10     15     20     25     30     35     40     45     50     55     60     65     70     75     80     85     90\n",
+      "G01 0   0   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00\n",
+      "G02 0  A\\Z     0      5     10     15     20     25     30     35     40     45     50     55     60     65     70     75     80     85     90\n",
+      "G02 0   0   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00\n",
+      "R01 0  A\\Z     0      5     10     15     20     25     30     35     40     45     50     55     60     65     70     75     80     85     90\n",
+      "R01 0   0   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00\n",
+      "R02 0  A\\Z     0      5     10     15     20     25     30     35     40     45     50     55     60     65     70     75     80     85     90\n",
+      "R02 0   0   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00\n",
+      "E01 0  A\\Z     0      5     10     15     20     25     30     35     40     45     50     55     60     65     70     75     80     85     90\n",
+      "E01 0   0   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00\n",
+      "E05 0  A\\Z     0      5     10     15     20     25     30     35     40     45     50     55     60     65     70     75     80     85     90\n",
+      "E05 0   0   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00\n",
+      "C02 0  A\\Z     0      5     10     15     20     25     30     35     40     45     50     55     60     65     70     75     80     85     90\n",
+      "C02 0   0   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00\n",
+      "C06 0  A\\Z     0      5     10     15     20     25     30     35     40     45     50     55     60     65     70     75     80     85     90\n",
+      "C06 0   0   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00\n",
+      "J01 0  A\\Z     0      5     10     15     20     25     30     35     40     45     50     55     60     65     70     75     80     85     90\n",
+      "J01 0   0   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00\n",
+      "J02 0  A\\Z     0      5     10     15     20     25     30     35     40     45     50     55     60     65     70     75     80     85     90\n",
+      "J02 0   0   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00\n",
+      "\n",
+      "\n"
+    );
+
+    # Check if existing file ends with a newline
+    open(my $existing_fh, '<', $pcvOld) or die "Cannot open '$pcvOld': $!\n";
+    my $last_char;
+
+    if (-s $pcvOld) {  # Only check if file is not empty
+      seek($existing_fh, -1, 2);  # Go to last character
+      read($existing_fh, $last_char, 1);
+    }
+    close($existing_fh);
+
+    # Open existing file for appending
+    open(my $append_fh, '>>', $pcvOld) or die "Cannot open '$pcvOld' for appending: $!\n";
+
+    # Add blank line if the existing file doesn't end with a newline
+    #if (defined $last_char && $last_char ne "\n") {
+    #  print $append_fh "\n";
+    #}
+
+    # Add another blank line to separate the new entry
+    #print $append_fh "\n";
+
+    # Append the new data
+    print $append_fh @new_lines;
+
+    close($append_fh);
+
+    print "Successfully appended antenna data to '$pcvOld'\n";
+    print "Added " . scalar(@new_lines) . " lines of hard-coded antenna data\n";
+
+    # Run program
+    # -----------
+    my $PGMNAM = "ATX2PCV";
+    $bpe->RUN_PGMS($PGMNAM);
+
+
+    # Update the phase center (PCV) file if there is new information
+    # --------------------------------------------------------------
+    my $pcvOld = "${dirPhaecc}/${pcvInf}_${pcv}.${extPhaecc}";
+    my $pcvNew = $bpe->getKey("$ENV{U}/INP/ATX2PCV.INP","PHASRSG");
+
+    if (compare("$pcvOld","$pcvNew",   # Copare but remove the creation date
+        sub {my $a = $_[0]; my $b = $_[1];
+             $a =~ s/[0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]$//;
+             $b =~ s/[0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]$//;
+             $a ne $b} ) != 0) {
+      copy("$pcvNew","$pcvOld");
+      prtMess($bpe,"Copy new Bernese phase eccenter file: ${pcvOld}");
+    }
+
+
+
+
+
+
+  }
+}
