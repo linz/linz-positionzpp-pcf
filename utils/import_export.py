@@ -347,7 +347,7 @@ def getBerneseDir(name: str, argval: str, *candidates) -> str:
 
 
 def getBerneseUserDir(argval: str) -> str:
-    return getBerneseDir("user", argval, "${U}", "${HOME}/BERN52/GPSUSER")
+    return getBerneseDir("user", argval, "${U}", "${HOME}/BERN54/GPSUSER")
 
 
 def getPcfFiles(userdir: str, pcfname: str, getMissingFiles=False):
