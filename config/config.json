@@ -1,5 +1,5 @@
 {
-    "PcfName": "PNZ_PP1",
+    "PcfName": "R2S_PNZ",
     "ReferenceFrame": "ITRF2020",
     "ReferenceStationCoordinateFile": "STA/REFSTNS.CRD",
     "OutputStatusFile": "OUT/STATUS.LCK",
