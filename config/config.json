@@ -5,6 +5,23 @@
     "ReferenceCoordinateProcessingStrategy": "d20f_54_code_A+d20f_52_code_A+p20r_54_code",
     "OutputStatusFile": "OUT/STATUS.LCK",
     "OutputSummaryJson": "OUT/SUMMARY.JSON",
+    "ParameterSets": {
+        "RAPID": {
+            "V_ORBTYP": "COD_RAP",
+            "V_OSBTYP": "COD_RAP",
+            "V_IONTYP": "COD_RAP"
+        },
+        "RAPID_PLUS": {
+            "V_ORBTYP": "COD_FIN/COD_RAP",
+            "V_OSBTYP": "COD_FIN/COD_RAP",
+            "V_IONTYP": "COD_FIN/COD_RAP"
+        },
+        "FINAL": {
+            "V_ORBTYP": "COD_FIN",
+            "V_OSBTYP": "COD_FIN",
+            "V_IONTYP": "COD_FIN"
+        }
+    },
     "ConfigOutputFiles": [
         {
             "source": "output_files/readme.txt",
