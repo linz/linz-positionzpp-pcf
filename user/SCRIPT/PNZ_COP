@@ -32,8 +32,8 @@ sub run{
 # Get variables
 # -------------
   my ($yyyyddd, $yyyyssss, $ssss,
-      $bswDir, $refDir, $orbDir,
-      $crdInf, $refInf, $psdInf, 
+      $bswDir, $refDir, 
+      $refInf, 
       $staInf, $blqInf, $atlInf, $crxInf, $snxInf,$pcvinf, $myAtx,
       $pcv, $obssel, $hoiFil, $osbFil, $gnss,
       $orb,  $hourly,
@@ -45,8 +45,8 @@ sub run{
       $extIon,$extSnxin,  $extPcv,  $extSel ) =
   $bpe->getKeys
      ('$YYYD+0','$YYYSS+0','$S+0',
-      'V_BSWDIR','V_REFDIR','V_ORBDIR',
-      'V_CRDINF','V_REFINF','V_REFPSD',
+      'V_BSWDIR','V_REFDIR',
+      'V_REFINF',
       'V_STAINF','V_BLQINF','V_ATLINF','V_CRXINF', 'V_SNXINF','V_PCVINF','V_MYATX',
       'V_PCV'   ,'V_OBSSEL','V_HOIFIL','V_OSBFIL','V_SATSYS',
       'V_ORB','V_HOURLY',
@@ -68,7 +68,7 @@ sub run{
       push @lstYYYYDDD,"$myYYYYDDD" if ( join(" ",@lstYYYYDDD) !~ /$myYYYYDDD/ );
     }
   }
-  print "### ORBDIR/ORB: ${orbDir}/${orb} \n";
+#  print "### ORBDIR/ORB: ${orbDir}/${orb} \n";
 
 # Construct list of reference files
 # ---------------------------------
@@ -148,7 +148,6 @@ sub run{
     if ( -e "${dirBia}${orb}_${myYYYYDDD}.${extBia}" ) {
       setGNSS($bpe,"$ENV{U}/PAN/BIA2OSB.INP","USE_",$gnss);
       $bpe->putKey("$ENV{U}/PAN/BIA2OSB.INP","BIASNX","${orb}_${myYYYYDDD}");
-      $bpe->putKey("$ENV{U}/PAN/BIA2OSB.INP","OSBOUT","IAR_${myYYYYDDD}0");
       push @biaLst,"${dirOsb}IAR_${myYYYYDDD}0.${extOsb}";
 
       my $PGMNAM = "BIA2OSB";

@@ -39,7 +39,6 @@ PID  SCRIPT    OPT_DIR   PARAMETERS
 # ---------------------------
 000  PNZSTART  R2S_GEN   CPU=ANY;  NEXTJOB= 001; NEXTJOB= 060; PARAM5=GETORB; PARAM6=GETREF; PARAM8=STATUS
 
-#### ===============================================
 # Copy required files
 # -------------------
 001  GETDATA   PNZ2NE2   CPU=ANY; WAIT=000;  NEXTJOB= 999; PARAM8=GETORB 
@@ -54,7 +53,7 @@ PID  SCRIPT    OPT_DIR   PARAMETERS
 # -------------------------------------------
 004  RNX2STA   PNZ1ORB   CPU=ANY; WAIT=003
 #Trim file copies original to new name and reduces
-# to only calibration for submitted file
+# to only calibration for submitted file - adds null antenna
 005  ANTXTRM3  PNZ1ORB   CPU=ANY; WAIT=003
 006  ATX2PCV1  PNZ1ORB   CPU=ANY; WAIT=004
 #
@@ -103,9 +102,12 @@ PID  SCRIPT    OPT_DIR   PARAMETERS
 055  SATCLK    PNZ1ORB   CPU=ANY; WAIT=051
 059  DUMMY     NO_OPT    CPU=ANY; WAIT=052 055
 #
-# Get X of the nearest sites that have a
-# Station coordinate model, merge these
-# into an APR_YYYYDDDY.CRD file and generate
+# Get X of the nearest sites 
+# in the reference coordinate file for which
+# RINEX data is available, merge these
+# into an APR_YYYYDDDY.CRD file, update 
+# the reference coordinates from the GNSS 
+# processing time series and generate
 # a station information file containing all
 # -------------------------------------------
 060  GETDATA   PNZ1REF   CPU=ANY; WAIT=059;  NEXTJOB= 999; PARAM8=GETREF 
@@ -189,17 +191,17 @@ V_PCVINF       = ANTENNA;        DESCRIPTION=PCV information file
 V_SATINF       = SATELLIT;       DESCRIPTION=Satellite information file
 V_SATCRX       = SAT_$Y+0;       DESCRIPTION=Satellite problem file
 ## Work out how to reference different product types/quality
-V_ORB          = COD0OPSFIN;     DESCRIPTION=Orbit/ERP, CLK, bias information
-V_STOCH_NUMBER = Orbit_midnight;  DESCRIPTION=_Stochastic pulses (Orbit_midnight or Spacing)
+V_ORB          = COD0OPSFIN;     DESCRIPTION=Orbit/ERP, CLK, bias information (COD0OPSFIN or COD0OPSRAP)
+V_STOCH_NUMBER = Spacing;        DESCRIPTION=_Stochastic pulses (Orbit_midnight or Spacing)
 #
 # Product variables for GETDATA steps
 # -----------------------------------
 V_STRATEGY     = d20f_54_code_A; DESCRIPTION=camp/strategy code to get a priori coordinates
-V_USRMRK       = AVLN;           DESCRIPTION=Name of mark submitted by user
+V_USRMRK       = 2406;           DESCRIPTION=Name of mark submitted by user
 # Need to work out what products to use and how to denote rapid/final or rapid + in this case
-V_ORBTYP       = COD_FIN;        DESCRIPTION=Type of product FINAL/RAPID/COD_FIN/COD_RAP/MGEX
-V_OSBTYP       = COD_FIN;        DESCRIPTION=Type of bias product
-V_IONTYP       = COD_FIN;        DESCRIPTION=Type of Ion product (CODE is the only one)
+V_ORBTYP       = COD_FIN/COD_RAP;        DESCRIPTION=Type of product FINAL/RAPID/COD_FIN/COD_RAP/MGEX
+V_OSBTYP       = COD_FIN/COD_RAP;        DESCRIPTION=Type of bias product
+V_IONTYP       = COD_FIN/COD_RAP;        DESCRIPTION=Type of Ion product (CODE is the only one)
 # There was a V_I - which triggered ION estimation -- is this needed?
 #
 # Reference frame and station related files:
@@ -221,7 +223,7 @@ V_OSBFIL       = IAR_$YYYSS+0;   DESCRIPTION=_OSB-file with GNSS satellite biase
 V_OBSSEL       = OBSERV;         DESCRIPTION=Observation selection file
 V_OBSTYP       = BOTH;           DESCRIPTION=Select kind of observations (CODE, PHASE, BOTH)
 # Should we enable 1HZ processing?
-V_SAMPL        = 30;            DESCRIPTION=Data sampling interval (in seconds)
+V_SAMPL        = 30;             DESCRIPTION=Data sampling interval (in seconds)
 V_SATSYS       = GRE;            DESCRIPTION=Select the GNSS (max. supported: GRECJ)
 #
 # Ambiguity resolution:

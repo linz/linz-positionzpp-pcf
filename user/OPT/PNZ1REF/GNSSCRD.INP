@@ -59,6 +59,13 @@ CODES 0
 MSG_CODES 1  "List of geodetic codes to update - default is all"
 
 ! Flags for stations in .CRD file
+
+FLGREQD 1 "S"
+   ## widget = lineedit; emptyallowed = true; check_strlen = 4; activeif = CRDIN /= ""
+
+DESCR_FLGREQD 1  "Flag on stations that must be updated - fail if not"
+
+! Flags for stations in .CRD file
 FLGUPDT 1  "I"
   ## widget = lineedit; emptyallowed = true; check_strlen = 4
   ## activeif = CRDIN /= ""
@@ -134,6 +141,7 @@ DESCR_SYSERR 1  "Error message"
 # Minimum number of sessions to average        > %%%%%%%% <                    # MINDAYS
 # Coordinate calculation method                > %%%%%%%% <                    # METHOD  
 # Maximum coordinate change (0=no limit)       > %%%%%%%% <                    # MAXDIFF
+# Input flag for stations requiring update     > %%%% <                        # FLGREQD
 # Flag for updated stations (blank=unchanged)  > %%%% <                        # FLGUPDT
 #                                                                              #
 # Update codes  > %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <   # CODES

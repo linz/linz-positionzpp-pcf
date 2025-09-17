@@ -64,7 +64,7 @@ ERPFIL_TXT_COL_1 1  "Input Bernese ERP files"
 IEPFIL 0
   ## widget = selwin; path = DIR_IEP; ext = EXT_IEP; maxfiles = 999
   ## emptyallowed = true
-  # $(ORB)_$YYYD+-
+  # $(ORB)_*
 
 MSG_IEPFIL 1  "Foreign formatted ERP files"
 

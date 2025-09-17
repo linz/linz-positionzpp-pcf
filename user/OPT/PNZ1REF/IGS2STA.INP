@@ -79,17 +79,17 @@ CRDIN 0
 DESCR_CRDIN 1  "Coordinate file"
 
 ! IGS log directory
-IGSDIR1 1  "${D}/sitelogs/igs/"
+IGSDIR1 1  "${D}/sitelogs/geonet/"
   ## widget = lineedit
 
 DESCR_IGSDIR1 1  "Directory to search for site logs"
 
-IGSDIR2 1  "${D}/sitelogs/geonet/"
+IGSDIR2 0
   ## widget = lineedit
 
 DESCR_IGSDIR2 1  "Directory to search for site logs"
 
-IGSDIR3 1  "${D}/sitelogs/linz/private_cors/"
+IGSDIR3 0
   ## widget = lineedit
 
 DESCR_IGSDIR3 1  "Directory to search for site logs"

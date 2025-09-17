@@ -49,8 +49,12 @@ sub run {
 # -----------------------------------------------------------
   my $smtRnx = $bpe->getKey("$ENV{U}/PAN/RXOBV3.INP","RADIO_S");
 
-  my @rxoFil = $smtRnx ? glob("${dirSmt}*${yyyyssss}.${extSmt}") :
-                         glob("${dirRxo}*${yyyyssss}.${extRxo}");
+  my $rnxglob=$smtRnx ? "${dirSmt}*${yyyyssss}.${extSmt}" : "${dirRxo}*${yyyyssss}.${extRxo}";
+  my @rxoFil = glob($rnxglob);
+  if( ! @rxoFil ) {
+    warn "No RINEX observation files found matching $rnxglob\n";
+    return;
+  }
   my $satsys_org = $satsys;
   # Hash to store unique antenna types
   my %antenna_types; 

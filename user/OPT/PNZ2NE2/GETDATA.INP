@@ -56,7 +56,7 @@ MSG_ORBTYP 1  "Orbit type, '+' = 'or better'"
 
 ORBNAM 0
   ## widget=lineedit; check_strlen=24
-  # 
+  # COD_FIN
 
 MSG_ORBNAM 1  "Name for downloaded orbit file(s)"
 
@@ -70,7 +70,7 @@ MSG_DNLDERP 1  "Download earth rotation parameters"
 
 ERPNAM 0
   ## widget=lineedit; check_strlen=24
-  # 
+  # COD_FIN
 
 MSG_ERPNAM 1  "Name for downloaded ERP file(s)"
 
@@ -84,7 +84,7 @@ MSG_DNLDCLK 1  "Download clock files"
 
 CLKNAM 0
   ## widget=lineedit; check_strlen=24
-  # 
+  # COD_FIN
 
 MSG_CLKNAM 1  "Name for downloaded clock file(s)"
 
@@ -134,6 +134,7 @@ MSG_IONFILE 1  "Name of combined ION files"
 
 IONNAM 0
   ## widget=lineedit; check_strlen=24
+  # COD_FIN
 
 MSG_IONNAM 1  "Name for downloaded ionosphere file(s)"
 
@@ -178,7 +179,7 @@ MSG_DNLDOSB 1  "Download daily OSB files"
 
 OSBNAM 0
   ## widget=lineedit; check_strlen=24
-  # 
+  # COD_FIN
 
 MSG_OSBNAM 1  "Name for downloaded OSB files"
 

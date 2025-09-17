@@ -64,7 +64,7 @@ MSG_BIASNX 1  "BIAS-SINEX file"
 ! ---------------
 OSBOUT 0
   ## widget = lineedit; path = DIR_OSB; ext = EXT_OSB; emptyallowed = false
-  # SCRIPT
+  # $(OSBFIL)
 
 MSG_OSBOUT 1  "OSB output file"
 

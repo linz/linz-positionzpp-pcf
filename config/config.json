@@ -2,6 +2,7 @@
     "PcfName": "R2S_PNZ",
     "ReferenceFrame": "ITRF2020",
     "ReferenceStationCoordinateFile": "STA/REFSTNS.CRD",
+    "ReferenceCoordinateProcessingStrategy": "d20f_54_code_A+d20f_52_code_A+p20r_54_code",
     "OutputStatusFile": "OUT/STATUS.LCK",
     "OutputSummaryJson": "OUT/SUMMARY.JSON",
     "ConfigOutputFiles": [
