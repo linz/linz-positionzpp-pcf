@@ -340,11 +340,11 @@ MSG_STAFLAG 1  "Flag used to select stations to download"
 REFCRD 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
   ## activeif = DNLDRS_A = 1
-  # REFSTNS
+  # REF_$Y$S+0
 
 MSG_REFCRD 1  "Name of station file containing potential reference stations"
 
-REFFLAG 1  "U"
+REFFLAG 1  "C"
   ## widget = lineedit; activeif = DNLDRS_A = 1
 
 MSG_REFFLAG 1  "If specified only stations with this flag will be candidates"
@@ -369,7 +369,7 @@ UPDTCRD 1  "1"
 
 MSG_UPDTCRD 1  "Update the coordinate file with the reference station coordinates at the session epoch"
 
-UPDTFLAG 1  "S"
+UPDTFLAG 1  "R"
   ## widget = lineedit; check_strlen = 4
   ## activeif = DNLDRS_A = 1 AND UPDTCRD = 1
 

@@ -37,7 +37,7 @@ MSG_TITLE 1  "Title line"
 CRDIN 0
   ## widget = selwin; path = DIR_CRD; ext = EXT_CRD; maxfiles = 1
   ## emptyallowed = true
-  # $(APR)_$YYYSS+0
+  # REFSTNS
 
 DESCR_CRDIN 1  "Coordinate file"
 
@@ -60,13 +60,13 @@ MSG_CODES 1  "List of geodetic codes to update - default is all"
 
 ! Flags for stations in .CRD file
 
-FLGREQD 1 "S"
+FLGREQD 0
    ## widget = lineedit; emptyallowed = true; check_strlen = 4; activeif = CRDIN /= ""
 
 DESCR_FLGREQD 1  "Flag on stations that must be updated - fail if not"
 
 ! Flags for stations in .CRD file
-FLGUPDT 1  "I"
+FLGUPDT 1  "C"
   ## widget = lineedit; emptyallowed = true; check_strlen = 4
   ## activeif = CRDIN /= ""
 
@@ -97,7 +97,7 @@ DESCR_METHOD 1  "Coordinate calculation method"
 ! --------------------
 CRDOUT 0
   ## widget = lineedit; path = DIR_CRD; ext = EXT_CRD
-  # $(APR)_$YYYSS+0
+  # REF_$Y$S+0
 
 DESCR_CRDOUT 1  "Output coordinate file"
 

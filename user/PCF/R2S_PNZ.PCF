@@ -110,8 +110,8 @@ PID  SCRIPT    OPT_DIR   PARAMETERS
 # processing time series and generate
 # a station information file containing all
 # -------------------------------------------
-060  GETDATA   PNZ1REF   CPU=ANY; WAIT=059;  NEXTJOB= 999; PARAM8=GETREF 
-061  GNSSCRD   PNZ1REF   CPU=ANY; WAIT=060
+060  GNSSCRD   PNZ1REF   CPU=ANY; WAIT=003
+061  GETDATA   PNZ1REF   CPU=ANY; WAIT=060 059;  NEXTJOB= 999; PARAM8=GETREF 
 062  IGS2STA   PNZ1REF   CPU=ANY; WAIT=061
 #
 # Create PCV file with only sites in STA file
