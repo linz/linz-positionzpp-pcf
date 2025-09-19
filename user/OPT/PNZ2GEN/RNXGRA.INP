@@ -155,7 +155,7 @@ DESCR_STAINFO 1  "Station information"
 
 ! Stop if Station Name not found in Translation Table
 ! ---------------------------------------------------
-STNMSTOP 1  "0"
+STNMSTOP 1  "1"
   ## widget = checkbox; activeif = STAINFO /= _
 
 MSG_STNMSTOP 1  "Stop if station name not found"

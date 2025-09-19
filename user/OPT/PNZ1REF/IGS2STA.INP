@@ -36,7 +36,7 @@ MSG_TITLE 1  "Title line"
 ! ----------
 STAIN 0
   ## widget = selwin; path = DIR_STA; ext = EXT_STA; emptyallowed = true
-  # 
+  # $(STAINF)
 
 DESCR_STAIN 1  "Input station information file"
 
@@ -86,11 +86,13 @@ DESCR_IGSDIR1 1  "Directory to search for site logs"
 
 IGSDIR2 0
   ## widget = lineedit
+  # 
 
 DESCR_IGSDIR2 1  "Directory to search for site logs"
 
 IGSDIR3 0
   ## widget = lineedit
+  # 
 
 DESCR_IGSDIR3 1  "Directory to search for site logs"
 
