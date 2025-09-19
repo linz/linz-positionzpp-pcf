@@ -295,17 +295,18 @@ MRGRINEX 1  "1"
 
 MSG_MRGRINEX 1  "Merge multiple RINEX files to make a single RINEX file for each station/session"
 
+MRGNAM 0
+  ## widget=lineedit; check_strlen=24
+  ## activeif = DNLDRS_F = 1 OR DNLDRS_A = 1 OR DNLDRS_C = 1
+  # 
+
+MSG_MRGNAM 1  "Name of the merged RINEX file - use CODE for the mark code"
+
 RNXCODE 1  "1"
   ## widget = checkbox
   ## activeif = DNLDRS_F = 1 OR DNLDRS_A = 1 OR DNLDRS_C = 1
 
 MSG_RNXCODE 1  "Replace mark name with code based on first four characters of the filename"
-
-FIXRINEX 1  "1"
-  ## widget = checkbox
-  ## activeif = DNLDRS_F = 1 OR DNLDRS_A = 1 OR DNLDRS_C = 1
-
-MSG_FIXRINEX 1  "Replace invalid antenna/receivers in RINEX file with best guess valid values"
 
 REFSTNS 0
   ## widget = lineedit; activeif = DNLDRS_C = 1
@@ -571,7 +572,7 @@ DESCR_SYSERR 1  "Error message"
 #   Maximum number of missing stations    > %%%% <                             # MAXMSSTN
 #   RINEX data type                       > %%%%%%% <                          # RSDTYPE
 #   Merge RINEX files to session file     > % <                                # MRGRINEX
+#   Merged RINEX filename                 > %%%%%%%%%%%%%%%%%%%% <             # MRGNAM
 #   Replace markname with code            > % <                                # RNXCODE
-#   Fix invalid RINEX antenna/receiver    > % <                                # FIXRINEX
 #                                                                              #
 # END_PANEL ####################################################################
