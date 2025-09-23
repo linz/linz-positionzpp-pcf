@@ -60,7 +60,7 @@ MSG_RADIO_C 1  "Concatenate files"
 CONCAT 0
   ## widget = selwin; path = DIR_OPR; ext = EXT_PRE; emptyallowed = false
   ## maxfiles = 999; activeif = RADIO_C == 1
-  # $(ORB)_$YYYD+-
+  # $(ORB)_*
 
 CONCAT_TXT_COL_1 1  "Input precise orbit files"
 
