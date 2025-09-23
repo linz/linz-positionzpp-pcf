@@ -837,7 +837,7 @@ RADIO2_4 1  "0"
 
 MSG_RADIO2_4 1  "Free network solution"
 
-RADIO2_3 1  "1"
+RADIO2_3 1  "0"
   ## widget = radiobutton; group = DUMMY
   ## radiokeys = FREESTA C_TRA C_ROT C_SCL
 
@@ -848,7 +848,7 @@ RADIO2_2 1  "0"
 
 MSG_RADIO2_2 1  "Coordinates constrained"
 
-RADIO2_1 1  "0"
+RADIO2_1 1  "1"
   ## widget = radiobutton; group = DUMMY; radiokeys = FIXSTA
 
 MSG_RADIO2_1 1  "Coordinates fixed"
