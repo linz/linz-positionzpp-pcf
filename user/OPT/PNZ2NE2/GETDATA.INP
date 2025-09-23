@@ -91,7 +91,7 @@ MSG_CLKNAM 1  "Name for downloaded clock file(s)"
 ! -------------------------------------------------------------------------
 ! Plus/minus session range in orbits
 ! ------------------
-ORBPLUSM 1  "1"
+ORBPLUSM 1  "0"
   ## widget = checkbox
 
 MSG_ORBPLUSM 1  "Include +/- session range in orbit products"
