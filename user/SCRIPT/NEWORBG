@@ -31,39 +31,50 @@ sub run {
 
 # Get variables
 # -------------
-  my ($ssss,$yyyy,$hourly,$satsys,$stoch,$dirses) = 
+  my ($ssss,$yyyy,$hourly,$satsys,$orb,$dirOrb,$dirses) = 
   $bpe->getKeys
-  ('$S+0','$Y+0','V_HOURLY','V_SATSYS','V_STOCH_NUMBER','DIR_SES');
+  ('$S+0','$Y+0','V_HOURLY','V_SATSYS','V_ORB','DIR_IEP','DIR_SES');
 
 # Hourly processing
 # -----------------
   setHourly($bpe);
 
-# Switch off the pulses if too few hours are processed
-# ----------------------------------------------------
-  if (isHourly($ssss)) {
-    my $stc = $bpe->getKey("$ENV{U}/PAN/ORBGEN.INP","STOCH_NUMBER");
-    if ( $stc eq "ALL" || $stc eq "MANUAL" ) {
-      my @hms = split(" ",$bpe->getKey("$ENV{U}/PAN/ORBGEN.INP","STOCH_INTER"));
-      my $hlp = $hms[0] + $hms[1]/60 + $hms[2]/3600;
-      if ( $hourly < ($hms[0] + $hms[1]/60 + $hms[2]/3600) * 1.9 ) {
-        $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","STOCH_NUMBER","NONE");
-        prtMess($bpe,"Stochastic pulses switched off");
-      }
-    }
-  } else {
-    if ( "$stoch" ne "" ) {
-      my $stc = $bpe->getKey("$ENV{U}/PAN/ORBGEN.INP","STOCH_NUMBER");
-      if ( $stc ne "No_setup" && substr($stc,0,1) ne '$' ) {
-        $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","STOCH_NUMBER",'$(STOCH_NUMBER)');
-      }
-    }
+# Check product files to determine if they are rapid or final this 
+# will be used to set the V_STOCH_NUMBER dynamically
+# ----------------------------------------------------------------
+  my $preFil = "${dirOrb}${orb}_${yyyy}${ssss}.PRE";
+ 
+  # Setting default stochastic number to the worst case scenario: rapid setting
+  my $stoch = "Spacing";
+  print "Header of precise orbit file $preFil:\n";
+
+  open(PRE,"$preFil") or die "cannot open $preFil\n";
+  while ( <PRE> ) {
+   print "$_";
+   # Note - these will fail if hardcoded headers don't have a comment line starting with rapid or final
+   if ( /^\/\*\sRAPID\s/i ) {
+     $stoch = "Spacing";
+     prtMess($bpe,"Precise orbit file read - found to be rapid product so STOCHASTIC PULSES set to \"$stoch\"");
+     last; 
+   }
+   elsif (/^\/\*\sFINAL\s/i ) {
+     $stoch = "Orbital_midnight";
+     print "using $stoch\n";
+     prtMess($bpe,"Precise orbit file read - found to be rapid product so STOCHASTIC PULSES set to \"$stoch\"");
+     last; 
+   }
   }
+  close PRE;  
+
+# Removed check for hourly processing and conditional setting of stochastic 
+# number to NONE based on length of stochastic interval. It is simpler to 
+# compute spacing or rapid based on product rather than length of file. 
 
 # Set the GNSS to be used
 # -----------------------
   if (! ($satsys =~ /G/) ) { $satsys = 'G'.$satsys; } 
   setGNSS($bpe,"$ENV{U}/PAN/ORBGEN.INP","USE_",$satsys);
+
 
 # Adjust the settings on integration interval if V_STOCH_NUMBER is set
 # --------------------------------------------------------------------
