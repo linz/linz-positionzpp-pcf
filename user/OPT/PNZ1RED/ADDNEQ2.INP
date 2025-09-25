@@ -963,18 +963,20 @@ MSG_STAFLAG4 1  "Stations with specific flags in CRD file"
 STATION1 0
   ## widget = selwin; activeif = FIXSTA == MANUAL AND RADIO2_1 == 1
   ## pointer = STALST
+  # 
 
 MSG_STATION1 1  "Manual selection"
 
 STAFILE1 0
   ## widget = selwin; activeif = FIXSTA == FROM_FILE AND RADIO2_1 == 1
   ## path = DIR_FIX; ext = EXT_FIX; maxfiles = 1
-  # 
+  # REF_$YYYSS+0
 
 MSG_STAFILE1 1  "List of stations from file"
 
 STAFLAG1 0
   ## widget = lineedit; activeif = FIXSTA == WITH_FLAG AND RADIO2_1 == 1
+  # 
 
 MSG_STAFLAG1 1  "Stations with specific flags in CRD file"
 
