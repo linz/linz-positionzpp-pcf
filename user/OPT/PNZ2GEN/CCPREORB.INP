@@ -126,7 +126,7 @@ REFEPO 0
 
 MSG_REFEPO 1  "Reference epoch for output files"
 
-FILSEQ 1  "0"
+FILSEQ 1  "X"
   ## widget = initmenu; pointer = SESSION_CHAR
 
 MSG_FILSEQ 1  "Session character"

@@ -90,7 +90,7 @@ sub GetOrbitType
         }
         close($of);
     }
-    substr($orbtype,1)=lc(substr($orbtype,1));
+    #substr($orbtype,1)=lc(substr($orbtype,1));
     $self->{orbit_type}=$orbtype;
 }
 
@@ -180,8 +180,8 @@ sub GetFinalStats
     {
         while(my $line=<$fsf>)
         {
-            $final->{dof}=$1+0 if $line=~/^\s*DEGREE\s+OF\s+FREEDOM\s+\(DOF\)\s*\:\s*(\d+)/;
-            $final->{seuw}=$1+0 if $line=~/^\s*CHI\*\*2\/DOF\s*\:\s*(\d+\.\d+)/;
+            $final->{dof}=$1+0 if $line=~/^\s*DEGREE\s+OF\s+FREEDOM\s+\(DOF\)\s+(\d+)/i;
+            $final->{seuw}=$1+0 if $line=~/^\s*CHI\*\*2\/DOF\s+(\d+\.\d+)/i;
         }
         close($fsf);
     }
@@ -244,6 +244,7 @@ sub GetSinexCoords
     my ($self,$dirsnx,$yyyyssss)=@_;
     my $snxfile="$dirsnx/FIN_$yyyyssss.SNX";
     my $sfdata={};
+    my $refstns = $self->{reference_stations};
     eval
     {
         my $sf=new LINZ::GNSS::SinexFile($snxfile);
@@ -251,11 +252,14 @@ sub GetSinexCoords
 
         foreach my $stn ($sf->stations)
         {
-            # Assume just one solution for code..
             my $code=$stn->{code};
+            # Assume just one solution for code..
             croak("SINEX file contains more than one solution for station $code\n")
                 if exists $codelist{$code};
             $codelist{$code}=1;
+
+            # Skip over reference stations
+            next if exists $refstns->{$code};
                
             my $xyz=$stn->{xyz};
             my $covxyz=$stn->{covar};

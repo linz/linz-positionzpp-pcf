@@ -6,10 +6,10 @@ ENVIRONMENT 0
 
 ! SOME KEYWORDS FOR AUTOMATIC OUTPUT
 ! ----------------------------------
-CAMPAIGN 1  "./DUMMY"
+CAMPAIGN 0
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 1  "${PAN}/SESSIONS.SES"
+SESSION_TABLE 0
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
@@ -53,7 +53,7 @@ PREFIL_EXT_COL_2 1  "ERP"
 
 ! Extension of the ERP Files
 ! --------------------------
-PREFIL_PTH_COL_2 1  "./DUMMY/ORB/"
+PREFIL_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_ERP
 
 ! Use general ERP file
