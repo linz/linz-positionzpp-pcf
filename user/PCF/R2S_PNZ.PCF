@@ -54,7 +54,7 @@ PID  SCRIPT    OPT_DIR   PARAMETERS
 004  RNX2STA   PNZ1ORB   CPU=ANY; WAIT=003
 #Trim file copies original to new name and reduces
 # to only calibration for submitted file - adds null antenna
-005  ANTXTRM3  PNZ1ORB   CPU=ANY; WAIT=003
+005  ANTXTRM3  PNZ1ORB   CPU=ANY; WAIT=004
 006  ATX2PCV1  PNZ1ORB   CPU=ANY; WAIT=005
 #
 # Preprocess, convert, and synchronize observation data
