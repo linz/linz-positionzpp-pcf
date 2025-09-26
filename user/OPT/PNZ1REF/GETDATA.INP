@@ -370,7 +370,7 @@ UPDTCRD 1  "1"
 
 MSG_UPDTCRD 1  "Update the coordinate file with the reference station coordinates at the session epoch"
 
-UPDTFLAG 1  "R"
+UPDTFLAG 1  "I"
   ## widget = lineedit; check_strlen = 4
   ## activeif = DNLDRS_A = 1 AND UPDTCRD = 1
 

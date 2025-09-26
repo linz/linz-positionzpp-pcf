@@ -1,10 +1,10 @@
 
 ! Some keywords for automatic output
 ! ----------------------------------
-CAMPAIGN 1  "./DUMMY"
+CAMPAIGN 0
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 1  "${PAN}/SESSIONS.SES"
+SESSION_TABLE 0
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
@@ -170,12 +170,12 @@ DESCR_SYSERR 1  "Error message"
 
 ! Start and End Epoch
 ! -------------------
-RADIO_0 1  "0"
+RADIO_0 1  "1"
   ## widget = radiobutton; group = WINDOW
 
 MSG_RADIO_0 1  "Take all bias records"
 
-RADIO_1 1  "1"
+RADIO_1 1  "0"
   ## widget = radiobutton; group = WINDOW
   ## radiokeys = SESSION_TABLE SESSION_YEAR SESSION_STRG
 

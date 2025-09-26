@@ -53,14 +53,14 @@ sub run {
    print "$_";
    # Note - these will fail if hardcoded headers don't have a comment line starting with rapid or final
    if ( /^\/\*\sRAPID\s/i ) {
-     $stoch = "Spacing";
-     prtMess($bpe,"Precise orbit file read - found to be rapid product so STOCHASTIC PULSES set to \"$stoch\"");
+     prtMess($bpe,"Precise orbit file read - found to be rapid product so STOCHASTIC PULSES set to \"Spacing\"");
+     $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","STOCH_NUMBER","Spacing");
      last; 
    }
    elsif (/^\/\*\sFINAL\s/i ) {
      $stoch = "Orbital_midnight";
-     print "using $stoch\n";
-     prtMess($bpe,"Precise orbit file read - found to be rapid product so STOCHASTIC PULSES set to \"$stoch\"");
+     prtMess($bpe,"Precise orbit file read - found to be rapid product so STOCHASTIC PULSES set to \"Orbital_midnight\"");
+     $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","STOCH_NUMBER","Orbital_midnight");
      last; 
    }
   }
