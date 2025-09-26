@@ -58,9 +58,9 @@ sub run {
      last; 
    }
    elsif (/^\/\*\sFINAL\s/i ) {
-     $stoch = "Orbital_midnight";
-     prtMess($bpe,"Precise orbit file read - found to be final product so STOCHASTIC PULSES set to \"Orbital_midnight\"");
-     $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","STOCH_NUMBER","Orbital_midnight");
+     $stoch = "Orbit_midnight";
+     prtMess($bpe,"Precise orbit file read - found to be final product so STOCHASTIC PULSES set to \"Orbit_midnight\"");
+     $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","STOCH_NUMBER","Orbit_midnight");
      last; 
    }
   }
