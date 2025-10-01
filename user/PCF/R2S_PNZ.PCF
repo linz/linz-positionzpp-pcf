@@ -124,7 +124,7 @@ PID  SCRIPT    OPT_DIR   PARAMETERS
 064  ATX2PCV   PNZ1REF   CPU=ANY; WAIT=063
 065  MAKEBLQ   PNZ1REF   CPU=ANY; WAIT=062
 066  GRDS1S2   PNZ1REF   CPU=ANY; WAIT=062
-069  DUMMY     NO_OPT    CPU=ANY; WAIT=063 065 066 
+069  DUMMY     NO_OPT    CPU=ANY; WAIT=064 065 066 
 #
 # Preprocess, convert, and synchronize observation data
 # -----------------------------------------------------
