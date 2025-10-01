@@ -54,8 +54,8 @@ PID  SCRIPT    OPT_DIR   PARAMETERS
 004  RNX2STA   PNZ1ORB   CPU=ANY; WAIT=003
 #Trim file copies original to new name and reduces
 # to only calibration for submitted file - adds null antenna
-005  ANTXTRM3  PNZ1ORB   CPU=ANY; WAIT=004
-006  ATX2PCV1  PNZ1ORB   CPU=ANY; WAIT=005
+005  ANTXTRM3  PNZ1ORB   CPU=ANY; WAIT=004; SKIP
+006  ATX2PCV1  PNZ1ORB   CPU=ANY; WAIT=005; SKIP
 #
 # Preprocess, convert, and synchronize observation data
 # -----------------------------------------------------
@@ -120,8 +120,8 @@ PID  SCRIPT    OPT_DIR   PARAMETERS
 # Get ORB & EOP products, VMF, ION, DCB data
 # Rename all files to be the same as the ref
 # -------------------------------------------
-063  ANTXTRM4  PNZ1REF   CPU=ANY; WAIT=062
-064  ATX2PCV   PNZ1REF   CPU=ANY; WAIT=063
+063  ANTXTRM4  PNZ1REF   CPU=ANY; WAIT=062; SKIP
+064  ATX2PCV   PNZ1REF   CPU=ANY; WAIT=063; SKIP
 065  MAKEBLQ   PNZ1REF   CPU=ANY; WAIT=062
 066  GRDS1S2   PNZ1REF   CPU=ANY; WAIT=062
 069  DUMMY     NO_OPT    CPU=ANY; WAIT=063 065 066 
