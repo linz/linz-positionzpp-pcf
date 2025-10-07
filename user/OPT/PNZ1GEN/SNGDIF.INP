@@ -428,7 +428,7 @@ MSG_USE_J 1  "Stations must contain observ. from QZSS"
 
 ! Interval of simultaneous obs.
 ! ----------------------------
-SIMDT 1  "1.0"
+SIMDT 1  "0.1"
   ## widget = lineedit
 
 MSG_SIMDT 1  "Tolerance to identify observations of one epoch"

@@ -491,7 +491,7 @@ MSG_IONOS 1  "Ionosphere"
 
 ! Minimal Elevation
 ! -----------------
-MINEL 1  "3"
+MINEL 1  "10"
   ## widget = spinbox; range = 0 90 1
 
 MSG_MINEL 1  "Minimum elevation"
@@ -505,9 +505,8 @@ MSG_SAMPLE 1  "Sampling interval"
 
 ! Interpolation of clocks
 ! -----------------------
-SECIPL 0
+SECIPL 1  "0"
   ## widget = lineedit
-  # 
 
 MSG_SECIPL 1  "Interpolation of clocks"
 

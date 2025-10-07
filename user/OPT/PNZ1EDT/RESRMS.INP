@@ -4,13 +4,13 @@
 ENVIRONMENT 0
   ## widget = initmenu; pointer = ENVIR_LIST
 
-CAMPAIGN 1  "./DUMMY"
+CAMPAIGN 0
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
 USR_INFO 1  "${USER}"
   ## widget = comment
 
-SESSION_TABLE 1  "${PAN}/SESSIONS.SES"
+SESSION_TABLE 0
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
@@ -68,6 +68,7 @@ RESFIL_TXT_COL_1 1  "Input file"
 ! ------------
 OUTPUT 0
   ## widget = lineedit; path = DIR_SUM; ext = EXT_SUM
+  # 
 
 DESCR_OUTPUT 1  "Summary file"
 
@@ -83,6 +84,7 @@ DESCR_EDITRS 1  "Edit information file"
 ! ------------------
 HISTOGRAM 0
   ## widget = lineedit; path = DIR_LST; ext = EXT_LST
+  # 
 
 DESCR_HISTOGRAM 1  "Residual histogram"
 
@@ -90,6 +92,7 @@ DESCR_HISTOGRAM 1  "Residual histogram"
 ! --------------------------
 STAWGTRS 0
   ## widget = lineedit; path = DIR_SOS; ext = EXT_SOS
+  # 
 
 DESCR_STAWGTRS 1  "Station observation sigma file"
 
@@ -169,7 +172,7 @@ DOBIGRES 1  "1"
 
 MSG_DOBIGRES 1  "Detect large residuals: phase measurements"
 
-BIGRES 0
+BIGRES 1  "0.004"
   ## widget = lineedit; activeif = DOBIGRES = 1; check_type = real
   ## check_min = 0.0
 
@@ -185,6 +188,7 @@ MSG_DOBIGRES2 1  "Detect large residuals: code  measurements"
 BIGRES2 0
   ## widget = lineedit; activeif = DOBIGRES2 = 1; check_type = real
   ## check_min = 0.0
+  # 
 
 MSG_BIGRES2 1  "Detect large residuals: code limit"
 
@@ -248,7 +252,7 @@ MSG_IPIECE 1  "Minimum continuously observed time interval"
 
 ! Minimum Number of Obs. per Ambiguity
 ! ------------------------------------
-DOMINAMB 1  "0"
+DOMINAMB 1  "1"
   ## widget = checkbox
 
 MSG_DOMINAMB 1  "Detect ambiguities with few observations"
@@ -256,6 +260,7 @@ MSG_DOMINAMB 1  "Detect ambiguities with few observations"
 IMINAMB 0
   ## widget = lineedit; activeif = DOMINAMB = 1; check_type = integer
   ## check_min = 0
+  # 
 
 MSG_IMINAMB 1  "Minimum number of observations per ambiguity"
 
@@ -264,6 +269,7 @@ MSG_IMINAMB 1  "Minimum number of observations per ambiguity"
 ISPLAMB 0
   ## widget = lineedit; activeif = DOMINAMB = 1 AND IMINAMB > 0
   ## check_type = integer; check_min = 0
+  # 
 
 MSG_ISPLAMB 1  "Sampling interval for counting the observations"
 

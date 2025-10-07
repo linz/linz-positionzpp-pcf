@@ -6,10 +6,10 @@ ENVIRONMENT 0
 
 ! SOME KEYWORDS FOR AUTOMATIC OUTPUT
 ! ----------------------------------
-CAMPAIGN 1  "./DUMMY"
+CAMPAIGN 0
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 1  "${PAN}/SESSIONS.SES"
+SESSION_TABLE 0
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
@@ -86,12 +86,13 @@ CZHFIL 0
   ## widget = selwin; path = DIR_CZH; ext = EXT_CZH; maxfiles = 999
   ## emptyallowed = true
   ## activeif = WHATTODO /= INITIALIZE AND OBSTYPE = GNSS
+  # 
 
 MSG_CZHFIL 1  "Zero diff. code"
 
 CZHFIL_TXT_COL_1 1  "Code Header Files"
 
-CZHFIL_PTH_COL_2 1  "./DUMMY/OBS/"
+CZHFIL_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_CZO
 
 CZHFIL_EXT_COL_2 1  "CZO"
@@ -99,7 +100,7 @@ CZHFIL_EXT_COL_2 1  "CZO"
 
 CZHFIL_TXT_COL_2 1  "Code Observation Files"
 
-CZHFIL_PTH_COL_3 1  "./DUMMY/OBS/"
+CZHFIL_PTH_COL_3 0
   ## widget = initmenu; pointer = DIR_PZH
 
 CZHFIL_EXT_COL_3 1  "PZH"
@@ -107,7 +108,7 @@ CZHFIL_EXT_COL_3 1  "PZH"
 
 CZHFIL_TXT_COL_3 1  "Phase Header Files"
 
-CZHFIL_PTH_COL_4 1  "./DUMMY/OBS/"
+CZHFIL_PTH_COL_4 0
   ## widget = initmenu; pointer = DIR_PZO
 
 CZHFIL_EXT_COL_4 1  "PZO"
@@ -120,22 +121,23 @@ CZHFIL_TXT_COL_4 1  "Phase Observation Files"
 PZHFIL 0
   ## widget = selwin; path = DIR_PZH; ext = EXT_PZH; maxfiles = 999
   ## emptyallowed = true; activeif = OBSTYPE = GNSS
+  # 
 
 MSG_PZHFIL 1  "Zero diff. phase"
 
-PZHFIL_PTH_COL_2 1  "./DUMMY/OBS/"
+PZHFIL_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_PZO
 
 PZHFIL_EXT_COL_2 1  "PZO"
   ## widget = initmenu; pointer = EXT_PZO
 
-PZHFIL_PTH_COL_3 1  "./DUMMY/OBS/"
+PZHFIL_PTH_COL_3 0
   ## widget = initmenu; pointer = DIR_CZH
 
 PZHFIL_EXT_COL_3 1  "CZH"
   ## widget = initmenu; pointer = EXT_CZH
 
-PZHFIL_PTH_COL_4 1  "./DUMMY/OBS/"
+PZHFIL_PTH_COL_4 0
   ## widget = initmenu; pointer = DIR_CZO
 
 PZHFIL_EXT_COL_4 1  "CZO"
@@ -155,12 +157,13 @@ CSHFIL 0
   ## widget = selwin; path = DIR_CSH; ext = EXT_CSH; maxfiles = 999
   ## emptyallowed = true
   ## activeif = WHATTODO /= INITIALIZE AND OBSTYPE = GNSS
+  # 
 
 MSG_CSHFIL 1  "Single diff. code"
 
 CSHFIL_TXT_COL_1 1  "Code Single Difference Files"
 
-CSHFIL_PTH_COL_2 1  "./DUMMY/OBS/"
+CSHFIL_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_CSO
 
 CSHFIL_EXT_COL_2 1  "CSO"
@@ -168,7 +171,7 @@ CSHFIL_EXT_COL_2 1  "CSO"
 
 CSHFIL_TXT_COL_2 1  "Code Single Difference Files"
 
-CSHFIL_PTH_COL_3 1  "./DUMMY/OBS/"
+CSHFIL_PTH_COL_3 0
   ## widget = initmenu; pointer = DIR_PSH
 
 CSHFIL_EXT_COL_3 1  "PSH"
@@ -176,7 +179,7 @@ CSHFIL_EXT_COL_3 1  "PSH"
 
 CSHFIL_TXT_COL_3 1  "Phase Single Difference Files"
 
-CSHFIL_PTH_COL_4 1  "./DUMMY/OBS/"
+CSHFIL_PTH_COL_4 0
   ## widget = initmenu; pointer = DIR_PSO
 
 CSHFIL_EXT_COL_4 1  "PSO"
@@ -189,22 +192,23 @@ CSHFIL_TXT_COL_4 1  "Phase Single Difference Files"
 PSHFIL 0
   ## widget = selwin; path = DIR_PSH; ext = EXT_PSH; maxfiles = 999
   ## emptyallowed = true; activeif = OBSTYPE = GNSS
+  # ????$S+0
 
 MSG_PSHFIL 1  "Single diff. phase"
 
-PSHFIL_PTH_COL_2 1  "./DUMMY/OBS/"
+PSHFIL_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_PSO
 
 PSHFIL_EXT_COL_2 1  "PSO"
   ## widget = initmenu; pointer = EXT_PSO
 
-PSHFIL_PTH_COL_3 1  "./DUMMY/OBS/"
+PSHFIL_PTH_COL_3 0
   ## widget = initmenu; pointer = DIR_CSH
 
 PSHFIL_EXT_COL_3 1  "CSH"
   ## widget = initmenu; pointer = EXT_CSH
 
-PSHFIL_PTH_COL_4 1  "./DUMMY/OBS/"
+PSHFIL_PTH_COL_4 0
   ## widget = initmenu; pointer = DIR_CSO
 
 PSHFIL_EXT_COL_4 1  "CSO"
@@ -229,7 +233,7 @@ MSG_RZHFIL 1  "Range obs"
 
 RZHFIL_TXT_COL_1 1  "Range Header Files"
 
-RZHFIL_PTH_COL_2 1  "./DUMMY/OBS/"
+RZHFIL_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_RZO
 
 RZHFIL_EXT_COL_2 1  "RZO"
@@ -349,11 +353,13 @@ MSG_RADIO_21 1  "From epoch selection"
 
 NUMFROM 0
   ## widget = lineedit; activeif = RADIO_21 = 1 AND WHATTODO = MARK_MANUAL
+  # 
 
 MSG_NUMFROM 1  "From epoch"
 
 NUMTO 0
   ## widget = lineedit; activeif = RADIO_21 = 1 AND WHATTODO = MARK_MANUAL
+  # 
 
 MSG_NUMTO 1  "To epoch"
 
