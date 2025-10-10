@@ -199,7 +199,7 @@ MSG_SCL9 1  "Scaling factor of PAR_9 (for output)"
 
 ! Setup stochastic parameters
 ! ---------------------------
-STOCH_NUMBER 1  "Spacing"
+STOCH_NUMBER 1  "No_setup"
   ## widget = combobox; editable = false
   ## cards = No_setup Spacing SATCRUX ELE_file Orbit_midnight Manual
   ## activeif = RPROUT = _

@@ -35,78 +35,10 @@ sub run {
   $bpe->getKeys
   ('$S+0','$Y+0','V_HOURLY','V_SATSYS','V_ORB','DIR_IEP','DIR_SES');
 
-
-# Get the session table and retrieve the start and end of the session
-  my $sesstable=$dirses.'/'.$$bpe{SESSION_TABLE};
-  my $sf=new LINZ::BERN::SessionFile($sesstable);
-  my ($start,$end)=$sf->sessionStartEnd($ssss,$yyyy);
-  
-  # Calculate duration - number of hours - to be used in determining stochastic number
-  my $duration = $end - $start;
-  my $duration_hours   = int($duration / 3600);
-
-# Check product files to determine if they are rapid or final this 
-# will be used to set the V_STOCH_NUMBER dynamically - Text files 
-# created by script ORBTYP
-# ----------------------------------------------------------------
-  my $ddd = substr($ssss,0,3);
-  my $preFil = "${dirOrb}${orb}_${yyyy}${ddd}.PRE";
-  my $stoch = 'Spacing';
-  my $product = 'RAPID';
-
-  print "Header of precise orbit file $preFil:\n";
-  open(PRE,"$preFil") or die "cannot open $preFil: $!\n";
-  while ( <PRE> ) {
-    print "$_";
-    # Note - these will fail if hardcoded headers don't have a comment line starting with rapid or final
-    if ( /^\/\*\sRAPID\s/i ) {
-     prtMess($bpe,"Precise orbit file read - found to be rapid product");
-     $product = 'RAPID';
-     last; 
-    }
-    elsif (/^\/\*\sFINAL\s/i ) {
-      prtMess($bpe,"Precise orbit file read - found to be final product");
-      $product = 'FINAL';
-     last; 
-   }
-  }
-  close PRE or die "cannot close $preFil: $!\n";
-
-  if ( $duration_hours < 2 ) { $stoch = 'No_setup'; } 
-  elsif ( $duration_hours >= 2 && $duration_hours < 10 ) { $stoch = 'Spacing'; } 
-  elsif ( $duration_hours >= 10 && $product eq 'RAPID') { $stoch = 'Spacing';  }
-  elsif ( $duration_hours >= 10 && $product eq 'FINAL') { $stoch = 'Orbit_midnight' }
-
 # Set the GNSS to be used
 # -----------------------
   if (! ($satsys =~ /G/) ) { $satsys = 'G'.$satsys; } 
   setGNSS($bpe,"$ENV{U}/PAN/ORBGEN.INP","USE_",$satsys);
-
-# Adjust the settings on integration interval if V_STOCH_NUMBER is set
-# --------------------------------------------------------------------
-  my $leninter = $bpe->getKey("$ENV{U}/PAN/ORBGEN.INP","LENINTER");
-  my $varlnint = $bpe->getKey("$ENV{U}/PAN/ORBGEN.INP","VARLNINT");
-
-  # "Spacing" is used for rapid products and timespans less than 10 hours
-  if ( $stoch eq "Spacing" && 
-       $leninter eq "00 05 00" && $varlnint eq "01 00 00" ) {
-    $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","LENINTER","01 00 00");
-    $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","VARLNINT","06 00 00");
-    $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","STOCH_NUMBER","Spacing");
-    prtMess($bpe,"Keywords LENINTER and VARNLINT adjusted for STOCHASTIC PULSES as \"$stoch\"");
-  }
-  # "Orbit_midnight" is used for final products time spans more than 10 hrs
-  if ( $stoch eq "Orbit_midnight" && 
-       $leninter eq "01 00 00" && $varlnint eq "06 00 00") {
-    $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","LENINTER","00 05 00");
-    $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","VARLNINT","01 00 00");
-    $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","STOCH_NUMBER","Orbit_midnight");
-    prtMess($bpe,"Keywords LENINTER and VARNLINT adjusted for STOCHASTIC PULSES as \"$stoch\"");
-  }
-  if ( $stoch eq 'No_setup') {
-    $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","STOCH_NUMBER","No_setup");
-    prtMess($bpe,"STOCH_NUMBER set to \"$stoch\" as data duration less than 2 hours");
-  }
 
   # PNZORB steps added to ORBGEN standard process
   # Get the integration interval for the selected products
@@ -119,11 +51,10 @@ sub run {
   # orbit midnight)
   my $intsec=$ints+$intm*60+$inth*3600;
 
-  # HASHED AS THESE HAVE ALREADY BEEN RUN AT BEGINNING OF SCRIPT
   # Get the session table and retrieve the start and end of the session
-  # my $sesstable=$dirses.'/'.$$bpe{SESSION_TABLE};
-  # my $sf=new LINZ::BERN::SessionFile($sesstable);
-  # my ($start,$end)=$sf->sessionStartEnd($ssss,$yyyy);
+  my $sesstable=$dirses.'/'.$$bpe{SESSION_TABLE};
+  my $sf=new LINZ::BERN::SessionFile($sesstable);
+  my ($start,$end)=$sf->sessionStartEnd($ssss,$yyyy);
   
   # Convert to 'YYYY MM DD HH MM SS'
   my $starts=seconds_datetime($start);

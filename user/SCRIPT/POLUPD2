@@ -1,0 +1,71 @@
+package POLUPD;
+@ISA = ("RUNBPE");
+# ============================================================================
+#
+# Name    :  POLUPD
+#
+# Purpose :  Execute POLUPD for daily or hourly processing
+#
+# Remark  :  - Consider range of sessions for hourly processing
+#            - USERATE is automatically adjusted according to the existence
+#              of midnight epochs in the IERS pole file or not
+#
+# Author  :  R. Dach
+# Created :  07-Jun-2022
+#
+# Changes :  07-Jun-2022 RD: Created for version 5.4
+#
+# ============================================================================
+use strict;
+
+use lib $ENV{BPE};
+use bpe_util qw(setHourly);
+
+sub run {
+  my $bpe = shift;
+
+# Get variables
+# -------------
+  my ($orb,$ssss,$hourly,$dirIep) = $bpe->getKeys('V_ORB','$S+0','V_HOURLY','DIR_IEP');
+
+# Check whether the ERP must switched off
+# ---------------------------------------
+  # The line below does not fetch the "$(ORB)*" default that it should, it used
+  # to point to INP rather than PAN directory but this produced an error saying
+  # it didn't exist in the INP directory in the work area and it didn't.
+  #my $iepFil = $bpe->getKey("$ENV{U}/PAN/POLUPD.INP","IEPFIL");
+
+  # Get list of IEP files to convert
+  my @iep_list = glob ("${dirIep}${orb}*.IEP");
+  my $isRate = $bpe->getKey("$ENV{U}/PAN/POLUPD.INP","USERATE");
+  my $doRate = 1;
+  print "Before we start our loop - our doRate is set to: $doRate, and our isRate from the INP file is is set to: $isRate\n";
+  print "My list of IEP files is: @iep_list\n";
+  print "Printing the file as we read it in looking for epochs ending in '.0' as they signify ERP rates should not be used"
+  my $iepFil = $iep_list[0];
+  open(IEP,"$iepFil");
+  while ( <IEP> ) {
+    print "$_\n";
+   if ( /^[ ]*([\d][\d][\d][\d][\d]\.[\d]*) / ) {
+     my $epo = $1;
+     # Tests if there is a start of day epoch ending in '.0'
+     # presence of a start of day epoch indicates that no rates
+     # are needed to construct the record - these are final products
+     if ( $epo == int($epo) ) {
+       $doRate = 0;
+       print "We have found beginning of day epoch, doRate is set to: $doRate\n";
+       last;
+     }
+   }
+  }
+  close IEP;
+
+  if ( $doRate != $isRate ) { 
+    $bpe->putKey("$ENV{U}/PAN/POLUPD.INP","USERATE","$doRate");
+    prtMess($bpe,"Use ERP rates set to: $doRate");
+  } 
+
+  my $PGMNAM = "POLUPD";
+  $bpe->RUN_PGMS($PGMNAM);
+  
+}
