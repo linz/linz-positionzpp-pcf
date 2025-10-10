@@ -199,7 +199,7 @@ MSG_SCL9 1  "Scaling factor of PAR_9 (for output)"
 
 ! Setup stochastic parameters
 ! ---------------------------
-STOCH_NUMBER 1  "$(STOCH_NUMBER)"
+STOCH_NUMBER 1  "Spacing"
   ## widget = combobox; editable = false
   ## cards = No_setup Spacing SATCRUX ELE_file Orbit_midnight Manual
   ## activeif = RPROUT = _
@@ -863,7 +863,7 @@ USE_G 1  "1"
 
 MSG_USE_G 1  "Consider satellites from GPS"
 
-USE_R 1  "1"
+USE_R 1  "0"
   ## widget = checkbox; activeif = RADIO_E == 0 AND SATSELECT == SYSTEM_WISE
 
 MSG_USE_R 1  "Consider satellites from GLONASS"
@@ -873,7 +873,7 @@ USE_E 1  "1"
 
 MSG_USE_E 1  "Consider satellites from GALILEO"
 
-USE_C 1  "1"
+USE_C 1  "0"
   ## widget = checkbox; activeif = RADIO_E == 0 AND SATSELECT == SYSTEM_WISE
 
 MSG_USE_C 1  "Consider satellites from BEIDOU"
@@ -883,7 +883,7 @@ USE_J 1  "0"
 
 MSG_USE_J 1  "Consider satellites from QZSS"
 
-USE_S 1  "1"
+USE_S 1  "0"
   ## widget = checkbox; activeif = RADIO_E == 0 AND SATSELECT == SYSTEM_WISE
 
 MSG_USE_S 1  "Consider satellites from SBAS"
@@ -915,13 +915,13 @@ ARCINT 0
 
 MSG_ARCINT 1  "LENGTH OF TIME INTERVAL"
 
-RADIO_1 1  "1"
+RADIO_1 1  "0"
   ## widget = radiobutton; group = DUMMY
   ## radiokeys = SESSION_YEAR SESSION_STRG
 
 MSG_RADIO_1 1  "Obs. window defined by year and session identifier"
 
-RADIO_2 1  "0"
+RADIO_2 1  "1"
   ## widget = radiobutton; group = DUMMY
 
 MSG_RADIO_2 1  "Obs. window defined by start and end times"
@@ -929,14 +929,14 @@ MSG_RADIO_2 1  "Obs. window defined by start and end times"
 SESSION_YEAR 0
   ## widget = lineedit; multilineallowed = true; emptyallowed = false
   ## activeif = RADIO_1 == 1
-  # $Y+-
+  # $Y+0
 
 MSG_SESSION_YEAR 1  "Year for sessions def. the time window"
 
 SESSION_STRG 0
   ## widget = lineedit; multilineallowed = true; emptyallowed = false
   ## activeif = RADIO_1 == 1
-  # $S+-
+  # $S+0
 
 MSG_SESSION_STRG 1  "Sessions defining the time window"
 
