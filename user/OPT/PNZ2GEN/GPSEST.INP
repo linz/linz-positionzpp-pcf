@@ -5157,7 +5157,7 @@ MSG_MAXAMB 1  "MAXAMB: Ambiguities in an observation file"
 
 ! MAXPAR: Maximum number of parameters simultaneously processed
 ! -------------------------------------------------------------
-MAXPAR 1  "4000"
+MAXPAR 1  "6000"
   ## widget = lineedit; check_type = integer; check_min = 0
 
 MSG_MAXPAR 1  "MAXPAR: Parameters simultaneously processed"
