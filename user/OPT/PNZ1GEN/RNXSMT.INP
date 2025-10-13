@@ -541,7 +541,7 @@ WRTRXRECALPH 1  "0"
 
 MSG_WRTRXRECALPH 1  "Write RNX records with GNSS char in alph. order"
 
-PHSCORRAPPL 1  "SUPPRESS"
+PHSCORRAPPL 1  "AS_NEEDED"
   ## widget = combobox; editable = false; cards = SUPPRESS AS_NEEDED FORCE
 
 MSG_PHSCORRAPPL 1  "Rule for applying phase shift corrections"

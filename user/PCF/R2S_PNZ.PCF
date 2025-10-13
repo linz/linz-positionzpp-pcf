@@ -78,7 +78,7 @@ PID  SCRIPT    OPT_DIR   PARAMETERS
 # rapid or final and applies the ERP rates or not
 # depending on the product
 #
-020  POLUPD    PNZ2GEN   CPU=ANY; WAIT=019
+020  POLUPD2   PNZ2GEN   CPU=ANY; WAIT=019
 021  ORBMRG    PNZ2GEN   CPU=ANY; WAIT=019
 022  NEWORBG   PNZ2GEN   CPU=ANY; WAIT=020 021
 023  CCRNXC    PNZ2GEN   CPU=ANY; WAIT=019
@@ -113,18 +113,9 @@ PID  SCRIPT    OPT_DIR   PARAMETERS
 060  GNSSCRD   PNZ1REF   CPU=ANY; WAIT=003
 061  GETDATA   PNZ1REF   CPU=ANY; WAIT=060 059;  NEXTJOB= 999; PARAM8=GETREF 
 062  IGS2STA   PNZ1REF   CPU=ANY; WAIT=061
-#
-# Create PCV file with only sites in STA file
-# Using both ATX file for completeness, both
-# have different antennas and update cadence
-# Get ORB & EOP products, VMF, ION, DCB data
-# Rename all files to be the same as the ref
-# -------------------------------------------
-063  ANTXTRM4  PNZ1REF   CPU=ANY; WAIT=062
-064  ATX2PCV   PNZ1REF   CPU=ANY; WAIT=063
 065  MAKEBLQ   PNZ1REF   CPU=ANY; WAIT=062
 066  GRDS1S2   PNZ1REF   CPU=ANY; WAIT=062
-069  DUMMY     NO_OPT    CPU=ANY; WAIT=064 065 066 
+069  DUMMY     NO_OPT    CPU=ANY; WAIT=065 066 
 #
 # Preprocess, convert, and synchronize observation data
 # -----------------------------------------------------
@@ -173,12 +164,6 @@ PID  SCRIPT    OPT_DIR   PARAMETERS
 999  PNZSTART  PNZ1GEN   CPU=ANY; WAIT=600;  PARAM1=FINISH; PARAM5=GETORB; PARAM6=GETREF; PARAM8=STATUS 
 
 
-#
-# End of BPE
-# ----------
-###999  DUMMY     NO_OPT    CPU=ANY; WAIT=601
-#
-#
 
 VARIABLE         DEFAULT         PARAMETERS
 # General and model files:
@@ -190,9 +175,7 @@ V_PCV          = I20;            DESCRIPTION=Antenna phase center (PCV) model
 V_PCVINF       = ANTENNA;        DESCRIPTION=PCV information file
 V_SATINF       = SATELLIT;       DESCRIPTION=Satellite information file
 V_SATCRX       = SAT_$Y+0;       DESCRIPTION=Satellite problem file
-## Work out how to reference different product types/quality
 V_ORB          = COD0OPSFIN;     DESCRIPTION=Orbit/ERP, CLK, bias information (COD0OPSFIN or COD0OPSRAP)
-V_STOCH_NUMBER = Spacing;        DESCRIPTION=_Stochastic pulses (Orbit_midnight or Spacing)
 #
 # Product variables for GETDATA steps
 # -----------------------------------

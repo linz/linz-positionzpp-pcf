@@ -6,10 +6,10 @@ ENVIRONMENT 0
 
 ! Information for the title
 ! -------------------------
-CAMPAIGN 1  "./DUMMY"
+CAMPAIGN 0
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 1  "${PAN}/SESSIONS.SES"
+SESSION_TABLE 0
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
@@ -120,7 +120,7 @@ MSG_PZFILES 1  "Zero-difference observation files"
 
 ! Extensions of the Zero-Difference Obs. Files
 ! ----------------------------------------------
-PZFILES_PTH_COL_2 1  "./DUMMY/OBS/"
+PZFILES_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_PZO
 
 PZFILES_EXT_COL_2 1  "PZO"
@@ -146,7 +146,7 @@ MSG_OBSFIL 1  "Single-difference observation files"
 
 ! Extensions of the Single-Difference Obs. Files
 ! ----------------------------------------------
-OBSFIL_PTH_COL_2 1  "./DUMMY/OBS/"
+OBSFIL_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_PSO
 
 OBSFIL_EXT_COL_2 1  "PSO"
@@ -175,6 +175,7 @@ DESCR_STDORB 1  "Standard orbits"
 METFIL 0
   ## widget = selwin; path = DIR_MET; ext = EXT_MET; maxfiles = 999
   ## emptyallowed = true
+  # 
 
 MSG_METFIL 1  "Meteo data files"
 
@@ -182,6 +183,7 @@ MSG_METFIL 1  "Meteo data files"
 ! -------------
 VMF_FILES 0
   ## widget = selwin; path = DIR_GRD; ext = EXT_GRD; emptyallowed = true
+  # 
 
 MSG_VMF_FILES 1  "VMF grid file"
 
@@ -198,6 +200,7 @@ MSG_TROPOS 1  "Troposphere"
 TROPEST 0
   ## widget = selwin; path = DIR_TRP; ext = EXT_TRP; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_TROPEST 1  "Estimated troposphere"
 
@@ -206,6 +209,7 @@ DESCR_TROPEST 1  "Estimated troposphere"
 IONOS 0
   ## widget = selwin; path = DIR_ION; ext = EXT_ION; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_IONOS 1  "Ionosphere models"
 
@@ -214,6 +218,7 @@ DESCR_IONOS 1  "Ionosphere models"
 ECCENT 0
   ## widget = selwin; path = DIR_ECC; ext = EXT_ECC; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_ECCENT 1  "Site eccentricities"
 
@@ -222,6 +227,7 @@ DESCR_ECCENT 1  "Site eccentricities"
 KININP 0
   ## widget = selwin; path = DIR_KIN; ext = EXT_KIN; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_KININP 1  "Input kinematic coordinates"
 
@@ -304,6 +310,7 @@ DESCR_OBSSEL 1  "Observation selection"
 ! ---------------------
 COORDRS 0
   ## widget = lineedit; path = DIR_CRD; ext = EXT_CRD
+  # 
 
 DESCR_COORDRS 1  "Coordinate results"
 
@@ -311,6 +318,7 @@ DESCR_COORDRS 1  "Coordinate results"
 ! ---------
 RESIDRS 0
   ## widget = lineedit; path = DIR_RES; ext = EXT_RES
+  # MPR_$(CLUSTER)
 
 DESCR_RESIDRS 1  "Residual file"
 
@@ -422,6 +430,7 @@ MSG_MINLEN 1  "Max. baseline length for BOTH (else COMBINED)"
 ! -----------------------
 SECIPL 0
   ## widget = lineedit; activeif = RADIO_Z = 1
+  # 
 
 MSG_SECIPL 1  "Interpolation interval for clocks"
 
@@ -448,7 +457,7 @@ MSG_MRK1O2 1  "Mark unpaired dual frequency observations"
 
 ! Minimal Elevation
 ! -----------------
-MINEL 1  "3"
+MINEL 1  "10"
   ## widget = spinbox; range = -90 90 1
 
 MSG_MINEL 1  "Mark observations below an elevation (stations)"
@@ -654,6 +663,7 @@ MSG_CLKOPT4 1  "Set ambiguities for all satellites"
 STAFIX 0
   ## widget = selwin; maxfiles = 1; pointer = STALST
   ## activeif = RADIO_S = 1 AND COORDRS / _
+  # 
 
 MSG_STAFIX 1  "Define the fixed station"
 

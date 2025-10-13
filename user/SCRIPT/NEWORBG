@@ -35,74 +35,20 @@ sub run {
   $bpe->getKeys
   ('$S+0','$Y+0','V_HOURLY','V_SATSYS','V_ORB','DIR_IEP','DIR_SES');
 
-# Hourly processing
-# -----------------
-  setHourly($bpe);
-
-# Check product files to determine if they are rapid or final this 
-# will be used to set the V_STOCH_NUMBER dynamically
-# ----------------------------------------------------------------
-  my $preFil = "${dirOrb}${orb}_${yyyy}${ssss}.PRE";
- 
-  # Setting default stochastic number to the worst case scenario: rapid setting
-  my $stoch = "Spacing";
-  print "Header of precise orbit file $preFil:\n";
-
-  open(PRE,"$preFil") or die "cannot open $preFil\n";
-  while ( <PRE> ) {
-   print "$_";
-   # Note - these will fail if hardcoded headers don't have a comment line starting with rapid or final
-   if ( /^\/\*\sRAPID\s/i ) {
-     prtMess($bpe,"Precise orbit file read - found to be rapid product so STOCHASTIC PULSES set to \"Spacing\"");
-     $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","STOCH_NUMBER","Spacing");
-     last; 
-   }
-   elsif (/^\/\*\sFINAL\s/i ) {
-     $stoch = "Orbit_midnight";
-     prtMess($bpe,"Precise orbit file read - found to be final product so STOCHASTIC PULSES set to \"Orbit_midnight\"");
-     $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","STOCH_NUMBER","Orbit_midnight");
-     last; 
-   }
-  }
-  close PRE;  
-
-# Removed check for hourly processing and conditional setting of stochastic 
-# number to NONE based on length of stochastic interval. It is simpler to 
-# compute spacing or rapid based on product rather than length of file. 
-
 # Set the GNSS to be used
 # -----------------------
   if (! ($satsys =~ /G/) ) { $satsys = 'G'.$satsys; } 
   setGNSS($bpe,"$ENV{U}/PAN/ORBGEN.INP","USE_",$satsys);
 
-
-# Adjust the settings on integration interval if V_STOCH_NUMBER is set
-# --------------------------------------------------------------------
-  my $leninter = $bpe->getKey("$ENV{U}/PAN/ORBGEN.INP","LENINTER");
-  my $varlnint = $bpe->getKey("$ENV{U}/PAN/ORBGEN.INP","VARLNINT");
-
-  # "Spacing" is used for rapid products
-  if ( "$stoch" eq "Spacing" && 
-       "$leninter" eq "00 05 00" && "$varlnint" eq "01 00 00" ) {
-    $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","LENINTER","01 00 00");
-    $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","VARLNINT","06 00 00");
-    prtMess($bpe,"Keywords LENINTER and VARNLINT adjusted for STOCHASTIC PULSES as \"$stoch\"");
-  }
-  # "Orbit_midnight" is used for final products
-  if ( "$stoch" eq "Orbit_midnight" && 
-       "$leninter" eq "01 00 00" && "$varlnint" eq "06 00 00") {
-    $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","LENINTER","00 05 00");
-    $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","VARLNINT","01 00 00");
-    prtMess($bpe,"Keywords LENINTER and VARNLINT adjusted for STOCHASTIC PULSES as \"$stoch\"");
-  }
-
-
-  # PNZORB steps added to ORBGEN standar process
+  # PNZORB steps added to ORBGEN standard process
   # Get the integration interval for the selected products
   # from above "LENINTER" will be 01 00 00 (1hr) for rapid products and 
-  # 00 05 00 (5min) for final products ($intsec is this interval is seconds)
+  # 00 05 00 (5min) for final products 
+ 
   my $lenint=$bpe->getKey("$$bpe{U}/PAN/ORBGEN.INP","LENINTER");
   my($inth,$intm,$ints)=split(' ',$lenint);
+  # gets the interval length in seconds specified (1hr for spacing, 5 mins for
+  # orbit midnight)
   my $intsec=$ints+$intm*60+$inth*3600;
 
   # Get the session table and retrieve the start and end of the session
@@ -117,10 +63,21 @@ sub run {
   my $statim0=substr($starts,11,8);
 
   my ($stah,$stam,$stas)=split(' ',$statim0);
+  # $stasec0 is start time in seconds
   my $stasec0=$stas+$stam*60+$stah*3600;
+  # $stasec is how many whole intervals have already occurred that day when the
+  # first epoch of data appears
   my $stasec=$intsec*int($stasec0/$intsec);
+  # subtracts the difference in time between the last whole interval and the 
+  # start time, to get the difference (this will be a negative number) and adds
+  # it to the start time. The effect is to set the start time at an the nearest interval
+  # to ensure the orbits are constrained appropriately at the start of the data.
+  # $start will be before the actual start time of the data  
+  # reminder $start is in unix time (seconds)
   $start += ($stasec-$stasec0);
-
+  
+  # I don't think this is needed anymore as we don't process sessions less than 15 mins
+  #------------------------------------------------------------------------------------
   # Issue with orbgen generating error
   # 
   # NO TWO SATELLITE POSITIONS FOUND < 3 HOURS APART
@@ -129,8 +86,9 @@ sub run {
   # So force end time to be at least 15 mins after start.  Not sure what factors could
   # change this value.
  
-  my $endmin=$start+15*60;
-  $end=$endmin if $end < $endmin;
+  #my $endmin=$start+15*60;
+  #$end=$endmin if $end < $endmin;
+  #------------------------------------------------------------------------------------
 
   $starts=seconds_datetime($start);
   $starts =~ s/\D/ /g;
@@ -144,11 +102,12 @@ sub run {
 
   prtMess($bpe,"Setting orbit time span to $stadat $statim - $enddat $endtim");
 
-  $bpe->putKey("$$bpe{U}/PAN/ORBGEN.INP","STADAT",$stadat);
-  $bpe->putKey("$$bpe{U}/PAN/ORBGEN.INP","STATIM",$statim);
+  $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","STADAT",$stadat);
+  $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","STATIM",$statim);
 
-  $bpe->putKey("$$bpe{U}/PAN/ORBGEN.INP","ENDDAT",$enddat);
-  $bpe->putKey("$$bpe{U}/PAN/ORBGEN.INP","ENDTIM",$endtim);
+  $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","ENDDAT",$enddat);
+  $bpe->putKey("$ENV{U}/PAN/ORBGEN.INP","ENDTIM",$endtim);
+
 
 # Run program
 # -----------
