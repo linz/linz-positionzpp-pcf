@@ -41,7 +41,7 @@ sub run {
   my $doRate = 1;
   print "Before we start our loop - our doRate is set to: $doRate, and our isRate from the INP file is is set to: $isRate\n";
   print "My list of IEP files is: @iep_list\n";
-  print "Printing the file as we read it in looking for epochs ending in '.0' as they signify ERP rates should not be used"
+  print "Printing the file as we read it in looking for epochs ending in '.0' as they signify ERP rates should not be used";
   my $iepFil = $iep_list[0];
   open(IEP,"$iepFil");
   while ( <IEP> ) {
