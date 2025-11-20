@@ -19,7 +19,7 @@ package POLUPD;
 use strict;
 
 use lib $ENV{BPE};
-use bpe_util qw(setHourly);
+use bpe_util qw(prtMess setHourly);
 
 sub run {
   my $bpe = shift;
