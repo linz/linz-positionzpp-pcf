@@ -78,6 +78,12 @@ CRDIN 0
 
 DESCR_CRDIN 1  "Coordinate file"
 
+FLGUPD 1  "I"
+  ## widget = lineedit; emptyallowed = true; check_strlen = 4
+  ## activeif = CRDIN /= ""
+
+DESCR_FLGUPD 1  "Flag identifying stations to use - blank for all"
+
 ! IGS log directory
 IGSDIR1 1  "${D}/sitelogs/geonet/"
   ## widget = lineedit

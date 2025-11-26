@@ -1,8 +1,8 @@
 
-CAMPAIGN 1  "./DUMMY"
+CAMPAIGN 0
   ## widget = initmenu; pointer = ACTIVE_CAMPAIGN
 
-SESSION_TABLE 1  "${PAN}/SESSIONS.SES"
+SESSION_TABLE 0
   ## widget = initmenu; pointer = SESSION_TABLE
 
 DESCR_SESSION_TABLE 1  "Session table"
@@ -207,7 +207,7 @@ PZFILES 0
 
 MSG_PZFILES 1  "Phase observation files"
 
-PZFILES_PTH_COL_2 1  "./DUMMY/OBS/"
+PZFILES_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_PZO
 
 PZFILES_EXT_COL_2 1  "PZO"
@@ -225,7 +225,7 @@ PSFILES 0
 
 MSG_PSFILES 1  "Phase observation files"
 
-PSFILES_PTH_COL_2 1  "./DUMMY/OBS/"
+PSFILES_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_PSO
 
 PSFILES_EXT_COL_2 1  "PSO"
@@ -243,7 +243,7 @@ CZFILES 0
 
 MSG_CZFILES 1  "Code observation files"
 
-CZFILES_PTH_COL_2 1  "./DUMMY/OBS/"
+CZFILES_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_CZO
 
 CZFILES_EXT_COL_2 1  "CZO"
@@ -257,10 +257,11 @@ CZFILES_TXT_COL_2 1  "OBSERVATION FILE"
 CSFILES 0
   ## widget = selwin; path = DIR_CSH; ext = EXT_CSH; emptyallowed = true
   ## activeif = DIFLVL = DOUBLE
+  # 
 
 MSG_CSFILES 1  "Code observation files"
 
-CSFILES_PTH_COL_2 1  "./DUMMY/OBS/"
+CSFILES_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_CSO
 
 CSFILES_EXT_COL_2 1  "CSO"
@@ -278,7 +279,7 @@ RZFILES 0
 
 MSG_RZFILES 1  "Range observation files"
 
-RZFILES_PTH_COL_2 1  "./DUMMY/OBS/"
+RZFILES_PTH_COL_2 0
   ## widget = initmenu; pointer = DIR_RZO
 
 RZFILES_EXT_COL_2 1  "RZO"
@@ -326,6 +327,7 @@ DESCR_SATCLK 1  "Satellite clock corrections"
 DCBINP 0
   ## widget = selwin; path = DIR_OSB; ext = EXT_OSB; maxfiles = 1
   ## emptyallowed = true; activeif = GEOTEC = GNSS
+  # 
 
 DESCR_DCBINP 1  "Observable-specifc biases"
 
@@ -340,6 +342,7 @@ MSG_NLBCLK 1  "NL phase biases from CLK"
 ! -------------
 VMF_FILES 0
   ## widget = selwin; path = DIR_GRD; ext = EXT_GRD; emptyallowed = true
+  # 
 
 MSG_VMF_FILES 1  "VMF grid file"
 
@@ -383,6 +386,7 @@ MSG_OPTLOAD 1  "Error handling for tidal loading"
 RPRCOE 0
   ## widget = selwin; path = DIR_RPR; ext = EXT_RPR; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_RPRCOE 1  "Satellite orbit partials (GNSS)"
 
@@ -416,6 +420,7 @@ DESCR_TROPEST 1  "Estimated troposphere"
 ! ----------
 METFIL 0
   ## widget = selwin; path = DIR_MET; ext = EXT_MET; emptyallowed = true
+  # 
 
 MSG_METFIL 1  "Meteorological data"
 
@@ -423,6 +428,7 @@ MSG_METFIL 1  "Meteorological data"
 ! -----------------------
 ALOAD_FILES 0
   ## widget = selwin; path = DIR_GRD; ext = EXT_GRD; emptyallowed = true
+  # 
 
 MSG_ALOAD_FILES 1  "Grid files for atmospheric pressure loading"
 
@@ -430,6 +436,7 @@ MSG_ALOAD_FILES 1  "Grid files for atmospheric pressure loading"
 ! ----------------------------------
 ONTLD_FILES 0
   ## widget = selwin; path = DIR_GRD; ext = EXT_GRD; emptyallowed = true
+  # 
 
 MSG_ONTLD_FILES 1  "Grid files for ocean non-tidal loading"
 
@@ -437,6 +444,7 @@ MSG_ONTLD_FILES 1  "Grid files for ocean non-tidal loading"
 ! ------------------------------
 HLOAD_FILES 0
   ## widget = selwin; path = DIR_GRD; ext = EXT_GRD; emptyallowed = true
+  # 
 
 MSG_HLOAD_FILES 1  "Grid files for hydrostatic pressure loading"
 
@@ -454,6 +462,7 @@ DESCR_STAINFO 1  "Station information"
 KININP 0
   ## widget = selwin; path = DIR_KIN; ext = EXT_KIN; maxfiles = 1
   ## emptyallowed = true; activeif = GEOTEC = GNSS
+  # 
 
 DESCR_KININP 1  "Input kinematic coordinates"
 
@@ -462,6 +471,7 @@ DESCR_KININP 1  "Input kinematic coordinates"
 STAWGT 0
   ## widget = selwin; path = DIR_SOS; ext = EXT_SOS; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_STAWGT 1  "Observation sigma factors"
 
@@ -470,6 +480,7 @@ DESCR_STAWGT 1  "Observation sigma factors"
 ECCENT 0
   ## widget = selwin; path = DIR_ECC; ext = EXT_ECC; maxfiles = 1
   ## emptyallowed = true
+  # 
 
 DESCR_ECCENT 1  "Station eccentricities"
 
@@ -596,6 +607,7 @@ MSG_IGNORE_ERR 1  "Ignore errors within specified subroutines"
 ! ----------------
 NEQUARS 0
   ## widget = lineedit; path = DIR_NEQ; ext = EXT_NEQ
+  # 
 
 DESCR_NEQUARS 1  "Normal equations"
 
@@ -603,6 +615,7 @@ DESCR_NEQUARS 1  "Normal equations"
 ! ------------------
 COORDRS 0
   ## widget = lineedit; path = DIR_CRD; ext = EXT_CRD
+  # 
 
 DESCR_COORDRS 1  "Station coordinates"
 
@@ -610,6 +623,7 @@ DESCR_COORDRS 1  "Station coordinates"
 ! ----------------
 ORBITRS 0
   ## widget = lineedit; path = DIR_ELE; ext = EXT_ELE
+  # 
 
 DESCR_ORBITRS 1  "GNSS orbital elements"
 
@@ -617,6 +631,7 @@ DESCR_ORBITRS 1  "GNSS orbital elements"
 ! -------------------------
 POLERS 0
   ## widget = lineedit; path = DIR_ERP; ext = EXT_ERP
+  # 
 
 DESCR_POLERS 1  "Earth rotation parameters (BERNESE)"
 
@@ -624,6 +639,7 @@ DESCR_POLERS 1  "Earth rotation parameters (BERNESE)"
 ! -------------------
 IERSPOL 0
   ## widget = lineedit; path = DIR_IEP; ext = EXT_IEP
+  # 
 
 DESCR_IERSPOL 1  "IERS ERP file"
 
@@ -632,6 +648,7 @@ DESCR_IERSPOL 1  "IERS ERP file"
 TROPSAV 0
   ## widget = lineedit; path = DIR_TRP; ext = EXT_TRP
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_TROPSAV 1  "Troposphere estimates"
 
@@ -640,6 +657,7 @@ DESCR_TROPSAV 1  "Troposphere estimates"
 TROPSNX 0
   ## widget = lineedit; path = DIR_TRO; ext = EXT_TRO
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_TROPSNX 1  "Troposphere SINEX"
 
@@ -657,6 +675,7 @@ DESCR_TROPSLA 1  "Troposphere slant delays"
 IONOSRS 0
   ## widget = lineedit; path = DIR_ION; ext = EXT_ION
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_IONOSRS 1  "Ionosphere models"
 
@@ -665,6 +684,7 @@ DESCR_IONOSRS 1  "Ionosphere models"
 IONEXRS 0
   ## widget = lineedit; path = DIR_INX; ext = EXT_INX
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_IONEXRS 1  "IONEX"
 
@@ -673,6 +693,7 @@ DESCR_IONEXRS 1  "IONEX"
 OSBOUT 0
   ## widget = lineedit; path = DIR_OSB; ext = EXT_OSB
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_OSBOUT 1  "Observable-specific code biases"
 
@@ -681,6 +702,7 @@ DESCR_OSBOUT 1  "Observable-specific code biases"
 BIASSNX 0
   ## widget = lineedit; path = DIR_BIA; ext = EXT_BIA
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_BIASSNX 1  "Bias SINEX"
 
@@ -696,6 +718,7 @@ DESCR_ISBOUT 1  "Inter-system biases"
 PHASRSG 0
   ## widget = lineedit; path = DIR_PHG; ext = EXT_PHG
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_PHASRSG 1  "Phase center variations (grid)"
 
@@ -704,6 +727,7 @@ DESCR_PHASRSG 1  "Phase center variations (grid)"
 PHASRSH 0
   ## widget = lineedit; path = DIR_PHH; ext = EXT_PHH
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_PHASRSH 1  "Phase center variations (harm)"
 
@@ -730,6 +754,7 @@ DESCR_CLKRNX 1  "Clock RINEX"
 KINOUT 0
   ## widget = lineedit; path = DIR_KIN; ext = EXT_KIN
   ## activeif = GEOTEC = GNSS
+  # 
 
 DESCR_KINOUT 1  "Output kinematic coordinates"
 
@@ -737,12 +762,13 @@ DESCR_KINOUT 1  "Output kinematic coordinates"
 ! ---------
 RESIDRS 0
   ## widget = lineedit; path = DIR_RES; ext = EXT_RES
+  # 
 
 DESCR_RESIDRS 1  "Residuals"
 
 ! Extended residual output (add TOBS,Beta,du)
 ! -------------------------------------------
-RES_EXTEND 0
+RES_EXTEND 1  "0"
   ## widget = checkbox; activeif = RESIDRS / _
 
 MSG_RES_EXTEND 1  "Extended residual output"
@@ -751,6 +777,7 @@ MSG_RES_EXTEND 1  "Extended residual output"
 ! -----------------
 COVTTRS 0
   ## widget = lineedit; path = DIR_COV; ext = EXT_COV
+  # 
 
 DESCR_COVTTRS 1  "Full covariance matrix"
 
@@ -758,6 +785,7 @@ DESCR_COVTTRS 1  "Full covariance matrix"
 ! --------------------
 COVARRS 0
   ## widget = lineedit; path = DIR_COV; ext = EXT_COV
+  # 
 
 DESCR_COVARRS 1  "Coordinate covariance matrix"
 
@@ -1588,7 +1616,7 @@ RADIO8_1 1  "1"
 
 MSG_RADIO8_1 1  "Coordinates fixed"
 
-FIXSTA 1  "FIRST"
+FIXSTA 1  "WITH_FLAG"
   ## widget = combobox; editable = false; activeif = RADIO8_1 = 1
   ## cards = FIRST LAST ALL MANUAL FROM_FILE WITH_FLAG
 
@@ -1598,6 +1626,7 @@ MSG_FIXSTA 1  "Coordinates fixed"
 ! -------------------------------------
 STATION1 0
   ## widget = selwin; activeif = FIXSTA == MANUAL; pointer = GRDCENLST
+  # 
 
 MSG_STATION1 1  "Stations to be fixed (Manual selection)"
 
@@ -1612,7 +1641,7 @@ MSG_STAFILE1 1  "List of stations to fix from file"
 
 ! Flags for fixed station(s)
 ! ---------------------------
-STAFLAG1 1  "#"
+STAFLAG1 1  "I"
   ## widget = lineedit; activeif = FIXSTA = WITH_FLAG
 
 MSG_STAFLAG1 1  "Stations with specific flags in CRD file"
@@ -5191,6 +5220,7 @@ MSG_PRE30 1  "Pre-elimination: GNSS-Specific parameters"
 ! ------------------
 PAR_OFF 0
   ## widget = lineedit; emptyallowed = true
+  # 
 
 MSG_PAR_OFF 1  "Time offset for Parameter intervals"
 
