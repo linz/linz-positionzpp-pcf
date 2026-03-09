@@ -1,0 +1,11 @@
+{
+    "products": [
+        {
+            "description": "Bernese rapid ionospheric products",
+            "type": "ION",
+            "subtype": "COD_RAP",
+            "start_days_ago": 3,
+            "end_days_ago": 1
+        }
+    ]
+}
