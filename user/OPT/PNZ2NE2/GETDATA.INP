@@ -186,7 +186,7 @@ MSG_OSBNAM 1  "Name for downloaded OSB files"
 ! -------------------------------------------------------------------------
 ! Plus/minus session range in atmosphere products
 ! ------------------
-ATMPLUSM 1  "1"
+ATMPLUSM 1  "0"
   ## widget = checkbox
 
 MSG_ATMPLUSM 1  "Include +/- session range in atmosphere products"
