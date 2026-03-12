@@ -1,11 +1,90 @@
 {
     "products": [
         {
-            "description": "Bernese rapid ionospheric products",
+            "description": "PNZPP rapid processing products",
+            "type": "BIA",
+            "subtype": "COD_RAP",
+            "start_days_ago": 3,
+            "end_days_ago": 1
+        },
+        {
+            "description": "PNZPP rapid processing products",
+            "type": "CLK",
+            "subtype": "COD_RAP",
+            "start_days_ago": 3,
+            "end_days_ago": 1
+        },
+        {
+            "description": "PNZPP rapid processing products",
+            "type": "ERP",
+            "subtype": "COD_RAP",
+            "start_days_ago": 3,
+            "end_days_ago": 1
+        },
+        {
+            "description": "PNZPP rapid processing products",
             "type": "ION",
             "subtype": "COD_RAP",
             "start_days_ago": 3,
             "end_days_ago": 1
+        },
+        {
+            "description": "PNZPP rapid processing products",
+            "type": "ORB",
+            "subtype": "COD_RAP",
+            "start_days_ago": 3,
+            "end_days_ago": 1
+        },
+        {
+            "description": "PNZPP rapid processing products",
+            "type": "VMF",
+            "subtype": "VMF3",
+            "start_days_ago": 3,
+            "end_days_ago": 0
+        },
+
+
+        {
+            "description": "PNZPP final processing products",
+            "type": "BIA",
+            "subtype": "COD_FIN",
+            "start_days_ago": 20,
+            "end_days_ago": 12
+        },
+        {
+            "description": "PNZPP final processing products",
+            "type": "CLK",
+            "subtype": "COD_FIN",
+            "start_days_ago": 20,
+            "end_days_ago": 12
+        },
+        {
+            "description": "PNZPP final processing products",
+            "type": "ERP",
+            "subtype": "COD_FIN",
+            "start_days_ago": 20,
+            "end_days_ago": 12
+        },
+        {
+            "description": "PNZPP final processing products",
+            "type": "ION",
+            "subtype": "COD_FIN",
+            "start_days_ago": 20,
+            "end_days_ago": 12
+        },
+        {
+            "description": "PNZPP final processing products",
+            "type": "ORB",
+            "subtype": "COD_FIN",
+            "start_days_ago": 20,
+            "end_days_ago": 12
+        },
+        {
+            "description": "PNZPP final processing products",
+            "type": "VMF",
+            "subtype": "VMF3",
+            "start_days_ago": 20,
+            "end_days_ago": 0
         }
     ]
 }
