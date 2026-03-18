@@ -402,10 +402,10 @@ DNLDNOW 1  "1"
 
 MSG_DNLDNOW 1  "Try to download now if data not in the cache"
 
-QUEUE 1  "0"
+FULLDAYS 1  "0"
   ## widget = checkbox
 
-MSG_QUEUE 1  "Queue the data for downloading if not available or downloaded"
+MSG_FULLDAYS 1  "Get products covering complete UTC days in the session"
 
 ! Wait/lock file
 LOCKFILE 0
@@ -454,8 +454,8 @@ DESCR_SYSERR 1  "Error message"
 #   (Queued jobs will only be downloaded if there is a queue manager           #
 #   job running.)                                                              #
 #                                                                              #
+#   Expand session to full days                           > % <                # FULLDAYS
 #   Try to download now if not in datapool                > % <                # DNLDNOW 
-#   Queue for download if not in datapool or downloaded   > % <                # QUEUE
 #                                                                              #
 # OUTPUT FILES                                                                 #
 #                                                                              #
@@ -473,7 +473,7 @@ DESCR_SYSERR 1  "Error message"
 # BEGIN_PANEL NO_CONDITION #####################################################
 # DOWNLOAD REFERENCE DATA - GETDATA 2: Orbit/ERP/OSB data                      # 
 #                                                                              #
-#   Orbit/ERP quality (+ = or better if available)   > %%%%%%% <               # ORBTYP
+#   Orbit/ERP quality (+ = or better if available)   > %%%%%%%%%%%%%% <        # ORBTYP
 #   Download orbits                                  > % <                     # DNLDORB
 #   Download earth rotation parameters               > % <                     # DNLDERP
 #   Download satellite 5 minute clock files          > % <                     # DNLDCLK
@@ -500,14 +500,14 @@ DESCR_SYSERR 1  "Error message"
 #   Download tropospheric models (.TRP)              > % <                     # DNLDTRP
 #                                                                              #
 #   Download ionospheric models (.ION)               > % <                     # DNLDION
-#       Ionosphere model quality                     > %%%%%%%% <              # IONTYP
+#       Ionosphere model quality                     > %%%%%%%%%%%%%% <        # IONTYP
 #       Merge ION files to a single file             > % <                     # MERGEION
-#       Name of merged ION file                      > %%%%%%%% <              # IONFILE
+#       Name of merged ION file                      > %%%%%%%%%%%%%% <        # IONFILE
 #                                                                              #
-#   Vienna Mapping Function version                  > %%%%%%% <               # VMFTYP
 #   Download VMF files                               > % <                     # DNLDVMF
+#       Vienna Mapping Function version              > %%%%%%%%%%%%%% <        # VMFTYP
 #       Merge VMF files to a single file             > % <                     # MERGEVMF
-#       Name of merged VMF file                      > %%%%%%%% <              # VMFFILE
+#       Name of merged VMF file                      > %%%%%%%%%%%%%% <        # VMFFILE
 #                                                                              #
 #   Include +/- session range in atmosphere products > % <                     # ATMPLUSM
 #                                                                              #
