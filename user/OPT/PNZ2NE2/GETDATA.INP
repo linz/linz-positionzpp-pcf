@@ -49,7 +49,7 @@ DNLDORB 1  "1"
 MSG_DNLDORB 1  "Download orbit files"
 
 ORBTYP 1  "$(ORBTYP)"
-  ## widget=combobox; editable=false
+  ## widget=combobox; editable=true
   ## cards = BROADCAST ULTRA ULTRA+ RAPID RAPID+ FINAL COD_FIN COD_RAP CO3 IG3
 
 MSG_ORBTYP 1  "Orbit type, '+' = 'or better'"
@@ -115,7 +115,7 @@ TRPNAM 0
 MSG_TRPNAM 1  "Name for downloaded troposphere files"
 
 IONTYP 1  "$(IONTYP)"
-  ## widget=combobox; editable=false
+  ## widget=combobox; editable=true
   ## cards = PREDICT PREDICT+ RAPID RAPID+ COD_FIN COD_RAP
 
 MSG_IONTYP 1  "Ionosphere model quality, '+' = 'or better'"
@@ -142,7 +142,8 @@ MSG_IONNAM 1  "Name for downloaded ionosphere file(s)"
 ! Download VMF files
 ! ------------------
 VMFTYP 1  "VMF3"
-  ## widget=combobox; editable=false; cards = VMF1 VMF3
+  ## widget=combobox; editable=true
+  ## cards = VMF1 VMF3
 
 MSG_VMFTYP 1  "Vienna Mapping Function version"
 
@@ -167,8 +168,7 @@ MSG_VMFFILE 1  "Name of combined VMF files"
 ! Download daily Observation Specific Bias files
 ! ------------------
 OSBTYP 1  "$(OSBTYP)"
-  ## widget=combobox; editable=false
-  ## cards = RAPID RAPID+ COD_FIN COD_RAP CO3 IG3
+  ## widget=combobox; editable=true; cards = RAPID RAPID+ COD_FIN COD_RAP CO3 IG3
 
 MSG_OSBTYP 1  "OSB product quality, '+' = 'or better'"
 
@@ -186,7 +186,7 @@ MSG_OSBNAM 1  "Name for downloaded OSB files"
 ! -------------------------------------------------------------------------
 ! Plus/minus session range in atmosphere products
 ! ------------------
-ATMPLUSM 1  "1"
+ATMPLUSM 1  "0"
   ## widget = checkbox
 
 MSG_ATMPLUSM 1  "Include +/- session range in atmosphere products"
@@ -284,7 +284,7 @@ DNLDRS_A 1  "0"
 MSG_DNLDRS_A 1  "Automatically select reference stations based on station coordinate"
 
 RSDTYPE 1  "DAILY"
-  ## widget=combobox; editable=false; cards = HOURLY HOURLY+ DAILY
+  ## widget=combobox; editable=true; cards = HOURLY HOURLY+ DAILY
   ## activeif = DNLDRS_0 = 0
 
 MSG_RSDTYPE 1  "RINEX file selection"
@@ -405,10 +405,10 @@ DNLDNOW 1  "1"
 
 MSG_DNLDNOW 1  "Try to download now if data not in the cache"
 
-QUEUE 1  "0"
+FULLDAYS 1  "1"
   ## widget = checkbox
 
-MSG_QUEUE 1  "Queue the data for downloading if not available or downloaded"
+MSG_FULLDAYS 1  "Get products covering complete UTC days in the session"
 
 ! Wait/lock file
 LOCKFILE 0
@@ -457,8 +457,8 @@ DESCR_SYSERR 1  "Error message"
 #   (Queued jobs will only be downloaded if there is a queue manager           #
 #   job running.)                                                              #
 #                                                                              #
+#   Expand session to full days                           > % <                # FULLDAYS
 #   Try to download now if not in datapool                > % <                # DNLDNOW 
-#   Queue for download if not in datapool or downloaded   > % <                # QUEUE
 #                                                                              #
 # OUTPUT FILES                                                                 #
 #                                                                              #
@@ -476,14 +476,14 @@ DESCR_SYSERR 1  "Error message"
 # BEGIN_PANEL NO_CONDITION #####################################################
 # DOWNLOAD REFERENCE DATA - GETDATA 2: Orbit/ERP/OSB data                      # 
 #                                                                              #
-#   Orbit/ERP quality (+ = or better if available)   > %%%%%%% <               # ORBTYP
+#   Orbit/ERP quality (+ = or better if available)   > %%%%%%%%%%%%%% <        # ORBTYP
 #   Download orbits                                  > % <                     # DNLDORB
 #   Download earth rotation parameters               > % <                     # DNLDERP
 #   Download satellite 5 minute clock files          > % <                     # DNLDCLK
 #   (clock files only available in RAPID and FINAL)                            #
 #                                                                              #
 #   Download daily Observation Specific Bias files                             #
-#      OSB product quality                           > %%%%%%% <               # OSBTYP
+#      OSB product quality                           > %%%%%%%%%%%%%% <        # OSBTYP
 #      Download daily OSB files                      > % <                     # DNLDOSB
 #                                                                              #
 #   Include +/- session range in orbit products      > % <                     # ORBPLUSM
@@ -503,14 +503,14 @@ DESCR_SYSERR 1  "Error message"
 #   Download tropospheric models (.TRP)              > % <                     # DNLDTRP
 #                                                                              #
 #   Download ionospheric models (.ION)               > % <                     # DNLDION
-#       Ionosphere model quality                     > %%%%%%%% <              # IONTYP
+#       Ionosphere model quality                     > %%%%%%%%%%%%%% <        # IONTYP
 #       Merge ION files to a single file             > % <                     # MERGEION
-#       Name of merged ION file                      > %%%%%%%% <              # IONFILE
+#       Name of merged ION file                      > %%%%%%%%%%%%%% <        # IONFILE
 #                                                                              #
-#   Vienna Mapping Function version                  > %%%%%%% <               # VMFTYP
 #   Download VMF files                               > % <                     # DNLDVMF
+#       Vienna Mapping Function version              > %%%%%%%%%%%%%% <        # VMFTYP
 #       Merge VMF files to a single file             > % <                     # MERGEVMF
-#       Name of merged VMF file                      > %%%%%%%% <              # VMFFILE
+#       Name of merged VMF file                      > %%%%%%%%%%%%%% <        # VMFFILE
 #                                                                              #
 #   Include +/- session range in atmosphere products > % <                     # ATMPLUSM
 #                                                                              #
